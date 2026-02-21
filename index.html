@@ -18,72 +18,41 @@
     body {
       min-height: 100vh;
       background-color: var(--dark);
+      background-image: url('logo.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       font-family: 'Montserrat', sans-serif;
       overflow: hidden;
     }
 
-    /* Subtle grain overlay */
-    body::before {
+    /* Dark gradient at bottom so buttons are readable */
+    body::after {
       content: '';
       position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
       pointer-events: none;
-      z-index: 10;
-      opacity: 0.5;
+      z-index: 0;
     }
 
     .container {
       text-align: center;
-      padding: 3rem 2rem;
+      padding: 2rem;
+      padding-bottom: 3rem;
+      position: relative;
+      z-index: 1;
       animation: fadeUp 1.2s ease both;
     }
 
-    /* Logo / image area */
-    .logo-wrap {
-      margin-bottom: 2.5rem;
-      animation: fadeUp 1.2s 0.1s ease both;
-    }
-
-    .logo-wrap img {
-      max-width: 320px;
-      width: 90vw;
-      border-radius: 4px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    /* Fallback if no image yet */
-    .logo-wrap .name-fallback {
-      display: none;
-    }
-
-    .logo-wrap img[src="logo.png"]:not([complete]) + .name-fallback,
-    .logo-wrap img[src=""] + .name-fallback {
-      display: block;
-    }
-
-    /* Business name shown below image */
-    .business-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(1.6rem, 5vw, 2.8rem);
-      color: var(--cream);
-      letter-spacing: 0.12em;
-      margin-bottom: 0.4rem;
-      animation: fadeUp 1.2s 0.25s ease both;
-    }
-
     .divider {
-      width: 60px;
-      height: 1px;
-      background: var(--gold);
-      margin: 1rem auto 2rem;
-      animation: expandWidth 1s 0.5s ease both;
-      transform-origin: center;
+      display: none;
     }
 
     /* Social buttons */
@@ -144,16 +113,6 @@
 </head>
 <body>
   <div class="container">
-    <div class="logo-wrap">
-      <!-- Replace logo.png with your actual image filename -->
-      <img src="logo.png" alt="Memory Photo And Video" onerror="this.style.display='none'; document.querySelector('.name-fallback').style.display='block';" />
-      <div class="name-fallback">
-        <p class="business-name">Memory Photo And Video</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
     <div class="buttons">
       <!-- Instagram -->
       <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener">
