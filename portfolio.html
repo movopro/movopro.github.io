@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Memory Photo And Video</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream:#f5f0e8; --dark:#0f0d0b; --gold:#c9a96e; }
+    body { font-family: Montserrat, sans-serif; background: var(--dark); color: var(--cream); padding: 22px; }
+    header { max-width: 1100px; margin: 0 auto 18px; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; }
+    .brand { font-family:"Cormorant Garamond", serif; letter-spacing:.12em; font-weight:300; font-size:1.4rem; }
+    nav a { color: rgba(245,240,232,.86); text-decoration:none; font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; padding:8px 10px; border-radius:12px; border:1px solid rgba(201,169,110,.22); background: rgba(0,0,0,.18); }
+    nav { display:flex; gap:10px; flex-wrap:wrap; }
+    main { max-width: 1100px; margin: 0 auto; }
+    h1 { font-family:"Cormorant Garamond", serif; font-weight:300; letter-spacing:.10em; margin: 10px 0 6px; }
+    p { color: rgba(245,240,232,.72); margin-bottom: 16px; line-height:1.5; }
+
+    .gallery {
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    @media (min-width: 900px){
+      .gallery { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    }
+    .card img{
+      width:100%;
+      display:block;
+      border-radius:16px;
+      object-fit:cover;
+      aspect-ratio: 4 / 5;
+      border: 1px solid rgba(201,169,110,.18);
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+    }
+    footer { max-width: 1100px; margin: 18px auto 0; color: rgba(245,240,232,.62); font-size:.82rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Memory Photo And Video</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Portfolio</h1>
+    <p>Селекция от кадри. Минимален текст. Максимален фокус върху визията.</p>
+
+    <section class="gallery">
+      <a class="card" href="assets/01.jpg"><img src="assets/01.jpg" alt=""></a>
+      <a class="card" href="assets/02.jpg"><img src="assets/02.jpg" alt=""></a>
+      <a class="card" href="assets/03.jpg"><img src="assets/03.jpg" alt=""></a>
+      <a class="card" href="assets/04.jpg"><img src="assets/04.jpg" alt=""></a>
+      <a class="card" href="assets/05.jpg"><img src="assets/05.jpg" alt=""></a>
+      <a class="card" href="assets/06.jpg"><img src="assets/06.jpg" alt=""></a>
+      <a class="card" href="assets/07.jpg"><img src="assets/07.jpg" alt=""></a>
+      <a class="card" href="assets/08.jpg"><img src="assets/08.jpg" alt=""></a>
+    </section>
+  </main>
+
+  <footer>За запитвания: Instagram / Facebook</footer>
+</body>
+</html>
