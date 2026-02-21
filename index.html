@@ -5,24 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Memory Photo & Video</title>
 
-  <!-- Favicon = logo.png -->
-  <link rel="icon" type="image/png" href="logo.png" />
-
+  <link rel="icon" type="image/png" href="icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
 
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --cream:#f5f0e8;
-      --ink:#0f0d0b;
+      --nav:#1e5c86;
       --gold:#c9a96e;
-      --nav:#1e5c86; /* като примера */
+      --bg:#000; /* черен фон */
     }
 
     body{
       font-family:Montserrat,sans-serif;
       color:var(--cream);
-      background:#0b0a09;
+      background:var(--bg);
       min-height:100vh;
     }
 
@@ -53,14 +51,6 @@
       height:44px;
       width:auto;
       display:block;
-    }
-    .brand span{
-      font-family:"Cormorant Garamond",serif;
-      font-weight:400;
-      letter-spacing:.10em;
-      font-size:1.05rem;
-      opacity:.95;
-      white-space:nowrap;
     }
 
     /* mobile menu toggle */
@@ -103,130 +93,67 @@
       text-transform:uppercase;
       padding:10px 10px;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.00);
+      border:1px solid rgba(255,255,255,0);
       transition:.15s ease;
     }
     nav a:hover{
       background:rgba(0,0,0,.14);
       border-color:rgba(255,255,255,.12);
     }
-
     .nav-cta{
-      border:1px solid rgba(201,169,110,.55) !important;
+      border:1px solid rgba(201,169,110,.55)!important;
       background:rgba(0,0,0,.10);
     }
 
-    /* HERO */
+    /* HERO (само лого + соц бутони, без надпис) */
     .hero{
       min-height:100vh;
       padding-top:78px; /* header height */
       display:grid;
       place-items:center;
-      position:relative;
-      overflow:hidden;
     }
-
-    /* Layer 1: background */
-    .hero::before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        linear-gradient(rgba(0,0,0,.68), rgba(0,0,0,.78)),
-        url("logo.png") center/cover no-repeat;
-      filter:saturate(1.05);
-      transform:scale(1.02);
-      z-index:0;
-    }
-
-    /* Layer 2: hero image (пред background-а) */
-    .hero::after{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(ellipse at center, rgba(0,0,0,.10), rgba(0,0,0,.60)),
-        url("hero.jpg") center/cover no-repeat;
-      opacity:.78; /* контролирай видимостта */
-      z-index:1;
-    }
-
     .hero-inner{
-      position:relative;
-      z-index:2;
-      width:min(900px, 92vw);
+      width:min(820px, 92vw);
       text-align:center;
       padding:26px 18px;
       animation:fadeUp .9s ease both;
     }
-
-    .hero-title{
-      font-family:"Cormorant Garamond",serif;
-      font-weight:400;
-      letter-spacing:.12em;
-      font-size:clamp(2.0rem, 5vw, 4.0rem);
-      text-shadow:0 10px 28px rgba(0,0,0,.6);
-      margin-bottom:10px;
+    .hero-logo{
+      width:min(180px, 45vw);
+      height:auto;
+      display:block;
+      margin:0 auto 18px;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,.55));
     }
 
-    .hero-sub{
-      color:rgba(245,240,232,.82);
-      line-height:1.55;
-      font-size:1.02rem;
-      max-width:760px;
-      margin:0 auto 22px;
-      text-shadow:0 8px 22px rgba(0,0,0,.55);
-    }
-
-    .btn-row{
+    .social{
       display:flex;
       justify-content:center;
       gap:12px;
       flex-wrap:wrap;
     }
+
     .btn{
       display:inline-block;
       padding:12px 18px;
       border-radius:14px;
+      border:1px solid rgba(201,169,110,.60);
+      background:rgba(10,8,6,.70);
+      color:rgba(232,213,176,.96);
       text-decoration:none;
       letter-spacing:.14em;
       text-transform:uppercase;
       font-weight:600;
       font-size:.78rem;
-      border:1px solid rgba(245,240,232,.35);
-      background:rgba(0,0,0,.28);
-      color:rgba(245,240,232,.92);
       transition:.15s ease;
     }
-    .btn:hover{background:rgba(0,0,0,.44); transform:translateY(-1px)}
-    .btn.primary{
-      border-color:rgba(201,169,110,.65);
-      color:rgba(232,213,176,.96);
-      background:rgba(10,8,6,.58);
-    }
-    .btn.primary:hover{background:rgba(0,0,0,.55)}
-
-    .social{
-      margin-top:18px;
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .social a{
-      color:rgba(245,240,232,.86);
-      text-decoration:none;
-      font-size:.84rem;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-    }
+    .btn:hover{background:rgba(0,0,0,.60); transform:translateY(-1px)}
 
     @keyframes fadeUp{
       from{opacity:0; transform:translateY(18px)}
       to{opacity:1; transform:translateY(0)}
     }
 
-    /* Mobile nav */
     @media (max-width: 880px){
       .burger{display:flex}
       nav{
@@ -245,9 +172,8 @@
 <body>
   <header>
     <div class="nav-wrap">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="Начало">
         <img src="logo.png" alt="Memory logo">
-        <span>Memory Photo & Video</span>
       </a>
 
       <input id="menuToggle" type="checkbox" />
@@ -258,26 +184,19 @@
         <a href="portfolio.html">Портфолио</a>
         <a href="uslugi-ceni.html" class="nav-cta">Услуги и цени</a>
         <a href="about.html">За нас</a>
-        <a href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Контакт</a>
       </nav>
     </div>
   </header>
 
   <section class="hero">
     <div class="hero-inner">
-      <div class="hero-title">MEMORY PHOTO & VIDEO</div>
-      <div class="hero-sub">
-        Професионално заснемане на сватбени и семейни тържества. Детайл. Емоция. Стил.
-      </div>
+      <!-- Лого над hero -->
+      <img class="hero-logo" src="logo.png" alt="Memory Photo & Video">
 
-      <div class="btn-row">
-        <a class="btn" href="uslugi-ceni.html">Услуги</a>
-        <a class="btn primary" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">За резервации</a>
-      </div>
-
+      <!-- Само Facebook + Instagram -->
       <div class="social">
-        <a href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a class="btn" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Facebook</a>
       </div>
     </div>
   </section>
