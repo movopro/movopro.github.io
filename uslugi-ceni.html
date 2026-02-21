@@ -29,9 +29,9 @@
     nav a:hover{background:rgba(0,0,0,.14);border-color:rgba(255,255,255,.12)}
     .nav-cta{border:1px solid rgba(201,169,110,.55)!important;background:rgba(0,0,0,.10)}
 
-    main{max-width:1050px;margin:22px auto;padding:0 18px}
+    main{max-width:1100px;margin:22px auto;padding:0 18px}
     h1{font-family:"Cormorant Garamond",serif;font-weight:400;letter-spacing:.10em;margin:14px 0 10px}
-    .sub{opacity:.80;line-height:1.55;margin-bottom:16px}
+    .sub{opacity:.80;line-height:1.55;margin-bottom:18px}
 
     .grid{display:grid;gap:14px}
     @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
@@ -44,14 +44,36 @@
       padding:18px;
     }
 
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:6px;
+    }
+
     h2{
       font-family:"Cormorant Garamond",serif;
       font-weight:400;
       letter-spacing:.08em;
-      margin-bottom:10px;
+      margin:0;
+    }
+
+    .pill{
+      font-size:.75rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:rgba(232,213,176,.95);
+      border:1px solid rgba(201,169,110,.45);
+      background:rgba(0,0,0,.18);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
     }
 
     .list{display:grid;gap:10px;margin-top:10px}
+
     .row{
       display:flex;
       justify-content:space-between;
@@ -60,10 +82,47 @@
       border-radius:16px;
       background:rgba(0,0,0,.16);
       border:1px solid rgba(201,169,110,.10);
+      align-items:baseline;
     }
-    .row b{font-weight:600}
-    .price{white-space:nowrap;color:rgba(232,213,176,.96)}
-    .note{opacity:.70; font-size:.86rem; line-height:1.5; margin-top:10px}
+    .row b{font-weight:700}
+    .price{white-space:nowrap;color:rgba(232,213,176,.96);font-weight:700}
+
+    .mini{
+      margin:-4px 0 10px;
+      opacity:.78;
+      font-size:.90rem;
+      line-height:1.55;
+    }
+
+    .bullets{
+      margin-top:8px;
+      display:grid;
+      gap:8px;
+    }
+    .bullets li{
+      list-style:none;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:rgba(245,240,232,.82);
+      font-size:.90rem;
+      line-height:1.5;
+    }
+    .bullets li::before{
+      content:"✓";
+      color:rgba(232,213,176,.96);
+      margin-top:1px;
+      flex:0 0 auto;
+    }
+
+    .note{
+      opacity:.72;
+      font-size:.86rem;
+      line-height:1.5;
+      margin-top:12px;
+      border-top:1px solid rgba(201,169,110,.12);
+      padding-top:12px;
+    }
 
     .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
     .btn{
@@ -78,10 +137,28 @@
       text-transform:uppercase;
       font-weight:600;
       font-size:.78rem;
+      transition:.15s ease;
     }
     .btn:hover{background:rgba(0,0,0,.55);transform:translateY(-1px)}
 
+    .info-wide{
+      margin-top:14px;
+      display:grid;
+      gap:10px;
+    }
+    .info-row{
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(0,0,0,.14);
+      border:1px solid rgba(201,169,110,.10);
+      color:rgba(245,240,232,.76);
+      line-height:1.55;
+      font-size:.90rem;
+    }
+    .info-row b{color:rgba(245,240,232,.92)}
+
     footer{max-width:1200px;margin:24px auto 30px;padding:0 18px;color:rgba(245,240,232,.60);font-size:.82rem}
+
     @media (max-width: 880px){
       .burger{display:flex}
       nav{display:none;width:100%;padding:12px 0 4px;gap:8px}
@@ -114,25 +191,74 @@
 
   <main>
     <h1>Услуги и цени</h1>
-    <div class="sub">Сватбени фото + видео пакети и заснемане на други събития (2026).</div>
+    <div class="sub">Сватбени пакети (до 10 часа) + заснемане на други събития (2026).</div>
 
     <div class="grid">
+      <!-- ===== WEDDING PACKAGES ===== -->
       <section class="card">
-        <h2>Сватбени фото + видео пакети</h2>
+        <div class="section-head">
+          <h2>Сватбени фото + видео пакети</h2>
+          <div class="pill">до 10 часа ангажимент</div>
+        </div>
+
+        <div class="mini">
+          Пълно покритие на сватбения ден с фокус върху емоция, детайл и стил. Запис на звук с външен рекордер за чист аудио резултат.
+        </div>
+
         <div class="list">
           <div class="row"><div><b>1. Стандартен</b></div><div class="price">1000 € (1956 лв.)</div></div>
+          <ul class="bullets">
+            <li>Фото + видео заснемане (екип 2 души).</li>
+            <li>Сватбен трейлър + репортажен филм.</li>
+            <li>Обработени снимки + цветови корекции и монтаж.</li>
+            <li>Запис на звук с външен рекордер.</li>
+          </ul>
+
           <div class="row"><div><b>2. Премиум</b></div><div class="price">1300 € (2542 лв.)</div></div>
+          <ul class="bullets">
+            <li>Фото + видео с повече внимание към детайлите и гостите.</li>
+            <li>По-динамичен трейлър и по-богат монтаж.</li>
+            <li>Обработени снимки + професионална цветова корекция.</li>
+            <li>Запис на звук с външен рекордер.</li>
+          </ul>
+
           <div class="row"><div><b>3. Ултра</b></div><div class="price">1596 € (3120 лв.)</div></div>
+          <ul class="bullets">
+            <li>Разширено покритие и по-кино усещане.</li>
+            <li>Силна история: кадри, детайли, реакции, атмосфера.</li>
+            <li>Обработени снимки + монтаж с по-високо темпо.</li>
+            <li>Запис на звук с външен рекордер.</li>
+          </ul>
+
           <div class="row"><div><b>4. Кино</b></div><div class="price">2240 € (4380 лв.)</div></div>
+          <ul class="bullets">
+            <li>Премиум кино подход: визия, ритъм и разказ.</li>
+            <li>Трейлър + силно режисиран монтаж на основния филм.</li>
+            <li>Фокус върху художествени кадри и детайли.</li>
+            <li>Запис на звук с външен рекордер.</li>
+          </ul>
         </div>
-        <div class="note">* Цените са ориентировъчни. За конкретна оферта – свържете се с нас.</div>
+
+        <div class="note">
+          * Съдържанието (дължина/стил/доставяне) се уточнява спрямо вашите желания и програмата на събитието.
+        </div>
+
         <div class="cta">
           <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
         </div>
       </section>
 
+      <!-- ===== OTHER EVENTS + SINGLE SERVICES ===== -->
       <section class="card">
-        <h2>Други събития</h2>
+        <div class="section-head">
+          <h2>Други събития</h2>
+          <div class="pill">цени 2026</div>
+        </div>
+
+        <div class="mini">
+          Кратки ангажименти и събития с професионална обработка и чист звук при видео (външен рекордер).
+        </div>
+
         <div class="list">
           <div class="row"><div><b>Заснемане на къна</b></div><div class="price">500 € (978 лв.)</div></div>
           <div class="row"><div><b>Заснемане на годеж</b></div><div class="price">700 € (1369 лв.)</div></div>
@@ -140,12 +266,31 @@
           <div class="row"><div><b>Рожден ден/парти до 4 часа</b></div><div class="price">200 € (391 лв.)</div></div>
           <div class="row"><div><b>Кръщене до 1 час</b></div><div class="price">80 € (150 лв.)</div></div>
         </div>
-        <div class="note">* При пътуване извън града – уточняване според локация и часове.</div>
+
+        <div class="note">
+          * При пътуване извън града – уточняване според локация и часове.
+        </div>
+
         <div class="cta">
           <a class="btn" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Контакт</a>
         </div>
       </section>
     </div>
+
+    <!-- ===== EXTRA INFO (compact) ===== -->
+    <section class="card" style="margin-top:14px;">
+      <div class="section-head">
+        <h2>Важно</h2>
+        <div class="pill">кратко</div>
+      </div>
+
+      <div class="info-wide">
+        <div class="info-row"><b>Ангажимент:</b> сватбените пакети са <b>до 10 снимачни часа</b>.</div>
+        <div class="info-row"><b>Звук при видео:</b> използваме <b>външен рекордер</b> за по-чисто аудио (включително DJ/ритуали, когато е възможно).</div>
+        <div class="info-row"><b>Пътуване:</b> при локации над 50 км/общ път над 50 км може да има транспортни разходи.</div>
+        <div class="info-row"><b>RAW/проекти:</b> предоставяне на сурови кадри (RAW, видео файлове, проект) е <b>отделна услуга</b>.</div>
+      </div>
+    </section>
   </main>
 
   <footer>© 2026 Memory Photo & Video</footer>
