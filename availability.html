@@ -184,6 +184,39 @@ footer{
   color:rgba(245,240,232,.6);
   border-top:1px solid rgba(201,169,110,.2);
 }
+  /* ===== MOBILE FIX: calendar overflow ===== */
+.card{ max-width:100%; }
+.grid{ max-width:100%; }
+
+@media (max-width: 520px){
+  .section{ padding: 110px 14px 80px; }
+  .card{ padding: 16px; border-radius: 18px; }
+  .grid{ gap: 6px; }
+
+  .cell{
+    padding: 8px;
+    min-height: 42px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+  }
+
+  .dow{
+    font-size: 0.65rem;
+    letter-spacing: .08em;
+  }
+
+  .cal-month{ font-size: 1.15rem; }
+  .cal-btn{
+    width: 40px; height: 40px;
+    border-radius: 12px;
+  }
+}
+
+
+@media (max-width: 360px){
+  .grid{ gap: 5px; }
+  .cell{ padding: 7px; min-height: 40px; font-size: 0.8rem; }
+}
 </style>
 </head>
 
