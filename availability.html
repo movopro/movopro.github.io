@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Свободни дати | Memory Photo & Video</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --cream:#f5f0e8;
+  --dark:#0f0d0b;
+  --gold:#c9a96e;
+  --gold-light:#e8d5b0;
+  --nav:#1e5c86;
+}
+
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--dark);
+  color:var(--cream);
+}
+
+/* ===== HEADER (същия като index) ===== */
+header{
+  background:var(--nav);
+  padding:14px 20px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+.nav-wrap{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  text-decoration:none;
+  color:var(--cream);
+  font-family:'Cormorant Garamond',serif;
+  letter-spacing:.1em;
+  font-size:1.1rem;
+}
+
+/* ===== SECTION ===== */
+.section{
+  padding:120px 20px 100px;
+}
+.wrap{
+  max-width:1000px;
+  margin:0 auto;
+}
+.title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.3rem;
+  letter-spacing:.08em;
+  margin-bottom:16px;
+  color:var(--gold-light);
+}
+.subtitle{
+  opacity:.85;
+  margin-bottom:30px;
+  line-height:1.6;
+}
+
+/* ===== CALENDAR ===== */
+.card{
+  border-radius:22px;
+  border:1px solid rgba(201,169,110,.25);
+  background:rgba(255,255,255,.02);
+  backdrop-filter:blur(8px);
+  padding:30px;
+  box-shadow:0 25px 60px rgba(0,0,0,.45);
+}
+
+.cal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.cal-month{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  letter-spacing:.1em;
+  color:var(--gold-light);
+}
+.cal-btn{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  border:1px solid rgba(201,169,110,.4);
+  background:rgba(0,0,0,.2);
+  color:var(--gold-light);
+  font-size:20px;
+  cursor:pointer;
+  transition:.2s;
+}
+.cal-btn:hover{
+  background:rgba(201,169,110,.15);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+}
+.cell{
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(0,0,0,.2);
+  min-height:55px;
+}
+.dow{
+  text-align:center;
+  font-size:.75rem;
+  letter-spacing:.12em;
+  opacity:.7;
+}
+.busy{
+  background:rgba(201,169,110,.15);
+  border-color:rgba(201,169,110,.6);
+  position:relative;
+}
+.busy::after{
+  content:"";
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:4px;
+  background:var(--gold);
+}
+
+.legend{
+  margin-top:18px;
+  font-size:.85rem;
+  opacity:.85;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#000;
+  padding:30px 20px;
+  text-align:center;
+  font-size:.75rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:rgba(245,240,232,.6);
+  border-top:1px solid rgba(201,169,110,.2);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <a class="brand" href="index.html">Memory Photo & Video</a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <h2 class="title">Свободни дати</h2>
+    <p class="subtitle">
+      Маркираните дати са заети. За потвърждение на свободна дата изпратете запитване.
+    </p>
+
+    <div class="card">
+      <div class="cal-header">
+        <button class="cal-btn" id="prev">‹</button>
+        <div class="cal-month" id="monthLabel"></div>
+        <button class="cal-btn" id="next">›</button>
+      </div>
+      <div class="grid" id="grid"></div>
+
+      <div class="legend">
+        Златните дати са заети.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Memory Photo & Video. All rights reserved.
+</footer>
+
+<script>
+(function(){
+  const busy = new Set([
+    "2026-03-14",
+    "2026-05-02",
+    "2026-06-20"
+  ]);
+
+  const monthNames = ["Януари","Февруари","Март","Април","Май","Юни",
+                      "Юли","Август","Септември","Октомври","Ноември","Декември"];
+  const dow = ["Пн","Вт","Ср","Чт","Пт","Сб","Нд"];
+
+  const grid = document.getElementById("grid");
+  const label = document.getElementById("monthLabel");
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+
+  let view = new Date();
+  view.setDate(1);
+
+  function pad(n){return String(n).padStart(2,"0")}
+  function fmt(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+
+  function render(){
+    grid.innerHTML="";
+    dow.forEach(d=>{
+      const el=document.createElement("div");
+      el.className="cell dow";
+      el.textContent=d;
+      grid.appendChild(el);
+    });
+
+    const y=view.getFullYear();
+    const m=view.getMonth();
+    label.textContent=monthNames[m]+" "+y;
+
+    const first=new Date(y,m,1);
+    const last=new Date(y,m+1,0);
+    const offset=(first.getDay()+6)%7;
+
+    for(let i=0;i<offset;i++){
+      const e=document.createElement("div");
+      e.className="cell";
+      grid.appendChild(e);
+    }
+
+    for(let d=1;d<=last.getDate();d++){
+      const date=new Date(y,m,d);
+      const key=fmt(date);
+      const e=document.createElement("div");
+      e.className="cell"+(busy.has(key)?" busy":"");
+      e.textContent=d;
+      grid.appendChild(e);
+    }
+  }
+
+  prev.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();}
+  next.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render();}
+  render();
+})();
+</script>
+
+</body>
+</html>
