@@ -108,37 +108,70 @@ header{
   grid-template-columns:repeat(7,1fr);
   gap:10px;
 }
+
+/* Клетки */
 .cell{
   padding:12px;
   border-radius:14px;
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(0,0,0,.2);
+  border:1px solid rgba(255,255,255,.10);
   min-height:55px;
-}
-.dow{
-  text-align:center;
-  font-size:.75rem;
-  letter-spacing:.12em;
-  opacity:.7;
-}
-.busy{
-  background:rgba(201,169,110,.15);
-  border-color:rgba(201,169,110,.6);
-  position:relative;
-}
-.busy::after{
-  content:"";
-  position:absolute;
-  bottom:0;left:0;right:0;
-  height:4px;
-  background:var(--gold);
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
+  font-weight:600;
 }
 
+/* Заглавки Пн-Нд */
+.dow{
+  text-align:center;
+  justify-content:center;
+  font-size:.75rem;
+  letter-spacing:.12em;
+  opacity:.75;
+  background: rgba(0,0,0,.22);
+  border-color: rgba(201,169,110,.18);
+  font-weight:500;
+}
+
+/* Празни клетки */
+.empty{
+  background: rgba(0,0,0,.12);
+  border-color: rgba(255,255,255,.06);
+  opacity:.25;
+}
+
+/* Свободно = зелено */
+.free{
+  background: rgba(0, 180, 90, .18);
+  border-color: rgba(0, 180, 90, .55);
+}
+
+/* Заето = червено */
+.busy{
+  background: rgba(220, 45, 45, .20);
+  border-color: rgba(220, 45, 45, .65);
+  position:relative;
+}
+
+/* Легенда */
 .legend{
   margin-top:18px;
   font-size:.85rem;
-  opacity:.85;
+  opacity:.90;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
 }
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.dot{
+  width:10px;height:10px;border-radius:999px;display:inline-block;
+}
+.dot-free{ background: rgba(0, 180, 90, .9); }
+.dot-busy{ background: rgba(220, 45, 45, .95); }
 
 /* ===== FOOTER ===== */
 footer{
@@ -166,19 +199,21 @@ footer{
   <div class="wrap">
     <h2 class="title">Свободни дати</h2>
     <p class="subtitle">
-      Маркираните дати са заети. За потвърждение на свободна дата изпратете запитване.
+      Червените дати са заети. Зелените са свободни (ориентировъчно). За потвърждение изпратете запитване.
     </p>
 
     <div class="card">
       <div class="cal-header">
-        <button class="cal-btn" id="prev">‹</button>
+        <button class="cal-btn" id="prev" type="button" aria-label="Предишен месец">‹</button>
         <div class="cal-month" id="monthLabel"></div>
-        <button class="cal-btn" id="next">›</button>
+        <button class="cal-btn" id="next" type="button" aria-label="Следващ месец">›</button>
       </div>
+
       <div class="grid" id="grid"></div>
 
       <div class="legend">
-        Златните дати са заети.
+        <span class="legend-item"><i class="dot dot-free"></i> Свободно</span>
+        <span class="legend-item"><i class="dot dot-busy"></i> Заето</span>
       </div>
     </div>
   </div>
@@ -190,11 +225,26 @@ footer{
 
 <script>
 (function(){
+  // Заети дати (формат YYYY-MM-DD)
   const busy = new Set([
     "2026-03-14",
-    "2026-05-02",
-    "2026-06-20"
+    "2026-04-18",
+    "2026-04-25",
+    "2026-05-16",
+    "2026-05-24",
+    "2026-05-25",
+    "2026-05-26",
+    "2026-05-30",
+    "2026-06-20",
+    "2026-07-18",
+    "2026-07-28",
+    "2026-07-30",
+    "2026-09-26"
   ]);
+
+  // ОГРАНИЧЕНИЕ: от Март 2026 до Септември 2026 (включително)
+  const minView = new Date(2026, 2, 1);  // March
+  const maxView = new Date(2026, 8, 1);  // September
 
   const monthNames = ["Януари","Февруари","Март","Април","Май","Юни",
                       "Юли","Август","Септември","Октомври","Ноември","Декември"];
@@ -205,14 +255,36 @@ footer{
   const prev = document.getElementById("prev");
   const next = document.getElementById("next");
 
-  let view = new Date();
-  view.setDate(1);
+  if(!grid || !label || !prev || !next) return;
+
+  let view = new Date(minView.getFullYear(), minView.getMonth(), 1);
 
   function pad(n){return String(n).padStart(2,"0")}
   function fmt(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
 
+  function clampView(){
+    if(view < minView) view = new Date(minView.getFullYear(), minView.getMonth(), 1);
+    if(view > maxView) view = new Date(maxView.getFullYear(), maxView.getMonth(), 1);
+  }
+
+  function updateButtons(){
+    const atMin = (view.getFullYear() === minView.getFullYear() && view.getMonth() === minView.getMonth());
+    const atMax = (view.getFullYear() === maxView.getFullYear() && view.getMonth() === maxView.getMonth());
+
+    prev.disabled = atMin;
+    next.disabled = atMax;
+
+    prev.style.opacity = atMin ? ".35" : "1";
+    next.style.opacity = atMax ? ".35" : "1";
+    prev.style.cursor = atMin ? "not-allowed" : "pointer";
+    next.style.cursor = atMax ? "not-allowed" : "pointer";
+  }
+
   function render(){
+    clampView();
     grid.innerHTML="";
+
+    // Header: days of week
     dow.forEach(d=>{
       const el=document.createElement("div");
       el.className="cell dow";
@@ -226,26 +298,46 @@ footer{
 
     const first=new Date(y,m,1);
     const last=new Date(y,m+1,0);
+
+    // Monday-first offset
     const offset=(first.getDay()+6)%7;
 
+    // Empty cells
     for(let i=0;i<offset;i++){
       const e=document.createElement("div");
-      e.className="cell";
+      e.className="cell empty";
       grid.appendChild(e);
     }
 
-    for(let d=1;d<=last.getDate();d++){
+    // Days
+    for(let d=1; d<=last.getDate(); d++){
       const date=new Date(y,m,d);
       const key=fmt(date);
+
       const e=document.createElement("div");
-      e.className="cell"+(busy.has(key)?" busy":"");
-      e.textContent=d;
+      const isBusy = busy.has(key);
+
+      e.className = "cell " + (isBusy ? "busy" : "free");
+      e.textContent = d;
+
       grid.appendChild(e);
     }
+
+    updateButtons();
   }
 
-  prev.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();}
-  next.onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render();}
+  prev.onclick=()=>{
+    if(prev.disabled) return;
+    view=new Date(view.getFullYear(), view.getMonth()-1, 1);
+    render();
+  };
+
+  next.onclick=()=>{
+    if(next.disabled) return;
+    view=new Date(view.getFullYear(), view.getMonth()+1, 1);
+    render();
+  };
+
   render();
 })();
 </script>
