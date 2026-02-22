@@ -370,6 +370,22 @@ footer{
     grid-template-columns:1fr;
   }
 }
+    .partner-photo{
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 22px;
+  border: 1px solid rgba(201,169,110,.35);
+  background: rgba(0,0,0,.25);
+  transition: .35s ease;
+  box-shadow: 0 18px 40px rgba(0,0,0,.45);
+}
+
+.partner-card:hover .partner-photo{
+  transform: scale(1.06);
+  border-color: rgba(201,169,110,.70);
+  box-shadow: 0 22px 55px rgba(201,169,110,.18);
+}
   </style>
 </head>
 
@@ -437,7 +453,7 @@ footer{
       </div>
 
       <div style="display:flex; align-items:center; justify-content:center;">
-        <div class="partner-logo">DJ</div>
+      <img class="partner-photo" src="dj-peppystar.jpg" alt="DJ PeppyStar">
       </div>
     </div>
   </div>
