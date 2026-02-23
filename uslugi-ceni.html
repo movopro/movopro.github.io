@@ -176,164 +176,58 @@
       nav a{width:100%;text-align:left;padding:12px 12px}
     }
 
-    /* ===== Calculator (NEW) ===== */
-    .calc-grid{
+    /* ===== Wedding Packages Layout NEW ===== */
+    .package-grid{
       display:grid;
-      gap:12px;
-      margin-top:12px;
+      gap:16px;
+      margin-top:14px;
     }
     @media(min-width:900px){
-      .calc-grid{grid-template-columns:1fr 1fr}
+      .package-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
     }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:7px;
-      padding:12px;
-      border-radius:16px;
-      background:rgba(0,0,0,.14);
-      border:1px solid rgba(201,169,110,.10);
-    }
-    .field label{
-      font-size:.82rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:rgba(245,240,232,.78);
-    }
-    .field select,
-    .field input[type="number"]{
-      width:100%;
-      border-radius:14px;
-      padding:11px 12px;
-      border:1px solid rgba(201,169,110,.22);
-      background:rgba(0,0,0,.22);
-      color:rgba(245,240,232,.92);
-      outline:none;
-      font-size:1rem;
-    }
-    .field select:focus,
-    .field input[type="number"]:focus{
-      border-color:rgba(201,169,110,.55);
-      box-shadow:0 0 0 3px rgba(201,169,110,.12);
-    }
-
-    .checkline{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .checkleft{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-    .checkleft span{
-      font-size:.95rem;
-      color:rgba(245,240,232,.86);
-      line-height:1.35;
-    }
-    .checkline input[type="checkbox"]{
-      width:18px;height:18px;
-      accent-color: var(--gold);
-      flex:0 0 auto;
-    }
-    .checkprice{
-      white-space:nowrap;
-      color:rgba(232,213,176,.96);
-      font-weight:700;
-      font-size:.95rem;
-    }
-
-    .calc-actions{
-      margin-top:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .btn-solid{
-      display:inline-block;
-      padding:12px 18px;
-      border-radius:14px;
-      border:1px solid rgba(201,169,110,.65);
-      background:rgba(201,169,110,.16);
-      color:rgba(232,213,176,.96);
-      text-decoration:none;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:600;
-      font-size:.78rem;
-      transition:.15s ease;
-      cursor:pointer;
-    }
-    .btn-solid:hover{background:rgba(201,169,110,.22);transform:translateY(-1px)}
-
-    .btn-ghost{
-      display:inline-block;
-      padding:12px 18px;
-      border-radius:14px;
-      border:1px solid rgba(201,169,110,.28);
-      background:rgba(0,0,0,.14);
-      color:rgba(245,240,232,.84);
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:600;
-      font-size:.78rem;
-      transition:.15s ease;
-      cursor:pointer;
-    }
-    .btn-ghost:hover{background:rgba(0,0,0,.22);transform:translateY(-1px)}
-
-    .totals{
-      margin-top:12px;
-      display:grid;
-      gap:10px;
-    }
-    .total-box{
-      padding:14px 14px;
-      border-radius:16px;
+    .package-card{
       background:rgba(0,0,0,.18);
-      border:1px solid rgba(201,169,110,.16);
-      display:flex;
-      justify-content:space-between;
-      align-items:baseline;
-      gap:12px;
-      flex-wrap:wrap;
+      border:1px solid rgba(201,169,110,.18);
+      border-radius:20px;
+      padding:18px;
+      position:relative;
+      transition:.2s ease;
     }
-    .total-box b{
-      font-size:1.05rem;
-      color:rgba(245,240,232,.92);
+    .package-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 40px rgba(0,0,0,.45);
     }
-    .total-val{
-      font-size:1.25rem;
+    .package-title{
+      font-family:"Cormorant Garamond",serif;
+      font-size:1.3rem;
+      margin-bottom:6px;
+    }
+    .package-price{
       font-weight:800;
       color:rgba(232,213,176,.98);
-      white-space:nowrap;
+      margin-bottom:12px;
     }
-
-    .breakdown{
-      display:none;
-      margin-top:10px;
-      border-top:1px solid rgba(201,169,110,.12);
-      padding-top:12px;
-      color:rgba(245,240,232,.78);
-      font-size:.92rem;
-      line-height:1.6;
+    .recommended{
+      border:1px solid rgba(201,169,110,.65);
+      box-shadow:0 0 0 2px rgba(201,169,110,.15);
     }
-    .breakdown .bd-row{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:6px 0;
-    }
-    .breakdown .bd-row span:last-child{
-      white-space:nowrap;
-      color:rgba(232,213,176,.96);
+    .badge{
+      position:absolute;
+      top:-12px;
+      right:16px;
+      background:var(--gold);
+      color:#000;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:.70rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
       font-weight:700;
+    }
+    .cinema-package{
+      margin-top:22px;
     }
   </style>
 </head>
@@ -361,351 +255,113 @@
   </div>
 </header>
 
-  <main>
-    <h1>Услуги и цени</h1>
-    <div class="sub">Сватбени пакети (до 10 часа) + заснемане на други събития (2026).</div>
+<main>
+  <h1>Услуги и цени</h1>
+  <div class="sub">Сватбени пакети (до 10 часа) + заснемане на други събития (2026).</div>
 
-    <div class="grid">
-      <!-- ===== WEDDING PACKAGES ===== -->
-      <section class="card">
-        <div class="section-head">
-          <h2>Сватбени фото + видео пакети</h2>
-          <div class="pill">до 10 часа ангажимент</div>
-        </div>
-
-        <div class="mini">
-          Пълно покритие на сватбения ден с фокус върху емоция, детайл и стил. Запис на звук с външен рекордер за чист аудио резултат.
-        </div>
-
-        <div class="list">
-          <div class="row"><div><b>1. Стандартен</b></div><div class="price">1000 € (1956 лв.)</div></div>
-          <ul class="bullets">
-            <li>Фото + видео заснемане (екип 2 души).</li>
-            <li>Сватбен трейлър + репортажен филм.</li>
-            <li>Обработени снимки + цветови корекции и монтаж.</li>
-            <li>Запис на звук с външен рекордер.</li>
-          </ul>
-
-          <div class="row"><div><b>2. Премиум</b></div><div class="price">1300 € (2542 лв.)</div></div>
-          <ul class="bullets">
-            <li>Фото + видео с повече внимание към детайлите и гостите.</li>
-            <li>По-динамичен трейлър и по-богат монтаж.</li>
-            <li>Обработени снимки + професионална цветова корекция.</li>
-            <li>Запис на звук с външен рекордер.</li>
-            <li>Екип от 3 души</li>
-          </ul>
-
-          <div class="row"><div><b>3. Ултра</b></div><div class="price">1596 € (3120 лв.)</div></div>
-          <ul class="bullets">
-            <li>Разширено покритие и по-кино усещане.</li>
-            <li>Силна история: кадри, детайли, реакции, атмосфера.</li>
-            <li>Обработени снимки + монтаж с по-високо темпо.</li>
-            <li>Запис на звук с външен рекордер.</li>
-            <li>Екип от 4 души</li>
-          </ul>
-
-          <div class="row"><div><b>4. Кино</b></div><div class="price">2240 € (4380 лв.)</div></div>
-          <ul class="bullets">
-            <li>Премиум кино подход: визия, ритъм и разказ.</li>
-            <li>Трейлър + силно режисиран монтаж на основния филм.</li>
-            <li>Фокус върху художествени кадри и детайли.</li>
-            <li>Запис на звук с външен рекордер.</li>
-            <li>Екип от 5 души</li>
-          </ul>
-        </div>
-
-        <div class="note">
-          * Съдържанието (дължина/стил/доставяне) се уточнява спрямо вашите желания и програмата на събитието.
-        </div>
-
-        <div class="cta">
-          <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
-        </div>
-      </section>
-
-      <!-- ===== OTHER EVENTS + SINGLE SERVICES ===== -->
-      <section class="card">
-        <div class="section-head">
-          <h2>Други събития</h2>
-          <div class="pill">цени 2026</div>
-        </div>
-
-        <div class="mini">
-          Кратки ангажименти и събития с професионална обработка и чист звук при видео (външен рекордер).
-        </div>
-
-        <div class="list">
-          <div class="row"><div><b>Заснемане на къна</b></div><div class="price">500 € (978 лв.)</div></div>
-          <div class="row"><div><b>Заснемане на годеж</b></div><div class="price">700 € (1369 лв.)</div></div>
-          <div class="row"><div><b>Заснемане на абитуриентски бал</b></div><div class="price">600 € (1173 лв.)</div></div>
-          <div class="row"><div><b>Рожден ден/парти до 4 часа</b></div><div class="price">200 € (391 лв.)</div></div>
-          <div class="row"><div><b>Кръщене до 1 час</b></div><div class="price">80 € (150 лв.)</div></div>
-        </div>
-
-        <div class="note">
-          * При пътуване извън града – уточняване според локация и часове.
-        </div>
-
-        <div class="cta">
-          <a class="btn" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Контакт</a>
-        </div>
-      </section>
+  <div class="card">
+    <div class="section-head">
+      <h2>Сватбени фото + видео пакети</h2>
+      <div class="pill">до 10 часа ангажимент</div>
     </div>
 
-    <!-- ===== PRICE CALCULATOR (NEW) ===== -->
-    <section class="card" style="margin-top:14px;">
-      <div class="section-head">
-        <h2>Калкулатор на цена</h2>
-        <div class="pill">лв + € автоматично</div>
+    <div class="mini">
+      Пълно покритие на сватбения ден с фокус върху емоция, детайл и стил. Запис на звук с външен рекордер за чист аудио резултат.
+    </div>
+
+    <!-- ===== Packages Grid ===== -->
+    <div class="package-grid">
+
+      <div class="package-card">
+        <div class="package-title">Стандартен</div>
+        <div class="package-price">1000 € (1956 лв.)</div>
+        <ul class="bullets">
+          <li>Фото + видео заснемане (екип 2 души).</li>
+          <li>Сватбен трейлър + репортажен филм.</li>
+          <li>Обработени снимки + цветови корекции и монтаж.</li>
+          <li>Запис на звук с външен рекордер.</li>
+        </ul>
       </div>
 
-      <div class="mini">
-        Изберете услуги и опции. <b>Сватбена фотография/видеография са до 10 снимачни часа</b>. При ангажимент над 10 часа се добавя овъртайм.
+      <div class="package-card">
+        <div class="package-title">Премиум</div>
+        <div class="package-price">1300 € (2542 лв.)</div>
+        <ul class="bullets">
+          <li>Фото + видео с повече внимание към детайлите и гостите.</li>
+          <li>По-динамичен трейлър и по-богат монтаж.</li>
+          <li>Обработени снимки + професионална цветова корекция.</li>
+          <li>Запис на звук с външен рекордер.</li>
+          <li>Екип от 3 души</li>
+        </ul>
       </div>
 
-      <div class="calc-grid">
-        <div class="field">
-          <label for="hours">Планирани снимачни часове (до 10)</label>
-          <select id="hours">
-            <option value="1">1 час</option>
-            <option value="2">2 часа</option>
-            <option value="3">3 часа</option>
-            <option value="4">4 часа</option>
-            <option value="5">5 часа</option>
-            <option value="6">6 часа</option>
-            <option value="7">7 часа</option>
-            <option value="8">8 часа</option>
-            <option value="9">9 часа</option>
-            <option value="10" selected>10 часа</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="photoTeam">Сватбена фотография</label>
-          <select id="photoTeam">
-            <option value="0">Без фотограф</option>
-            <option value="1000">1 фотограф — 1000 лв</option>
-            <option value="1750">2 фотографи — 1750 лв</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="videoTeam">Сватбена видеография</label>
-          <select id="videoTeam">
-            <option value="0">Без оператор</option>
-            <option value="1000">1 оператор — 1000 лв</option>
-            <option value="1950">2 оператора — 1950 лв</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="overtimeHours">Овъртайм (часове над 10)</label>
-          <input id="overtimeHours" type="number" min="0" step="1" value="0" inputmode="numeric" />
-        </div>
-
-        <div class="field">
-          <label for="km">Транспорт (общо км)</label>
-          <input id="km" type="number" min="0" step="1" value="0" inputmode="numeric" />
-          <div style="opacity:.72;font-size:.86rem;line-height:1.45;">
-            Транспортът се калкулира <b>1 € / км</b> (автоматично се показва и в лева по курс).
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="usbCount">Допълнителна флашка (брой)</label>
-          <input id="usbCount" type="number" min="0" step="1" value="0" inputmode="numeric" />
-          <div style="opacity:.72;font-size:.86rem;line-height:1.45;">
-            50 лв / бр.
-          </div>
-        </div>
+      <div class="package-card recommended">
+        <div class="badge">Препоръчан</div>
+        <div class="package-title">Ултра</div>
+        <div class="package-price">1596 € (3120 лв.)</div>
+        <ul class="bullets">
+          <li>Разширено покритие и по-кино усещане.</li>
+          <li>Силна история: кадри, детайли, реакции, атмосфера.</li>
+          <li>Обработени снимки + монтаж с по-високо темпо.</li>
+          <li>Запис на звук с външен рекордер.</li>
+          <li>Екип от 4 души</li>
+        </ul>
       </div>
 
-      <div class="list" style="margin-top:12px;">
-        <div class="row">
-          <div class="checkleft">
-            <input type="checkbox" id="drone" />
-            <span>Дрон</span>
-          </div>
-          <div class="checkprice">+300 лв</div>
-        </div>
+    </div>
 
-        <div class="row">
-          <div class="checkleft">
-            <input type="checkbox" id="raw" />
-            <span>Сурови файлове + HDD</span>
-          </div>
-          <div class="checkprice">+300 лв</div>
-        </div>
+    <!-- Кино пакет -->
+    <div class="package-card cinema-package">
+      <div class="package-title">Кино</div>
+      <div class="package-price">2240 € (4380 лв.)</div>
+      <ul class="bullets">
+        <li>Премиум кино подход: визия, ритъм и разказ.</li>
+        <li>Трейлър + силно режисиран монтаж на основния филм.</li>
+        <li>Фокус върху художествени кадри и детайли.</li>
+        <li>Запис на звук с външен рекордер.</li>
+        <li>Екип от 5 души</li>
+      </ul>
+    </div>
 
-        <div class="row">
-          <div class="checkleft">
-            <input type="checkbox" id="postSession" />
-            <span>Следсватбена сесия</span>
-          </div>
-          <div class="checkprice">+250 лв</div>
-        </div>
-      </div>
+    <div class="note">
+      * Съдържанието (дължина/стил/доставяне) се уточнява спрямо вашите желания и програмата на събитието.
+    </div>
 
-      <div class="calc-actions">
-        <button class="btn-solid" id="calcBtn" type="button">Изчисли</button>
-        <button class="btn-ghost" id="resetBtn" type="button">Нулирай</button>
-        <div class="pill" style="margin-left:auto;">курс: 1 € = 1.95583 лв</div>
-      </div>
+    <div class="cta">
+      <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
+    </div>
+  </div>
 
-      <div class="totals">
-        <div class="total-box">
-          <b>Общо</b>
-          <div class="total-val" id="totalOut">0 лв / 0 €</div>
-        </div>
+  <!-- ===== OTHER EVENTS ===== -->
+  <div class="card">
+    <div class="section-head">
+      <h2>Други събития</h2>
+      <div class="pill">цени 2026</div>
+    </div>
 
-        <div class="breakdown" id="breakdown">
-          <div class="bd-row"><span>Фотография</span><span id="bdPhoto">0 лв</span></div>
-          <div class="bd-row"><span>Видеография</span><span id="bdVideo">0 лв</span></div>
-          <div class="bd-row"><span>Дрон</span><span id="bdDrone">0 лв</span></div>
-          <div class="bd-row"><span>Сурови файлове + HDD</span><span id="bdRaw">0 лв</span></div>
-          <div class="bd-row"><span>Следсватбена сесия</span><span id="bdPost">0 лв</span></div>
-          <div class="bd-row"><span>Флашки</span><span id="bdUsb">0 лв</span></div>
-          <div class="bd-row"><span>Овъртайм</span><span id="bdOt">0 лв</span></div>
-          <div class="bd-row"><span>Транспорт</span><span id="bdTransport">0 лв / 0 €</span></div>
-        </div>
-      </div>
+    <div class="mini">
+      Кратки ангажименти и събития с професионална обработка и чист звук при видео (външен рекордер).
+    </div>
 
-      <div class="note">
-        * Овъртайм: <b>70 € / час на човек</b> (≈ 130 лв) – изчислява се автоматично спрямо избрания брой фотографи и оператори.<br/>
-        * Транспорт: <b>1 € / км</b> (в калкулатора въвеждате общите км).<br/>
-        * Калкулаторът е ориентировъчен – финална оферта се потвърждава след уточняване на програма и локация.
-      </div>
-    </section>
+    <div class="list">
+      <div class="row"><div><b>Заснемане на къна</b></div><div class="price">500 € (978 лв.)</div></div>
+      <div class="row"><div><b>Заснемане на годеж</b></div><div class="price">700 € (1369 лв.)</div></div>
+      <div class="row"><div><b>Заснемане на абитуриентски бал</b></div><div class="price">600 € (1173 лв.)</div></div>
+      <div class="row"><div><b>Рожден ден/парти до 4 часа</b></div><div class="price">200 € (391 лв.)</div></div>
+      <div class="row"><div><b>Кръщене до 1 час</b></div><div class="price">80 € (150 лв.)</div></div>
+    </div>
 
-    <!-- ===== EXTRA INFO (compact) ===== -->
-    <section class="card" style="margin-top:14px;">
-      <div class="section-head">
-        <h2>Важно</h2>
-        <div class="pill">кратко</div>
-      </div>
+    <div class="note">
+      * При пътуване извън града – уточняване според локация и часове.
+    </div>
 
-      <div class="info-wide">
-        <div class="info-row"><b>Ангажимент:</b> сватбените пакети са <b>до 10 снимачни часа</b>.</div>
-        <div class="info-row"><b>Звук при видео:</b> използваме <b>външен рекордер</b> за по-чисто аудио (включително DJ/ритуали, когато е възможно).</div>
-        <div class="info-row"><b>Пътуване:</b> при локации над 50 км/общ път над 50 км може да има транспортни разходи.</div>
-        <div class="info-row"><b>RAW/проекти:</b> предоставяне на сурови кадри (RAW, видео файлове, проект) е <b>отделна услуга</b>.</div>
-        <div class="info-row"><b>Овъртайм:</b> при ангажимент над 10 часа – 70 € / час на човек (130 лв.)</div>
-      </div>
-    </section>
-  </main>
+    <div class="cta">
+      <a class="btn" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Контакт</a>
+    </div>
+  </div>
 
-  <footer>© 2026 Memory Photo & Video</footer>
+</main>
 
-  <script>
-    (function(){
-      const EURO_RATE = 1.95583;
-
-      // Prices in BGN (per your request)
-      const PRICE = {
-        droneBGN: 300,
-        rawBGN: 300,
-        postBGN: 250,
-        usbBGN: 50,
-        overtimePerHourPerPersonBGN: 130, // (≈ 70€)
-        transportPerKmEUR: 1
-      };
-
-      const el = (id) => document.getElementById(id);
-
-      function getTeamCountFromSelectValue(v){
-        const n = Number(v) || 0;
-        // Wedding photo/video team sizes:
-        // Photo: 1000 -> 1, 1750 -> 2
-        // Video: 1000 -> 1, 1950 -> 2
-        if (n === 1000) return 1;
-        if (n === 1750) return 2;
-        if (n === 1950) return 2;
-        return 0;
-      }
-
-      function fmtBGN(x){
-        const n = Math.round(Number(x) || 0);
-        return n.toLocaleString('bg-BG') + " лв";
-      }
-
-      function fmtEUR(x){
-        const n = Math.round(Number(x) || 0);
-        return n.toLocaleString('bg-BG') + " €";
-      }
-
-      function calculate(){
-        const photoBGN = Number(el("photoTeam").value) || 0;
-        const videoBGN = Number(el("videoTeam").value) || 0;
-
-        const droneBGN = el("drone").checked ? PRICE.droneBGN : 0;
-        const rawBGN = el("raw").checked ? PRICE.rawBGN : 0;
-        const postBGN = el("postSession").checked ? PRICE.postBGN : 0;
-
-        const usbCount = Math.max(0, Number(el("usbCount").value) || 0);
-        const usbBGN = usbCount * PRICE.usbBGN;
-
-        const overtimeHours = Math.max(0, Number(el("overtimeHours").value) || 0);
-
-        const photoPeople = getTeamCountFromSelectValue(photoBGN);
-        const videoPeople = getTeamCountFromSelectValue(videoBGN);
-        const peopleCount = photoPeople + videoPeople;
-
-        const overtimeBGN = overtimeHours * peopleCount * PRICE.overtimePerHourPerPersonBGN;
-
-        const km = Math.max(0, Number(el("km").value) || 0);
-        const transportEUR = km * PRICE.transportPerKmEUR;
-        const transportBGN = transportEUR * EURO_RATE;
-
-        const totalBGN = photoBGN + videoBGN + droneBGN + rawBGN + postBGN + usbBGN + overtimeBGN + transportBGN;
-        const totalEUR = totalBGN / EURO_RATE;
-
-        el("totalOut").textContent = `${fmtBGN(totalBGN)} / ${fmtEUR(totalEUR)}`;
-
-        // breakdown (show after first calc)
-        el("breakdown").style.display = "block";
-        el("bdPhoto").textContent = fmtBGN(photoBGN);
-        el("bdVideo").textContent = fmtBGN(videoBGN);
-        el("bdDrone").textContent = fmtBGN(droneBGN);
-        el("bdRaw").textContent = fmtBGN(rawBGN);
-        el("bdPost").textContent = fmtBGN(postBGN);
-        el("bdUsb").textContent = fmtBGN(usbBGN);
-        el("bdOt").textContent = fmtBGN(overtimeBGN);
-        el("bdTransport").textContent = `${fmtBGN(transportBGN)} / ${fmtEUR(transportEUR)}`;
-      }
-
-      function resetCalc(){
-        el("hours").value = "10";
-        el("photoTeam").value = "0";
-        el("videoTeam").value = "0";
-        el("overtimeHours").value = "0";
-        el("km").value = "0";
-        el("usbCount").value = "0";
-        el("drone").checked = false;
-        el("raw").checked = false;
-        el("postSession").checked = false;
-
-        el("totalOut").textContent = "0 лв / 0 €";
-        el("breakdown").style.display = "none";
-      }
-
-      // Button events
-      el("calcBtn").addEventListener("click", calculate);
-      el("resetBtn").addEventListener("click", resetCalc);
-
-      // Optional: live update (без да досажда) — ако вече има breakdown, обновявай автоматично
-      const liveInputs = ["hours","photoTeam","videoTeam","overtimeHours","km","usbCount","drone","raw","postSession"];
-      liveInputs.forEach(id => {
-        el(id).addEventListener("input", () => {
-          if (el("breakdown").style.display === "block") calculate();
-        });
-        el(id).addEventListener("change", () => {
-          if (el("breakdown").style.display === "block") calculate();
-        });
-      });
-
-      // initial state
-      resetCalc();
-    })();
-  </script>
+<footer>© 2026 Memory Photo & Video</footer>
 </body>
 </html>
