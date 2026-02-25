@@ -8,9 +8,9 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-WJK01GL7PM');
 </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Услуги и цени | Memory Photo & Video</title>
@@ -151,22 +151,6 @@
     }
     .btn:hover{background:rgba(0,0,0,.55);transform:translateY(-1px)}
 
-    .info-wide{
-      margin-top:14px;
-      display:grid;
-      gap:10px;
-    }
-    .info-row{
-      padding:12px 14px;
-      border-radius:16px;
-      background:rgba(0,0,0,.14);
-      border:1px solid rgba(201,169,110,.10);
-      color:rgba(245,240,232,.76);
-      line-height:1.55;
-      font-size:.90rem;
-    }
-    .info-row b{color:rgba(245,240,232,.92)}
-
     footer{max-width:1200px;margin:24px auto 30px;padding:0 18px;color:rgba(245,240,232,.60);font-size:.82rem}
 
     @media (max-width: 880px){
@@ -226,8 +210,87 @@
       text-transform:uppercase;
       font-weight:700;
     }
-    .cinema-package{
-      margin-top:22px;
+    .cinema-package{ margin-top:22px; }
+
+    /* ===== CALCULATOR ===== */
+    .calc-wrap{margin-top:18px}
+    .calc-grid{display:grid;gap:14px;margin-top:12px}
+    @media(min-width:900px){.calc-grid{grid-template-columns:1.1fr .9fr}}
+    .calc-card{
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(201,169,110,.18);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:0 14px 35px rgba(0,0,0,.30);
+    }
+    .calc-card h3{
+      font-family:"Cormorant Garamond",serif;
+      font-weight:400;
+      letter-spacing:.08em;
+      margin:0 0 12px;
+      color:rgba(232,213,176,.98);
+      font-size:1.25rem;
+    }
+    .calc-row{display:grid;gap:8px;margin:10px 0}
+    .calc-label{
+      font-size:.78rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      opacity:.85
+    }
+    .calc-input, .calc-select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.25);
+      color:var(--cream);
+      font-family:Montserrat,sans-serif;
+    }
+    .calc-input:focus, .calc-select:focus{outline:none;border-color:rgba(201,169,110,.75)}
+    .calc-two{display:grid;gap:12px}
+    @media(min-width:700px){.calc-two{grid-template-columns:1fr 1fr}}
+    .calc-check{display:flex;align-items:center;gap:10px;margin:10px 0}
+    .calc-check input{width:18px;height:18px;accent-color:var(--gold)}
+    .help{font-size:.82rem;opacity:.75;line-height:1.5;margin-top:8px}
+    .divider{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
+    .totalBox{
+      border-radius:18px;
+      border:1px solid rgba(201,169,110,.30);
+      background:rgba(0,0,0,.20);
+      padding:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:12px;
+    }
+    .totalBox .lbl{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+    .totalBox .val{
+      font-family:"Cormorant Garamond",serif;
+      font-size:2rem;
+      letter-spacing:.06em;
+      color:rgba(232,213,176,.98);
+      white-space:nowrap;
+    }
+    .breakdown{display:grid;gap:10px;margin-top:12px}
+    .line{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px;
+      border-radius:16px;
+      background:rgba(0,0,0,.16);
+      border:1px solid rgba(201,169,110,.10);
+      align-items:baseline;
+      font-size:.92rem;
+      opacity:.92
+    }
+    .line .r{white-space:nowrap;color:rgba(232,213,176,.96);font-weight:800}
+    .calc-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    .calc-actions .btn{width:auto}
+    @media(max-width:520px){
+      .calc-actions{flex-direction:column}
+      .calc-actions .btn{width:100%;text-align:center}
     }
   </style>
 </head>
@@ -248,8 +311,8 @@
     <nav>
       <a href="index.html">Начало</a>
       <a href="portfolio.html">Портфолио</a>
-      <a href="uslugi-ceni.html">Ценоразпис</a>
-      <a href="availability.html" class="nav-cta">Свободни дати</a>
+      <a href="uslugi-ceni.html" class="nav-cta">Ценоразпис</a>
+      <a href="availability.html">Свободни дати</a>
       <a href="about.html">За нас</a>
     </nav>
   </div>
@@ -332,6 +395,121 @@
     </div>
   </div>
 
+  <!-- ===== CALCULATOR CARD ===== -->
+  <div class="card calc-wrap" id="kalkulator">
+    <div class="section-head">
+      <h2>Калкулатор цена</h2>
+      <div class="pill">база до 10 часа + екстри</div>
+    </div>
+
+    <div class="mini">
+      Калкулаторът е ориентировъчен и е базиран на цените от 2026. Overtime се начислява само за заснемане над 10 часа: <b>70€ / човек / час</b>.
+    </div>
+
+    <div class="calc-grid">
+      <!-- LEFT: INPUTS -->
+      <div class="calc-card">
+        <h3>Избор</h3>
+
+        <div class="calc-two">
+          <div class="calc-row">
+            <label class="calc-label" for="photoTeam">Сватбена фотография</label>
+            <select class="calc-select" id="photoTeam">
+              <option value="0">Не</option>
+              <option value="1">1 фотограф — 530€</option>
+              <option value="2">2 фотографи — 900€</option>
+            </select>
+          </div>
+
+          <div class="calc-row">
+            <label class="calc-label" for="videoTeam">Сватбена видеография</label>
+            <select class="calc-select" id="videoTeam">
+              <option value="0">Не</option>
+              <option value="1">1 оператор — 530€</option>
+              <option value="2">2 оператора — 1000€</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="calc-row">
+          <label class="calc-label" for="otHours">Overtime над 10 часа</label>
+          <select class="calc-select" id="otHours">
+            <option value="0">0 часа</option>
+            <option value="1">1 час</option>
+            <option value="2">2 часа</option>
+            <option value="3">3 часа</option>
+            <option value="4">4 часа</option>
+            <option value="5">5 часа</option>
+            <option value="6">6 часа</option>
+          </select>
+          <div class="help">
+            Overtime цена: <b>70€ / човек / час</b>. Човек = избрани фотографи + оператори.
+          </div>
+        </div>
+
+        <div class="calc-two">
+          <div class="calc-row">
+            <label class="calc-label" for="km">Транспорт (км общо)</label>
+            <input class="calc-input" id="km" type="number" min="0" step="1" value="0" placeholder="пример: 40">
+            <div class="help">0.50€ / км</div>
+          </div>
+
+          <div class="calc-row">
+            <label class="calc-label" for="droneMode">Дрон</label>
+            <select class="calc-select" id="droneMode">
+              <option value="none">Без дрон</option>
+              <option value="hour">Дрон — 53€ / час</option>
+              <option value="day">Дрон — 203€ / ден</option>
+            </select>
+            <div class="help">При “на час” се умножава по (10 + overtime часовете).</div>
+          </div>
+        </div>
+
+        <div class="calc-check">
+          <input type="checkbox" id="rawFiles">
+          <label for="rawFiles">Сурови файлове (RAW / uncut) — <b>150€</b></label>
+        </div>
+
+        <div class="calc-check">
+          <input type="checkbox" id="afterSession">
+          <label for="afterSession">Фотосесия в отделен ден — <b>130€</b></label>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="help">
+          Ако не избереш нито фото, нито видео — калкулаторът ще покаже 0€.
+        </div>
+
+        <div class="calc-actions">
+          <button class="btn" type="button" id="resetCalc">Нулирай</button>
+          <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: TOTAL -->
+      <div class="calc-card">
+        <h3>Ориентировъчна цена</h3>
+
+        <div class="totalBox">
+          <div class="lbl">Общо</div>
+          <div class="val" id="totalEUR">0€</div>
+        </div>
+        <div class="help" style="margin-top:10px">
+          Приблизително: <b id="totalBGN">0 лв.</b> (1€ = 1.95583 лв)
+        </div>
+
+        <div class="breakdown" id="breakdown"></div>
+
+        <div class="note">
+          * Финалната оферта може да се промени спрямо локация, програма, достъп и специфични изисквания.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== OTHER EVENTS ===== -->
   <div class="card">
     <div class="section-head">
@@ -363,5 +541,135 @@
 </main>
 
 <footer>© 2026 Memory Photo & Video</footer>
+
+<script>
+(function(){
+  // ===== Config based on your 2026 price image =====
+  const EUR_TO_BGN = 1.95583;
+
+  const PRICES = {
+    weddingPhoto: { 1: 530, 2: 900 },
+    weddingVideo: { 1: 530, 2: 1000 },
+    overtimePerPersonPerHour: 70,    // € / person / hour (above 10h)
+    rawFiles: 150,                  // €
+    afterSession: 130,              // €
+    transportPerKm: 0.50,           // € per km
+    dronePerHour: 53,               // € / hour
+    dronePerDay: 203                // € / day
+  };
+
+  // ===== Elements =====
+  const photoTeam = document.getElementById('photoTeam');
+  const videoTeam = document.getElementById('videoTeam');
+  const otHours  = document.getElementById('otHours');
+  const km       = document.getElementById('km');
+  const droneMode= document.getElementById('droneMode');
+  const rawFiles = document.getElementById('rawFiles');
+  const afterSession = document.getElementById('afterSession');
+
+  const totalEUR = document.getElementById('totalEUR');
+  const totalBGN = document.getElementById('totalBGN');
+  const breakdown = document.getElementById('breakdown');
+  const resetBtn = document.getElementById('resetCalc');
+
+  function moneyEUR(n){ return `${Math.round(n)}€`; }
+  function moneyBGN(n){ return `${Math.round(n)} лв.`; }
+
+  function line(label, value){
+    return `<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
+  }
+
+  function calc(){
+    const p = parseInt(photoTeam.value, 10);
+    const v = parseInt(videoTeam.value, 10);
+    const ot = parseInt(otHours.value, 10);
+    const kmVal = Math.max(0, parseFloat(km.value || "0"));
+    const dMode = droneMode.value;
+
+    const people = (isNaN(p)?0:p) + (isNaN(v)?0:v);
+    const totalHours = 10 + ot;
+
+    let total = 0;
+    const lines = [];
+
+    // Base (up to 10h)
+    if(p > 0){
+      const val = PRICES.weddingPhoto[p] || 0;
+      total += val;
+      lines.push(line(`Сватбена фотография: ${p} фотограф${p===1?'':'и'} (до 10ч)`, val));
+    }
+    if(v > 0){
+      const val = PRICES.weddingVideo[v] || 0;
+      total += val;
+      lines.push(line(`Сватбена видеография: ${v} оператор${v===1?'':'и'} (до 10ч)`, val));
+    }
+
+    // Overtime (only if there are people)
+    if(ot > 0 && people > 0){
+      const val = ot * people * PRICES.overtimePerPersonPerHour;
+      total += val;
+      lines.push(line(`Overtime: ${ot}ч × ${people} човек × 70€`, val));
+    }
+
+    // Drone
+    if(dMode === "hour"){
+      const val = totalHours * PRICES.dronePerHour;
+      total += val;
+      lines.push(line(`Дрон: ${totalHours}ч × 53€`, val));
+    } else if(dMode === "day"){
+      const val = PRICES.dronePerDay;
+      total += val;
+      lines.push(line(`Дрон (ден)`, val));
+    }
+
+    // RAW
+    if(rawFiles.checked){
+      total += PRICES.rawFiles;
+      lines.push(line(`Сурови файлове`, PRICES.rawFiles));
+    }
+
+    // After-session
+    if(afterSession.checked){
+      total += PRICES.afterSession;
+      lines.push(line(`Фотосесия в отделен ден`, PRICES.afterSession));
+    }
+
+    // Transport
+    if(kmVal > 0){
+      const val = kmVal * PRICES.transportPerKm;
+      total += val;
+      lines.push(line(`Транспорт: ${kmVal} км × 0.50€`, val));
+    }
+
+    // Render
+    totalEUR.textContent = moneyEUR(total);
+    totalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
+    breakdown.innerHTML = lines.length ? lines.join('') : `<div class="help">Избери фото и/или видео, за да се калкулира цена.</div>`;
+  }
+
+  function reset(){
+    photoTeam.value = "0";
+    videoTeam.value = "0";
+    otHours.value = "0";
+    km.value = "0";
+    droneMode.value = "none";
+    rawFiles.checked = false;
+    afterSession.checked = false;
+    calc();
+  }
+
+  // Events
+  [photoTeam, videoTeam, otHours, km, droneMode, rawFiles, afterSession].forEach(el => {
+    el.addEventListener('input', calc);
+    el.addEventListener('change', calc);
+  });
+
+  resetBtn.addEventListener('click', reset);
+
+  // Init
+  calc();
+})();
+</script>
+
 </body>
 </html>
