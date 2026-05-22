@@ -149,12 +149,12 @@ nav a:hover{
 
 /* ===== SECTION ===== */
 .section{
-  padding: 110px 20px 100px; /* място за fixed header */
+  padding: 110px 20px 100px;
 }
 .wrap{
   max-width:1000px;
   margin:0 auto;
-  overflow-x: hidden; /* допълнителна защита от overflow на мобилни */
+  overflow-x: hidden;
 }
 .title{
   font-family:'Cormorant Garamond',serif;
@@ -261,6 +261,12 @@ nav a:hover{
   position:relative;
 }
 
+/* Само фотограф = оранжево */
+.partial{
+  background: rgba(255, 140, 0, .20);
+  border-color: rgba(255, 140, 0, .72);
+}
+
 /* Легенда */
 .legend{
   margin-top:18px;
@@ -280,6 +286,7 @@ nav a:hover{
 }
 .dot-free{ background: rgba(0, 180, 90, .9); }
 .dot-busy{ background: rgba(220, 45, 45, .95); }
+.dot-partial{ background: rgba(255, 140, 0, .95); }
 
 /* ===== FOOTER ===== */
 footer{
@@ -350,7 +357,7 @@ footer{
   <div class="wrap">
     <h2 class="title">Свободни дати</h2>
     <p class="subtitle">
-      Червените дати са заети. Зелените са свободни (ориентировъчно). За потвърждение изпратете запитване.
+      Червените дати са напълно заети. Зелените са свободни. Оранжевите означават, че е наличен само фотограф.
     </p>
 
     <div class="card">
@@ -364,6 +371,7 @@ footer{
 
       <div class="legend">
         <span class="legend-item"><i class="dot dot-free"></i> Свободно</span>
+        <span class="legend-item"><i class="dot dot-partial"></i> Само фотограф</span>
         <span class="legend-item"><i class="dot dot-busy"></i> Заето</span>
       </div>
     </div>
@@ -376,7 +384,6 @@ footer{
 
 <script>
 (function(){
-  // Заети дати (формат YYYY-MM-DD)
   const busy = new Set([
     "2026-03-14",
     "2026-04-18",
@@ -398,12 +405,15 @@ footer{
     "2026-09-26"
   ]);
 
-  // ОГРАНИЧЕНИЕ: от Март 2026 до Септември 2026 (включително)
-  const minView = new Date(2026, 2, 1);  // March
-  const maxView = new Date(2026, 9, 1);  // Oct
+  const partial = new Set([
+    "2026-07-10",
+    "2026-07-12"
+  ]);
 
-  const monthNames = ["Януари","Февруари","Март","Април","Май","Юни",
-                      "Юли","Август","Септември","Октомври","Ноември","Декември"];
+  const minView = new Date(2026, 2, 1);
+  const maxView = new Date(2026, 9, 1);
+
+  const monthNames = ["Януари","Февруари","Март","Април","Май","Юни","Юли","Август","Септември","Октомври","Ноември","Декември"];
   const dow = ["Пн","Вт","Ср","Чт","Пт","Сб","Нд"];
 
   const grid = document.getElementById("grid");
@@ -415,8 +425,8 @@ footer{
 
   let view = new Date(minView.getFullYear(), minView.getMonth(), 1);
 
-  function pad(n){return String(n).padStart(2,"0")}
-  function fmt(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function fmt(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
 
   function clampView(){
     if(view < minView) view = new Date(minView.getFullYear(), minView.getMonth(), 1);
@@ -440,7 +450,6 @@ footer{
     clampView();
     grid.innerHTML="";
 
-    // Header: days of week
     dow.forEach(d=>{
       const el=document.createElement("div");
       el.className="cell dow";
@@ -454,26 +463,23 @@ footer{
 
     const first=new Date(y,m,1);
     const last=new Date(y,m+1,0);
-
-    // Monday-first offset
     const offset=(first.getDay()+6)%7;
 
-    // Empty cells
     for(let i=0;i<offset;i++){
       const e=document.createElement("div");
       e.className="cell empty";
       grid.appendChild(e);
     }
 
-    // Days
     for(let d=1; d<=last.getDate(); d++){
       const date=new Date(y,m,d);
       const key=fmt(date);
 
       const e=document.createElement("div");
       const isBusy = busy.has(key);
+      const isPartial = partial.has(key);
 
-      e.className = "cell " + (isBusy ? "busy" : "free");
+      e.className = "cell " + (isBusy ? "busy" : (isPartial ? "partial" : "free"));
       e.textContent = d;
 
       grid.appendChild(e);
