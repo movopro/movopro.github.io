@@ -427,7 +427,9 @@ footer{
 
   if(!grid || !label || !prev || !next) return;
 
-  let view = new Date(minView.getFullYear(), minView.getMonth(), 1);
+  let today = new Date();
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
+
 
   function pad(n){ return String(n).padStart(2,"0"); }
   function fmt(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
