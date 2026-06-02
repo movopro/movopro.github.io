@@ -473,16 +473,16 @@
             <label class="calc-label" for="photoHours">Само фотограф (на час)</label>
             <select class="calc-select" id="photoHours">
               <option value="0">Не</option>
-              <option value="1">1 час — 66€</option>
-              <option value="2">2 часа — 113€</option>
-              <option value="3">3 часа — 160€</option>
-              <option value="4">4 часа — 207€</option>
-              <option value="5">5 часа — 254€</option>
-              <option value="6">6 часа — 301€</option>
-              <option value="7">7 часа — 348€</option>
-              <option value="8">8 часа — 395€</option>
+              <option value="1">1 час — 80€</option>
+              <option value="2">2 часа — 130€</option>
+              <option value="3">3 часа — 180€</option>
+              <option value="4">4 часа — 230€</option>
+              <option value="5">5 часа — 280€</option>
+              <option value="6">6 часа — 330€</option>
+              <option value="7">7 часа — 380€</option>
+              <option value="8">8 часа — 430€</option>
             </select>
-            <div class="help">66€ базова + 47€ за всеки доп. час.</div>
+            <div class="help">80€ базова + 50€ за всеки доп. час.</div>
           </div>
 
           <div class="calc-row">
@@ -490,15 +490,15 @@
             <select class="calc-select" id="videoHours">
               <option value="0">Не</option>
               <option value="1">1 час — 100€</option>
-              <option value="2">2 часа — 153€</option>
-              <option value="3">3 часа — 206€</option>
-              <option value="4">4 часа — 259€</option>
-              <option value="5">5 часа — 312€</option>
-              <option value="6">6 часа — 365€</option>
-              <option value="7">7 часа — 418€</option>
-              <option value="8">8 часа — 471€</option>
+              <option value="2">2 часа — 160€</option>
+              <option value="3">3 часа — 220€</option>
+              <option value="4">4 часа — 280€</option>
+              <option value="5">5 часа — 340€</option>
+              <option value="6">6 часа — 400€</option>
+              <option value="7">7 часа — 460€</option>
+              <option value="8">8 часа — 520€</option>
             </select>
-            <div class="help">100€ базова + 53€ за всеки доп. час.</div>
+            <div class="help">100€ базова + 60€ за всеки доп. час.</div>
           </div>
         </div>
 
@@ -633,10 +633,10 @@
     dronePerHour: 53,
     dronePerDay: 203,
     // Hourly event shooting
-    photoBase: 66,
-    photoPerHour: 47,
+    photoBase: 80,
+    photoPerHour: 50,
     videoBase: 100,
-    videoPerHour: 53
+    videoPerHour: 60
   };
 
   const photoTeam    = document.getElementById('photoTeam');
@@ -708,12 +708,12 @@
     if(ph > 0){
       const val = calcHourlyPhoto(ph);
       total += val;
-      lines.push(line(`Фотограф на час: ${ph} ч (66€ + ${ph-1}×47€)`, val));
+      lines.push(line(`Фотограф на час: ${ph} ч (80€ + ${ph-1>0?ph-1+'×50€':''})`, val));
     }
     if(vh > 0){
       const val = calcHourlyVideo(vh);
       total += val;
-      lines.push(line(`Оператор на час: ${vh} ч (100€ + ${vh-1}×53€)`, val));
+      lines.push(line(`Оператор на час: ${vh} ч (100€ + ${vh-1>0?vh-1+'×60€':''})`, val));
     }
 
     // ---- Drone ----
