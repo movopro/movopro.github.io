@@ -13,7 +13,7 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Услуги и цени | Memory Photo & Video</title>
+  <title>Услуги и цени | Memory Photo &amp; Video</title>
   <link rel="icon" type="image/png" href="logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
 
@@ -52,6 +52,7 @@
       border-radius:20px;
       box-shadow:0 14px 35px rgba(0,0,0,.35);
       padding:18px;
+      margin-bottom:14px;
     }
 
     .section-head{
@@ -148,6 +149,7 @@
       font-weight:600;
       font-size:.78rem;
       transition:.15s ease;
+      cursor:pointer;
     }
     .btn:hover{background:rgba(0,0,0,.55);transform:translateY(-1px)}
 
@@ -158,6 +160,42 @@
       nav{display:none;width:100%;padding:12px 0 4px;gap:8px}
       #menuToggle:checked ~ nav{display:flex}
       nav a{width:100%;text-align:left;padding:12px 12px}
+    }
+
+    /* ===== INCLUDED IN ALL PACKAGES BANNER ===== */
+    .included-all{
+      background:rgba(201,169,110,.07);
+      border:1px solid rgba(201,169,110,.30);
+      border-radius:16px;
+      padding:14px 16px;
+      margin-bottom:16px;
+    }
+    .included-all .inc-title{
+      font-family:"Cormorant Garamond",serif;
+      font-size:1.05rem;
+      letter-spacing:.08em;
+      color:rgba(232,213,176,.98);
+      margin-bottom:8px;
+    }
+    .inc-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+      gap:6px 14px;
+    }
+    .inc-item{
+      display:flex;
+      align-items:flex-start;
+      gap:7px;
+      font-size:.84rem;
+      color:rgba(245,240,232,.80);
+      line-height:1.4;
+    }
+    .inc-item::before{
+      content:"★";
+      color:var(--gold);
+      font-size:.70rem;
+      margin-top:2px;
+      flex:0 0 auto;
     }
 
     /* ===== Wedding Packages Layout ===== */
@@ -178,6 +216,8 @@
       padding:18px;
       position:relative;
       transition:.2s ease;
+      display:flex;
+      flex-direction:column;
     }
     .package-card:hover{
       transform:translateY(-4px);
@@ -192,6 +232,15 @@
       font-weight:800;
       color:rgba(232,213,176,.98);
       margin-bottom:12px;
+    }
+    .package-diff-label{
+      font-size:.72rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--gold);
+      opacity:.85;
+      margin-bottom:6px;
+      margin-top:4px;
     }
     .recommended{
       border:1px solid rgba(201,169,110,.65);
@@ -211,22 +260,8 @@
       font-weight:700;
     }
 
-    /* common included tag */
-    .included-tag{
-      display:inline-block;
-      font-size:.70rem;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      color:rgba(232,213,176,.80);
-      border:1px solid rgba(201,169,110,.30);
-      background:rgba(0,0,0,.20);
-      padding:3px 8px;
-      border-radius:999px;
-      margin-bottom:10px;
-    }
-
     /* ===== CALCULATOR ===== */
-    .calc-wrap{margin-top:18px}
+    .calc-wrap{margin-top:0}
     .calc-grid{display:grid;gap:14px;margin-top:12px}
     @media(min-width:900px){.calc-grid{grid-template-columns:1.1fr .9fr}}
     .calc-card{
@@ -259,16 +294,56 @@
       background:rgba(0,0,0,.25);
       color:var(--cream);
       font-family:Montserrat,sans-serif;
+      font-size:.88rem;
     }
     .calc-input:focus, .calc-select:focus{outline:none;border-color:rgba(201,169,110,.75)}
     .calc-two{display:grid;gap:12px}
     @media(min-width:700px){.calc-two{grid-template-columns:1fr 1fr}}
-    .calc-three{display:grid;gap:12px}
-    @media(min-width:700px){.calc-three{grid-template-columns:1fr 1fr 1fr}}
     .calc-check{display:flex;align-items:center;gap:10px;margin:10px 0}
     .calc-check input{width:18px;height:18px;accent-color:var(--gold)}
     .help{font-size:.82rem;opacity:.75;line-height:1.5;margin-top:8px}
     .divider{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
+
+    /* Mode tabs */
+    .mode-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+    .mode-tab{
+      padding:9px 16px;
+      border-radius:12px;
+      border:1px solid rgba(201,169,110,.30);
+      background:rgba(0,0,0,.20);
+      color:rgba(245,240,232,.75);
+      font-size:.76rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:.15s ease;
+      font-family:Montserrat,sans-serif;
+      font-weight:600;
+    }
+    .mode-tab.active{
+      border-color:rgba(201,169,110,.75);
+      background:rgba(201,169,110,.12);
+      color:rgba(232,213,176,.98);
+    }
+    .mode-panel{display:none}
+    .mode-panel.visible{display:block}
+
+    .hourly-section{
+      background:rgba(201,169,110,.05);
+      border:1px solid rgba(201,169,110,.14);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:12px;
+    }
+    .hourly-section-title{
+      font-size:.76rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      opacity:.90;
+      margin-bottom:10px;
+    }
+
     .totalBox{
       border-radius:18px;
       border:1px solid rgba(201,169,110,.30);
@@ -307,17 +382,6 @@
       .calc-actions{flex-direction:column}
       .calc-actions .btn{width:100%;text-align:center}
     }
-
-    /* ===== Section tabs ===== */
-    .calc-section-title{
-      font-size:.72rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(201,169,110,.85);
-      margin:14px 0 4px;
-      padding-bottom:4px;
-      border-bottom:1px solid rgba(201,169,110,.15);
-    }
   </style>
 </head>
 
@@ -348,79 +412,75 @@
   <h1>Услуги и цени</h1>
   <div class="sub">Сватбени пакети (до 10 часа) + заснемане на други събития (2026).</div>
 
+  <!-- ===== WEDDING PACKAGES ===== -->
   <div class="card">
     <div class="section-head">
       <h2>Сватбени фото + видео пакети</h2>
       <div class="pill">до 10 часа ангажимент</div>
     </div>
 
-    <div class="mini">
-      Пълно покритие на сватбения ден с фокус върху емоция, детайл и стил. Запис на звук с външен рекордер за чист аудио резултат.
+    <!-- Included in ALL packages -->
+    <div class="included-all">
+      <div class="inc-title">Всеки пакет включва:</div>
+      <div class="inc-grid">
+        <div class="inc-item">Неограничен брой кадри и обработка</div>
+        <div class="inc-item">Видео трейлър с най-важните моменти</div>
+        <div class="inc-item">Цял репортажен филм</div>
+        <div class="inc-item">Фотосесия в деня на сватбата</div>
+        <div class="inc-item">Заснемане до 10 часа</div>
+        <div class="inc-item">Запис на звук с външен рекордер</div>
+        <div class="inc-item">Репортажна фотография</div>
+        <div class="inc-item">Записан материал на флашка</div>
+      </div>
     </div>
 
-    <!-- ===== Packages Grid ===== -->
+    <!-- Packages Grid — 3 columns -->
     <div class="package-grid">
 
       <!-- STANDARD -->
       <div class="package-card">
         <div class="package-title">Стандартен</div>
-        <div class="package-price">1000 € <span style="font-size:.85rem;opacity:.75;font-weight:400">(1956 лв.)</span></div>
-        <div class="included-tag">Екип 2 души</div>
+        <div class="package-price">1 000 € <span style="opacity:.65;font-size:.82rem;font-weight:400">(1 956 лв.)</span></div>
+        <div class="package-diff-label">Какво е различното</div>
         <ul class="bullets">
-          <li>Неограничен брой кадри и обработка.</li>
-          <li>Видео трейлър + цял репортажен филм.</li>
-          <li>Фотосесия в деня на сватбата.</li>
-          <li>Заснемане до 10 часа.</li>
-          <li>Обработени снимки + цветови корекции и монтаж.</li>
-          <li>Запис на звук с външен рекордер.</li>
-          <li>Материали на флашка с кутийка.</li>
+          <li>Екип от 2 души — 1 фотограф + 1 оператор.</li>
+          <li>Пълно покритие на сватбения ден.</li>
+          <li>Материалът се записва на 1 флашка с кутийка.</li>
         </ul>
       </div>
 
       <!-- PREMIUM -->
-      <div class="package-card">
+      <div class="package-card recommended">
+        <div class="badge">Препоръчан</div>
         <div class="package-title">Премиум</div>
-        <div class="package-price">1300 € <span style="font-size:.85rem;opacity:.75;font-weight:400">(2542 лв.)</span></div>
-        <div class="included-tag">Екип 3 души</div>
+        <div class="package-price">1 300 € <span style="opacity:.65;font-size:.82rem;font-weight:400">(2 542 лв.)</span></div>
+        <div class="package-diff-label">Какво е различното</div>
         <ul class="bullets">
-          <li>Неограничен брой кадри и обработка.</li>
-          <li>Видео трейлър + цял репортажен филм.</li>
-          <li>Фотосесия в деня на сватбата.</li>
-          <li>Заснемане до 10 часа.</li>
-          <li>По-голямо покритие: грим, фризьор, арт кадри.</li>
-          <li>По-динамичен трейлър и по-богат монтаж.</li>
-          <li>Обработени снимки + професионална цветова корекция.</li>
-          <li>Запис на звук с външен рекордер.</li>
-          <li>2 оператора + 1 фотограф <em>или</em> 2 фотографа + 1 оператор.</li>
-          <li>Материали на флашка с кутийка.</li>
+          <li>Екип от 3 души — избираш: 2 фотографи + 1 оператор, или 1 фотограф + 2 оператори.</li>
+          <li>По-широко покритие: заснемане на подготовката — грим, фризьор, детайли.</li>
+          <li>По-богат монтаж и по-динамичен трейлър.</li>
+          <li>Материалът се записва на 1 флашка с кутийка.</li>
         </ul>
       </div>
 
       <!-- ULTRA -->
-      <div class="package-card recommended">
-        <div class="badge">Препоръчан</div>
+      <div class="package-card">
         <div class="package-title">Ултра</div>
-        <div class="package-price">1800 € <span style="font-size:.85rem;opacity:.75;font-weight:400">(3520 лв.)</span></div>
-        <div class="included-tag">Екип 4 души</div>
+        <div class="package-price">1 700 € <span style="opacity:.65;font-size:.82rem;font-weight:400">(3 325 лв.)</span></div>
+        <div class="package-diff-label">Какво е различното</div>
         <ul class="bullets">
-          <li>Неограничен брой кадри и обработка.</li>
-          <li>Видео трейлър + цял репортажен филм.</li>
-          <li>Фотосесия в деня на сватбата.</li>
-          <li>Заснемане до 10 часа.</li>
-          <li>Дрон заснемане (включен в пакета).</li>
-          <li>Разширено покритие: от подготовката до края на вечерта.</li>
-          <li>2 фотографи + 2 оператори — кино усещане.</li>
-          <li>Висококачествен монтаж с по-силна история.</li>
-          <li>Обработени снимки + монтаж с по-високо темпо.</li>
-          <li>Запис на звук с външен рекордер.</li>
-          <li>Материали на флашка с кутийка.</li>
+          <li>Пълен екип от 4 души — 2 фотографи + 2 оператори.</li>
+          <li>Максимално покритие: всеки момент, детайл и емоция от деня.</li>
+          <li>Заснемане с дрон включено.</li>
+          <li>Сватбена книга с размер 20×20.</li>
+          <li>Материалът се записва на 2 флашки с кутийки.</li>
         </ul>
       </div>
 
     </div>
 
     <div class="note">
-      * Съдържанието (дължина/стил/доставяне) се уточнява спрямо вашите желания и програмата на събитието.
+      * Съдържанието (дължина, стил, доставяне) се уточнява спрямо вашите желания и програмата на събитието.
     </div>
 
     <div class="cta">
@@ -428,7 +488,7 @@
     </div>
   </div>
 
-  <!-- ===== CALCULATOR CARD ===== -->
+  <!-- ===== CALCULATOR ===== -->
   <div class="card calc-wrap" id="kalkulator">
     <div class="section-head">
       <h2>Калкулатор цена</h2>
@@ -436,152 +496,217 @@
     </div>
 
     <div class="mini">
-      Калкулаторът е ориентировъчен и е базиран на цените от 2026. Overtime се начислява само за заснемане над 10 часа: <b>70€ / човек / час</b>.
+      Избери режим — сватбено заснемане (база до 10 часа) или почасово заснемане на събитие само с фотограф или само с оператор.
     </div>
 
-    <div class="calc-grid">
-      <!-- LEFT: INPUTS -->
-      <div class="calc-card">
-        <h3>Избор</h3>
+    <!-- Mode Tabs -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" data-mode="wedding" type="button">Сватба (до 10 ч.)</button>
+      <button class="mode-tab" data-mode="hourly" type="button">Почасово заснемане</button>
+    </div>
 
-        <!-- WEDDING PHOTO + VIDEO -->
-        <div class="calc-section-title">Сватбена фотография (до 10 ч.)</div>
-        <div class="calc-two">
-          <div class="calc-row">
-            <label class="calc-label" for="photoTeam">Брой фотографи</label>
-            <select class="calc-select" id="photoTeam">
-              <option value="0">Не</option>
-              <option value="1">1 фотограф — 530€</option>
-              <option value="2">2 фотографи — 900€</option>
-            </select>
+    <!-- ===== MODE: WEDDING ===== -->
+    <div class="mode-panel visible" id="panel-wedding">
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h3>Избор</h3>
+
+          <div class="calc-two">
+            <div class="calc-row">
+              <label class="calc-label" for="photoTeam">Сватбена фотография</label>
+              <select class="calc-select" id="photoTeam">
+                <option value="0">Не</option>
+                <option value="1">1 фотограф — 530€</option>
+                <option value="2">2 фотографи — 900€</option>
+              </select>
+            </div>
+
+            <div class="calc-row">
+              <label class="calc-label" for="videoTeam">Сватбена видеография</label>
+              <select class="calc-select" id="videoTeam">
+                <option value="0">Не</option>
+                <option value="1">1 оператор — 530€</option>
+                <option value="2">2 оператора — 1000€</option>
+              </select>
+            </div>
           </div>
 
-          <div class="calc-row">
-            <label class="calc-label" for="videoTeam">Брой оператори</label>
-            <select class="calc-select" id="videoTeam">
-              <option value="0">Не</option>
-              <option value="1">1 оператор — 530€</option>
-              <option value="2">2 оператора — 1000€</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- HOURLY SECTION -->
-        <div class="calc-section-title">Събитийно заснемане — на час</div>
-        <div class="calc-two">
-          <div class="calc-row">
-            <label class="calc-label" for="photoHours">Само фотограф (на час)</label>
-            <select class="calc-select" id="photoHours">
-              <option value="0">Не</option>
-              <option value="1">1 час — 80€</option>
-              <option value="2">2 часа — 130€</option>
-              <option value="3">3 часа — 180€</option>
-              <option value="4">4 часа — 230€</option>
-              <option value="5">5 часа — 280€</option>
-              <option value="6">6 часа — 330€</option>
-              <option value="7">7 часа — 380€</option>
-              <option value="8">8 часа — 430€</option>
-            </select>
-            <div class="help">80€ базова + 50€ за всеки доп. час.</div>
-          </div>
+          <div class="divider"></div>
 
           <div class="calc-row">
-            <label class="calc-label" for="videoHours">Само оператор (на час)</label>
-            <select class="calc-select" id="videoHours">
-              <option value="0">Не</option>
-              <option value="1">1 час — 100€</option>
-              <option value="2">2 часа — 160€</option>
-              <option value="3">3 часа — 220€</option>
-              <option value="4">4 часа — 280€</option>
-              <option value="5">5 часа — 340€</option>
-              <option value="6">6 часа — 400€</option>
-              <option value="7">7 часа — 460€</option>
-              <option value="8">8 часа — 520€</option>
+            <label class="calc-label" for="otHours">Overtime над 10 часа</label>
+            <select class="calc-select" id="otHours">
+              <option value="0">0 часа</option>
+              <option value="1">1 час</option>
+              <option value="2">2 часа</option>
+              <option value="3">3 часа</option>
+              <option value="4">4 часа</option>
+              <option value="5">5 часа</option>
+              <option value="6">6 часа</option>
             </select>
-            <div class="help">100€ базова + 60€ за всеки доп. час.</div>
+            <div class="help">
+              Overtime цена: <b>70€ / човек / час</b>. Човек = избрани фотографи + оператори.
+            </div>
           </div>
-        </div>
 
-        <div class="divider"></div>
+          <div class="calc-two">
+            <div class="calc-row">
+              <label class="calc-label" for="km">Транспорт (км общо)</label>
+              <input class="calc-input" id="km" type="number" min="0" step="1" value="0" placeholder="пример: 40">
+              <div class="help">0.50€ / км</div>
+            </div>
 
-        <!-- OVERTIME -->
-        <div class="calc-section-title">Overtime (само за сватбено заснемане)</div>
-        <div class="calc-row">
-          <label class="calc-label" for="otHours">Overtime над 10 часа</label>
-          <select class="calc-select" id="otHours">
-            <option value="0">0 часа</option>
-            <option value="1">1 час</option>
-            <option value="2">2 часа</option>
-            <option value="3">3 часа</option>
-            <option value="4">4 часа</option>
-            <option value="5">5 часа</option>
-            <option value="6">6 часа</option>
-          </select>
+            <div class="calc-row">
+              <label class="calc-label" for="droneMode">Дрон</label>
+              <select class="calc-select" id="droneMode">
+                <option value="none">Без дрон</option>
+                <option value="hour">Дрон — 53€ / час</option>
+                <option value="day">Дрон — 203€ / ден</option>
+              </select>
+              <div class="help">При "на час" се умножава по (10 + overtime часовете).</div>
+            </div>
+          </div>
+
+          <div class="calc-check">
+            <input type="checkbox" id="rawFiles">
+            <label for="rawFiles">Сурови файлове (RAW / uncut) — <b>150€</b></label>
+          </div>
+
+          <div class="calc-check">
+            <input type="checkbox" id="afterSession">
+            <label for="afterSession">Фотосесия в отделен ден — <b>130€</b></label>
+          </div>
+
+          <div class="divider"></div>
+
           <div class="help">
-            Overtime цена: <b>70€ / човек / час</b>. Брой хора = избрани фотографи + оператори.
+            Ако не избереш нито фото, нито видео — калкулаторът ще покаже 0€.
+          </div>
+
+          <div class="calc-actions">
+            <button class="btn" type="button" id="resetCalc">Нулирай</button>
+            <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
           </div>
         </div>
 
-        <div class="divider"></div>
+        <!-- RIGHT: TOTAL (wedding) -->
+        <div class="calc-card">
+          <h3>Ориентировъчна цена</h3>
+          <div class="totalBox">
+            <div class="lbl">Общо</div>
+            <div class="val" id="totalEUR">0€</div>
+          </div>
+          <div class="help" style="margin-top:10px">
+            Приблизително: <b id="totalBGN">0 лв.</b> (1€ = 1.95583 лв)
+          </div>
+          <div class="breakdown" id="breakdown"></div>
+          <div class="note">
+            * Финалната оферта може да се промени спрямо локация, програма, достъп и специфични изисквания.
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <!-- EXTRAS -->
-        <div class="calc-section-title">Допълнителни услуги</div>
-        <div class="calc-two">
+    <!-- ===== MODE: HOURLY ===== -->
+    <div class="mode-panel" id="panel-hourly">
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h3>Почасово заснемане</h3>
+
+          <!-- PHOTOGRAPHER SECTION -->
+          <div class="hourly-section">
+            <div class="hourly-section-title">Фотограф</div>
+            <div class="calc-two">
+              <div class="calc-row">
+                <label class="calc-label" for="hPhotoCount">Брой фотографи</label>
+                <select class="calc-select" id="hPhotoCount">
+                  <option value="0">Не</option>
+                  <option value="1">1 фотограф</option>
+                  <option value="2">2 фотографи</option>
+                </select>
+              </div>
+              <div class="calc-row">
+                <label class="calc-label" for="hPhotoHours">Часове</label>
+                <select class="calc-select" id="hPhotoHours">
+                  <option value="1">1 час</option>
+                  <option value="2">2 часа</option>
+                  <option value="3">3 часа</option>
+                  <option value="4">4 часа</option>
+                  <option value="5">5 часа</option>
+                  <option value="6">6 часа</option>
+                  <option value="7">7 часа</option>
+                  <option value="8">8 часа</option>
+                  <option value="9">9 часа</option>
+                  <option value="10">10 часа</option>
+                </select>
+              </div>
+            </div>
+            <div class="help">
+              1 фотограф: 66€ база + 47€ всеки допълнителен час.<br>
+              2 фотографи: 120€ база + 66€ всеки допълнителен час.
+            </div>
+          </div>
+
+          <!-- OPERATOR SECTION -->
+          <div class="hourly-section">
+            <div class="hourly-section-title">Оператор</div>
+            <div class="calc-two">
+              <div class="calc-row">
+                <label class="calc-label" for="hVideoCount">Брой оператори</label>
+                <select class="calc-select" id="hVideoCount">
+                  <option value="0">Не</option>
+                  <option value="1">1 оператор</option>
+                  <option value="2">2 оператора</option>
+                </select>
+              </div>
+              <div class="calc-row">
+                <label class="calc-label" for="hVideoHours">Часове</label>
+                <select class="calc-select" id="hVideoHours">
+                  <option value="1">1 час</option>
+                  <option value="2">2 часа</option>
+                  <option value="3">3 часа</option>
+                  <option value="4">4 часа</option>
+                  <option value="5">5 часа</option>
+                  <option value="6">6 часа</option>
+                  <option value="7">7 часа</option>
+                  <option value="8">8 часа</option>
+                  <option value="9">9 часа</option>
+                  <option value="10">10 часа</option>
+                </select>
+              </div>
+            </div>
+            <div class="help">
+              1 оператор: 100€ база + 53€ всеки допълнителен час.<br>
+              2 оператора: 133€ база + 66€ всеки допълнителен час.
+            </div>
+          </div>
+
           <div class="calc-row">
-            <label class="calc-label" for="km">Транспорт (км общо)</label>
-            <input class="calc-input" id="km" type="number" min="0" step="1" value="0" placeholder="пример: 40">
+            <label class="calc-label" for="hKm">Транспорт (км общо)</label>
+            <input class="calc-input" id="hKm" type="number" min="0" step="1" value="0" placeholder="пример: 30">
             <div class="help">0.50€ / км</div>
           </div>
 
-          <div class="calc-row">
-            <label class="calc-label" for="droneMode">Дрон</label>
-            <select class="calc-select" id="droneMode">
-              <option value="none">Без дрон</option>
-              <option value="hour">Дрон — 53€ / час</option>
-              <option value="day">Дрон — 203€ / ден</option>
-            </select>
-            <div class="help">При "на час" се умножава по часовете на заснемане.</div>
+          <div class="calc-actions">
+            <button class="btn" type="button" id="resetHourly">Нулирай</button>
+            <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
           </div>
         </div>
 
-        <div class="calc-check">
-          <input type="checkbox" id="rawFiles">
-          <label for="rawFiles">Сурови файлове (RAW / uncut) — <b>150€</b></label>
-        </div>
-
-        <div class="calc-check">
-          <input type="checkbox" id="afterSession">
-          <label for="afterSession">Фотосесия в отделен ден — <b>130€</b></label>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="help">
-          Избери сватбено заснемане <em>или</em> събитийно заснемане на час. При комбиниране цените се сумират.
-        </div>
-
-        <div class="calc-actions">
-          <button class="btn" type="button" id="resetCalc">Нулирай</button>
-          <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
-        </div>
-      </div>
-
-      <!-- RIGHT: TOTAL -->
-      <div class="calc-card">
-        <h3>Ориентировъчна цена</h3>
-
-        <div class="totalBox">
-          <div class="lbl">Общо</div>
-          <div class="val" id="totalEUR">0€</div>
-        </div>
-        <div class="help" style="margin-top:10px">
-          Приблизително: <b id="totalBGN">0 лв.</b> (1€ = 1.95583 лв)
-        </div>
-
-        <div class="breakdown" id="breakdown"></div>
-
-        <div class="note">
-          * Финалната оферта може да се промени спрямо локация, програма, достъп и специфични изисквания.
+        <!-- RIGHT: TOTAL (hourly) -->
+        <div class="calc-card">
+          <h3>Ориентировъчна цена</h3>
+          <div class="totalBox">
+            <div class="lbl">Общо</div>
+            <div class="val" id="hTotalEUR">0€</div>
+          </div>
+          <div class="help" style="margin-top:10px">
+            Приблизително: <b id="hTotalBGN">0 лв.</b> (1€ = 1.95583 лв)
+          </div>
+          <div class="breakdown" id="hBreakdown"></div>
+          <div class="note">
+            * Финалната оферта може да се промени спрямо локация, програма, достъп и специфични изисквания.
+          </div>
         </div>
       </div>
     </div>
@@ -595,14 +720,14 @@
     </div>
 
     <div class="mini">
-      Кратки ангажименти и събития с професионална обработка и чист звук при видео (външен рекордер) (фото+видео).
+      Кратки ангажименти и събития с професионална обработка и чист звук при видео (фото+видео).
     </div>
 
     <div class="list">
       <div class="row"><div><b>Заснемане на къна</b></div><div class="price">500 € (978 лв.)</div></div>
-      <div class="row"><div><b>Заснемане на годеж</b></div><div class="price">800 € (1369 лв.)</div></div>
-      <div class="row"><div><b>Заснемане на абитуриентски бал</b></div><div class="price">700 € (1173 лв.)</div></div>
-      <div class="row"><div><b>Рожден ден/парти до 4 часа</b></div><div class="price">360 € (684 лв.)</div></div>
+      <div class="row"><div><b>Заснемане на годеж</b></div><div class="price">700 € (1369 лв.)</div></div>
+      <div class="row"><div><b>Заснемане на абитуриентски бал</b></div><div class="price">600 € (1173 лв.)</div></div>
+      <div class="row"><div><b>Рожден ден / парти до 4 часа</b></div><div class="price">200 € (391 лв.)</div></div>
       <div class="row"><div><b>Кръщене до 1 час</b></div><div class="price">180 € (352 лв.)</div></div>
     </div>
 
@@ -615,6 +740,20 @@
     </div>
   </div>
 
+  <!-- ===== ADDITIONAL INFO ===== -->
+  <div class="card">
+    <div class="section-head">
+      <h2>Допълнителна информация</h2>
+    </div>
+    <div class="list">
+      <div class="row"><div>За локации над 50 км или общ пропътуван път над 50 км — транспортни и командировъчни разходи.</div></div>
+      <div class="row"><div>За ангажиране над 10 снимачни часа се прилага овъртайм услуга — <b>70€ / човек / час</b>.</div></div>
+      <div class="row"><div>Предоставяне на сурови кадри (RAW снимки и видео файлове, проект) е отделна услуга — <b>150€</b>.</div></div>
+      <div class="row"><div>Фотосесия в отделен ден — <b>130€</b>.</div></div>
+      <div class="row"><div>Дрон — <b>53€ / час</b> или <b>203€ / ден</b>.</div></div>
+    </div>
+  </div>
+
 </main>
 
 <footer>© 2026 Memory Photo &amp; Video</footer>
@@ -623,6 +762,20 @@
 (function(){
   const EUR_TO_BGN = 1.95583;
 
+  // ===== MODE TABS =====
+  const tabs = document.querySelectorAll('.mode-tab');
+  const panels = document.querySelectorAll('.mode-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('visible'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.mode).classList.add('visible');
+    });
+  });
+
+  // ===== WEDDING CALCULATOR =====
   const PRICES = {
     weddingPhoto: { 1: 530, 2: 900 },
     weddingVideo: { 1: 530, 2: 1000 },
@@ -631,153 +784,174 @@
     afterSession: 130,
     transportPerKm: 0.50,
     dronePerHour: 53,
-    dronePerDay: 203,
-    // Hourly event shooting
-    photoBase: 80,
-    photoPerHour: 50,
-    videoBase: 100,
-    videoPerHour: 60
+    dronePerDay: 203
   };
 
-  const photoTeam    = document.getElementById('photoTeam');
-  const videoTeam    = document.getElementById('videoTeam');
-  const photoHours   = document.getElementById('photoHours');
-  const videoHours   = document.getElementById('videoHours');
-  const otHours      = document.getElementById('otHours');
-  const km           = document.getElementById('km');
-  const droneMode    = document.getElementById('droneMode');
-  const rawFiles     = document.getElementById('rawFiles');
-  const afterSession = document.getElementById('afterSession');
+  const photoTeam   = document.getElementById('photoTeam');
+  const videoTeam   = document.getElementById('videoTeam');
+  const otHours     = document.getElementById('otHours');
+  const km          = document.getElementById('km');
+  const droneMode   = document.getElementById('droneMode');
+  const rawFiles    = document.getElementById('rawFiles');
+  const afterSession= document.getElementById('afterSession');
+  const totalEUR    = document.getElementById('totalEUR');
+  const totalBGN    = document.getElementById('totalBGN');
+  const breakdown   = document.getElementById('breakdown');
+  const resetBtn    = document.getElementById('resetCalc');
 
-  const totalEUR  = document.getElementById('totalEUR');
-  const totalBGN  = document.getElementById('totalBGN');
-  const breakdown = document.getElementById('breakdown');
-  const resetBtn  = document.getElementById('resetCalc');
-
-  function moneyEUR(n){ return `${Math.round(n)}€`; }
-  function moneyBGN(n){ return `${Math.round(n)} лв.`; }
-
+  function moneyEUR(n){ return Math.round(n) + '€'; }
+  function moneyBGN(n){ return Math.round(n) + ' лв.'; }
   function line(label, value){
-    return `<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
+    return '<div class="line"><div>' + label + '</div><div class="r">' + moneyEUR(value) + '</div></div>';
   }
 
-  function calcHourlyPhoto(h){
-    if(h <= 0) return 0;
-    return PRICES.photoBase + (h - 1) * PRICES.photoPerHour;
-  }
-  function calcHourlyVideo(h){
-    if(h <= 0) return 0;
-    return PRICES.videoBase + (h - 1) * PRICES.videoPerHour;
-  }
-
-  function calc(){
-    const p  = parseInt(photoTeam.value, 10);
-    const v  = parseInt(videoTeam.value, 10);
-    const ph = parseInt(photoHours.value, 10);
-    const vh = parseInt(videoHours.value, 10);
+  function calcWedding(){
+    const p = parseInt(photoTeam.value, 10);
+    const v = parseInt(videoTeam.value, 10);
     const ot = parseInt(otHours.value, 10);
-    const kmVal = Math.max(0, parseFloat(km.value || "0"));
+    const kmVal = Math.max(0, parseFloat(km.value || '0'));
     const dMode = droneMode.value;
-
     const people = (isNaN(p)?0:p) + (isNaN(v)?0:v);
-    const weddingHours = 10 + ot;
+    const totalHours = 10 + ot;
 
     let total = 0;
     const lines = [];
 
-    // ---- Wedding photo/video (base up to 10h) ----
     if(p > 0){
       const val = PRICES.weddingPhoto[p] || 0;
       total += val;
-      lines.push(line(`Сватбена фотография: ${p} фотограф${p===1?'':'и'} (до 10ч)`, val));
+      lines.push(line('Сватбена фотография: ' + p + ' фотограф' + (p===1?'':'и') + ' (до 10ч)', val));
     }
     if(v > 0){
       const val = PRICES.weddingVideo[v] || 0;
       total += val;
-      lines.push(line(`Сватбена видеография: ${v} оператор${v===1?'':'а'} (до 10ч)`, val));
+      lines.push(line('Сватбена видеография: ' + v + ' оператор' + (v===1?'':'и') + ' (до 10ч)', val));
     }
-
-    // ---- Overtime (wedding only) ----
     if(ot > 0 && people > 0){
       const val = ot * people * PRICES.overtimePerPersonPerHour;
       total += val;
-      lines.push(line(`Overtime: ${ot}ч × ${people} ${people===1?'човек':'души'} × 70€`, val));
+      lines.push(line('Overtime: ' + ot + 'ч × ' + people + ' човек × 70€', val));
     }
-
-    // ---- Hourly event shooting ----
-    if(ph > 0){
-      const val = calcHourlyPhoto(ph);
+    if(dMode === 'hour'){
+      const val = totalHours * PRICES.dronePerHour;
       total += val;
-      lines.push(line(`Фотограф на час: ${ph} ч (80€ + ${ph-1>0?ph-1+'×50€':''})`, val));
+      lines.push(line('Дрон: ' + totalHours + 'ч × 53€', val));
+    } else if(dMode === 'day'){
+      total += PRICES.dronePerDay;
+      lines.push(line('Дрон (ден)', PRICES.dronePerDay));
     }
-    if(vh > 0){
-      const val = calcHourlyVideo(vh);
-      total += val;
-      lines.push(line(`Оператор на час: ${vh} ч (100€ + ${vh-1>0?vh-1+'×60€':''})`, val));
-    }
-
-    // ---- Drone ----
-    // For drone "per hour", use wedding hours if wedding selected, else hourly hours
-    let activeHours = weddingHours;
-    if(people === 0 && (ph > 0 || vh > 0)){
-      activeHours = Math.max(ph, vh);
-    }
-    if(dMode === "hour"){
-      const val = activeHours * PRICES.dronePerHour;
-      total += val;
-      lines.push(line(`Дрон: ${activeHours}ч × 53€`, val));
-    } else if(dMode === "day"){
-      const val = PRICES.dronePerDay;
-      total += val;
-      lines.push(line(`Дрон (ден)`, val));
-    }
-
-    // ---- RAW ----
     if(rawFiles.checked){
       total += PRICES.rawFiles;
-      lines.push(line(`Сурови файлове`, PRICES.rawFiles));
+      lines.push(line('Сурови файлове', PRICES.rawFiles));
     }
-
-    // ---- After-session ----
     if(afterSession.checked){
       total += PRICES.afterSession;
-      lines.push(line(`Фотосесия в отделен ден`, PRICES.afterSession));
+      lines.push(line('Фотосесия в отделен ден', PRICES.afterSession));
     }
-
-    // ---- Transport ----
     if(kmVal > 0){
       const val = kmVal * PRICES.transportPerKm;
       total += val;
-      lines.push(line(`Транспорт: ${kmVal} км × 0.50€`, val));
+      lines.push(line('Транспорт: ' + kmVal + ' км × 0.50€', val));
     }
 
     totalEUR.textContent = moneyEUR(total);
     totalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
-    breakdown.innerHTML = lines.length
-      ? lines.join('')
-      : `<div class="help">Избери услуга, за да се калкулира цена.</div>`;
+    breakdown.innerHTML = lines.length ? lines.join('') : '<div class="help">Избери фото и/или видео, за да се калкулира цена.</div>';
   }
 
-  function reset(){
-    photoTeam.value    = "0";
-    videoTeam.value    = "0";
-    photoHours.value   = "0";
-    videoHours.value   = "0";
-    otHours.value      = "0";
-    km.value           = "0";
-    droneMode.value    = "none";
-    rawFiles.checked   = false;
+  function resetWedding(){
+    photoTeam.value = '0';
+    videoTeam.value = '0';
+    otHours.value = '0';
+    km.value = '0';
+    droneMode.value = 'none';
+    rawFiles.checked = false;
     afterSession.checked = false;
-    calc();
+    calcWedding();
   }
 
-  [photoTeam, videoTeam, photoHours, videoHours, otHours, km, droneMode, rawFiles, afterSession].forEach(el => {
-    el.addEventListener('input', calc);
-    el.addEventListener('change', calc);
+  [photoTeam, videoTeam, otHours, km, droneMode, rawFiles, afterSession].forEach(el => {
+    el.addEventListener('input', calcWedding);
+    el.addEventListener('change', calcWedding);
   });
+  resetBtn.addEventListener('click', resetWedding);
+  calcWedding();
 
-  resetBtn.addEventListener('click', reset);
-  calc();
+  // ===== HOURLY CALCULATOR =====
+  // Event photography: 1 person base 66€ + 47€/extra hour; 2 people base 120€ + 66€/extra hour
+  // Event videography: 1 person base 100€ + 53€/extra hour; 2 people base 133€ + 66€/extra hour
+
+  const HOURLY = {
+    photo: {
+      1: { base: 66, extra: 47 },
+      2: { base: 120, extra: 66 }
+    },
+    video: {
+      1: { base: 100, extra: 53 },
+      2: { base: 133, extra: 66 }
+    },
+    transportPerKm: 0.50
+  };
+
+  const hPhotoCount = document.getElementById('hPhotoCount');
+  const hPhotoHours = document.getElementById('hPhotoHours');
+  const hVideoCount = document.getElementById('hVideoCount');
+  const hVideoHours = document.getElementById('hVideoHours');
+  const hKm         = document.getElementById('hKm');
+  const hTotalEUR   = document.getElementById('hTotalEUR');
+  const hTotalBGN   = document.getElementById('hTotalBGN');
+  const hBreakdown  = document.getElementById('hBreakdown');
+  const resetHourly = document.getElementById('resetHourly');
+
+  function calcHourly(){
+    const pc = parseInt(hPhotoCount.value, 10);
+    const ph = parseInt(hPhotoHours.value, 10);
+    const vc = parseInt(hVideoCount.value, 10);
+    const vh = parseInt(hVideoHours.value, 10);
+    const kmVal = Math.max(0, parseFloat(hKm.value || '0'));
+
+    let total = 0;
+    const lines = [];
+
+    if(pc > 0){
+      const r = HOURLY.photo[pc];
+      const val = r.base + Math.max(0, ph - 1) * r.extra;
+      total += val;
+      lines.push(line(pc + ' фотограф' + (pc===1?'':'и') + ' × ' + ph + 'ч', val));
+    }
+    if(vc > 0){
+      const r = HOURLY.video[vc];
+      const val = r.base + Math.max(0, vh - 1) * r.extra;
+      total += val;
+      lines.push(line(vc + ' оператор' + (vc===1?'':'и') + ' × ' + vh + 'ч', val));
+    }
+    if(kmVal > 0){
+      const val = kmVal * HOURLY.transportPerKm;
+      total += val;
+      lines.push(line('Транспорт: ' + kmVal + ' км × 0.50€', val));
+    }
+
+    hTotalEUR.textContent = moneyEUR(total);
+    hTotalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
+    hBreakdown.innerHTML = lines.length ? lines.join('') : '<div class="help">Избери поне фотограф или оператор.</div>';
+  }
+
+  function doResetHourly(){
+    hPhotoCount.value = '0';
+    hPhotoHours.value = '1';
+    hVideoCount.value = '0';
+    hVideoHours.value = '1';
+    hKm.value = '0';
+    calcHourly();
+  }
+
+  [hPhotoCount, hPhotoHours, hVideoCount, hVideoHours, hKm].forEach(el => {
+    el.addEventListener('input', calcHourly);
+    el.addEventListener('change', calcHourly);
+  });
+  resetHourly.addEventListener('click', doResetHourly);
+  calcHourly();
+
 })();
 </script>
 
