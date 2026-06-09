@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-WJK01GL7PM');
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>За нас | Memory Photo & Video</title>
+  <title>За нас | Memory Photo &amp; Video</title>
   <link rel="icon" type="image/png" href="icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
 
@@ -25,56 +23,39 @@
     .nav-wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;gap:14px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream)}
     .brand img{height:44px}
-    .brand span{font-family:"Cormorant Garamond",serif;letter-spacing:.10em;font-weight:400}
-
     #menuToggle{display:none}
     .burger{display:none;width:44px;height:44px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(0,0,0,.12);align-items:center;justify-content:center;cursor:pointer}
     .burger div{width:18px;height:2px;background:rgba(245,240,232,.92);position:relative}
     .burger div::before,.burger div::after{content:"";position:absolute;left:0;width:18px;height:2px;background:rgba(245,240,232,.92)}
     .burger div::before{top:-6px}.burger div::after{top:6px}
-
     nav{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
     nav a{color:rgba(245,240,232,.92);text-decoration:none;font-size:.80rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0);transition:.15s ease}
     nav a:hover{background:rgba(0,0,0,.14);border-color:rgba(255,255,255,.12)}
     .nav-cta{border:1px solid rgba(201,169,110,.55)!important;background:rgba(0,0,0,.10)}
 
-    main{max-width:1000px;margin:22px auto;padding:0 18px}
-    h1{font-family:"Cormorant Garamond",serif;font-weight:400;letter-spacing:.10em;margin:14px 0 16px}
+    main{max-width:1000px;margin:22px auto;padding:0 18px 40px}
+    h1{font-family:"Cormorant Garamond",serif;font-weight:400;letter-spacing:.10em;margin:14px 0 22px;font-size:2rem}
 
-    .card{
-      background:rgba(0,0,0,.22);
-      border:1px solid rgba(201,169,110,.16);
-      border-radius:20px;
-      box-shadow:0 14px 35px rgba(0,0,0,.35);
-      padding:22px;
-      line-height:1.75;
-    }
-    .card h2{
-      font-family:"Cormorant Garamond",serif;
-      font-weight:400;
-      letter-spacing:.08em;
-      margin-bottom:12px;
-    }
-    .card p{opacity:.86;margin-bottom:14px}
+    .team{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px}
+    @media(max-width:640px){.team{grid-template-columns:1fr}}
 
-    .cta{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      display:inline-block;
-      padding:12px 18px;
-      border-radius:14px;
-      border:1px solid rgba(201,169,110,.55);
-      background:rgba(10,8,6,.58);
-      color:rgba(232,213,176,.96);
-      text-decoration:none;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:600;
-      font-size:.78rem;
-    }
+    .team-card{background:rgba(0,0,0,.22);border:1px solid rgba(201,169,110,.16);border-radius:20px;box-shadow:0 14px 35px rgba(0,0,0,.35);overflow:hidden}
+    .team-card img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top center;display:block;border-bottom:1px solid rgba(201,169,110,.16)}
+    .team-info{padding:20px 22px 24px}
+    .team-info h2{font-family:"Cormorant Garamond",serif;font-weight:400;letter-spacing:.08em;font-size:1.35rem;margin-bottom:4px;color:var(--gold)}
+    .team-role{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;opacity:.60;margin-bottom:14px}
+    .team-info p{opacity:.86;font-size:.88rem;line-height:1.75;margin-bottom:10px}
+
+    .card{background:rgba(0,0,0,.22);border:1px solid rgba(201,169,110,.16);border-radius:20px;box-shadow:0 14px 35px rgba(0,0,0,.35);padding:22px 26px;line-height:1.75}
+    .card h2{font-family:"Cormorant Garamond",serif;font-weight:400;letter-spacing:.08em;margin-bottom:12px;font-size:1.2rem}
+    .card p{opacity:.86;margin-bottom:14px;font-size:.90rem}
+    .card p:last-of-type{margin-bottom:0}
+    .cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:12px 18px;border-radius:14px;border:1px solid rgba(201,169,110,.55);background:rgba(10,8,6,.58);color:rgba(232,213,176,.96);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;font-weight:600;font-size:.78rem;transition:.15s ease}
     .btn:hover{background:rgba(0,0,0,.55);transform:translateY(-1px)}
 
     footer{max-width:1200px;margin:24px auto 30px;padding:0 18px;color:rgba(245,240,232,.60);font-size:.82rem}
-    @media (max-width: 880px){
+    @media(max-width:880px){
       .burger{display:flex}
       nav{display:none;width:100%;padding:12px 0 4px;gap:8px}
       #menuToggle:checked ~ nav{display:flex}
@@ -84,61 +65,66 @@
 </head>
 
 <body>
- <header>
-  <div class="nav-wrap">
-    <a class="brand" href="index.html" aria-label="Начало">
-      <img src="icon.png" alt="Икона" style="width:34px;height:34px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.10);">
-      <span style="font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:.10em;font-size:1.05rem;white-space:nowrap;opacity:.95;">
-        Memory Photo &amp; Video
-      </span>
-    </a>
-
-    <input id="menuToggle" type="checkbox" />
-    <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
-
-    <nav>
-      <a href="index.html">Начало</a>
-      <a href="portfolio.html">Портфолио</a>
-      <a href="uslugi-ceni.html">Ценоразпис</a>
-      <a href="availability.html">Свободни дати</a>
-      <a href="about.html" class="nav-cta">За нас</a>
-    </nav>
-  </div>
-</header>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="Начало">
+        <img src="icon.png" alt="Икона" style="width:34px;height:34px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.10);">
+        <span style="font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:.10em;font-size:1.05rem;white-space:nowrap;opacity:.95;">
+          Memory Photo &amp; Video
+        </span>
+      </a>
+      <input id="menuToggle" type="checkbox" />
+      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+      <nav>
+        <a href="index.html">Начало</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="uslugi-ceni.html">Ценоразпис</a>
+        <a href="availability.html">Свободни дати</a>
+        <a href="about.html" class="nav-cta">За нас</a>
+      </nav>
+    </div>
+  </header>
 
   <main>
     <h1>За нас</h1>
 
+    <div class="team">
+
+      <div class="team-card">
+        <img src="mario.jpg" alt="Марио Орешков — видеограф" loading="lazy" />
+        <div class="team-info">
+          <h2>Марио Орешков</h2>
+          <div class="team-role">Видеограф · Основател</div>
+          <p>Страстта ми към фотографията и видеографията започна още през 2010 г., когато се присъединих към местния фотоклуб в Кърджали. През 2012 г. направих първата си стъпка в света на събитийната фотография като асистент към фото студио „Декор" — там положих основите на занаята.</p>
+          <p>В годините след това изградих свой стил — внимание към светлината, емоцията и детайла, които превръщат обикновения момент в незабравим спомен.</p>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <img src="victor.jpg" alt="Фотограф и оператор — Memory Photo &amp; Video" loading="lazy" />
+        <div class="team-info">
+          <h2>Виктор Орешков</h2>
+          <div class="team-role">Фотограф &amp; Видеооператор · Съосновател</div>
+          <p>Виктор навлезе в света на фотографията през 2015–2016 г. и бързо разви свой поглед и усет за кадъра — особено за динамичните и емоционални моменти по време на събитие.</p>
+          <p>Днес той е равностоен партньор и незаменима част от екипа, отговарящ за фотозаснемането, режисурата и монтажа.</p>
+        </div>
+      </div>
+
+    </div>
+
     <div class="card">
-      <h2>Какво предлагаме</h2>
-
-      <p>
-        Предлагаме професионални фото и видео услуги, специализирани в заснемането на сватбени и семейни тържества.
-        Уловете най-ценните си моменти с внимание към детайлите, креативност и лично отношение.
-      </p>
-
-      <p>
-        Ние ще запечатаме емоциите, усмивките и магията на Вашия специален ден,
-        създавайки незабравими спомени, които ще пазите завинаги.
-      </p>
-
-      <p>
-        Независимо дали става въпрос за сватба, годеж, юбилей или семейно събиране,
-        нашият екип ще осигури висококачествени кадри и професионален монтаж,
-        съобразен с Вашия стил и желания.
-      </p>
-
-      <p>
-        Доверете ни се, за да разкажем Вашата история по най-добрия начин!
-      </p>
-
+      <h2>Нашата история</h2>
+      <p>През 2017 г. обединихме уменията и страстта си и основахме <strong>Memory Photo &amp; Video</strong> — студио, посветено на заснемането на сватбени и семейни тържества в Кърджали и региона.</p>
+      <p>Специализирани сме в сватби, кръщенета, годежи, рождени дни и фирмени събития. Работим в двоен екип — фотограф и видеооператор — за да уловим всеки важен момент без нищо да убягне.</p>
+      <p>Доверете ни се, за да разкажем Вашата история по най-добрия начин!</p>
       <div class="cta">
-        <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Резервации</a>
+        <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a class="btn" href="uslugi-ceni.html">Услуги и цени</a>
+        <a class="btn" href="availability.html">Свободни дати</a>
       </div>
     </div>
   </main>
 
-  <footer>© 2026 Memory Photo & Video</footer>
+  <footer>© 2026 Memory Photo &amp; Video</footer>
 </body>
 </html>
