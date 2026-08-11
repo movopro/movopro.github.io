@@ -355,51 +355,6 @@ nav a:hover{
   border-color: rgba(255, 140, 0, .72);
 }
 
-/* Специално маркирани дати */
-.featured{
-  position:relative;
-  background:linear-gradient(135deg, rgba(201,169,110,.30), rgba(201,169,110,.14));
-  border-color:rgba(232,213,176,.92);
-  box-shadow:0 0 0 1px rgba(201,169,110,.24), 0 10px 24px rgba(201,169,110,.18);
-}
-
-.featured::before{
-  content:"★";
-  position:absolute;
-  top:6px;
-  right:8px;
-  font-size:.72rem;
-  color:var(--gold-light);
-  opacity:.95;
-}
-
-.featured::after{
-  content:attr(data-note);
-  position:absolute;
-  left:50%;
-  bottom:calc(100% + 8px);
-  transform:translateX(-50%) translateY(6px);
-  background:rgba(15,13,11,.96);
-  color:var(--gold-light);
-  border:1px solid rgba(201,169,110,.45);
-  border-radius:12px;
-  padding:8px 10px;
-  font-size:.68rem;
-  line-height:1.3;
-  white-space:nowrap;
-  box-shadow:0 14px 30px rgba(0,0,0,.38);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease;
-  z-index:4;
-}
-
-.featured:hover::after,
-.featured:focus-visible::after{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
 /* Легенда */
 .legend{
   margin-top:18px;
@@ -420,7 +375,6 @@ nav a:hover{
 .dot-free{ background: rgba(0, 180, 90, .9); }
 .dot-busy{ background: rgba(220, 45, 45, .95); }
 .dot-partial{ background: rgba(255, 140, 0, .95); }
-.dot-featured{ background: rgba(201,169,110,.95); box-shadow:0 0 0 3px rgba(201,169,110,.18); }
 
 /* ===== FOOTER ===== */
 footer{
@@ -469,12 +423,6 @@ footer{
     min-width:52px;
     height:32px;
     padding:0 12px;
-  }
-
-  .featured::after{
-    white-space:normal;
-    width:min(220px, calc(100vw - 56px));
-    text-align:center;
   }
 }
 
@@ -533,7 +481,6 @@ footer{
         <span class="legend-item"><i class="dot dot-free"></i> Свободно</span>
         <span class="legend-item"><i class="dot dot-partial"></i> Само фотограф</span>
         <span class="legend-item"><i class="dot dot-busy"></i> Заето</span>
-        <span class="legend-item"><i class="dot dot-featured"></i> Специално отбелязани дати</span>
       </div>
     </div>
   </div>
@@ -586,9 +533,8 @@ footer{
         "2026-09-13",
         "2026-10-04"
       ]),
-      featured: {},
-      minView: new Date(2026, 2, 1),
-      maxView: new Date(2026, 9, 1)
+      minView: new Date(2026, 7, 1),
+      maxView: new Date(2026, 11, 1)
     },
     2027: {
       busy: new Set([
@@ -596,10 +542,6 @@ footer{
         "2027-08-21"
       ]),
       partial: new Set([]),
-      featured: {
-        "2027-07-17": "17.07.2027",
-        "2027-08-21": "21.08.2027"
-      },
       minView: new Date(2027, 0, 1),
       maxView: new Date(2027, 11, 1)
     }
@@ -617,13 +559,23 @@ footer{
   if(!grid || !label || !prev || !next || !yearToggle) return;
 
   let activeYear = 2026;
-  let view = new Date(calendarData[activeYear].minView.getFullYear(), calendarData[activeYear].minView.getMonth(), 1);
+  let view = new Date(2026, Math.max(new Date().getMonth(), calendarData[2026].minView.getMonth()), 1);
 
   function pad(n){ return String(n).padStart(2,"0"); }
   function fmt(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
 
   function getConfig(){
     return calendarData[activeYear];
+  }
+
+  function getDefaultView(year){
+    const config = calendarData[year];
+    if(year === 2026){
+      const currentMonth = new Date().getMonth();
+      const targetMonth = Math.min(Math.max(currentMonth, config.minView.getMonth()), config.maxView.getMonth());
+      return new Date(2026, targetMonth, 1);
+    }
+    return new Date(config.minView.getFullYear(), config.minView.getMonth(), 1);
   }
 
   function clampView(){
@@ -669,7 +621,7 @@ footer{
     const first=new Date(y,m,1);
     const last=new Date(y,m+1,0);
     const offset=(first.getDay()+6)%7;
-    const { busy, partial, featured } = getConfig();
+    const { busy, partial } = getConfig();
 
     for(let i=0;i<offset;i++){
       const e=document.createElement("div");
@@ -684,15 +636,8 @@ footer{
       const e=document.createElement("div");
       const isBusy = busy.has(key);
       const isPartial = partial.has(key);
-      const isFeatured = Object.prototype.hasOwnProperty.call(featured, key);
 
       e.className = "cell " + (isBusy ? "busy" : (isPartial ? "partial" : "free"));
-      if(isFeatured){
-        e.classList.add("featured");
-        e.setAttribute("data-note", featured[key]);
-        e.setAttribute("tabindex", "0");
-        e.setAttribute("aria-label", "Отбелязана дата " + featured[key]);
-      }
       e.textContent = d;
 
       grid.appendChild(e);
@@ -703,7 +648,7 @@ footer{
 
   function setYear(year){
     activeYear = year;
-    view = new Date(calendarData[activeYear].minView.getFullYear(), calendarData[activeYear].minView.getMonth(), 1);
+    view = getDefaultView(year);
     render();
   }
 
