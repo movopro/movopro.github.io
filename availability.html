@@ -211,6 +211,93 @@ nav a:hover{
   background:rgba(201,169,110,.15);
 }
 
+.year-switch{
+  display:flex;
+  justify-content:center;
+  margin:22px 0 8px;
+}
+
+.year-toggle{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 22px;
+  border-radius:999px;
+  border:1px solid rgba(201,169,110,.45);
+  background:linear-gradient(135deg, rgba(201,169,110,.18), rgba(30,92,134,.16));
+  color:var(--cream);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:.78rem;
+  cursor:pointer;
+  overflow:hidden;
+  box-shadow:0 14px 34px rgba(0,0,0,.28);
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.year-toggle::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:inherit;
+  background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
+  opacity:.9;
+  pointer-events:none;
+}
+
+.year-toggle::after{
+  content:"";
+  position:absolute;
+  inset:-30% auto -30% -20%;
+  width:90px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  transform:skewX(-20deg);
+  transition:transform .7s ease;
+  pointer-events:none;
+}
+
+.year-toggle:hover,
+.year-toggle:focus-visible{
+  transform:translateY(-2px) scale(1.01);
+  box-shadow:0 18px 40px rgba(0,0,0,.34), 0 0 0 6px rgba(201,169,110,.06);
+  border-color:rgba(232,213,176,.72);
+}
+
+.year-toggle:hover::after,
+.year-toggle:focus-visible::after{
+  transform:translateX(240px) skewX(-20deg);
+}
+
+.year-toggle-text,
+.year-toggle-badge{
+  position:relative;
+  z-index:1;
+}
+
+.year-toggle-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:56px;
+  height:34px;
+  padding:0 14px;
+  border-radius:999px;
+  background:rgba(15,13,11,.34);
+  border:1px solid rgba(255,255,255,.1);
+  font-weight:600;
+  letter-spacing:.12em;
+  color:var(--gold-light);
+}
+
+.year-toggle[data-target-year="2027"] .year-toggle-text::before{
+  content:"Отвори";
+}
+
+.year-toggle[data-target-year="2026"] .year-toggle-text::before{
+  content:"Назад към";
+}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(7,1fr);
@@ -268,6 +355,51 @@ nav a:hover{
   border-color: rgba(255, 140, 0, .72);
 }
 
+/* Специално маркирани дати */
+.featured{
+  position:relative;
+  background:linear-gradient(135deg, rgba(201,169,110,.30), rgba(201,169,110,.14));
+  border-color:rgba(232,213,176,.92);
+  box-shadow:0 0 0 1px rgba(201,169,110,.24), 0 10px 24px rgba(201,169,110,.18);
+}
+
+.featured::before{
+  content:"★";
+  position:absolute;
+  top:6px;
+  right:8px;
+  font-size:.72rem;
+  color:var(--gold-light);
+  opacity:.95;
+}
+
+.featured::after{
+  content:attr(data-note);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 8px);
+  transform:translateX(-50%) translateY(6px);
+  background:rgba(15,13,11,.96);
+  color:var(--gold-light);
+  border:1px solid rgba(201,169,110,.45);
+  border-radius:12px;
+  padding:8px 10px;
+  font-size:.68rem;
+  line-height:1.3;
+  white-space:nowrap;
+  box-shadow:0 14px 30px rgba(0,0,0,.38);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
+  z-index:4;
+}
+
+.featured:hover::after,
+.featured:focus-visible::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
 /* Легенда */
 .legend{
   margin-top:18px;
@@ -288,6 +420,7 @@ nav a:hover{
 .dot-free{ background: rgba(0, 180, 90, .9); }
 .dot-busy{ background: rgba(220, 45, 45, .95); }
 .dot-partial{ background: rgba(255, 140, 0, .95); }
+.dot-featured{ background: rgba(201,169,110,.95); box-shadow:0 0 0 3px rgba(201,169,110,.18); }
 
 /* ===== FOOTER ===== */
 footer{
@@ -323,6 +456,25 @@ footer{
   .cal-btn{
     width: 40px; height: 40px;
     border-radius: 12px;
+  }
+
+  .year-toggle{
+    width:100%;
+    justify-content:center;
+    padding:13px 16px;
+    letter-spacing:.12em;
+  }
+
+  .year-toggle-badge{
+    min-width:52px;
+    height:32px;
+    padding:0 12px;
+  }
+
+  .featured::after{
+    white-space:normal;
+    width:min(220px, calc(100vw - 56px));
+    text-align:center;
   }
 }
 
@@ -370,10 +522,18 @@ footer{
 
       <div class="grid" id="grid"></div>
 
+      <div class="year-switch">
+        <button class="year-toggle" id="yearToggle" type="button" data-target-year="2027" aria-label="Отвори календара за 2027">
+          <span class="year-toggle-text"></span>
+          <span class="year-toggle-badge">2027</span>
+        </button>
+      </div>
+
       <div class="legend">
         <span class="legend-item"><i class="dot dot-free"></i> Свободно</span>
         <span class="legend-item"><i class="dot dot-partial"></i> Само фотограф</span>
         <span class="legend-item"><i class="dot dot-busy"></i> Заето</span>
+        <span class="legend-item"><i class="dot dot-featured"></i> Специално отбелязани дати</span>
       </div>
     </div>
   </div>
@@ -385,48 +545,61 @@ footer{
 
 <script>
 (function(){
-  const busy = new Set([
-    "2026-03-14",
-    "2026-04-18",
-    "2026-04-25",
-    "2026-05-16",
-    "2026-05-24",
-    "2026-05-25",
-    "2026-05-26",
-    "2026-05-28",
-    "2026-05-30",
-    "2026-06-06",
-    "2026-06-14",
-    "2026-06-20",
-    "2026-06-26",
-    "2026-06-27",
-    "2026-07-18",
-    "2026-07-28",
-    "2026-07-30",
-    "2026-08-08",
-    "2026-08-15",
-    "2026-08-23",
-    "2026-09-26"
-  ]);
-
-  const partial = new Set([
-    "2026-06-13",
-    "2026-07-10",
-    "2026-07-11",
-    "2026-07-12",
-    "2026-07-14",
-    "2026-07-19",
-    "2026-07-24",
-    "2026-07-25",
-    "2026-08-16",
-    "2026-08-29",
-    "2026-09-12",
-    "2026-09-13",
-    "2026-10-04"
-  ]);
-
-  const minView = new Date(2026, 2, 1);
-  const maxView = new Date(2026, 9, 1);
+  const calendarData = {
+    2026: {
+      busy: new Set([
+        "2026-03-14",
+        "2026-04-18",
+        "2026-04-25",
+        "2026-05-16",
+        "2026-05-24",
+        "2026-05-25",
+        "2026-05-26",
+        "2026-05-28",
+        "2026-05-30",
+        "2026-06-06",
+        "2026-06-14",
+        "2026-06-20",
+        "2026-06-26",
+        "2026-06-27",
+        "2026-07-18",
+        "2026-07-28",
+        "2026-07-30",
+        "2026-08-08",
+        "2026-08-15",
+        "2026-08-23",
+        "2026-09-26"
+      ]),
+      partial: new Set([
+        "2026-06-13",
+        "2026-07-10",
+        "2026-07-11",
+        "2026-07-12",
+        "2026-07-14",
+        "2026-07-19",
+        "2026-07-24",
+        "2026-07-25",
+        "2026-08-16",
+        "2026-08-29",
+        "2026-09-12",
+        "2026-09-13",
+        "2026-10-04"
+      ]),
+      featured: {},
+      minView: new Date(2026, 2, 1),
+      maxView: new Date(2026, 9, 1)
+    },
+    2027: {
+      busy: new Set([]),
+      partial: new Set([]),
+      featured: {
+        "2027-07-17": "17.07.2027",
+        "2027-08-21": "21.08.2027"
+      },
+      minView: new Date(2027, 0, 1),
+      maxView: new Date(2027, 11, 1)
+    }
+  };
 
   const monthNames = ["Януари","Февруари","Март","Април","Май","Юни","Юли","Август","Септември","Октомври","Ноември","Декември"];
   const dow = ["Пн","Вт","Ср","Чт","Пт","Сб","Нд"];
@@ -435,22 +608,28 @@ footer{
   const label = document.getElementById("monthLabel");
   const prev = document.getElementById("prev");
   const next = document.getElementById("next");
+  const yearToggle = document.getElementById("yearToggle");
 
-  if(!grid || !label || !prev || !next) return;
+  if(!grid || !label || !prev || !next || !yearToggle) return;
 
-  let today = new Date();
-  let view = new Date(today.getFullYear(), today.getMonth(), 1);
-
+  let activeYear = 2026;
+  let view = new Date(calendarData[activeYear].minView.getFullYear(), calendarData[activeYear].minView.getMonth(), 1);
 
   function pad(n){ return String(n).padStart(2,"0"); }
   function fmt(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
 
+  function getConfig(){
+    return calendarData[activeYear];
+  }
+
   function clampView(){
+    const { minView, maxView } = getConfig();
     if(view < minView) view = new Date(minView.getFullYear(), minView.getMonth(), 1);
     if(view > maxView) view = new Date(maxView.getFullYear(), maxView.getMonth(), 1);
   }
 
   function updateButtons(){
+    const { minView, maxView } = getConfig();
     const atMin = (view.getFullYear() === minView.getFullYear() && view.getMonth() === minView.getMonth());
     const atMax = (view.getFullYear() === maxView.getFullYear() && view.getMonth() === maxView.getMonth());
 
@@ -461,6 +640,11 @@ footer{
     next.style.opacity = atMax ? ".35" : "1";
     prev.style.cursor = atMin ? "not-allowed" : "pointer";
     next.style.cursor = atMax ? "not-allowed" : "pointer";
+
+    const nextYear = activeYear === 2026 ? 2027 : 2026;
+    yearToggle.dataset.targetYear = String(nextYear);
+    yearToggle.setAttribute("aria-label", (activeYear === 2026 ? "Отвори календара за " : "Назад към календара за ") + nextYear);
+    yearToggle.querySelector(".year-toggle-badge").textContent = nextYear;
   }
 
   function render(){
@@ -481,6 +665,7 @@ footer{
     const first=new Date(y,m,1);
     const last=new Date(y,m+1,0);
     const offset=(first.getDay()+6)%7;
+    const { busy, partial, featured } = getConfig();
 
     for(let i=0;i<offset;i++){
       const e=document.createElement("div");
@@ -495,14 +680,27 @@ footer{
       const e=document.createElement("div");
       const isBusy = busy.has(key);
       const isPartial = partial.has(key);
+      const isFeatured = Object.prototype.hasOwnProperty.call(featured, key);
 
       e.className = "cell " + (isBusy ? "busy" : (isPartial ? "partial" : "free"));
+      if(isFeatured){
+        e.classList.add("featured");
+        e.setAttribute("data-note", featured[key]);
+        e.setAttribute("tabindex", "0");
+        e.setAttribute("aria-label", "Отбелязана дата " + featured[key]);
+      }
       e.textContent = d;
 
       grid.appendChild(e);
     }
 
     updateButtons();
+  }
+
+  function setYear(year){
+    activeYear = year;
+    view = new Date(calendarData[activeYear].minView.getFullYear(), calendarData[activeYear].minView.getMonth(), 1);
+    render();
   }
 
   prev.onclick=()=>{
@@ -515,6 +713,10 @@ footer{
     if(next.disabled) return;
     view=new Date(view.getFullYear(), view.getMonth()+1, 1);
     render();
+  };
+
+  yearToggle.onclick=()=>{
+    setYear(activeYear === 2026 ? 2027 : 2026);
   };
 
   render();
