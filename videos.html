@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJK01GL7PM');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Сватбени видеа | Memory Photo & Video</title>
+  <meta name="description" content="Сватбени трейлъри и cinematic wedding films от Memory Photo & Video. Истински емоции, стилна визия и внимателно подбрани моменти." />
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Сватбени видеа | Memory Photo & Video">
+  <meta property="og:description" content="Сватбени трейлъри и cinematic wedding films от Memory Photo & Video.">
+  <meta property="og:url" content="https://memoryphotoandvideo.com/videos.html">
+  <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root{
+      --cream:#f5f0e8;
+      --dark:#0f0d0b;
+      --gold:#c9a96e;
+      --gold-light:#e8d5b0;
+      --nav:#1e5c86;
+    }
+
+    body{
+      font-family:'Montserrat', sans-serif;
+      background: var(--dark);
+      color: var(--cream);
+      min-height: 100vh;
+    }
+
+    header{
+      background: var(--nav);
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+
+    .nav-wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:var(--cream);
+    }
+
+    .brand img{
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.10);
+    }
+
+    .brand span{
+      font-family:"Cormorant Garamond",serif;
+      letter-spacing:.10em;
+      font-weight:400;
+      font-size:1.05rem;
+      white-space:nowrap;
+      opacity:.95;
+    }
+
+    #menuToggle{display:none}
+
+    .burger{
+      display:none;
+      width:44px;
+      height:44px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:12px;
+      background:rgba(0,0,0,.12);
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+
+    .burger div{
+      width:18px;
+      height:2px;
+      background:rgba(245,240,232,.92);
+      position:relative;
+    }
+
+    .burger div::before,
+    .burger div::after{
+      content:"";
+      position:absolute;
+      left:0;
+      width:18px;
+      height:2px;
+      background:rgba(245,240,232,.92);
+    }
+
+    .burger div::before{top:-6px}
+    .burger div::after{top:6px}
+
+    nav{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    nav a{
+      color:rgba(245,240,232,.92);
+      text-decoration:none;
+      font-size:.80rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0);
+      transition:.15s ease;
+    }
+
+    nav a:hover{
+      background:rgba(0,0,0,.14);
+      border-color:rgba(255,255,255,.12);
+    }
+
+    .nav-cta{
+      border:1px solid rgba(201,169,110,.55)!important;
+      background:rgba(0,0,0,.10);
+    }
+
+    main{
+      max-width:1200px;
+      margin:0 auto;
+      padding:42px 18px 70px;
+    }
+
+    .hero{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:34px;
+    }
+
+    .hero-text h1{
+      font-family:"Cormorant Garamond",serif;
+      font-weight:400;
+      letter-spacing:.10em;
+      color:var(--gold-light);
+      font-size:clamp(2rem,4vw,3.2rem);
+      margin-bottom:10px;
+    }
+
+    .hero-text p{
+      max-width:760px;
+      line-height:1.8;
+      opacity:.86;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 18px;
+      border-radius:999px;
+      text-decoration:none;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:.74rem;
+      transition:.18s ease;
+      border:1px solid rgba(201,169,110,.35);
+    }
+
+    .btn-primary{
+      background:rgba(201,169,110,.18);
+      color:var(--cream);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.03);
+      color:var(--gold-light);
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(232,213,176,.65);
+    }
+
+    .videos-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:20px;
+    }
+
+    .video-card{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(201,169,110,.18);
+      background:rgba(255,255,255,.03);
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
+    }
+
+    .video-frame{
+      aspect-ratio:16 / 9;
+      background:#000;
+    }
+
+    .video-frame iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+
+    .video-content{
+      padding:18px 18px 20px;
+    }
+
+    .video-content h2{
+      font-family:"Cormorant Garamond",serif;
+      font-weight:400;
+      color:var(--gold-light);
+      font-size:1.8rem;
+      margin-bottom:8px;
+      letter-spacing:.04em;
+    }
+
+    .video-content p{
+      line-height:1.75;
+      opacity:.82;
+      margin-bottom:14px;
+    }
+
+    .video-meta{
+      font-size:.74rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(232,213,176,.72);
+    }
+
+    .cta-note{
+      margin-top:24px;
+      padding:18px 20px;
+      border-radius:18px;
+      border:1px solid rgba(201,169,110,.18);
+      background:rgba(255,255,255,.03);
+      color:rgba(245,240,232,.78);
+      line-height:1.8;
+    }
+
+    footer{
+      max-width:1200px;
+      margin:20px auto 30px;
+      padding:0 18px;
+      color:rgba(245,240,232,.60);
+      font-size:.82rem;
+    }
+
+    @media (max-width: 880px){
+      .burger{display:flex}
+      nav{
+        display:none;
+        width:100%;
+        padding:12px 0 4px;
+        gap:8px;
+      }
+      #menuToggle:checked ~ nav{display:flex}
+      nav a{
+        width:100%;
+        text-align:left;
+        padding:12px 12px;
+      }
+      .videos-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:640px){
+      main{padding-top:30px}
+      .hero{align-items:flex-start}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="Начало">
+        <img src="icon.png" alt="Икона">
+        <span>Memory Photo &amp; Video</span>
+      </a>
+
+      <input id="menuToggle" type="checkbox" />
+      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+
+      <nav>
+        <a href="index.html">Начало</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="videos.html" class="nav-cta">Видеа</a>
+        <a href="uslugi-ceni.html">Ценоразпис</a>
+        <a href="availability.html">Свободни дати</a>
+        <a href="about.html">За нас</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Сватбени видеа</h1>
+        <p>
+          Подбрани cinematic wedding trailers с фокус върху емоцията, атмосферата и истинските моменти от сватбения ден.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube канал</a>
+        <a class="btn btn-secondary" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </section>
+
+    <section class="videos-grid">
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1"
+            title="Svetlan & Victor | Cinematic Wedding Trailer"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-content">
+          <h2>Svetlan & Victor</h2>
+          <p>
+            Кратък сватбен трейлър с cinematic атмосфера, нежни детайли и емоционални моменти от специалния ден.
+          </p>
+          <div class="video-meta">Wedding Trailer • Cinematic Edit</div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID_2"
+            title="Wedding Trailer"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-content">
+          <h2>Maria & Nikola</h2>
+          <p>
+            Романтичен сватбен филм с естествена емоция, стилна визия и подбрани кадри от един незабравим ден.
+          </p>
+          <div class="video-meta">Wedding Film • Highlights</div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID_3"
+            title="Wedding Highlights"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-content">
+          <h2>Elena & Petar</h2>
+          <p>
+            Елегантен wedding highlights трейлър, създаден да предаде усещането, светлината и динамиката на деня.
+          </p>
+          <div class="video-meta">Wedding Highlights • Love Story</div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID_4"
+            title="Romantic Wedding Trailer"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-content">
+          <h2>Anna & Georgi</h2>
+          <p>
+            Сватбен трейлър с мек cinematic ритъм, емоционални акценти и красиво разказана визуална история.
+          </p>
+          <div class="video-meta">Cinematic Wedding Trailer</div>
+        </div>
+      </article>
+    </section>
+
+    <div class="cta-note">
+      За запитвания относно сватбено видеозаснемане, трейлъри и пълни wedding films: 
+      <a href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer" style="color: var(--gold-light);">Instagram</a>
+      /
+      <a href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer" style="color: var(--gold-light);">Facebook</a>
+    </div>
+  </main>
+
+  <footer>© 2026 Memory Photo & Video</footer>
+</body>
+</html>
