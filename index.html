@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,11 +13,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Memory Photo & Video</title>
-  <meta name="description" content="Сватбена фотография, видеография и cinematic visual storytelling от Memory Photo & Video. Премиум заснемане на сватби, събития и бранд видеа." />
+  <meta name="description" content="Сватбена фотография, видеография и premium visual storytelling от Memory Photo & Video." />
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Memory Photo & Video">
-  <meta property="og:description" content="Сватбена фотография, видеография и cinematic visual storytelling.">
+  <meta property="og:description" content="Сватбена фотография, видеография и premium visual storytelling.">
   <meta property="og:url" content="https://memoryphotoandvideo.com/">
   <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
   <meta property="og:image:secure_url" content="https://memoryphotoandvideo.com/og-image.jpg">
@@ -38,16 +39,14 @@
 
     :root{
       --cream:#f5f0e8;
-      --dark:#0b0908;
-      --dark-2:#15110e;
+      --dark:#0f0d0b;
+      --dark-soft:#171310;
       --gold:#c9a96e;
       --gold-light:#e8d5b0;
-      --gold-soft:rgba(201,169,110,.22);
-      --nav:rgba(17, 47, 69, .76);
+      --nav:#1e5c86;
       --line:rgba(255,255,255,.10);
       --glass:rgba(255,255,255,.05);
       --glass-strong:rgba(255,255,255,.08);
-      --shadow:0 20px 60px rgba(0,0,0,.45);
     }
 
     html{
@@ -56,13 +55,9 @@
 
     body{
       font-family:'Montserrat', sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(201,169,110,.12), transparent 24%),
-        radial-gradient(circle at 20% 20%, rgba(30,92,134,.20), transparent 28%),
-        linear-gradient(180deg, #0b0908 0%, #120f0d 38%, #0b0908 100%);
-      color: var(--cream);
-      min-height: 100vh;
-      overflow-x:hidden;
+      background:linear-gradient(to bottom, #0f0d0b 0%, #14110e 50%, #0f0d0b 100%);
+      color:var(--cream);
+      min-height:100vh;
     }
 
     a{
@@ -74,11 +69,11 @@
       top:0;
       left:0;
       right:0;
+      background:rgba(30,92,134,.88);
+      backdrop-filter:blur(12px);
       z-index:100;
-      backdrop-filter: blur(16px);
-      background:var(--nav);
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
       border-bottom:1px solid rgba(255,255,255,.08);
-      box-shadow:0 10px 30px rgba(0,0,0,.22);
     }
 
     .nav-wrap{
@@ -105,9 +100,8 @@
       height:34px;
       border-radius:10px;
       object-fit:cover;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.16);
-      box-shadow:0 10px 26px rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.10);
     }
 
     .brand span{
@@ -116,7 +110,7 @@
       letter-spacing:.10em;
       font-size:1.05rem;
       white-space:nowrap;
-      opacity:.96;
+      opacity:.95;
     }
 
     #menuToggle{display:none}
@@ -127,7 +121,7 @@
       height:44px;
       border:1px solid rgba(255,255,255,.18);
       border-radius:12px;
-      background:rgba(255,255,255,.05);
+      background:rgba(0,0,0,.12);
       align-items:center;
       justify-content:center;
       cursor:pointer;
@@ -169,160 +163,104 @@
       padding:10px 10px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,0);
-      transition:.2s ease;
+      transition:.15s ease;
     }
 
     nav a:hover{
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.10);
+      background:rgba(0,0,0,.14);
+      border-color:rgba(255,255,255,.12);
     }
 
     .nav-cta{
       border:1px solid rgba(201,169,110,.55)!important;
-      background:rgba(201,169,110,.08);
+      background:rgba(0,0,0,.10);
     }
 
     .hero{
       min-height:100vh;
-      padding:110px 18px 80px;
-      position:relative;
-      overflow:hidden;
+      padding:110px 18px 70px;
       display:flex;
       align-items:center;
-    }
-
-    .hero-bg{
-      position:absolute;
-      inset:0;
+      position:relative;
       overflow:hidden;
-      z-index:0;
     }
 
-    .hero-image{
+    .hero::before{
+      content:"";
       position:absolute;
       inset:0;
       background:
-        linear-gradient(rgba(5,5,5,.38), rgba(5,5,5,.62)),
-        url("hero.jpg") center center / cover no-repeat;
-      transform:scale(1.05);
-      filter:saturate(1.02) contrast(1.03);
+        linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.62)),
+        url("hero.jpg") center/cover no-repeat;
+      transform:scale(1.02);
+      z-index:0;
     }
 
-    .orb{
-      position:absolute;
-      border-radius:999px;
-      filter:blur(40px);
-      pointer-events:none;
-      opacity:.65;
-      mix-blend-mode:screen;
-    }
-
-    .orb-1{
-      width:340px;
-      height:340px;
-      top:10%;
-      left:8%;
-      background:rgba(201,169,110,.20);
-    }
-
-    .orb-2{
-      width:420px;
-      height:420px;
-      right:-40px;
-      top:14%;
-      background:rgba(30,92,134,.25);
-    }
-
-    .orb-3{
-      width:360px;
-      height:360px;
-      left:50%;
-      bottom:-120px;
-      transform:translateX(-50%);
-      background:rgba(201,169,110,.12);
-    }
-
-    .grid-glow{
+    .hero::after{
+      content:"";
       position:absolute;
       inset:0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-      background-size:70px 70px;
-      mask-image:linear-gradient(to bottom, rgba(0,0,0,.5), transparent 75%);
-      opacity:.10;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(201,169,110,.16), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.08), transparent 22%);
+      z-index:0;
+      pointer-events:none;
     }
 
     .hero-wrap{
       position:relative;
-      z-index:2;
+      z-index:1;
       max-width:1200px;
-      margin:0 auto;
       width:100%;
+      margin:0 auto;
       display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:34px;
+      grid-template-columns:1.05fr .95fr;
+      gap:38px;
       align-items:center;
     }
 
     .hero-copy{
-      max-width:720px;
+      max-width:640px;
     }
 
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
+    .hero-kicker{
+      display:inline-block;
       margin-bottom:16px;
-      padding:9px 14px;
-      border:1px solid rgba(201,169,110,.24);
+      padding:8px 14px;
+      border:1px solid rgba(201,169,110,.35);
       border-radius:999px;
-      background:rgba(0,0,0,.26);
-      backdrop-filter:blur(14px);
+      background:rgba(0,0,0,.18);
+      backdrop-filter:blur(8px);
       color:var(--gold-light);
       font-size:.72rem;
-      text-transform:uppercase;
       letter-spacing:.18em;
-    }
-
-    .eyebrow::before{
-      content:"";
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:var(--gold);
-      box-shadow:0 0 16px rgba(201,169,110,.7);
+      text-transform:uppercase;
     }
 
     .hero h1{
       font-family:'Cormorant Garamond', serif;
       font-weight:400;
-      line-height:.95;
-      letter-spacing:.04em;
-      font-size:clamp(3rem, 8vw, 6.8rem);
-      color:var(--gold-light);
+      line-height:.92;
+      letter-spacing:.03em;
+      font-size:clamp(3.2rem, 8vw, 6.2rem);
+      color:#fff6e8;
       margin-bottom:18px;
-      text-shadow:0 10px 35px rgba(0,0,0,.35);
+      text-shadow:0 8px 30px rgba(0,0,0,.35);
     }
 
-    .hero h1 span{
-      display:block;
-      color:#fff7ea;
-    }
-
-    .hero-copy p{
-      max-width:640px;
-      line-height:1.85;
+    .hero p{
       font-size:1rem;
+      line-height:1.9;
       color:rgba(245,240,232,.86);
-      margin-bottom:24px;
+      margin-bottom:28px;
+      max-width:600px;
     }
 
     .hero-actions{
       display:flex;
       gap:14px;
       flex-wrap:wrap;
-      margin-bottom:22px;
+      margin-bottom:16px;
     }
 
     .btn{
@@ -330,242 +268,94 @@
       align-items:center;
       justify-content:center;
       min-height:48px;
-      padding:0 22px;
-      border-radius:16px;
-      border:1px solid rgba(201,169,110,.45);
+      padding:0 20px;
+      border-radius:14px;
       text-decoration:none;
-      text-transform:uppercase;
       letter-spacing:.16em;
-      font-size:.76rem;
+      text-transform:uppercase;
+      font-size:.75rem;
       font-weight:600;
-      position:relative;
-      overflow:hidden;
-      backdrop-filter:blur(10px);
-      transition:transform .18s ease, border-color .18s ease, color .18s ease;
-    }
-
-    .btn::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      transform:scaleX(0);
-      transform-origin:left;
-      transition:transform .28s ease;
-      z-index:0;
-    }
-
-    .btn span{
-      position:relative;
-      z-index:1;
+      transition:.18s ease;
+      border:1px solid rgba(201,169,110,.42);
+      backdrop-filter:blur(8px);
     }
 
     .btn-primary{
-      color:#111;
       background:var(--gold-light);
-      border-color:rgba(232,213,176,.85);
-      box-shadow:0 18px 40px rgba(201,169,110,.18);
-    }
-
-    .btn-primary::before{
-      background:#fff;
+      color:var(--dark);
+      border-color:rgba(232,213,176,.86);
     }
 
     .btn-secondary{
+      background:rgba(0,0,0,.20);
       color:var(--gold-light);
-      background:rgba(255,255,255,.04);
-    }
-
-    .btn-secondary::before{
-      background:rgba(201,169,110,.18);
     }
 
     .btn:hover{
       transform:translateY(-2px);
       border-color:rgba(232,213,176,.85);
+      box-shadow:0 12px 30px rgba(0,0,0,.24);
     }
 
-    .btn:hover::before{
-      transform:scaleX(1);
+    .hero-note{
+      color:rgba(245,240,232,.66);
+      font-size:.88rem;
+      line-height:1.8;
     }
 
-    .hero-stats{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    .stat-chip{
-      padding:10px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      backdrop-filter:blur(14px);
-      font-size:.76rem;
-      letter-spacing:.08em;
-      color:rgba(245,240,232,.84);
-    }
-
-    .hero-visual{
-      position:relative;
-      min-height:560px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      perspective:1400px;
-    }
-
-    .hero-stack{
-      position:relative;
-      width:min(520px, 100%);
-      aspect-ratio:4 / 5;
-      transform-style:preserve-3d;
-    }
-
-    .glass-card{
-      position:absolute;
-      border-radius:30px;
+    .hero-card{
+      justify-self:end;
+      width:min(470px, 100%);
+      border-radius:28px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      backdrop-filter:blur(14px);
-      box-shadow:var(--shadow);
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter:blur(12px);
+      box-shadow:0 20px 60px rgba(0,0,0,.42);
+      transform:translateY(0);
+      transition:transform .35s ease, box-shadow .35s ease;
     }
 
-    .glass-card img{
+    .hero-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 28px 70px rgba(0,0,0,.50);
+    }
+
+    .hero-card img{
       width:100%;
       height:100%;
-      object-fit:cover;
       display:block;
+      object-fit:cover;
+      aspect-ratio:4/5;
     }
 
-    .card-back{
-      inset:10% 8% 18% 12%;
-      transform:translate3d(-30px, -10px, -120px) rotateY(10deg) rotateX(6deg);
-      opacity:.55;
-      filter:blur(.3px);
-    }
-
-    .card-mid{
-      inset:6% 2% 12% 18%;
-      transform:translate3d(24px, 8px, -40px) rotateY(-9deg) rotateX(5deg);
-      opacity:.75;
-    }
-
-    .card-front{
-      inset:0;
-      transform:translate3d(0,0,0) rotateY(-4deg) rotateX(2deg);
-    }
-
-    .floating-panel{
-      position:absolute;
-      backdrop-filter:blur(16px);
-      background:rgba(10,10,10,.36);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:22px;
-      box-shadow:0 18px 44px rgba(0,0,0,.30);
-      padding:16px 18px;
-      color:var(--cream);
-    }
-
-    .panel-top{
-      top:30px;
-      left:-22px;
-      width:210px;
-      transform:translateZ(80px);
-    }
-
-    .panel-bottom{
-      right:-34px;
-      bottom:34px;
-      width:240px;
-      transform:translateZ(70px);
-    }
-
-    .floating-label{
-      font-size:.70rem;
-      text-transform:uppercase;
-      letter-spacing:.16em;
-      color:rgba(232,213,176,.72);
-      margin-bottom:6px;
-    }
-
-    .floating-title{
-      font-family:'Cormorant Garamond', serif;
-      font-size:1.2rem;
-      color:var(--gold-light);
-      margin-bottom:5px;
-    }
-
-    .floating-text{
-      font-size:.90rem;
-      line-height:1.6;
-      color:rgba(245,240,232,.80);
-    }
-
-    .section{
+    .intro-section{
       max-width:1200px;
       margin:0 auto;
-      padding:90px 18px;
+      padding:90px 18px 30px;
     }
 
-    .section-intro{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:20px;
-      flex-wrap:wrap;
-      margin-bottom:28px;
-    }
-
-    .section-intro h2{
-      font-family:'Cormorant Garamond', serif;
-      font-weight:400;
-      font-size:clamp(2rem, 4vw, 3rem);
-      letter-spacing:.06em;
-      color:var(--gold-light);
-    }
-
-    .section-intro p{
-      max-width:720px;
-      line-height:1.8;
-      color:rgba(245,240,232,.80);
-    }
-
-    .value-grid{
+    .intro-grid{
       display:grid;
       grid-template-columns:repeat(3, minmax(0,1fr));
       gap:20px;
     }
 
-    .value-card{
+    .intro-card{
       padding:24px;
-      border-radius:24px;
-      border:1px solid rgba(201,169,110,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
-      box-shadow:0 14px 34px rgba(0,0,0,.24);
-      transform:translateY(20px);
-      opacity:0;
-      transition:opacity .7s ease, transform .7s ease, border-color .25s ease;
+      border-radius:22px;
+      border:1px solid rgba(201,169,110,.18);
+      background:rgba(255,255,255,.03);
+      box-shadow:0 12px 30px rgba(0,0,0,.24);
+      transition:.25s ease;
     }
 
-    .value-card.is-visible{
-      opacity:1;
-      transform:translateY(0);
+    .intro-card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(201,169,110,.38);
     }
 
-    .value-card:hover{
-      border-color:rgba(201,169,110,.35);
-    }
-
-    .value-number{
-      font-size:.76rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(232,213,176,.72);
-      margin-bottom:10px;
-    }
-
-    .value-card h3{
+    .intro-card h3{
       font-family:'Cormorant Garamond', serif;
       font-size:1.7rem;
       font-weight:400;
@@ -573,15 +363,15 @@
       margin-bottom:10px;
     }
 
-    .value-card p{
+    .intro-card p{
       line-height:1.8;
       color:rgba(245,240,232,.80);
     }
 
     .partner-section{
+      padding:80px 18px 100px;
       max-width:1200px;
       margin:0 auto;
-      padding:20px 18px 100px;
     }
 
     .partner-title{
@@ -598,18 +388,17 @@
       grid-template-columns:1.6fr .9fr;
       gap:40px;
       padding:40px;
-      border-radius:26px;
-      border:1px solid rgba(201,169,110,.18);
-      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
-      backdrop-filter:blur(10px);
-      transition:all .35s ease;
-      box-shadow:0 22px 56px rgba(0,0,0,.34);
+      border-radius:22px;
+      border:1px solid rgba(201,169,110,.25);
+      background:rgba(255,255,255,.02);
+      backdrop-filter:blur(8px);
+      transition:all .4s ease;
     }
 
     .partner-card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 30px 60px rgba(0,0,0,.52);
-      border-color:rgba(201,169,110,.34);
+      transform:translateY(-8px);
+      box-shadow:0 30px 60px rgba(0,0,0,.45);
+      border-color:rgba(201,169,110,.6);
     }
 
     .partner-accent{
@@ -618,9 +407,8 @@
       top:0;
       width:4px;
       height:100%;
-      background:linear-gradient(180deg, var(--gold-light), var(--gold));
+      background:var(--gold);
       transition:.3s ease;
-      border-radius:20px 0 0 20px;
     }
 
     .partner-card:hover .partner-accent{
@@ -629,7 +417,7 @@
 
     .partner-name{
       font-family:'Cormorant Garamond', serif;
-      font-size:1.95rem;
+      font-size:1.8rem;
       margin-bottom:12px;
       color:var(--gold-light);
     }
@@ -643,7 +431,7 @@
     .partner-meta{
       margin-bottom:22px;
       padding-left:18px;
-      line-height:1.9;
+      line-height:1.8;
       opacity:.85;
     }
 
@@ -654,8 +442,8 @@
     }
 
     .partner-btn{
-      padding:.78rem 1.8rem;
-      border:1px solid rgba(201,169,110,.5);
+      padding:.7rem 1.8rem;
+      border:1px solid var(--gold);
       text-decoration:none;
       color:var(--gold-light);
       font-size:.75rem;
@@ -663,13 +451,29 @@
       text-transform:uppercase;
       border-radius:14px;
       transition:.25s ease;
-      background:rgba(255,255,255,.03);
     }
 
     .partner-btn:hover{
       background:var(--gold);
       color:var(--dark);
-      box-shadow:0 10px 25px rgba(201,169,110,.28);
+      box-shadow:0 10px 25px rgba(201,169,110,.4);
+    }
+
+    .partner-photo{
+      width:140px;
+      height:140px;
+      object-fit:cover;
+      border-radius:22px;
+      border:1px solid rgba(201,169,110,.35);
+      background:rgba(0,0,0,.25);
+      transition:.35s ease;
+      box-shadow:0 18px 40px rgba(0,0,0,.45);
+    }
+
+    .partner-card:hover .partner-photo{
+      transform:scale(1.06);
+      border-color:rgba(201,169,110,.70);
+      box-shadow:0 22px 55px rgba(201,169,110,.18);
     }
 
     .partner-note{
@@ -679,32 +483,15 @@
       line-height:1.7;
     }
 
-    .partner-photo{
-      width:160px;
-      height:160px;
-      object-fit:cover;
-      border-radius:24px;
-      border:1px solid rgba(201,169,110,.35);
-      background:rgba(0,0,0,.25);
-      transition:.35s ease;
-      box-shadow:0 18px 40px rgba(0,0,0,.45);
-    }
-
-    .partner-card:hover .partner-photo{
-      transform:scale(1.05);
-      border-color:rgba(201,169,110,.60);
-      box-shadow:0 22px 55px rgba(201,169,110,.16);
-    }
-
     footer{
-      background:#070606;
+      background:#000;
       padding:30px 20px;
       text-align:center;
       font-size:.75rem;
       letter-spacing:.15em;
       text-transform:uppercase;
       color:rgba(245,240,232,.6);
-      border-top:1px solid rgba(201,169,110,.16);
+      border-top:1px solid rgba(201,169,110,.2);
     }
 
     @media (max-width: 980px){
@@ -712,11 +499,12 @@
         grid-template-columns:1fr;
       }
 
-      .hero-visual{
-        min-height:460px;
+      .hero-card{
+        justify-self:start;
+        max-width:420px;
       }
 
-      .value-grid{
+      .intro-grid{
         grid-template-columns:1fr;
       }
 
@@ -749,14 +537,6 @@
         padding-top:100px;
       }
 
-      .hero h1{
-        font-size:clamp(2.5rem, 13vw, 4rem);
-      }
-
-      .hero-copy p{
-        font-size:.96rem;
-      }
-
       .hero-actions,
       .partner-actions{
         flex-direction:column;
@@ -767,21 +547,20 @@
         width:100%;
       }
 
-      .panel-top{
-        left:0;
-        top:16px;
-        width:180px;
+      .hero-card{
+        max-width:100%;
+      }
+    }
+
+    @media (max-width: 520px){
+      .partner-actions{
+        flex-direction:column;
+        gap:10px;
       }
 
-      .panel-bottom{
-        right:0;
-        bottom:20px;
-        width:200px;
-      }
-
-      .partner-photo{
-        width:140px;
-        height:140px;
+      .partner-btn{
+        width:100%;
+        text-align:center;
       }
     }
   </style>
@@ -810,102 +589,58 @@
   </header>
 
   <section class="hero">
-    <div class="hero-bg">
-      <div class="hero-image" data-depth="0.08"></div>
-      <div class="orb orb-1" data-depth="0.20"></div>
-      <div class="orb orb-2" data-depth="0.14"></div>
-      <div class="orb orb-3" data-depth="0.10"></div>
-      <div class="grid-glow"></div>
-    </div>
-
     <div class="hero-wrap">
       <div class="hero-copy">
-        <div class="eyebrow">Premium Photo & Video Production</div>
-        <h1>Memory <span>Photo & Video</span></h1>
+        <div class="hero-kicker">Memory Photo & Video</div>
+        <h1>Premium photo & video with cinematic presence.</h1>
         <p>
-          Сватбена фотография, видеография и cinematic visual storytelling за хора и брандове, които искат не просто кадри, а усещане, атмосфера и завършено визуално присъствие.
+          Сватбена фотография, видеография и визуално съдържание с емоция, стил и завършено усещане за премиум присъствие.
         </p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="portfolio.html"><span>Разгледай портфолио</span></a>
-          <a class="btn btn-secondary" href="videos.html"><span>Гледай видеа</span></a>
-          <a class="btn btn-secondary" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer"><span>Instagram</span></a>
-          <a class="btn btn-secondary" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer"><span>Facebook</span></a>
+          <a class="btn btn-primary" href="portfolio.html">Портфолио</a>
+          <a class="btn btn-secondary" href="videos.html">Видео</a>
+          <a class="btn btn-secondary" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a class="btn btn-secondary" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Facebook</a>
         </div>
 
-        <div class="hero-stats">
-          <div class="stat-chip">Wedding Films</div>
-          <div class="stat-chip">Business Video</div>
-          <div class="stat-chip">Premium Visual Identity</div>
+        <div class="hero-note">
+          За сватби, събития, бизнес видеа и силно визуално представяне на брандове и хора.
         </div>
       </div>
 
-      <div class="hero-visual" id="hero3d">
-        <div class="hero-stack">
-          <div class="glass-card card-back">
-            <img src="hero.jpg" alt="Memory Photo & Video cinematic scene">
-          </div>
-
-          <div class="glass-card card-mid">
-            <img src="hero.jpg" alt="Wedding and visual storytelling frame">
-          </div>
-
-          <div class="glass-card card-front">
-            <img src="hero.jpg" alt="Premium cinematic visual by Memory Photo & Video">
-          </div>
-
-          <div class="floating-panel panel-top">
-            <div class="floating-label">Visual Style</div>
-            <div class="floating-title">Cinematic & Elegant</div>
-            <div class="floating-text">Премиум визия с емоция, светлина и внимателно подбран ритъм.</div>
-          </div>
-
-          <div class="floating-panel panel-bottom">
-            <div class="floating-label">Production Focus</div>
-            <div class="floating-title">Weddings • Events • Brand Stories</div>
-            <div class="floating-text">Създадено да изглежда силно още от първия екран.</div>
-          </div>
-        </div>
+      <div class="hero-card">
+        <img src="hero.jpg" alt="Memory Photo & Video hero visual">
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-intro">
-      <h2>Какво отличава бранда</h2>
-      <p>
-        Начинът, по който е представена една услуга, е толкова важен, колкото и самата услуга. Затова началната страница трябва да изглежда уверено, премиум и запомнящо се още в първите секунди.
-      </p>
-    </div>
-
-    <div class="value-grid">
-      <article class="value-card reveal">
-        <div class="value-number">01</div>
-        <h3>Първо впечатление</h3>
+  <section class="intro-section">
+    <div class="intro-grid">
+      <article class="intro-card">
+        <h3>Сватби</h3>
         <p>
-          Hero секцията е изградена с layered depth, glow акценти и glass surfaces, които дават скъп и модерен визуален характер.
+          Кадри с естествена емоция, стилна атмосфера и внимание към важните моменти от деня.
         </p>
       </article>
 
-      <article class="value-card reveal">
-        <div class="value-number">02</div>
-        <h3>Плавно движение</h3>
+      <article class="intro-card">
+        <h3>Видео</h3>
         <p>
-          Лек parallax ефект, scroll reveal анимации и движение по cursor правят сайта жив, без да го натоварват излишно.
+          Трейлъри, highlight видеа и cinematic монтаж с внимание към ритъм, детайл и усещане.
         </p>
       </article>
 
-      <article class="value-card reveal">
-        <div class="value-number">03</div>
-        <h3>Ясно позициониране</h3>
+      <article class="intro-card">
+        <h3>Брандове</h3>
         <p>
-          Посетителят веднага разбира, че това не е просто стандартен photo/video сайт, а premium студио с ясно излъчване.
+          Визуално съдържание за бизнеси, услуги и представяне, което изглежда чисто, уверено и premium.
         </p>
       </article>
     </div>
   </section>
 
-  <section class="partner-section reveal">
+  <section class="partner-section">
     <h2 class="partner-title">DJ Партньор</h2>
 
     <div class="partner-card">
@@ -942,43 +677,5 @@
   <footer>
     © 2026 Memory Photo & Video. All rights reserved.
   </footer>
-
-  <script>
-    const hero = document.getElementById('hero3d');
-    const depthItems = document.querySelectorAll('[data-depth]');
-    const stack = document.querySelector('.hero-stack');
-
-    if (hero && stack) {
-      hero.addEventListener('mousemove', (e) => {
-        const rect = hero.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-        stack.style.transform = `rotateY(${x * 10}deg) rotateX(${y * -10}deg)`;
-
-        depthItems.forEach(item => {
-          const depth = parseFloat(item.dataset.depth || 0);
-          item.style.transform = `translate3d(${x * depth * 80}px, ${y * depth * 80}px, 0) scale(1.03)`;
-        });
-      });
-
-      hero.addEventListener('mouseleave', () => {
-        stack.style.transform = 'rotateY(0deg) rotateX(0deg)';
-        depthItems.forEach(item => {
-          item.style.transform = 'translate3d(0,0,0) scale(1)';
-        });
-      });
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
-      });
-    }, { threshold: 0.18 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
 </body>
 </html>
