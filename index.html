@@ -1,69 +1,95 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJK01GL7PM');
+  </script>
 
-  gtag('config', 'G-WJK01GL7PM');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Memory Photo & Video</title>
+  <meta name="description" content="Сватбена фотография, видеография и cinematic visual storytelling от Memory Photo & Video. Премиум заснемане на сватби, събития и бранд видеа." />
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="Memory Photo & Video">
-  <meta property="og:description" content="Сватбена фотография и видеография. Професионално заснемане до 10 часа.">
+  <meta property="og:description" content="Сватбена фотография, видеография и cinematic visual storytelling.">
   <meta property="og:url" content="https://memoryphotoandvideo.com/">
   <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
   <meta property="og:image:secure_url" content="https://memoryphotoandvideo.com/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Memory Photo & Video">
-<meta name="twitter:description" content="Сватбена фотография и видеография до 10 часа ангажимент.">
-<meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Memory Photo & Video">
+  <meta name="twitter:description" content="Сватбена фотография, видеография и premium visual storytelling.">
+  <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+
   <link rel="icon" type="image/png" href="icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root{
       --cream:#f5f0e8;
-      --dark:#0f0d0b;
+      --dark:#0b0908;
+      --dark-2:#15110e;
       --gold:#c9a96e;
       --gold-light:#e8d5b0;
-      --nav:#1e5c86; /* синьото от примера */
+      --gold-soft:rgba(201,169,110,.22);
+      --nav:rgba(17, 47, 69, .76);
+      --line:rgba(255,255,255,.10);
+      --glass:rgba(255,255,255,.05);
+      --glass-strong:rgba(255,255,255,.08);
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+    }
+
+    html{
+      scroll-behavior:smooth;
     }
 
     body{
       font-family:'Montserrat', sans-serif;
-      background: var(--dark);
+      background:
+        radial-gradient(circle at top right, rgba(201,169,110,.12), transparent 24%),
+        radial-gradient(circle at 20% 20%, rgba(30,92,134,.20), transparent 28%),
+        linear-gradient(180deg, #0b0908 0%, #120f0d 38%, #0b0908 100%);
       color: var(--cream);
       min-height: 100vh;
+      overflow-x:hidden;
     }
 
-    /* ===== TOP NAV ===== */
-    header{
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: var(--nav);
-      z-index: 50;
-      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    a{
+      color:inherit;
     }
+
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:100;
+      backdrop-filter: blur(16px);
+      background:var(--nav);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 30px rgba(0,0,0,.22);
+    }
+
     .nav-wrap{
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-      gap: 14px;
-      flex-wrap: wrap;
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 18px;
+      gap:14px;
+      flex-wrap:wrap;
     }
 
     .brand{
@@ -71,48 +97,59 @@
       align-items:center;
       gap:10px;
       text-decoration:none;
-      color: var(--cream);
-    }
-    .brand img{
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.10);
-    }
-    .brand span{
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      letter-spacing: .10em;
-      font-size: 1.05rem;
-      white-space: nowrap;
-      opacity: .95;
+      color:var(--cream);
     }
 
-    /* Mobile menu toggle */
+    .brand img{
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.16);
+      box-shadow:0 10px 26px rgba(0,0,0,.25);
+    }
+
+    .brand span{
+      font-family:'Cormorant Garamond', serif;
+      font-weight:400;
+      letter-spacing:.10em;
+      font-size:1.05rem;
+      white-space:nowrap;
+      opacity:.96;
+    }
+
     #menuToggle{display:none}
+
     .burger{
       display:none;
-      width:44px; height:44px;
+      width:44px;
+      height:44px;
       border:1px solid rgba(255,255,255,.18);
       border-radius:12px;
-      background:rgba(0,0,0,.12);
+      background:rgba(255,255,255,.05);
       align-items:center;
       justify-content:center;
       cursor:pointer;
     }
+
     .burger div{
-      width:18px; height:2px;
+      width:18px;
+      height:2px;
       background:rgba(245,240,232,.92);
       position:relative;
     }
-    .burger div::before,.burger div::after{
+
+    .burger div::before,
+    .burger div::after{
       content:"";
-      position:absolute; left:0;
-      width:18px; height:2px;
+      position:absolute;
+      left:0;
+      width:18px;
+      height:2px;
       background:rgba(245,240,232,.92);
     }
+
     .burger div::before{top:-6px}
     .burger div::after{top:6px}
 
@@ -122,300 +159,637 @@
       align-items:center;
       flex-wrap:wrap;
     }
+
     nav a{
-      color: rgba(245,240,232,.92);
+      color:rgba(245,240,232,.92);
       text-decoration:none;
-      font-size: .80rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0);
-      transition: .15s ease;
+      font-size:.80rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0);
+      transition:.2s ease;
     }
+
     nav a:hover{
-      background: rgba(0,0,0,.14);
-      border-color: rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.10);
     }
+
     .nav-cta{
-      border: 1px solid rgba(201,169,110,.55) !important;
-      background: rgba(0,0,0,.10);
+      border:1px solid rgba(201,169,110,.55)!important;
+      background:rgba(201,169,110,.08);
     }
 
-    @media (max-width: 880px){
-      .burger{display:flex}
-      nav{
-        display:none;
-        width:100%;
-        padding: 12px 0 4px;
-        gap: 8px;
-      }
-      #menuToggle:checked ~ nav{display:flex}
-      nav a{width:100%; text-align:left; padding:12px 12px}
-    }
-
-    /* ===== HERO ===== */
     .hero{
-      min-height: 100vh;
-      padding-top: 78px; /* височина на header */
-      display: grid;
-      place-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Fullscreen hero.png, както на примера */
-    .hero::before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        /* леко потъмняване за да изпъкнат бутоните */
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55)),
-        url("hero.jpg") center/cover no-repeat;
-      transform: scale(1.01);
-      z-index: 0;
-    }
-
-    .hero-inner{
-      position: relative;
-      z-index: 1;
-      width: min(900px, 92vw);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      animation: fadeUp .9s ease both;
-    }
-
-    /* Бутони тип "първите" (fill on hover) */
-    .buttons{
+      min-height:100vh;
+      padding:110px 18px 80px;
+      position:relative;
+      overflow:hidden;
       display:flex;
-      gap: 14px;
-      justify-content:center;
-      flex-wrap: wrap;
-      margin-top: 8px;
+      align-items:center;
+    }
+
+    .hero-bg{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      z-index:0;
+    }
+
+    .hero-image{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(rgba(5,5,5,.38), rgba(5,5,5,.62)),
+        url("hero.jpg") center center / cover no-repeat;
+      transform:scale(1.05);
+      filter:saturate(1.02) contrast(1.03);
+    }
+
+    .orb{
+      position:absolute;
+      border-radius:999px;
+      filter:blur(40px);
+      pointer-events:none;
+      opacity:.65;
+      mix-blend-mode:screen;
+    }
+
+    .orb-1{
+      width:340px;
+      height:340px;
+      top:10%;
+      left:8%;
+      background:rgba(201,169,110,.20);
+    }
+
+    .orb-2{
+      width:420px;
+      height:420px;
+      right:-40px;
+      top:14%;
+      background:rgba(30,92,134,.25);
+    }
+
+    .orb-3{
+      width:360px;
+      height:360px;
+      left:50%;
+      bottom:-120px;
+      transform:translateX(-50%);
+      background:rgba(201,169,110,.12);
+    }
+
+    .grid-glow{
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:70px 70px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.5), transparent 75%);
+      opacity:.10;
+    }
+
+    .hero-wrap{
+      position:relative;
+      z-index:2;
+      max-width:1200px;
+      margin:0 auto;
+      width:100%;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:34px;
+      align-items:center;
+    }
+
+    .hero-copy{
+      max-width:720px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:16px;
+      padding:9px 14px;
+      border:1px solid rgba(201,169,110,.24);
+      border-radius:999px;
+      background:rgba(0,0,0,.26);
+      backdrop-filter:blur(14px);
+      color:var(--gold-light);
+      font-size:.72rem;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--gold);
+      box-shadow:0 0 16px rgba(201,169,110,.7);
+    }
+
+    .hero h1{
+      font-family:'Cormorant Garamond', serif;
+      font-weight:400;
+      line-height:.95;
+      letter-spacing:.04em;
+      font-size:clamp(3rem, 8vw, 6.8rem);
+      color:var(--gold-light);
+      margin-bottom:18px;
+      text-shadow:0 10px 35px rgba(0,0,0,.35);
+    }
+
+    .hero h1 span{
+      display:block;
+      color:#fff7ea;
+    }
+
+    .hero-copy p{
+      max-width:640px;
+      line-height:1.85;
+      font-size:1rem;
+      color:rgba(245,240,232,.86);
+      margin-bottom:24px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:22px;
     }
 
     .btn{
       display:inline-flex;
       align-items:center;
-      gap: .6rem;
-      padding: .78rem 2.05rem;
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-      text-decoration: none;
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(6px);
-      transition: color .25s ease, transform .12s ease;
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.28);
+      justify-content:center;
+      min-height:48px;
+      padding:0 22px;
+      border-radius:16px;
+      border:1px solid rgba(201,169,110,.45);
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:.76rem;
+      font-weight:600;
+      position:relative;
+      overflow:hidden;
+      backdrop-filter:blur(10px);
+      transition:transform .18s ease, border-color .18s ease, color .18s ease;
     }
 
     .btn::before{
-      content:'';
+      content:"";
       position:absolute;
       inset:0;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .28s ease;
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .28s ease;
       z-index:0;
     }
 
-    .btn:hover::before{ transform: scaleX(1); }
+    .btn span{
+      position:relative;
+      z-index:1;
+    }
+
+    .btn-primary{
+      color:#111;
+      background:var(--gold-light);
+      border-color:rgba(232,213,176,.85);
+      box-shadow:0 18px 40px rgba(201,169,110,.18);
+    }
+
+    .btn-primary::before{
+      background:#fff;
+    }
+
+    .btn-secondary{
+      color:var(--gold-light);
+      background:rgba(255,255,255,.04);
+    }
+
+    .btn-secondary::before{
+      background:rgba(201,169,110,.18);
+    }
+
     .btn:hover{
-      color: var(--dark);
-      transform: translateY(-1px);
+      transform:translateY(-2px);
+      border-color:rgba(232,213,176,.85);
     }
 
-    .btn span{ position:relative; z-index:1; }
-
-    @keyframes fadeUp{
-      from{opacity:0; transform: translateY(18px);}
-      to{opacity:1; transform: translateY(0);}
+    .btn:hover::before{
+      transform:scaleX(1);
     }
-    /* ===== DJ PARTNER SECTION ===== */
 
-.partner-section{
-  padding: 120px 20px 100px;
-  background: linear-gradient(to bottom, #0f0d0b 0%, #14110e 100%);
-}
+    .hero-stats{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
 
-.partner-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-}
+    .stat-chip{
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      backdrop-filter:blur(14px);
+      font-size:.76rem;
+      letter-spacing:.08em;
+      color:rgba(245,240,232,.84);
+    }
 
-.partner-title{
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.2rem;
-  letter-spacing: .08em;
-  margin-bottom: 20px;
-  color: var(--gold-light);
-}
+    .hero-visual{
+      position:relative;
+      min-height:560px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      perspective:1400px;
+    }
 
-.partner-card{
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.6fr .9fr;
-  gap: 40px;
-  padding: 40px;
-  border-radius: 22px;
-  border: 1px solid rgba(201,169,110,.25);
-  background: rgba(255,255,255,.02);
-  backdrop-filter: blur(8px);
-  transition: all .4s ease;
-}
+    .hero-stack{
+      position:relative;
+      width:min(520px, 100%);
+      aspect-ratio:4 / 5;
+      transform-style:preserve-3d;
+    }
 
-.partner-card:hover{
-  transform: translateY(-8px);
-  box-shadow: 0 30px 60px rgba(0,0,0,.6);
-  border-color: rgba(201,169,110,.6);
-}
+    .glass-card{
+      position:absolute;
+      border-radius:30px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+    }
 
-.partner-accent{
-  position:absolute;
-  left:0;
-  top:0;
-  width:4px;
-  height:100%;
-  background: var(--gold);
-  transition:.3s ease;
-}
+    .glass-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
 
-.partner-card:hover .partner-accent{
-  width:8px;
-}
+    .card-back{
+      inset:10% 8% 18% 12%;
+      transform:translate3d(-30px, -10px, -120px) rotateY(10deg) rotateX(6deg);
+      opacity:.55;
+      filter:blur(.3px);
+    }
 
-.partner-name{
-  font-family:'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-  color: var(--gold-light);
-}
+    .card-mid{
+      inset:6% 2% 12% 18%;
+      transform:translate3d(24px, 8px, -40px) rotateY(-9deg) rotateX(5deg);
+      opacity:.75;
+    }
 
-.partner-desc{
-  opacity:.85;
-  margin-bottom:18px;
-}
+    .card-front{
+      inset:0;
+      transform:translate3d(0,0,0) rotateY(-4deg) rotateX(2deg);
+    }
 
-.partner-meta{
-  margin-bottom: 22px;
-  padding-left:18px;
-  line-height:1.8;
-  opacity:.85;
-}
+    .floating-panel{
+      position:absolute;
+      backdrop-filter:blur(16px);
+      background:rgba(10,10,10,.36);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:22px;
+      box-shadow:0 18px 44px rgba(0,0,0,.30);
+      padding:16px 18px;
+      color:var(--cream);
+    }
 
-.partner-actions{
-  display:flex;
-  gap:14px;
-}
+    .panel-top{
+      top:30px;
+      left:-22px;
+      width:210px;
+      transform:translateZ(80px);
+    }
 
-.partner-btn{
-  padding:.7rem 1.8rem;
-  border:1px solid var(--gold);
-  text-decoration:none;
-  color:var(--gold-light);
-  font-size:.75rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  border-radius:14px;
-  transition:.25s ease;
-}
+    .panel-bottom{
+      right:-34px;
+      bottom:34px;
+      width:240px;
+      transform:translateZ(70px);
+    }
 
-.partner-btn:hover{
-  background:var(--gold);
-  color:var(--dark);
-  box-shadow:0 10px 25px rgba(201,169,110,.4);
-}
+    .floating-label{
+      font-size:.70rem;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      color:rgba(232,213,176,.72);
+      margin-bottom:6px;
+    }
 
-.partner-logo{
-  width:110px;
-  height:110px;
-  border-radius:22px;
-  display:grid;
-  place-items:center;
-  font-size:28px;
-  font-weight:600;
-  border:1px solid rgba(201,169,110,.3);
-  color:var(--gold-light);
-  background:rgba(0,0,0,.25);
-  transition:.3s ease;
-}
+    .floating-title{
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.2rem;
+      color:var(--gold-light);
+      margin-bottom:5px;
+    }
 
-.partner-card:hover .partner-logo{
-  transform:scale(1.08);
-  box-shadow:0 15px 35px rgba(201,169,110,.25);
-}
+    .floating-text{
+      font-size:.90rem;
+      line-height:1.6;
+      color:rgba(245,240,232,.80);
+    }
 
-.partner-note{
-  font-size:12px;
-  opacity:.6;
-  margin-top:20px;
-}
+    .section{
+      max-width:1200px;
+      margin:0 auto;
+      padding:90px 18px;
+    }
 
-/* ===== FOOTER ===== */
+    .section-intro{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:28px;
+    }
 
-footer{
-  background:#000;
-  padding:30px 20px;
-  text-align:center;
-  font-size:.75rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:rgba(245,240,232,.6);
-  border-top:1px solid rgba(201,169,110,.2);
-}
+    .section-intro h2{
+      font-family:'Cormorant Garamond', serif;
+      font-weight:400;
+      font-size:clamp(2rem, 4vw, 3rem);
+      letter-spacing:.06em;
+      color:var(--gold-light);
+    }
 
-@media (max-width: 820px){
-  .partner-card{
-    grid-template-columns:1fr;
-  }
-}
+    .section-intro p{
+      max-width:720px;
+      line-height:1.8;
+      color:rgba(245,240,232,.80);
+    }
+
+    .value-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:20px;
+    }
+
+    .value-card{
+      padding:24px;
+      border-radius:24px;
+      border:1px solid rgba(201,169,110,.14);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+      box-shadow:0 14px 34px rgba(0,0,0,.24);
+      transform:translateY(20px);
+      opacity:0;
+      transition:opacity .7s ease, transform .7s ease, border-color .25s ease;
+    }
+
+    .value-card.is-visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .value-card:hover{
+      border-color:rgba(201,169,110,.35);
+    }
+
+    .value-number{
+      font-size:.76rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(232,213,176,.72);
+      margin-bottom:10px;
+    }
+
+    .value-card h3{
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.7rem;
+      font-weight:400;
+      color:var(--gold-light);
+      margin-bottom:10px;
+    }
+
+    .value-card p{
+      line-height:1.8;
+      color:rgba(245,240,232,.80);
+    }
+
+    .partner-section{
+      max-width:1200px;
+      margin:0 auto;
+      padding:20px 18px 100px;
+    }
+
+    .partner-title{
+      font-family:'Cormorant Garamond', serif;
+      font-size:2.2rem;
+      letter-spacing:.08em;
+      margin-bottom:20px;
+      color:var(--gold-light);
+    }
+
+    .partner-card{
+      position:relative;
+      display:grid;
+      grid-template-columns:1.6fr .9fr;
+      gap:40px;
+      padding:40px;
+      border-radius:26px;
+      border:1px solid rgba(201,169,110,.18);
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
+      backdrop-filter:blur(10px);
+      transition:all .35s ease;
+      box-shadow:0 22px 56px rgba(0,0,0,.34);
+    }
+
+    .partner-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 30px 60px rgba(0,0,0,.52);
+      border-color:rgba(201,169,110,.34);
+    }
+
+    .partner-accent{
+      position:absolute;
+      left:0;
+      top:0;
+      width:4px;
+      height:100%;
+      background:linear-gradient(180deg, var(--gold-light), var(--gold));
+      transition:.3s ease;
+      border-radius:20px 0 0 20px;
+    }
+
+    .partner-card:hover .partner-accent{
+      width:8px;
+    }
+
+    .partner-name{
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.95rem;
+      margin-bottom:12px;
+      color:var(--gold-light);
+    }
+
+    .partner-desc{
+      opacity:.85;
+      margin-bottom:18px;
+      line-height:1.8;
+    }
+
+    .partner-meta{
+      margin-bottom:22px;
+      padding-left:18px;
+      line-height:1.9;
+      opacity:.85;
+    }
+
+    .partner-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .partner-btn{
+      padding:.78rem 1.8rem;
+      border:1px solid rgba(201,169,110,.5);
+      text-decoration:none;
+      color:var(--gold-light);
+      font-size:.75rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      border-radius:14px;
+      transition:.25s ease;
+      background:rgba(255,255,255,.03);
+    }
+
+    .partner-btn:hover{
+      background:var(--gold);
+      color:var(--dark);
+      box-shadow:0 10px 25px rgba(201,169,110,.28);
+    }
+
+    .partner-note{
+      font-size:12px;
+      opacity:.6;
+      margin-top:20px;
+      line-height:1.7;
+    }
+
     .partner-photo{
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 22px;
-  border: 1px solid rgba(201,169,110,.35);
-  background: rgba(0,0,0,.25);
-  transition: .35s ease;
-  box-shadow: 0 18px 40px rgba(0,0,0,.45);
-}
+      width:160px;
+      height:160px;
+      object-fit:cover;
+      border-radius:24px;
+      border:1px solid rgba(201,169,110,.35);
+      background:rgba(0,0,0,.25);
+      transition:.35s ease;
+      box-shadow:0 18px 40px rgba(0,0,0,.45);
+    }
 
-.partner-card:hover .partner-photo{
-  transform: scale(1.06);
-  border-color: rgba(201,169,110,.70);
-  box-shadow: 0 22px 55px rgba(201,169,110,.18);
-}
-    /* ===== MOBILE FIX: DJ buttons ===== */
-@media (max-width: 520px){
+    .partner-card:hover .partner-photo{
+      transform:scale(1.05);
+      border-color:rgba(201,169,110,.60);
+      box-shadow:0 22px 55px rgba(201,169,110,.16);
+    }
 
-  .partner-actions{
-    flex-direction: column;
-    gap: 10px;
-  }
+    footer{
+      background:#070606;
+      padding:30px 20px;
+      text-align:center;
+      font-size:.75rem;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      color:rgba(245,240,232,.6);
+      border-top:1px solid rgba(201,169,110,.16);
+    }
 
-  .partner-btn{
-    width: 100%;
-    text-align: center;
-  }
+    @media (max-width: 980px){
+      .hero-wrap{
+        grid-template-columns:1fr;
+      }
 
-}
+      .hero-visual{
+        min-height:460px;
+      }
+
+      .value-grid{
+        grid-template-columns:1fr;
+      }
+
+      .partner-card{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 880px){
+      .burger{display:flex}
+
+      nav{
+        display:none;
+        width:100%;
+        padding:12px 0 4px;
+        gap:8px;
+      }
+
+      #menuToggle:checked ~ nav{display:flex}
+
+      nav a{
+        width:100%;
+        text-align:left;
+        padding:12px 12px;
+      }
+    }
+
+    @media (max-width: 640px){
+      .hero{
+        padding-top:100px;
+      }
+
+      .hero h1{
+        font-size:clamp(2.5rem, 13vw, 4rem);
+      }
+
+      .hero-copy p{
+        font-size:.96rem;
+      }
+
+      .hero-actions,
+      .partner-actions{
+        flex-direction:column;
+      }
+
+      .btn,
+      .partner-btn{
+        width:100%;
+      }
+
+      .panel-top{
+        left:0;
+        top:16px;
+        width:180px;
+      }
+
+      .panel-bottom{
+        right:0;
+        bottom:20px;
+        width:200px;
+      }
+
+      .partner-photo{
+        width:140px;
+        height:140px;
+      }
+    }
   </style>
 </head>
 
 <body>
   <header>
     <div class="nav-wrap">
-      <!-- icon.png до надписа -->
       <a class="brand" href="index.html" aria-label="Начало">
         <img src="icon.png" alt="Икона">
         <span>Memory Photo &amp; Video</span>
@@ -425,7 +799,7 @@ footer{
       <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
 
       <nav>
-        <a href="index.html"class="nav-cta">Начало</a>
+        <a href="index.html" class="nav-cta">Начало</a>
         <a href="portfolio.html">Портфолио</a>
         <a href="videos.html">Видео</a>
         <a href="uslugi-ceni.html">Ценоразпис</a>
@@ -436,20 +810,102 @@ footer{
   </header>
 
   <section class="hero">
-    <div class="hero-inner">
-      <!-- Само 2 бутона: Instagram + Facebook -->
-      <div class="buttons">
-        <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">
-          <span>Instagram</span>
-        </a>
-        <a class="btn" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">
-          <span>Facebook</span>
-        </a>
+    <div class="hero-bg">
+      <div class="hero-image" data-depth="0.08"></div>
+      <div class="orb orb-1" data-depth="0.20"></div>
+      <div class="orb orb-2" data-depth="0.14"></div>
+      <div class="orb orb-3" data-depth="0.10"></div>
+      <div class="grid-glow"></div>
+    </div>
+
+    <div class="hero-wrap">
+      <div class="hero-copy">
+        <div class="eyebrow">Premium Photo & Video Production</div>
+        <h1>Memory <span>Photo & Video</span></h1>
+        <p>
+          Сватбена фотография, видеография и cinematic visual storytelling за хора и брандове, които искат не просто кадри, а усещане, атмосфера и завършено визуално присъствие.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="portfolio.html"><span>Разгледай портфолио</span></a>
+          <a class="btn btn-secondary" href="videos.html"><span>Гледай видеа</span></a>
+          <a class="btn btn-secondary" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer"><span>Instagram</span></a>
+          <a class="btn btn-secondary" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer"><span>Facebook</span></a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-chip">Wedding Films</div>
+          <div class="stat-chip">Business Video</div>
+          <div class="stat-chip">Premium Visual Identity</div>
+        </div>
+      </div>
+
+      <div class="hero-visual" id="hero3d">
+        <div class="hero-stack">
+          <div class="glass-card card-back">
+            <img src="hero.jpg" alt="Memory Photo & Video cinematic scene">
+          </div>
+
+          <div class="glass-card card-mid">
+            <img src="hero.jpg" alt="Wedding and visual storytelling frame">
+          </div>
+
+          <div class="glass-card card-front">
+            <img src="hero.jpg" alt="Premium cinematic visual by Memory Photo & Video">
+          </div>
+
+          <div class="floating-panel panel-top">
+            <div class="floating-label">Visual Style</div>
+            <div class="floating-title">Cinematic & Elegant</div>
+            <div class="floating-text">Премиум визия с емоция, светлина и внимателно подбран ритъм.</div>
+          </div>
+
+          <div class="floating-panel panel-bottom">
+            <div class="floating-label">Production Focus</div>
+            <div class="floating-title">Weddings • Events • Brand Stories</div>
+            <div class="floating-text">Създадено да изглежда силно още от първия екран.</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-  <section class="partner-section">
-  <div class="partner-wrap">
+
+  <section class="section">
+    <div class="section-intro">
+      <h2>Какво отличава бранда</h2>
+      <p>
+        Начинът, по който е представена една услуга, е толкова важен, колкото и самата услуга. Затова началната страница трябва да изглежда уверено, премиум и запомнящо се още в първите секунди.
+      </p>
+    </div>
+
+    <div class="value-grid">
+      <article class="value-card reveal">
+        <div class="value-number">01</div>
+        <h3>Първо впечатление</h3>
+        <p>
+          Hero секцията е изградена с layered depth, glow акценти и glass surfaces, които дават скъп и модерен визуален характер.
+        </p>
+      </article>
+
+      <article class="value-card reveal">
+        <div class="value-number">02</div>
+        <h3>Плавно движение</h3>
+        <p>
+          Лек parallax ефект, scroll reveal анимации и движение по cursor правят сайта жив, без да го натоварват излишно.
+        </p>
+      </article>
+
+      <article class="value-card reveal">
+        <div class="value-number">03</div>
+        <h3>Ясно позициониране</h3>
+        <p>
+          Посетителят веднага разбира, че това не е просто стандартен photo/video сайт, а premium студио с ясно излъчване.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="partner-section reveal">
     <h2 class="partner-title">DJ Партньор</h2>
 
     <div class="partner-card">
@@ -468,8 +924,8 @@ footer{
         </ul>
 
         <div class="partner-actions">
-          <a class="partner-btn" href="https://www.instagram.com/dj_peppystar/" target="_blank">Instagram</a>
-          <a class="partner-btn" href="https://www.facebook.com/profile.php?id=61571705841656" target="_blank">Facebook</a>
+          <a class="partner-btn" href="https://www.instagram.com/dj_peppystar/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a class="partner-btn" href="https://www.facebook.com/profile.php?id=61571705841656" target="_blank" rel="noopener noreferrer">Facebook</a>
         </div>
 
         <p class="partner-note">
@@ -478,14 +934,51 @@ footer{
       </div>
 
       <div style="display:flex; align-items:center; justify-content:center;">
-      <img class="partner-photo" src="dj-peppystar.jpg" alt="DJ PeppyStar">
+        <img class="partner-photo" src="dj-peppystar.jpg" alt="DJ PeppyStar">
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  © 2026 Memory Photo & Video. All rights reserved.
-</footer>
+  <footer>
+    © 2026 Memory Photo & Video. All rights reserved.
+  </footer>
+
+  <script>
+    const hero = document.getElementById('hero3d');
+    const depthItems = document.querySelectorAll('[data-depth]');
+    const stack = document.querySelector('.hero-stack');
+
+    if (hero && stack) {
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        stack.style.transform = `rotateY(${x * 10}deg) rotateX(${y * -10}deg)`;
+
+        depthItems.forEach(item => {
+          const depth = parseFloat(item.dataset.depth || 0);
+          item.style.transform = `translate3d(${x * depth * 80}px, ${y * depth * 80}px, 0) scale(1.03)`;
+        });
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        stack.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        depthItems.forEach(item => {
+          item.style.transform = 'translate3d(0,0,0) scale(1)';
+        });
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
