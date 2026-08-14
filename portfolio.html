@@ -16,7 +16,7 @@
     @media(max-width:900px){.portfolio-head{grid-template-columns:1fr}.portfolio-note{max-width:none}.gallery{columns:3 180px}}
     @media(max-width:620px){.portfolio-v2{padding-top:98px}.gallery{columns:2 140px}.gallery-item{border-radius:15px;margin-bottom:8px}}
   </style>
-</head>
+<link rel="stylesheet" href="assets/css/language-switch.css">\n</head>
 <body>
   <a class="skip-link" href="#main-content">Към съдържанието</a>
   <header><div class="nav-wrap"><a class="brand" href="index.html" aria-label="Начало"><img src="icon.png" alt="Memory Photo & Video" width="32" height="32"><span>Memory Photo &amp; Video</span></a><input id="menuToggle" type="checkbox"><label class="burger" for="menuToggle" aria-label="Меню"><div></div></label><nav aria-label="Основна навигация"><a href="index.html">Начало</a><a href="portfolio.html" class="nav-cta">Портфолио</a><a href="videos.html">Видео</a><a href="uslugi-ceni.html">Цени</a><a href="availability.html">Свободни дати</a><a href="about.html">За нас</a></nav></div></header>
@@ -66,5 +66,5 @@
       document.querySelectorAll('.v2-reveal').forEach(el=>{if('IntersectionObserver' in window){const o=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v2-visible');o.unobserve(x.target);}}),{threshold:.1});o.observe(el)}else el.classList.add('v2-visible')});
     });
   </script>
-</body>
+<script defer src="assets/js/language-switch.js"></script>\n</body>
 </html>
