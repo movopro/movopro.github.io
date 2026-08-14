@@ -1,0 +1,51 @@
+name: Final language cleanup
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/language-final.yml'
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix remaining language issues
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files = ['index.html','portfolio.html','videos.html','uslugi-ceni.html','availability.html','about.html','svatba-izbrani.html']
+          replacements = {
+              'сватбен трейлър с кино визияs': 'сватбен трейлър с кино визия',
+              'сватбени филми, сватбен трейлър с кино визия, бизнес видеа и prom трейлъри': 'сватбени филми, сватбени трейлъри с кино визия, бизнес видеа и трейлъри за балове',
+              'Проверете свободните дати за вашето събитие и виж актуалната заетост': 'Проверете свободните дати за вашето събитие и вижте актуалната заетост',
+              'Провери свободна дата': 'Проверете свободна дата',
+              'Провери дати': 'Проверете датите',
+              'Виж портфолио': 'Вижте портфолиото',
+              'Виж цени': 'Вижте цените',
+              'Виж пакети': 'Вижте пакетите',
+              'Виж снимките': 'Вижте снимките',
+              'Виж всички видеа': 'Вижте всички видеа',
+              'Към портфолио': 'Към портфолиото',
+          }
+          for name in files:
+              p = Path(name)
+              if not p.exists():
+                  continue
+              text = p.read_text(encoding='utf-8')
+              old = text
+              for a,b in replacements.items():
+                  text = text.replace(a,b)
+              if text != old:
+                  p.write_text(text,encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html portfolio.html videos.html uslugi-ceni.html availability.html about.html svatba-izbrani.html
+          git commit -m 'Fix remaining Bulgarian copy' || true
+          git rm .github/workflows/language-final.yml || true
+          git add -A
+          git commit -m 'Remove final language cleanup workflow' || true
+          git push
