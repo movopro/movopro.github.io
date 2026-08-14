@@ -10,19 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   if (header) {
-    const updateHeader = () => {
-      header.classList.toggle('scrolled', window.scrollY > 12);
-    };
+    const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 12);
     updateHeader();
     window.addEventListener('scroll', updateHeader, { passive: true });
   }
 
   if (menuToggle && nav) {
     nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuToggle.checked = false;
-      });
+      link.addEventListener('click', () => { menuToggle.checked = false; });
     });
+  }
+
+  const reviewNote = document.querySelector('.v2-review-note');
+  if (reviewNote) {
+    reviewNote.textContent = 'Публичният Google рейтинг в момента е 5.0/5 от 21 отзива.';
   }
 
   const revealItems = document.querySelectorAll('.v2-reveal');
@@ -53,17 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const animate = () => {
     currentX += (targetX - currentX) * 0.08;
     currentY += (targetY - currentY) * 0.08;
-
     heroContent.style.transform = `rotateY(${currentX * 3.5}deg) rotateX(${currentY * -3.5}deg)`;
-
-    if (heroBg) {
-      heroBg.style.transform = `scale(1.04) translate(${currentX * -8}px, ${currentY * -8}px)`;
-    }
-
-    if (heroImage) {
-      heroImage.style.transform = `scale(1.05) translate(${currentX * -5}px, ${currentY * -5}px)`;
-    }
-
+    if (heroBg) heroBg.style.transform = `scale(1.04) translate(${currentX * -8}px, ${currentY * -8}px)`;
+    if (heroImage) heroImage.style.transform = `scale(1.05) translate(${currentX * -5}px, ${currentY * -5}px)`;
     rafId = requestAnimationFrame(animate);
   };
 
