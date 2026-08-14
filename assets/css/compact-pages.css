@@ -1,0 +1,182 @@
+/* Compact shared layer for pricing + availability pages */
+
+/* Keep their navigation identical to the V2 pages. */
+body:has(.pricing-page) header,
+body:has(.availability-page) header{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  z-index:100 !important;
+  background:rgba(9,8,6,.82) !important;
+  backdrop-filter:blur(20px) saturate(1.25) !important;
+  border-bottom:1px solid rgba(240,229,201,.12) !important;
+  box-shadow:0 10px 35px rgba(0,0,0,.28) !important;
+}
+
+body:has(.pricing-page) .nav-wrap,
+body:has(.availability-page) .nav-wrap{
+  max-width:1240px !important;
+  padding:11px 20px !important;
+  gap:12px !important;
+}
+
+body:has(.pricing-page) .brand,
+body:has(.availability-page) .brand{gap:.75rem !important;}
+body:has(.pricing-page) .brand img,
+body:has(.availability-page) .brand img{width:32px !important;height:32px !important;}
+body:has(.pricing-page) .brand span,
+body:has(.availability-page) .brand span{
+  font-family:'Cormorant Garamond',Georgia,serif !important;
+  font-size:1rem !important;
+  letter-spacing:.10em !important;
+}
+body:has(.pricing-page) nav,
+body:has(.availability-page) nav{gap:6px !important;}
+body:has(.pricing-page) nav a,
+body:has(.availability-page) nav a{
+  color:rgba(243,236,220,.67) !important;
+  font-size:.72rem !important;
+  letter-spacing:.14em !important;
+  padding:8px 10px !important;
+  border-radius:10px !important;
+}
+body:has(.pricing-page) nav a:hover,
+body:has(.availability-page) nav a:hover{
+  color:#f3ecdc !important;
+  background:rgba(255,255,255,.045) !important;
+  border-color:rgba(240,229,201,.12) !important;
+}
+body:has(.pricing-page) .nav-cta,
+body:has(.availability-page) .nav-cta{
+  color:#f0d39b !important;
+  border-color:rgba(195,152,90,.34) !important;
+  background:rgba(195,152,90,.075) !important;
+}
+
+/* More restrained page scale so these pages feel like part of the same site. */
+body:has(.pricing-page) .pricing-page{
+  padding:104px 20px 76px !important;
+}
+body:has(.availability-page) .availability-page{
+  padding:104px 20px 76px !important;
+}
+
+body:has(.pricing-page) .pricing-wrap,
+body:has(.availability-page) .availability-wrap{
+  width:min(1180px,100%) !important;
+  gap:16px !important;
+}
+
+body:has(.pricing-page) .pricing-hero{
+  padding:42px 38px 38px !important;
+  border-radius:28px !important;
+}
+body:has(.pricing-page) .pricing-hero h1{
+  font-size:clamp(2.55rem,4.7vw,4.5rem) !important;
+  line-height:.98 !important;
+  max-width:14ch !important;
+  margin-bottom:14px !important;
+}
+body:has(.pricing-page) .pricing-hero p{
+  font-size:.95rem !important;
+  line-height:1.72 !important;
+}
+body:has(.pricing-page) .pricing-points{
+  gap:10px !important;
+  margin-top:24px !important;
+}
+body:has(.pricing-page) .pricing-point{
+  padding:11px 14px !important;
+}
+body:has(.pricing-page) .pricing-point strong{font-size:.82rem !important;}
+body:has(.pricing-page) .pricing-point span{font-size:.64rem !important;}
+body:has(.pricing-page) .glass-card{
+  padding:28px !important;
+  border-radius:26px !important;
+}
+body:has(.pricing-page) .section-topline{margin-bottom:22px !important;padding-bottom:18px !important;}
+body:has(.pricing-page) .section-topline h2{
+  font-size:clamp(1.8rem,2.8vw,2.45rem) !important;
+}
+body:has(.pricing-page) .section-topline p{font-size:.88rem !important;}
+body:has(.pricing-page) .included-all{padding:20px !important;margin-bottom:22px !important;}
+body:has(.pricing-page) .inc-item{padding:12px 14px !important;font-size:.84rem !important;}
+body:has(.pricing-page) .package-grid{gap:14px !important;}
+body:has(.pricing-page) .package-card{padding:24px 20px 20px !important;border-radius:24px !important;gap:12px !important;}
+body:has(.pricing-page) .package-title{font-size:1.72rem !important;}
+body:has(.pricing-page) .package-price{font-size:1.16rem !important;}
+body:has(.pricing-page) .bullets li{font-size:.84rem !important;}
+body:has(.pricing-page) .calc-card{padding:24px !important;border-radius:22px !important;}
+body:has(.pricing-page) .calc-card h3{font-size:1.42rem !important;}
+body:has(.pricing-page) .calc-input,
+body:has(.pricing-page) .calc-select{padding:12px 14px !important;border-radius:15px !important;font-size:.84rem !important;}
+body:has(.pricing-page) .calc-label{font-size:.62rem !important;}
+body:has(.pricing-page) .result-eur{font-size:2.05rem !important;}
+body:has(.pricing-page) .event-rate-card{padding:22px 20px !important;border-radius:22px !important;}
+body:has(.pricing-page) .pricing-footer-cta{padding:30px 34px !important;border-radius:26px !important;}
+
+body:has(.availability-page) .availability-hero{
+  padding:30px 34px 28px !important;
+  border-radius:28px !important;
+}
+body:has(.availability-page) .availability-hero h1{
+  font-size:clamp(2.5rem,4.7vw,4.4rem) !important;
+  line-height:.98 !important;
+  margin-bottom:12px !important;
+}
+body:has(.availability-page) .availability-hero p{
+  font-size:.95rem !important;
+  line-height:1.72 !important;
+}
+body:has(.availability-page) .availability-points{gap:10px !important;margin-top:20px !important;}
+body:has(.availability-page) .availability-point{
+  min-width:170px !important;
+  padding:10px 12px !important;
+}
+body:has(.availability-page) .availability-point strong{font-size:.84rem !important;}
+body:has(.availability-page) .availability-point span{font-size:.68rem !important;}
+body:has(.availability-page) .glass-card,
+body:has(.availability-page) .calendar-card{
+  padding:20px !important;
+  border-radius:26px !important;
+}
+body:has(.availability-page) .calendar-title-wrap h2{
+  font-size:clamp(1.75rem,2.8vw,2.35rem) !important;
+}
+body:has(.availability-page) .calendar-title-wrap p{font-size:.87rem !important;}
+body:has(.availability-page) .legend-item{font-size:.76rem !important;}
+body:has(.availability-page) .cal-month{font-size:1.48rem !important;}
+body:has(.availability-page) .cell{min-height:70px !important;padding:9px !important;border-radius:14px !important;}
+body:has(.availability-page) .day-number{font-size:.82rem !important;}
+body:has(.availability-page) .availability-cta{padding:22px 24px !important;border-radius:22px !important;}
+
+@media (max-width:880px){
+  body:has(.pricing-page) .burger,
+  body:has(.availability-page) .burger{display:flex !important;}
+  body:has(.pricing-page) nav,
+  body:has(.availability-page) nav{
+    display:none !important;
+    width:100% !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    padding:10px 0 4px !important;
+  }
+  body:has(.pricing-page) #menuToggle:checked ~ nav,
+  body:has(.availability-page) #menuToggle:checked ~ nav{display:flex !important;}
+  body:has(.pricing-page) nav a,
+  body:has(.availability-page) nav a{width:100% !important;text-align:left !important;padding:11px 12px !important;}
+}
+
+@media (max-width:640px){
+  body:has(.pricing-page) .pricing-page,
+  body:has(.availability-page) .availability-page{padding:92px 14px 58px !important;}
+  body:has(.pricing-page) .pricing-hero{padding:28px 22px 26px !important;}
+  body:has(.pricing-page) .pricing-hero h1,
+  body:has(.availability-page) .availability-hero h1{font-size:clamp(2.2rem,10vw,3.25rem) !important;}
+  body:has(.pricing-page) .glass-card,
+  body:has(.availability-page) .glass-card,
+  body:has(.availability-page) .calendar-card{padding:20px 16px !important;}
+  body:has(.availability-page) .availability-hero{padding:26px 20px 24px !important;}
+  body:has(.availability-page) .cell{min-height:54px !important;padding:7px !important;}
+}

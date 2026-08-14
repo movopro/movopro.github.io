@@ -26,12 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     reviewNote.textContent = 'Публичният Google рейтинг в момента е 5.0/5 от 21 отзива.';
   }
 
-  const featuredPhoto = document.querySelector('.v2-filmstrip .wide img');
-  if (featuredPhoto) {
-    featuredPhoto.src = 'assets/weddings/wedding-party.webp';
-    featuredPhoto.alt = 'Емоционален момент от сватбено тържество';
-  }
-
   const revealItems = document.querySelectorAll('.v2-reveal');
   if (revealItems.length) {
     if (reduceMotion || !('IntersectionObserver' in window)) {
