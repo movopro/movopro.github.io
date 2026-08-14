@@ -1,495 +1,560 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJK01GL7PM');
+  </script>
 
-  gtag('config', 'G-WJK01GL7PM');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Свободни дати | Memory Photo & Video</title>
-<link rel="icon" type="image/png" href="logo.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Свободни дати | Memory Photo & Video</title>
+  <link rel="icon" type="image/png" href="icon.png" />
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .availability-page {
+      position: relative;
+      min-height: 100vh;
+      padding: 110px 20px 100px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(201,169,110,.10), transparent 24%),
+        radial-gradient(circle at 85% 10%, rgba(255,255,255,.05), transparent 18%),
+        linear-gradient(180deg, #0f0d0b 0%, #14110e 100%);
+    }
 
-:root{
-  --cream:#f5f0e8;
-  --dark:#0f0d0b;
-  --gold:#c9a96e;
-  --gold-light:#e8d5b0;
-  --nav:#1e5c86;
-}
+    .availability-wrap {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
 
-body{
-  font-family:'Montserrat',sans-serif;
-  background:var(--dark);
-  color:var(--cream);
-  min-height: 100vh;
-}
+    .availability-hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
 
-/* ===== TOP NAV (като index) ===== */
-header{
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  background: var(--nav);
-  z-index: 50;
-  box-shadow: 0 8px 24px rgba(0,0,0,.25);
-}
+    .availability-copy,
+    .availability-aside,
+    .calendar-shell,
+    .availability-cta {
+      border-radius: 28px;
+      border: 1px solid rgba(245,240,232,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    }
 
-.nav-wrap{
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
-  gap: 14px;
-  flex-wrap: wrap;
-}
+    .availability-copy {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+    }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  text-decoration:none;
-  color: var(--cream);
-}
+    .availability-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 1rem;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .78rem;
+    }
 
-.brand img{
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  object-fit: cover;
-  border: 1px solid rgba(255,255,255,.18);
-  background: rgba(0,0,0,.10);
-}
+    .availability-kicker::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: var(--gold);
+    }
 
-.brand span{
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400;
-  letter-spacing: .10em;
-  font-size: 1.05rem;
-  white-space: nowrap;
-  opacity: .95;
-}
+    .availability-copy h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      line-height: .94;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
 
-/* Mobile menu toggle */
-#menuToggle{display:none}
+    .availability-copy p {
+      max-width: 60ch;
+      color: rgba(245,240,232,.82);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
 
-.burger{
-  display:none;
-  width:44px; height:44px;
-  border:1px solid rgba(255,255,255,.18);
-  border-radius:12px;
-  background:rgba(0,0,0,.12);
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-}
+    .availability-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
 
-.burger div{
-  width:18px; height:2px;
-  background:rgba(245,240,232,.92);
-  position:relative;
-}
-.burger div::before,.burger div::after{
-  content:"";
-  position:absolute; left:0;
-  width:18px; height:2px;
-  background:rgba(245,240,232,.92);
-}
-.burger div::before{top:-6px}
-.burger div::after{top:6px}
+    .availability-point {
+      border-radius: 18px;
+      border: 1px solid rgba(245,240,232,.08);
+      background: rgba(255,255,255,.03);
+      padding: 14px 16px;
+    }
 
-nav{
-  display:flex;
-  gap:18px;
-  align-items:center;
-  flex-wrap:wrap;
-}
+    .availability-point strong {
+      display: block;
+      color: var(--cream);
+      font-size: .95rem;
+      margin-bottom: 6px;
+    }
 
-nav a{
-  color: rgba(245,240,232,.92);
-  text-decoration:none;
-  font-size: .80rem;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  padding: 10px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0);
-  transition: .15s ease;
-}
-nav a:hover{
-  background: rgba(0,0,0,.14);
-  border-color: rgba(255,255,255,.12);
-}
-.nav-cta{
-  border: 1px solid rgba(201,169,110,.55) !important;
-  background: rgba(0,0,0,.10);
-}
+    .availability-point span {
+      display: block;
+      color: rgba(245,240,232,.66);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .10em;
+    }
 
-@media (max-width: 880px){
-  .burger{display:flex}
-  nav{
-    display:none;
-    width:100%;
-    padding: 12px 0 4px;
-    gap: 8px;
-  }
-  #menuToggle:checked ~ nav{display:flex}
-  nav a{width:100%; text-align:left; padding:12px 12px}
-}
+    .availability-aside {
+      position: relative;
+      overflow: hidden;
+      min-height: 100%;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
 
-/* ===== SECTION ===== */
-.section{
-  padding: 110px 20px 100px;
-}
-.wrap{
-  max-width:1000px;
-  margin:0 auto;
-  overflow-x: hidden;
-}
-.title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:2.3rem;
-  letter-spacing:.08em;
-  margin-bottom:16px;
-  color:var(--gold-light);
-}
-.subtitle{
-  opacity:.85;
-  margin-bottom:30px;
-  line-height:1.6;
-}
+    .availability-aside::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0,0,0,.16), rgba(0,0,0,.48)),
+        url("hero.jpg") center/cover no-repeat;
+      transform: scale(1.05);
+      opacity: .9;
+    }
 
-/* ===== CALENDAR ===== */
-.card{
-  border-radius:22px;
-  border:1px solid rgba(201,169,110,.25);
-  background:rgba(255,255,255,.02);
-  backdrop-filter:blur(8px);
-  padding:30px;
-  box-shadow:0 25px 60px rgba(0,0,0,.45);
-  max-width: 100%;
-}
+    .availability-aside-content {
+      position: relative;
+      z-index: 1;
+      max-width: 360px;
+    }
 
-.cal-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-  gap: 10px;
-}
-.cal-month{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.4rem;
-  letter-spacing:.1em;
-  color:var(--gold-light);
-  text-align: center;
-  flex: 1;
-}
-.cal-btn{
-  width:44px;
-  height:44px;
-  border-radius:14px;
-  border:1px solid rgba(201,169,110,.4);
-  background:rgba(0,0,0,.2);
-  color:var(--gold-light);
-  font-size:20px;
-  cursor:pointer;
-  transition:.2s;
-}
-.cal-btn:hover{
-  background:rgba(201,169,110,.15);
-}
+    .availability-aside-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: .55rem .8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(15,13,11,.45);
+      color: var(--gold-light);
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
 
-.year-switch{
-  display:flex;
-  justify-content:center;
-  margin:22px 0 8px;
-}
+    .availability-aside h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.06;
+      margin-bottom: .7rem;
+    }
 
-.year-toggle{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  padding:14px 22px;
-  border-radius:999px;
-  border:1px solid rgba(201,169,110,.45);
-  background:linear-gradient(135deg, rgba(201,169,110,.18), rgba(30,92,134,.16));
-  color:var(--cream);
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  font-size:.78rem;
-  cursor:pointer;
-  overflow:hidden;
-  box-shadow:0 14px 34px rgba(0,0,0,.28);
-  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-}
+    .availability-aside p {
+      color: rgba(245,240,232,.80);
+      line-height: 1.7;
+    }
 
-.year-toggle::before{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:inherit;
-  background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
-  opacity:.9;
-  pointer-events:none;
-}
+    .calendar-shell {
+      padding: 28px;
+    }
 
-.year-toggle::after{
-  content:"";
-  position:absolute;
-  inset:-30% auto -30% -20%;
-  width:90px;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
-  transform:skewX(-20deg);
-  transition:transform .7s ease;
-  pointer-events:none;
-}
+    .calendar-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
 
-.year-toggle:hover,
-.year-toggle:focus-visible{
-  transform:translateY(-2px) scale(1.01);
-  box-shadow:0 18px 40px rgba(0,0,0,.34), 0 0 0 6px rgba(201,169,110,.06);
-  border-color:rgba(232,213,176,.72);
-}
+    .calendar-title-wrap h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 400;
+      color: var(--gold-light);
+      letter-spacing: .06em;
+    }
 
-.year-toggle:hover::after,
-.year-toggle:focus-visible::after{
-  transform:translateX(240px) skewX(-20deg);
-}
+    .calendar-title-wrap p {
+      margin-top: 6px;
+      color: rgba(245,240,232,.72);
+      line-height: 1.6;
+    }
 
-.year-toggle-text,
-.year-toggle-badge{
-  position:relative;
-  z-index:1;
-}
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-.year-toggle-badge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:56px;
-  height:34px;
-  padding:0 14px;
-  border-radius:999px;
-  background:rgba(15,13,11,.34);
-  border:1px solid rgba(255,255,255,.1);
-  font-weight:600;
-  letter-spacing:.12em;
-  color:var(--gold-light);
-}
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(245,240,232,.86);
+      font-size: .86rem;
+    }
 
-.year-toggle[data-target-year="2027"] .year-toggle-text::before{
-  content:"Отвори";
-}
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.14);
+    }
 
-.year-toggle[data-target-year="2026"] .year-toggle-text::before{
-  content:"Назад към";
-}
+    .dot-free { background: rgba(0, 180, 90, .92); }
+    .dot-busy { background: rgba(220, 60, 60, .92); }
+    .dot-partial { background: rgba(230, 170, 40, .95); }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:10px;
-  max-width: 100%;
-}
+    .card {
+      border-radius: 22px;
+      border: 1px solid rgba(201,169,110,.22);
+      background: rgba(255,255,255,.02);
+      backdrop-filter: blur(8px);
+      padding: 28px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.28);
+      max-width: 100%;
+    }
 
-/* Клетки */
-.cell{
-  padding:12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.10);
-  min-height:55px;
-  display:flex;
-  align-items:flex-start;
-  justify-content:flex-start;
-  font-weight:600;
-}
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 10px;
+    }
 
-/* Заглавки Пн-Нд */
-.dow{
-  text-align:center;
-  justify-content:center;
-  font-size:.75rem;
-  letter-spacing:.12em;
-  opacity:.75;
-  background: rgba(0,0,0,.22);
-  border-color: rgba(201,169,110,.18);
-  font-weight:500;
-}
+    .cal-month {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      letter-spacing: .08em;
+      color: var(--gold-light);
+      text-align: center;
+      flex: 1;
+    }
 
-/* Празни клетки */
-.empty{
-  background: rgba(0,0,0,.12);
-  border-color: rgba(255,255,255,.06);
-  opacity:.25;
-}
+    .cal-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(201,169,110,.36);
+      background: rgba(0,0,0,.20);
+      color: var(--gold-light);
+      font-size: 20px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
 
-/* Свободно = зелено */
-.free{
-  background: rgba(0, 180, 90, .18);
-  border-color: rgba(0, 180, 90, .55);
-}
+    .cal-btn:hover {
+      background: rgba(201,169,110,.15);
+      transform: translateY(-1px);
+    }
 
-/* Заето = червено */
-.busy{
-  background: rgba(220, 45, 45, .20);
-  border-color: rgba(220, 45, 45, .65);
-  position:relative;
-}
+    .year-switch {
+      display: flex;
+      justify-content: center;
+      margin: 22px 0 10px;
+    }
 
-/* Само фотограф = оранжево */
-.partial{
-  background: rgba(255, 140, 0, .20);
-  border-color: rgba(255, 140, 0, .72);
-}
+    .year-toggle {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(201,169,110,.45);
+      background: linear-gradient(135deg, rgba(201,169,110,.18), rgba(30,92,134,.16));
+      color: var(--cream);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(0,0,0,.28);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
 
-/* Легенда */
-.legend{
-  margin-top:18px;
-  font-size:.85rem;
-  opacity:.90;
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.legend-item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.dot{
-  width:10px;height:10px;border-radius:999px;display:inline-block;
-}
-.dot-free{ background: rgba(0, 180, 90, .9); }
-.dot-busy{ background: rgba(220, 45, 45, .95); }
-.dot-partial{ background: rgba(255, 140, 0, .95); }
+    .year-toggle:hover {
+      transform: translateY(-1px);
+      border-color: rgba(201,169,110,.65);
+      box-shadow: 0 18px 38px rgba(0,0,0,.34);
+    }
 
-/* ===== FOOTER ===== */
-footer{
-  background:#000;
-  padding:30px 20px;
-  text-align:center;
-  font-size:.75rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:rgba(245,240,232,.6);
-  border-top:1px solid rgba(201,169,110,.2);
-}
+    .weekdays,
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
 
-/* ===== MOBILE FIX: calendar overflow ===== */
-@media (max-width: 520px){
-  .section{ padding: 110px 14px 80px; }
-  .card{ padding: 16px; border-radius: 18px; }
-  .grid{ gap: 6px; }
+    .weekdays {
+      margin-bottom: 10px;
+    }
 
-  .cell{
-    padding: 8px;
-    min-height: 42px;
-    border-radius: 12px;
-    font-size: 0.85rem;
-  }
+    .weekdays div {
+      text-align: center;
+      color: rgba(245,240,232,.58);
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 8px 0;
+    }
 
-  .dow{
-    font-size: 0.65rem;
-    letter-spacing: .08em;
-  }
+    .cell {
+      min-height: 74px;
+      border-radius: 18px;
+      border: 1px solid rgba(245,240,232,.06);
+      background: rgba(255,255,255,.03);
+      padding: 10px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      position: relative;
+      transition: .18s ease;
+    }
 
-  .cal-month{ font-size: 1.15rem; }
-  .cal-btn{
-    width: 40px; height: 40px;
-    border-radius: 12px;
-  }
+    .cell:hover {
+      transform: translateY(-1px);
+      border-color: rgba(245,240,232,.14);
+    }
 
-  .year-toggle{
-    width:100%;
-    justify-content:center;
-    padding:13px 16px;
-    letter-spacing:.12em;
-  }
+    .cell.empty {
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+    }
 
-  .year-toggle-badge{
-    min-width:52px;
-    height:32px;
-    padding:0 12px;
-  }
-}
+    .cell.free { background: rgba(0, 180, 90, .11); }
+    .cell.busy { background: rgba(190, 40, 40, .12); }
+    .cell.partial { background: rgba(215, 158, 28, .12); }
 
-@media (max-width: 360px){
-  .grid{ gap: 5px; }
-  .cell{ padding: 7px; min-height: 40px; font-size: 0.8rem; }
-}
-</style>
+    .day-number {
+      font-size: .92rem;
+      color: var(--cream);
+      font-weight: 600;
+    }
+
+    .availability-cta {
+      margin-top: 24px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .availability-cta h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      margin-bottom: 6px;
+      color: var(--gold-light);
+    }
+
+    .availability-cta p {
+      color: rgba(245,240,232,.76);
+      line-height: 1.7;
+      max-width: 58ch;
+    }
+
+    .availability-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .availability-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .availability-points {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .availability-page {
+        padding-top: 96px;
+      }
+
+      .calendar-shell,
+      .availability-copy,
+      .availability-aside,
+      .availability-cta,
+      .card {
+        padding: 20px;
+      }
+
+      .weekdays,
+      .calendar-grid {
+        gap: 6px;
+      }
+
+      .cell {
+        min-height: 56px;
+        padding: 8px;
+        border-radius: 14px;
+      }
+
+      .availability-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .availability-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-
 <body>
-<header>
-  <div class="nav-wrap">
-    <a class="brand" href="index.html" aria-label="Начало">
-      <img src="icon.png" alt="Икона">
-      <span>Memory Photo &amp; Video</span>
-    </a>
+  <a class="skip-link" href="#main-content">Към съдържанието</a>
 
-    <input id="menuToggle" type="checkbox" />
-    <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="Начало">
+        <img src="icon.png" alt="Икона на Memory Photo & Video">
+        <span>Memory Photo &amp; Video</span>
+      </a>
 
-    <nav>
-      <a href="index.html">Начало</a>
-      <a href="portfolio.html">Портфолио</a>
-      <a href="videos.html">Видео</a>
-      <a href="uslugi-ceni.html">Ценоразпис</a>
-      <a href="availability.html" class="nav-cta">Свободни дати</a>
-      <a href="about.html">За нас</a>
-    </nav>
-  </div>
-</header>
+      <input id="menuToggle" type="checkbox" />
+      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
 
-<section class="section">
-  <div class="wrap">
-    <h2 class="title">Свободни дати</h2>
-    <p class="subtitle">
-      Червените дати са напълно заети. Зелените са свободни. Оранжевите означават, че е наличен само фотограф.
-    </p>
-
-    <div class="card">
-      <div class="cal-header">
-        <button class="cal-btn" id="prev" type="button" aria-label="Предишен месец">‹</button>
-        <div class="cal-month" id="monthLabel"></div>
-        <button class="cal-btn" id="next" type="button" aria-label="Следващ месец">›</button>
-      </div>
-
-      <div class="grid" id="grid"></div>
-
-      <div class="year-switch">
-        <button class="year-toggle" id="yearToggle" type="button" data-target-year="2027" aria-label="Отвори календара за 2027">
-          <span class="year-toggle-text"></span>
-          <span class="year-toggle-badge">2027</span>
-        </button>
-      </div>
-
-      <div class="legend">
-        <span class="legend-item"><i class="dot dot-free"></i> Свободно</span>
-        <span class="legend-item"><i class="dot dot-partial"></i> Само фотограф</span>
-        <span class="legend-item"><i class="dot dot-busy"></i> Заето</span>
-      </div>
+      <nav>
+        <a href="index.html">Начало</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="videos.html">Видео</a>
+        <a href="uslugi-ceni.html">Ценоразпис</a>
+        <a href="availability.html" class="nav-cta">Свободни дати</a>
+        <a href="about.html">За нас</a>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<footer>
-  © 2026 Memory Photo & Video. All rights reserved.
-</footer>
+  <main id="main-content" class="availability-page">
+    <div class="availability-wrap">
+      <section class="availability-hero">
+        <div class="availability-copy">
+          <span class="availability-kicker">Booking Calendar</span>
+          <h1>Провери свободните дати за вашето събитие.</h1>
+          <p>
+            Тук можеш бързо да видиш кои дни са свободни, заети или частично ангажирани.
+            Ако откриеш подходяща дата, премини към контакт с нас и ще уточним всички детайли.
+          </p>
+
+          <div class="availability-points">
+            <div class="availability-point">
+              <strong>Бърза проверка</strong>
+              <span>Свободни дати</span>
+            </div>
+            <div class="availability-point">
+              <strong>Ясни статуси</strong>
+              <span>Свободно / Частично / Заето</span>
+            </div>
+            <div class="availability-point">
+              <strong>Лесна следваща стъпка</strong>
+              <span>Контакт и резервация</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="availability-aside">
+          <div class="availability-aside-content">
+            <span class="availability-aside-label">Memory Schedule</span>
+            <h2>Избери дата с увереност и я запази навреме.</h2>
+            <p>
+              Най-търсените уикенди се резервират първи, затова е добре да провериш календара възможно най-рано.
+            </p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="calendar-shell">
+        <div class="calendar-topline">
+          <div class="calendar-title-wrap">
+            <h2>Свободни дати</h2>
+            <p>Актуален преглед на заетостта по месеци.</p>
+          </div>
+
+          <div class="legend">
+            <span class="legend-item"><i class="dot dot-free"></i> Свободно</span>
+            <span class="legend-item"><i class="dot dot-partial"></i> Частично заето</span>
+            <span class="legend-item"><i class="dot dot-busy"></i> Заето</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cal-header">
+            <button class="cal-btn" id="prevMonth" aria-label="Предишен месец">‹</button>
+            <div class="cal-month" id="monthLabel">Месец</div>
+            <button class="cal-btn" id="nextMonth" aria-label="Следващ месец">›</button>
+          </div>
+
+          <div class="year-switch">
+            <button class="year-toggle" id="yearToggle" type="button">Смени година</button>
+          </div>
+
+          <div class="weekdays">
+            <div>Пн</div>
+            <div>Вт</div>
+            <div>Ср</div>
+            <div>Чт</div>
+            <div>Пт</div>
+            <div>Сб</div>
+            <div>Нд</div>
+          </div>
+
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+
+        <div class="availability-cta">
+          <div>
+            <h3>Хареса ли ти свободна дата?</h3>
+            <p>
+              Запази интереса си навреме и продължи към портфолиото или цените, за да избереш най-подходящия вариант.
+            </p>
+          </div>
+
+          <div class="availability-actions">
+            <a class="btn btn--primary" href="portfolio.html">Виж портфолио</a>
+            <a class="btn btn--secondary" href="uslugi-ceni.html">Виж цени</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Memory Photo & Video. All rights reserved.
+  </footer>
 
 <script>
 (function(){
@@ -549,21 +614,29 @@ footer{
   };
 
   const monthNames = ["Януари","Февруари","Март","Април","Май","Юни","Юли","Август","Септември","Октомври","Ноември","Декември"];
-  const dow = ["Пн","Вт","Ср","Чт","Пт","Сб","Нд"];
 
-  const grid = document.getElementById("grid");
+  const grid = document.getElementById("calendarGrid");
   const label = document.getElementById("monthLabel");
-  const prev = document.getElementById("prev");
-  const next = document.getElementById("next");
+  const prev = document.getElementById("prevMonth");
+  const next = document.getElementById("nextMonth");
   const yearToggle = document.getElementById("yearToggle");
 
-  if(!grid || !label || !prev || !next || !yearToggle) return;
+  if (!grid || !label || !prev || !next || !yearToggle) return;
 
   let activeYear = 2026;
-  let view = new Date(2026, Math.max(new Date().getMonth(), calendarData[2026].minView.getMonth()), 1);
+  let view = new Date(
+    2026,
+    Math.max(new Date().getMonth(), calendarData[2026].minView.getMonth()),
+    1
+  );
 
-  function pad(n){ return String(n).padStart(2,"0"); }
-  function fmt(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function pad(n){
+    return String(n).padStart(2, "0");
+  }
+
+  function fmt(d){
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  }
 
   function getConfig(){
     return calendarData[activeYear];
@@ -571,24 +644,41 @@ footer{
 
   function getDefaultView(year){
     const config = calendarData[year];
-    if(year === 2026){
+
+    if (year === 2026) {
       const currentMonth = new Date().getMonth();
-      const targetMonth = Math.min(Math.max(currentMonth, config.minView.getMonth()), config.maxView.getMonth());
+      const targetMonth = Math.min(
+        Math.max(currentMonth, config.minView.getMonth()),
+        config.maxView.getMonth()
+      );
       return new Date(2026, targetMonth, 1);
     }
+
     return new Date(config.minView.getFullYear(), config.minView.getMonth(), 1);
   }
 
   function clampView(){
     const { minView, maxView } = getConfig();
-    if(view < minView) view = new Date(minView.getFullYear(), minView.getMonth(), 1);
-    if(view > maxView) view = new Date(maxView.getFullYear(), maxView.getMonth(), 1);
+
+    if (view < minView) {
+      view = new Date(minView.getFullYear(), minView.getMonth(), 1);
+    }
+
+    if (view > maxView) {
+      view = new Date(maxView.getFullYear(), maxView.getMonth(), 1);
+    }
   }
 
   function updateButtons(){
     const { minView, maxView } = getConfig();
-    const atMin = (view.getFullYear() === minView.getFullYear() && view.getMonth() === minView.getMonth());
-    const atMax = (view.getFullYear() === maxView.getFullYear() && view.getMonth() === maxView.getMonth());
+
+    const atMin =
+      view.getFullYear() === minView.getFullYear() &&
+      view.getMonth() === minView.getMonth();
+
+    const atMax =
+      view.getFullYear() === maxView.getFullYear() &&
+      view.getMonth() === maxView.getMonth();
 
     prev.disabled = atMin;
     next.disabled = atMax;
@@ -600,48 +690,51 @@ footer{
 
     const nextYear = activeYear === 2026 ? 2027 : 2026;
     yearToggle.dataset.targetYear = String(nextYear);
-    yearToggle.setAttribute("aria-label", (activeYear === 2026 ? "Отвори календара за " : "Назад към календара за ") + nextYear);
-    yearToggle.querySelector(".year-toggle-badge").textContent = nextYear;
+    yearToggle.setAttribute(
+      "aria-label",
+      (activeYear === 2026 ? "Отвори календара за " : "Назад към календара за ") + nextYear
+    );
+    yearToggle.textContent = activeYear === 2026
+      ? `Виж ${nextYear}`
+      : `Назад към ${nextYear}`;
   }
 
   function render(){
     clampView();
-    grid.innerHTML="";
+    grid.innerHTML = "";
 
-    dow.forEach(d=>{
-      const el=document.createElement("div");
-      el.className="cell dow";
-      el.textContent=d;
-      grid.appendChild(el);
-    });
+    const y = view.getFullYear();
+    const m = view.getMonth();
+    label.textContent = monthNames[m] + " " + y;
 
-    const y=view.getFullYear();
-    const m=view.getMonth();
-    label.textContent=monthNames[m]+" "+y;
-
-    const first=new Date(y,m,1);
-    const last=new Date(y,m+1,0);
-    const offset=(first.getDay()+6)%7;
+    const first = new Date(y, m, 1);
+    const last = new Date(y, m + 1, 0);
+    const offset = (first.getDay() + 6) % 7;
     const { busy, partial } = getConfig();
 
-    for(let i=0;i<offset;i++){
-      const e=document.createElement("div");
-      e.className="cell empty";
-      grid.appendChild(e);
+    for (let i = 0; i < offset; i++) {
+      const emptyCell = document.createElement("div");
+      emptyCell.className = "cell empty";
+      grid.appendChild(emptyCell);
     }
 
-    for(let d=1; d<=last.getDate(); d++){
-      const date=new Date(y,m,d);
-      const key=fmt(date);
+    for (let d = 1; d <= last.getDate(); d++) {
+      const date = new Date(y, m, d);
+      const key = fmt(date);
 
-      const e=document.createElement("div");
+      const cell = document.createElement("div");
+      const dayNumber = document.createElement("span");
+
       const isBusy = busy.has(key);
       const isPartial = partial.has(key);
 
-      e.className = "cell " + (isBusy ? "busy" : (isPartial ? "partial" : "free"));
-      e.textContent = d;
+      cell.className = "cell " + (isBusy ? "busy" : (isPartial ? "partial" : "free"));
 
-      grid.appendChild(e);
+      dayNumber.className = "day-number";
+      dayNumber.textContent = d;
+
+      cell.appendChild(dayNumber);
+      grid.appendChild(cell);
     }
 
     updateButtons();
@@ -653,21 +746,21 @@ footer{
     render();
   }
 
-  prev.onclick=()=>{
-    if(prev.disabled) return;
-    view=new Date(view.getFullYear(), view.getMonth()-1, 1);
+  prev.addEventListener("click", () => {
+    if (prev.disabled) return;
+    view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
     render();
-  };
+  });
 
-  next.onclick=()=>{
-    if(next.disabled) return;
-    view=new Date(view.getFullYear(), view.getMonth()+1, 1);
+  next.addEventListener("click", () => {
+    if (next.disabled) return;
+    view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
     render();
-  };
+  });
 
-  yearToggle.onclick=()=>{
+  yearToggle.addEventListener("click", () => {
     setYear(activeYear === 2026 ? 2027 : 2026);
-  };
+  });
 
   render();
 })();
