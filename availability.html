@@ -10,20 +10,20 @@
     gtag('config', 'G-WJK01GL7PM');
   </script>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Свободни дати | Memory Photo & Video</title>
-  <link rel="icon" type="image/png" href="icon.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Свободни дати | Memory Photo &amp; Video</title>
 
+  <link rel="icon" type="image/png" href="icon.png" />
   <meta property="og:type" content="website">
   <meta property="og:title" content="Свободни дати | Memory Photo & Video">
-  <meta property="og:description" content="Провери свободните дати за сватбена фотография и видеография.">
+  <meta property="og:description" content="Провери свободните дати за твоето събитие и виж актуалната заетост по месеци.">
   <meta property="og:url" content="https://memoryphotoandvideo.com/availability.html">
   <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Свободни дати | Memory Photo & Video">
-  <meta name="twitter:description" content="Актуален календар със свободни, частично заети и заети дати.">
+  <meta name="twitter:description" content="Провери свободните дати за твоето събитие и се ориентирай бързо кои уикенди са свободни.">
   <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,9 +41,9 @@
       --line-soft:rgba(245,240,232,.06);
       --text-soft:rgba(245,240,232,.78);
       --text-faint:rgba(245,240,232,.56);
-      --busy:rgba(150, 44, 44, .18);
-      --partial:rgba(195, 143, 33, .18);
-      --free:rgba(31, 116, 77, .20);
+      --busy:rgba(150,44,44,.18);
+      --partial:rgba(195,143,33,.18);
+      --free:rgba(31,116,77,.20);
     }
 
     body{
@@ -62,13 +62,11 @@
     .availability-wrap{
       width: min(1180px, 100%);
       margin: 0 auto;
+      display: grid;
+      gap: 18px;
     }
 
     .availability-hero{
-      margin-bottom: 22px;
-    }
-
-    .availability-copy{
       position: relative;
       overflow: hidden;
       padding: 34px 38px 30px;
@@ -81,12 +79,12 @@
       backdrop-filter: blur(10px);
     }
 
-    .availability-copy::after{
+    .availability-hero::after{
       content:"";
       position:absolute;
       inset:auto -60px -60px auto;
-      width:220px;
-      height:220px;
+      width:240px;
+      height:240px;
       border-radius:50%;
       background: radial-gradient(circle, rgba(201,169,110,.10), transparent 68%);
       pointer-events:none;
@@ -110,17 +108,18 @@
       background:var(--gold);
     }
 
-    .availability-copy h1{
-      max-width: 11ch;
+    .availability-hero h1{
+      max-width: 14ch;
       font-family:'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
-      line-height: .92;
+      font-size: clamp(2.8rem, 5.2vw, 4.9rem);
+      line-height: 1.03;
       font-weight: 400;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       color: var(--cream);
+      text-wrap: balance;
     }
 
-    .availability-copy p{
+    .availability-hero p{
       max-width: 66ch;
       font-size: 1rem;
       line-height: 1.78;
@@ -131,11 +130,11 @@
       display:flex;
       flex-wrap:wrap;
       gap:12px;
-      margin-top:22px;
+      margin-top:24px;
     }
 
     .availability-point{
-      min-width: 180px;
+      min-width: 190px;
       padding:12px 14px;
       border-radius:18px;
       border:1px solid var(--line-soft);
@@ -158,8 +157,14 @@
       line-height:1.5;
     }
 
-    .calendar-shell{
-      margin-top: 10px;
+    .glass-card{
+      padding: 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(201,169,110,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+      box-shadow: 0 30px 80px rgba(0,0,0,.34);
+      backdrop-filter: blur(10px);
     }
 
     .calendar-topline{
@@ -169,7 +174,6 @@
       gap:16px;
       flex-wrap:wrap;
       margin-bottom:14px;
-      padding:0 8px;
     }
 
     .calendar-title-wrap h2{
@@ -185,6 +189,7 @@
       color:var(--text-faint);
       line-height:1.6;
       font-size:.95rem;
+      max-width: 60ch;
     }
 
     .legend{
@@ -214,7 +219,7 @@
     .dot-partial{ background:#d39a2d; }
     .dot-busy{ background:#d85a5a; }
 
-    .card{
+    .calendar-card{
       padding: 24px;
       border-radius: 30px;
       border: 1px solid rgba(201,169,110,.18);
@@ -340,17 +345,16 @@
     }
 
     .availability-cta{
-      margin-top:18px;
-      padding:24px 28px;
-      border-radius:24px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      box-shadow:0 22px 55px rgba(0,0,0,.24);
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap:18px;
       flex-wrap:wrap;
+      padding:24px 28px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      box-shadow:0 22px 55px rgba(0,0,0,.24);
     }
 
     .availability-cta h3{
@@ -375,15 +379,8 @@
 
     .availability-actions .btn{
       min-width: 190px;
-      justify-content:center;
+      justify-content: center;
     }
-    .pricing-hero h1{
-  max-width: 8ch;
-  font-size: clamp(2.6rem, 5vw, 4.8rem);
-  line-height: 1.02;
-  text-wrap: balance;
-}
-
 
     footer{
       background:#000;
@@ -401,17 +398,16 @@
         padding: 98px 16px 74px;
       }
 
-      .availability-copy{
-        padding: 24px 20px 22px;
+      .availability-hero,
+      .glass-card,
+      .calendar-card{
+        padding: 20px;
       }
 
-      .availability-copy h1{
-        max-width: none;
+      .availability-hero h1{
+        max-width: 11ch;
         font-size: clamp(2.2rem, 10vw, 3.4rem);
-      }
-
-      .card{
-        padding: 18px;
+        line-height: 1.05;
       }
 
       .cell{
@@ -453,6 +449,10 @@
       .availability-point{
         width:100%;
       }
+
+      .availability-hero h1{
+        max-width:none;
+      }
     }
   </style>
 </head>
@@ -473,7 +473,7 @@
         <a href="index.html">Начало</a>
         <a href="portfolio.html">Портфолио</a>
         <a href="videos.html">Видео</a>
-        <a href="uslugi-ceni.html">Ценоразпис</a>
+        <a href="uslugi-ceni.html">Цени</a>
         <a href="availability.html" class="nav-cta">Свободни дати</a>
         <a href="about.html">За нас</a>
       </nav>
@@ -483,49 +483,47 @@
   <main id="main-content" class="availability-page">
     <div class="availability-wrap">
       <section class="availability-hero">
-        <div class="availability-copy">
-          <span class="availability-kicker">Booking Calendar</span>
-          <h1>Провери свободните дати за вашето събитие.</h1>
-          <p>
-            Виж актуалната заетост по месеци и се ориентирай бързо кои дати са свободни,
-            частично ангажирани или вече запазени. Така следващата стъпка към резервацията
-            е по-лесна и по-уверена.
-          </p>
+        <span class="availability-kicker">Booking Calendar</span>
+        <h1>Провери свободните дати за вашето събитие.</h1>
+        <p>
+          Виж актуалната заетост по месеци и се ориентирай бързо кои дати са свободни,
+          частично ангажирани или вече запазени. Така следващата стъпка към резервацията
+          е по-лесна и по-уверена.
+        </p>
 
-          <div class="availability-points">
-            <div class="availability-point">
-              <strong>Актуален календар</strong>
-              <span>Свободни дати</span>
-            </div>
+        <div class="availability-points">
+          <div class="availability-point">
+            <strong>Актуален календар</strong>
+            <span>Свободни дати</span>
+          </div>
 
-            <div class="availability-point">
-              <strong>Ясен статус</strong>
-              <span>Свободно / Частично / Заето</span>
-            </div>
+          <div class="availability-point">
+            <strong>Ясен статус</strong>
+            <span>Свободно / Частично / Заето</span>
+          </div>
 
-            <div class="availability-point">
-              <strong>Бърза следваща стъпка</strong>
-              <span>Портфолио, цени, контакт</span>
-            </div>
+          <div class="availability-point">
+            <strong>Бърза следваща стъпка</strong>
+            <span>Портфолио, цени, контакт</span>
           </div>
         </div>
       </section>
 
-      <section class="calendar-shell">
+      <section class="glass-card">
         <div class="calendar-topline">
           <div class="calendar-title-wrap">
             <h2>Свободни дати</h2>
             <p>Актуален преглед на заетостта по месеци.</p>
           </div>
 
-          <div class="legend">
-            <span class="legend-item"><i class="dot dot-free"></i> Свободно</span>
-            <span class="legend-item"><i class="dot dot-partial"></i> Частично заето</span>
-            <span class="legend-item"><i class="dot dot-busy"></i> Заето</span>
+          <div class="legend" aria-label="Легенда">
+            <span class="legend-item"><i class="dot dot-free"></i>Свободно</span>
+            <span class="legend-item"><i class="dot dot-partial"></i>Частично заето</span>
+            <span class="legend-item"><i class="dot dot-busy"></i>Заето</span>
           </div>
         </div>
 
-        <div class="card">
+        <div class="calendar-card">
           <div class="cal-header">
             <button class="cal-btn" id="prevMonth" aria-label="Предишен месец">‹</button>
             <div class="cal-month" id="monthLabel">Месец</div>
@@ -533,7 +531,7 @@
           </div>
 
           <div class="year-switch">
-            <button class="year-toggle" id="yearToggle" type="button">Виж 2027</button>
+            <button class="year-toggle" id="yearToggle" type="button">2027</button>
           </div>
 
           <div class="weekdays">
@@ -559,7 +557,7 @@
           </div>
 
           <div class="availability-actions">
-            <a class="btn btn--secondary" href="portfolio.html">Виж портфолио</a>
+            <a class="btn btn--secondary" href="portfolio.html">Към портфолио</a>
             <a class="btn btn--primary" href="uslugi-ceni.html">Виж цени</a>
           </div>
         </div>
@@ -567,218 +565,166 @@
     </div>
   </main>
 
-  <footer>
-    © 2026 Memory Photo & Video. All rights reserved.
-  </footer>
+  <footer>© 2026 Memory Photo &amp; Video. All rights reserved.</footer>
 
   <script>
-(function(){
-  const calendarData = {
-    2026: {
-      busy: new Set([
-        "2026-03-14",
-        "2026-04-18",
-        "2026-04-25",
-        "2026-05-16",
-        "2026-05-24",
-        "2026-05-25",
-        "2026-05-26",
-        "2026-05-28",
-        "2026-05-30",
-        "2026-06-06",
-        "2026-06-14",
-        "2026-06-20",
-        "2026-06-26",
-        "2026-06-27",
-        "2026-07-18",
-        "2026-07-28",
-        "2026-07-30",
-        "2026-08-08",
-        "2026-08-15",
-        "2026-08-23",
-        "2026-09-26",
-        "2026-10-10"
-      ]),
-      partial: new Set([
-        "2026-06-13",
-        "2026-07-10",
-        "2026-07-11",
-        "2026-07-12",
-        "2026-07-14",
-        "2026-07-19",
-        "2026-07-24",
-        "2026-07-25",
-        "2026-08-16",
-        "2026-08-29",
-        "2026-09-12",
-        "2026-09-13",
-        "2026-10-04"
-      ]),
-      minView: new Date(2026, 7, 1),
-      maxView: new Date(2026, 11, 1)
-    },
-    2027: {
-      busy: new Set([
-        "2027-07-17",
-        "2027-08-21"
-      ]),
-      partial: new Set([]),
-      minView: new Date(2027, 0, 1),
-      maxView: new Date(2027, 11, 1)
-    }
-  };
+    (function () {
+      const calendarData = {
+        2026: {
+          busy: new Set([
+            '2026-03-14','2026-04-18','2026-04-25','2026-05-16','2026-05-24','2026-05-25',
+            '2026-05-26','2026-05-28','2026-05-30','2026-06-06','2026-06-14','2026-06-20',
+            '2026-06-26','2026-06-27','2026-07-18','2026-07-28','2026-07-30','2026-08-08',
+            '2026-08-15','2026-08-23','2026-09-26','2026-10-10'
+          ]),
+          partial: new Set([
+            '2026-06-13','2026-07-10','2026-07-11','2026-07-12','2026-07-14','2026-07-19',
+            '2026-07-24','2026-07-25','2026-08-16','2026-08-29','2026-09-12','2026-09-13',
+            '2026-10-04'
+          ]),
+          minView: new Date(2026, 7, 1),
+          maxView: new Date(2026, 11, 1)
+        },
+        2027: {
+          busy: new Set([
+            '2027-07-17','2027-08-21'
+          ]),
+          partial: new Set([]),
+          minView: new Date(2027, 0, 1),
+          maxView: new Date(2027, 11, 1)
+        }
+      };
 
-  const monthNames = ["Януари","Февруари","Март","Април","Май","Юни","Юли","Август","Септември","Октомври","Ноември","Декември"];
+      const monthNames = [
+        'Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни',
+        'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'
+      ];
 
-  const grid = document.getElementById("calendarGrid");
-  const label = document.getElementById("monthLabel");
-  const prev = document.getElementById("prevMonth");
-  const next = document.getElementById("nextMonth");
-  const yearToggle = document.getElementById("yearToggle");
+      const grid = document.getElementById('calendarGrid');
+      const label = document.getElementById('monthLabel');
+      const prev = document.getElementById('prevMonth');
+      const next = document.getElementById('nextMonth');
+      const yearToggle = document.getElementById('yearToggle');
 
-  if (!grid || !label || !prev || !next || !yearToggle) return;
+      if (!grid || !label || !prev || !next || !yearToggle) return;
 
-  let activeYear = 2026;
-  let view = new Date(
-    2026,
-    Math.max(new Date().getMonth(), calendarData[2026].minView.getMonth()),
-    1
-  );
+      let activeYear = 2026;
+      let view = new Date(2026, Math.max(new Date().getMonth(), calendarData[2026].minView.getMonth()), 1);
 
-  function pad(n){
-    return String(n).padStart(2, "0");
-  }
+      function pad(n) {
+        return String(n).padStart(2, '0');
+      }
 
-  function fmt(d){
-    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
-  }
+      function fmt(d) {
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+      }
 
-  function getConfig(){
-    return calendarData[activeYear];
-  }
+      function getConfig() {
+        return calendarData[activeYear];
+      }
 
-  function getDefaultView(year){
-    const config = calendarData[year];
+      function getDefaultView(year) {
+        const config = calendarData[year];
+        if (year === 2026) {
+          const currentMonth = new Date().getMonth();
+          const targetMonth = Math.min(
+            Math.max(currentMonth, config.minView.getMonth()),
+            config.maxView.getMonth()
+          );
+          return new Date(2026, targetMonth, 1);
+        }
+        return new Date(config.minView.getFullYear(), config.minView.getMonth(), 1);
+      }
 
-    if (year === 2026) {
-      const currentMonth = new Date().getMonth();
-      const targetMonth = Math.min(
-        Math.max(currentMonth, config.minView.getMonth()),
-        config.maxView.getMonth()
-      );
-      return new Date(2026, targetMonth, 1);
-    }
+      function clampView() {
+        const { minView, maxView } = getConfig();
+        if (view < minView) view = new Date(minView.getFullYear(), minView.getMonth(), 1);
+        if (view > maxView) view = new Date(maxView.getFullYear(), maxView.getMonth(), 1);
+      }
 
-    return new Date(config.minView.getFullYear(), config.minView.getMonth(), 1);
-  }
+      function updateButtons() {
+        const { minView, maxView } = getConfig();
+        const atMin = view.getFullYear() === minView.getFullYear() && view.getMonth() === minView.getMonth();
+        const atMax = view.getFullYear() === maxView.getFullYear() && view.getMonth() === maxView.getMonth();
 
-  function clampView(){
-    const { minView, maxView } = getConfig();
+        prev.disabled = atMin;
+        next.disabled = atMax;
+        prev.style.opacity = atMin ? '.35' : '1';
+        next.style.opacity = atMax ? '.35' : '1';
+        prev.style.cursor = atMin ? 'not-allowed' : 'pointer';
+        next.style.cursor = atMax ? 'not-allowed' : 'pointer';
 
-    if (view < minView) {
-      view = new Date(minView.getFullYear(), minView.getMonth(), 1);
-    }
+        const nextYear = activeYear === 2026 ? 2027 : 2026;
+        yearToggle.dataset.targetYear = String(nextYear);
+        yearToggle.setAttribute('aria-label', `Покажи ${nextYear}`);
+        yearToggle.textContent = String(nextYear);
+      }
 
-    if (view > maxView) {
-      view = new Date(maxView.getFullYear(), maxView.getMonth(), 1);
-    }
-  }
+      function render() {
+        clampView();
+        grid.innerHTML = '';
 
-  function updateButtons(){
-    const { minView, maxView } = getConfig();
+        const y = view.getFullYear();
+        const m = view.getMonth();
+        label.textContent = `${monthNames[m]} ${y}`;
 
-    const atMin =
-      view.getFullYear() === minView.getFullYear() &&
-      view.getMonth() === minView.getMonth();
+        const first = new Date(y, m, 1);
+        const last = new Date(y, m + 1, 0);
+        const offset = (first.getDay() + 6) % 7;
 
-    const atMax =
-      view.getFullYear() === maxView.getFullYear() &&
-      view.getMonth() === maxView.getMonth();
+        const { busy, partial } = getConfig();
 
-    prev.disabled = atMin;
-    next.disabled = atMax;
+        for (let i = 0; i < offset; i++) {
+          const emptyCell = document.createElement('div');
+          emptyCell.className = 'cell empty';
+          grid.appendChild(emptyCell);
+        }
 
-    prev.style.opacity = atMin ? ".35" : "1";
-    next.style.opacity = atMax ? ".35" : "1";
-    prev.style.cursor = atMin ? "not-allowed" : "pointer";
-    next.style.cursor = atMax ? "not-allowed" : "pointer";
+        for (let d = 1; d <= last.getDate(); d++) {
+          const date = new Date(y, m, d);
+          const key = fmt(date);
 
-    const nextYear = activeYear === 2026 ? 2027 : 2026;
-    yearToggle.dataset.targetYear = String(nextYear);
-    yearToggle.setAttribute(
-      "aria-label",
-      (activeYear === 2026 ? "Отвори календара за " : "Назад към календара за ") + nextYear
-    );
-    yearToggle.textContent = activeYear === 2026
-      ? `Виж ${nextYear}`
-      : `Назад към ${nextYear}`;
-  }
+          const cell = document.createElement('div');
+          const dayNumber = document.createElement('span');
 
-  function render(){
-    clampView();
-    grid.innerHTML = "";
+          const isBusy = busy.has(key);
+          const isPartial = partial.has(key);
 
-    const y = view.getFullYear();
-    const m = view.getMonth();
-    label.textContent = monthNames[m] + " " + y;
+          cell.className = `cell ${isBusy ? 'busy' : isPartial ? 'partial' : 'free'}`;
+          dayNumber.className = 'day-number';
+          dayNumber.textContent = d;
 
-    const first = new Date(y, m, 1);
-    const last = new Date(y, m + 1, 0);
-    const offset = (first.getDay() + 6) % 7;
-    const { busy, partial } = getConfig();
+          cell.appendChild(dayNumber);
+          grid.appendChild(cell);
+        }
 
-    for (let i = 0; i < offset; i++) {
-      const emptyCell = document.createElement("div");
-      emptyCell.className = "cell empty";
-      grid.appendChild(emptyCell);
-    }
+        updateButtons();
+      }
 
-    for (let d = 1; d <= last.getDate(); d++) {
-      const date = new Date(y, m, d);
-      const key = fmt(date);
+      function setYear(year) {
+        activeYear = year;
+        view = getDefaultView(year);
+        render();
+      }
 
-      const cell = document.createElement("div");
-      const dayNumber = document.createElement("span");
+      prev.addEventListener('click', () => {
+        if (prev.disabled) return;
+        view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
+        render();
+      });
 
-      const isBusy = busy.has(key);
-      const isPartial = partial.has(key);
+      next.addEventListener('click', () => {
+        if (next.disabled) return;
+        view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+        render();
+      });
 
-      cell.className = "cell " + (isBusy ? "busy" : (isPartial ? "partial" : "free"));
+      yearToggle.addEventListener('click', () => {
+        setYear(activeYear === 2026 ? 2027 : 2026);
+      });
 
-      dayNumber.className = "day-number";
-      dayNumber.textContent = d;
-
-      cell.appendChild(dayNumber);
-      grid.appendChild(cell);
-    }
-
-    updateButtons();
-  }
-
-  function setYear(year){
-    activeYear = year;
-    view = getDefaultView(year);
-    render();
-  }
-
-  prev.addEventListener("click", () => {
-    if (prev.disabled) return;
-    view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
-    render();
-  });
-
-  next.addEventListener("click", () => {
-    if (next.disabled) return;
-    view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
-    render();
-  });
-
-  yearToggle.addEventListener("click", () => {
-    setYear(activeYear === 2026 ? 2027 : 2026);
-  });
-
-  render();
-})();
+      render();
+    })();
   </script>
 </body>
 </html>
