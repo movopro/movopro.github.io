@@ -108,13 +108,14 @@
     }
 
     .pricing-hero h1{
-      max-width: 11ch;
+      max-width: 8ch;
       font-family:'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
-      line-height: .92;
+      font-size: clamp(2.7rem, 5vw, 4.8rem);
+      line-height: 1.02;
       font-weight: 400;
       margin-bottom: 14px;
       color: var(--cream);
+      text-wrap: balance;
     }
 
     .pricing-hero p{
@@ -264,7 +265,7 @@
       background:
         linear-gradient(180deg, rgba(201,169,110,.08), rgba(255,255,255,.02));
     }
-    
+
     .badge{
       position:absolute;
       top:-12px;
@@ -304,6 +305,10 @@
       color:var(--gold);
       opacity:.9;
       margin-top:2px;
+    }
+
+    .package-card .btn{
+      margin-top:auto;
     }
 
     .bullets{
@@ -435,6 +440,10 @@
       outline:none;
       border-color:rgba(201,169,110,.75);
       box-shadow:0 0 0 3px rgba(201,169,110,.10);
+    }
+
+    textarea.calc-input{
+      resize:vertical;
     }
 
     .calc-two{
@@ -588,102 +597,6 @@
       gap:12px;
       flex-wrap:wrap;
     }
-    <section class="glass-card" id="inquirySection">
-  <div class="section-topline">
-    <div>
-      <h2>Изпрати запитване</h2>
-      <p>
-        Изпрати запитване за конкретен пакет или за персонална конфигурация от калкулатора.
-        Датата е задължителна, за да можем да проверим наличност.
-      </p>
-    </div>
-    <div class="pill">задължителна дата</div>
-  </div>
-
-  <div class="calc-grid">
-    <div class="calc-card">
-      <h3>Данни за запитването</h3>
-
-      <div class="calc-row">
-        <label class="calc-label" for="inquiryType">Тип запитване</label>
-        <select class="calc-select" id="inquiryType">
-          <option value="Пакетна оферта">Пакетна оферта</option>
-          <option value="Персонална конфигурация">Персонална конфигурация</option>
-          <option value="Друго събитие">Друго събитие</option>
-        </select>
-      </div>
-
-      <div class="calc-two">
-        <div class="calc-row">
-          <label class="calc-label" for="clientName">Име</label>
-          <input class="calc-input" id="clientName" type="text" required>
-        </div>
-
-        <div class="calc-row">
-          <label class="calc-label" for="clientPhone">Телефон</label>
-          <input class="calc-input" id="clientPhone" type="text" required>
-        </div>
-      </div>
-
-      <div class="calc-two">
-        <div class="calc-row">
-          <label class="calc-label" for="clientEmail">Имейл</label>
-          <input class="calc-input" id="clientEmail" type="email" required>
-        </div>
-
-        <div class="calc-row">
-          <label class="calc-label" for="eventDate">Дата на събитието</label>
-          <input class="calc-input" id="eventDate" type="date" required>
-        </div>
-      </div>
-
-      <div class="calc-two">
-        <div class="calc-row">
-          <label class="calc-label" for="eventLocation">Локация</label>
-          <input class="calc-input" id="eventLocation" type="text">
-        </div>
-
-        <div class="calc-row">
-          <label class="calc-label" for="selectedOffer">Избрана оферта</label>
-          <input class="calc-input" id="selectedOffer" type="text" readonly>
-        </div>
-      </div>
-
-      <div class="calc-row">
-        <label class="calc-label" for="inquirySummary">Обобщение</label>
-        <textarea class="calc-input" id="inquirySummary" rows="8" readonly></textarea>
-      </div>
-
-      <div class="calc-row">
-        <label class="calc-label" for="clientNote">Допълнителни детайли</label>
-        <textarea class="calc-input" id="clientNote" rows="5" placeholder="Например: начало на събитието, брой гости, адрес, предпочитан стил, допълнителни изисквания."></textarea>
-      </div>
-
-      <label class="check-row">
-        <input type="checkbox" id="privacyConsent">
-        <span>Съгласен/на съм личните ми данни да бъдат използвани за връзка по това запитване.</span>
-      </label>
-
-      <div class="calc-actions">
-        <button class="btn btn--primary" type="button" id="sendInquiry">Изпрати запитване</button>
-      </div>
-
-      <p id="sendStatus" class="calc-mini" style="margin-top:12px;"></p>
-    </div>
-
-    <div class="calc-card result-card">
-      <h3>Какво ще получиш</h3>
-      <ul class="bullets">
-        <li>Запитване за конкретен пакет или персонален вариант.</li>
-        <li>Автоматично добавена разбивка от калкулатора при нужда.</li>
-        <li>Задължителна дата за реална проверка на наличност.</li>
-        <li>По-ясна комуникация още от първото съобщение.</li>
-      </ul>
-
-
-    </div>
-  </div>
-</section>
 
     footer{
       background:#000;
@@ -718,8 +631,9 @@
       }
 
       .pricing-hero h1{
-        max-width:none;
+        max-width: 10ch;
         font-size: clamp(2.2rem, 10vw, 3.4rem);
+        line-height: 1.04;
       }
 
       .glass-card{
@@ -842,6 +756,13 @@
               <li>Пълно покритие на сватбения ден с ясен баланс между фото и видео.</li>
               <li>Подходящ пакет за двойки, които искат силно и изчистено цялостно покритие.</li>
             </ul>
+            <button
+              class="btn btn--secondary package-inquiry-btn"
+              type="button"
+              data-package="Стандартен"
+              data-package-price="1 304 € (2 550 лв.)">
+              Запитване за този пакет
+            </button>
           </article>
 
           <article class="package-card recommended">
@@ -854,6 +775,13 @@
               <li>По-широко покритие на подготовката, детайлите и паралелните моменти.</li>
               <li>По-богат монтаж, по-силен трейлър и по-голяма визуална свобода през целия ден.</li>
             </ul>
+            <button
+              class="btn btn--primary package-inquiry-btn"
+              type="button"
+              data-package="Премиум"
+              data-package-price="1 763 € (3 448 лв.)">
+              Запитване за този пакет
+            </button>
           </article>
 
           <article class="package-card">
@@ -865,11 +793,18 @@
               <li>Максимално покритие с повече ъгли, повече динамика и по-пълна история.</li>
               <li>Най-силният вариант за по-големи сватби и за двойки, които искат максимален обхват.</li>
             </ul>
+            <button
+              class="btn btn--secondary package-inquiry-btn"
+              type="button"
+              data-package="Ултра"
+              data-package-price="2 420 € (4 733 лв.)">
+              Запитване за този пакет
+            </button>
           </article>
-        </div> 
+        </div>
 
         <div class="note">
-           
+          Всички стойности са ориентировъчни и могат да се адаптират според локация, програма, продължителност и допълнителни изисквания.
         </div>
       </section>
 
@@ -1047,6 +982,101 @@
         </div>
       </section>
 
+      <section class="glass-card" id="inquirySection">
+        <div class="section-topline">
+          <div>
+            <h2>Изпрати запитване</h2>
+            <p>
+              Изпрати запитване за конкретен пакет или за персонална конфигурация от калкулатора.
+              Датата е задължителна, за да можем да проверим наличност.
+            </p>
+          </div>
+          <div class="pill">задължителна дата</div>
+        </div>
+
+        <div class="calc-grid">
+          <div class="calc-card">
+            <h3>Данни за запитването</h3>
+
+            <div class="calc-row">
+              <label class="calc-label" for="inquiryType">Тип запитване</label>
+              <select class="calc-select" id="inquiryType">
+                <option value="Пакетна оферта">Пакетна оферта</option>
+                <option value="Персонална конфигурация">Персонална конфигурация</option>
+                <option value="Друго събитие">Друго събитие</option>
+              </select>
+            </div>
+
+            <div class="calc-two">
+              <div class="calc-row">
+                <label class="calc-label" for="clientName">Име</label>
+                <input class="calc-input" id="clientName" type="text" required>
+              </div>
+
+              <div class="calc-row">
+                <label class="calc-label" for="clientPhone">Телефон</label>
+                <input class="calc-input" id="clientPhone" type="text" required>
+              </div>
+            </div>
+
+            <div class="calc-two">
+              <div class="calc-row">
+                <label class="calc-label" for="clientEmail">Имейл</label>
+                <input class="calc-input" id="clientEmail" type="email" required>
+              </div>
+
+              <div class="calc-row">
+                <label class="calc-label" for="eventDate">Дата на събитието</label>
+                <input class="calc-input" id="eventDate" type="date" required>
+              </div>
+            </div>
+
+            <div class="calc-two">
+              <div class="calc-row">
+                <label class="calc-label" for="eventLocation">Локация</label>
+                <input class="calc-input" id="eventLocation" type="text">
+              </div>
+
+              <div class="calc-row">
+                <label class="calc-label" for="selectedOffer">Избрана оферта</label>
+                <input class="calc-input" id="selectedOffer" type="text" readonly>
+              </div>
+            </div>
+
+            <div class="calc-row">
+              <label class="calc-label" for="inquirySummary">Обобщение</label>
+              <textarea class="calc-input" id="inquirySummary" rows="8" readonly></textarea>
+            </div>
+
+            <div class="calc-row">
+              <label class="calc-label" for="clientNote">Допълнителни детайли</label>
+              <textarea class="calc-input" id="clientNote" rows="5" placeholder="Например: начало на събитието, брой гости, адрес, предпочитан стил, допълнителни изисквания."></textarea>
+            </div>
+
+            <label class="check-row">
+              <input type="checkbox" id="privacyConsent">
+              <span>Съгласен/на съм личните ми данни да бъдат използвани за връзка по това запитване.</span>
+            </label>
+
+            <div class="calc-actions">
+              <button class="btn btn--primary" type="button" id="sendInquiry">Изпрати запитване</button>
+            </div>
+
+            <p id="sendStatus" class="calc-mini" style="margin-top:12px;"></p>
+          </div>
+
+          <div class="calc-card result-card">
+            <h3>Какво ще получиш</h3>
+            <ul class="bullets">
+              <li>Запитване за конкретен пакет или персонален вариант.</li>
+              <li>Автоматично добавена разбивка от калкулатора при нужда.</li>
+              <li>Задължителна дата за реална проверка на наличност.</li>
+              <li>По-ясна комуникация още от първото съобщение.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section class="glass-card">
         <div class="section-topline">
           <div>
@@ -1093,8 +1123,6 @@
             </ul>
           </article>
         </div>
-
-      
       </section>
 
       <section class="pricing-footer-cta">
@@ -1119,423 +1147,421 @@
   </footer>
 
   <script>
-  const EUR_TO_BGN = 1.95583;
+    const EUR_TO_BGN = 1.95583;
 
-  const tabs = document.querySelectorAll('.mode-tab');
-  const panels = document.querySelectorAll('.mode-panel');
+    const tabs = document.querySelectorAll('.mode-tab');
+    const panels = document.querySelectorAll('.mode-panel');
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('visible'));
-      tab.classList.add('active');
-      document.getElementById('panel-' + tab.dataset.mode).classList.add('visible');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('visible'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.mode).classList.add('visible');
+      });
     });
-  });
 
-  const PRICES = {
-    weddingPhoto: { 1: 656, 2: 1106 },
-    weddingVideo: { 1: 719, 2: 1214 },
-    overtimePerPersonPerHour: 78,
-    rawFiles: 168,
-    afterSession: 143,
-    transportPerKm: 0.58,
-    dronePerHour: 58,
-    dronePerDay: 224
-  };
+    const PRICES = {
+      weddingPhoto: { 1: 656, 2: 1106 },
+      weddingVideo: { 1: 719, 2: 1214 },
+      overtimePerPersonPerHour: 78,
+      rawFiles: 168,
+      afterSession: 143,
+      transportPerKm: 0.58,
+      dronePerHour: 58,
+      dronePerDay: 224
+    };
 
-  const photoTeam = document.getElementById('photoTeam');
-  const videoTeam = document.getElementById('videoTeam');
-  const otHours = document.getElementById('otHours');
-  const km = document.getElementById('km');
-  const droneMode = document.getElementById('droneMode');
-  const droneHours = document.getElementById('droneHours');
-  const rawFiles = document.getElementById('rawFiles');
-  const afterSession = document.getElementById('afterSession');
-  const totalEUR = document.getElementById('totalEUR');
-  const totalBGN = document.getElementById('totalBGN');
-  const breakdown = document.getElementById('breakdown');
-  const resetBtn = document.getElementById('resetCalc');
-  const recalcWeddingBtn = document.getElementById('recalcWedding');
+    const photoTeam = document.getElementById('photoTeam');
+    const videoTeam = document.getElementById('videoTeam');
+    const otHours = document.getElementById('otHours');
+    const km = document.getElementById('km');
+    const droneMode = document.getElementById('droneMode');
+    const droneHours = document.getElementById('droneHours');
+    const rawFiles = document.getElementById('rawFiles');
+    const afterSession = document.getElementById('afterSession');
+    const totalEUR = document.getElementById('totalEUR');
+    const totalBGN = document.getElementById('totalBGN');
+    const breakdown = document.getElementById('breakdown');
+    const resetBtn = document.getElementById('resetCalc');
+    const recalcWeddingBtn = document.getElementById('recalcWedding');
 
-  function moneyEUR(n){ return Math.round(n) + '€'; }
-  function moneyBGN(n){ return Math.round(n) + ' лв.'; }
-  function line(label, value){
-    return '<div class=\"line\"><div>' + label + '</div><div class=\"r\">' + moneyEUR(value) + '</div></div>';
-  }
-
-  function updateDroneField(){
-    const hourly = droneMode.value === 'hour';
-    droneHours.disabled = !hourly;
-    droneHours.style.opacity = hourly ? '1' : '.55';
-  }
-
-  function calcWedding(){
-    const p = parseInt(photoTeam.value, 10);
-    const v = parseInt(videoTeam.value, 10);
-    const ot = parseInt(otHours.value, 10);
-    const kmVal = Math.max(0, parseFloat(km.value || '0'));
-    const dMode = droneMode.value;
-    const dHours = Math.max(1, parseInt(droneHours.value || '1', 10));
-    const people = (isNaN(p)?0:p) + (isNaN(v)?0:v);
-
-    let total = 0;
-    const lines = [];
-
-    if(p > 0){
-      const val = PRICES.weddingPhoto[p] || 0;
-      total += val;
-      lines.push(line('Сватбена фотография: ' + p + ' фотограф' + (p===1?'':'и') + ' (до 10ч)', val));
+    function moneyEUR(n){ return Math.round(n) + '€'; }
+    function moneyBGN(n){ return Math.round(n) + ' лв.'; }
+    function line(label, value){
+      return '<div class="line"><div>' + label + '</div><div class="r">' + moneyEUR(value) + '</div></div>';
     }
 
-    if(v > 0){
-      const val = PRICES.weddingVideo[v] || 0;
-      total += val;
-      lines.push(line('Сватбена видеография: ' + v + ' оператор' + (v===1?'':'и') + ' (до 10ч)', val));
+    function updateDroneField(){
+      const hourly = droneMode.value === 'hour';
+      droneHours.disabled = !hourly;
+      droneHours.style.opacity = hourly ? '1' : '.55';
     }
 
-    if(ot > 0 && people > 0){
-      const val = ot * people * PRICES.overtimePerPersonPerHour;
-      total += val;
-      lines.push(line('Допълнителни часове: ' + ot + 'ч × ' + people + ' човек × 78€', val));
+    function calcWedding(){
+      const p = parseInt(photoTeam.value, 10);
+      const v = parseInt(videoTeam.value, 10);
+      const ot = parseInt(otHours.value, 10);
+      const kmVal = Math.max(0, parseFloat(km.value || '0'));
+      const dMode = droneMode.value;
+      const dHours = Math.max(1, parseInt(droneHours.value || '1', 10));
+      const people = (isNaN(p)?0:p) + (isNaN(v)?0:v);
+
+      let total = 0;
+      const lines = [];
+
+      if(p > 0){
+        const val = PRICES.weddingPhoto[p] || 0;
+        total += val;
+        lines.push(line('Сватбена фотография: ' + p + ' фотограф' + (p===1?'':'и') + ' (до 10ч)', val));
+      }
+
+      if(v > 0){
+        const val = PRICES.weddingVideo[v] || 0;
+        total += val;
+        lines.push(line('Сватбена видеография: ' + v + ' оператор' + (v===1?'':'и') + ' (до 10ч)', val));
+      }
+
+      if(ot > 0 && people > 0){
+        const val = ot * people * PRICES.overtimePerPersonPerHour;
+        total += val;
+        lines.push(line('Допълнителни часове: ' + ot + 'ч × ' + people + ' човек × 78€', val));
+      }
+
+      if(dMode === 'hour'){
+        const val = dHours * PRICES.dronePerHour;
+        total += val;
+        lines.push(line('Дрон: ' + dHours + 'ч × 58€', val));
+      } else if(dMode === 'day'){
+        total += PRICES.dronePerDay;
+        lines.push(line('Дрон за целия ден', PRICES.dronePerDay));
+      }
+
+      if(rawFiles.checked){
+        total += PRICES.rawFiles;
+        lines.push(line('Сурови файлове', PRICES.rawFiles));
+      }
+
+      if(afterSession.checked){
+        total += PRICES.afterSession;
+        lines.push(line('Фотосесия в отделен ден', PRICES.afterSession));
+      }
+
+      if(kmVal > 0){
+        const val = kmVal * PRICES.transportPerKm;
+        total += val;
+        lines.push(line('Транспорт: ' + kmVal + ' км × 0.58€', val));
+      }
+
+      totalEUR.textContent = moneyEUR(total);
+      totalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
+      breakdown.innerHTML = lines.length
+        ? lines.join('')
+        : '<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
     }
 
-    if(dMode === 'hour'){
-      const val = dHours * PRICES.dronePerHour;
-      total += val;
-      lines.push(line('Дрон: ' + dHours + 'ч × 58€', val));
-    } else if(dMode === 'day'){
-      total += PRICES.dronePerDay;
-      lines.push(line('Дрон за целия ден', PRICES.dronePerDay));
+    [photoTeam, videoTeam, otHours, km, droneMode, droneHours, rawFiles, afterSession].forEach(el => {
+      el.addEventListener('input', calcWedding);
+      el.addEventListener('change', calcWedding);
+    });
+
+    droneMode.addEventListener('change', updateDroneField);
+    recalcWeddingBtn.addEventListener('click', calcWedding);
+
+    resetBtn.addEventListener('click', () => {
+      photoTeam.value = '0';
+      videoTeam.value = '0';
+      otHours.value = '0';
+      km.value = '0';
+      droneMode.value = 'none';
+      droneHours.value = '1';
+      rawFiles.checked = false;
+      afterSession.checked = false;
+      updateDroneField();
+      calcWedding();
+    });
+
+    const EVENT_PRICES = {
+      birthday: 88,
+      baptism: 99,
+      corporate: 128,
+      other: 88,
+      rawFiles: 168,
+      transportPerKm: 0.58
+    };
+
+    const eventType = document.getElementById('eventType');
+    const eventHours = document.getElementById('eventHours');
+    const eventPeople = document.getElementById('eventPeople');
+    const eventKm = document.getElementById('eventKm');
+    const eventRawFiles = document.getElementById('eventRawFiles');
+    const eventTotalEUR = document.getElementById('eventTotalEUR');
+    const eventTotalBGN = document.getElementById('eventTotalBGN');
+    const eventBreakdown = document.getElementById('eventBreakdown');
+    const recalcEventBtn = document.getElementById('recalcEvent');
+    const resetEventCalc = document.getElementById('resetEventCalc');
+
+    function calcEvent(){
+      const type = eventType.value;
+      const hours = Math.max(1, parseInt(eventHours.value || '1', 10));
+      const people = Math.max(1, parseInt(eventPeople.value || '1', 10));
+      const kmVal = Math.max(0, parseFloat(eventKm.value || '0'));
+      const rate = EVENT_PRICES[type] || EVENT_PRICES.other;
+
+      let total = 0;
+      const lines = [];
+
+      const coverage = hours * people * rate;
+      total += coverage;
+      lines.push(line('Покритие: ' + hours + 'ч × ' + people + ' човек × ' + rate + '€', coverage));
+
+      if(kmVal > 0){
+        const transport = kmVal * EVENT_PRICES.transportPerKm;
+        total += transport;
+        lines.push(line('Транспорт: ' + kmVal + ' км × 0.58€', transport));
+      }
+
+      if(eventRawFiles.checked){
+        total += EVENT_PRICES.rawFiles;
+        lines.push(line('Сурови файлове', EVENT_PRICES.rawFiles));
+      }
+
+      eventTotalEUR.textContent = moneyEUR(total);
+      eventTotalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
+      eventBreakdown.innerHTML = lines.length
+        ? lines.join('')
+        : '<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
     }
 
-    if(rawFiles.checked){
-      total += PRICES.rawFiles;
-      lines.push(line('Сурови файлове', PRICES.rawFiles));
+    [eventType, eventHours, eventPeople, eventKm, eventRawFiles].forEach(el => {
+      el.addEventListener('input', calcEvent);
+      el.addEventListener('change', calcEvent);
+    });
+
+    recalcEventBtn.addEventListener('click', calcEvent);
+
+    resetEventCalc.addEventListener('click', () => {
+      eventType.value = 'birthday';
+      eventHours.value = '2';
+      eventPeople.value = '1';
+      eventKm.value = '0';
+      eventRawFiles.checked = false;
+      calcEvent();
+    });
+
+    function getWeddingSummaryText() {
+      const p = parseInt(photoTeam.value, 10) || 0;
+      const v = parseInt(videoTeam.value, 10) || 0;
+      const ot = parseInt(otHours.value, 10) || 0;
+      const kmVal = parseFloat(km.value || '0') || 0;
+      const dMode = droneMode.value;
+      const dHours = parseInt(droneHours.value || '1', 10) || 1;
+
+      const selected = [];
+      selected.push('Тип: Сватба');
+      selected.push('Фотографи: ' + p);
+      selected.push('Оператори: ' + v);
+      selected.push('Допълнителни часове: ' + ot);
+      selected.push('Транспорт (км): ' + kmVal);
+
+      if (dMode === 'hour') {
+        selected.push('Дрон: По часове (' + dHours + ' ч)');
+      } else if (dMode === 'day') {
+        selected.push('Дрон: За целия ден');
+      } else {
+        selected.push('Дрон: Не');
+      }
+
+      selected.push('Сурови файлове: ' + (rawFiles.checked ? 'Да' : 'Не'));
+      selected.push('Фотосесия в отделен ден: ' + (afterSession.checked ? 'Да' : 'Не'));
+      selected.push('Ориентировъчна сума: ' + totalEUR.textContent + ' / ' + totalBGN.textContent);
+
+      return selected.join('\n');
     }
 
-    if(afterSession.checked){
-      total += PRICES.afterSession;
-      lines.push(line('Фотосесия в отделен ден', PRICES.afterSession));
+    function getEventSummaryText() {
+      const typeMap = {
+        birthday: 'Рожден ден / лично събитие',
+        baptism: 'Кръщене',
+        corporate: 'Фирмено събитие',
+        other: 'Друго'
+      };
+
+      const type = eventType.value;
+      const hours = Math.max(1, parseInt(eventHours.value || '1', 10));
+      const people = Math.max(1, parseInt(eventPeople.value || '1', 10));
+      const kmVal = Math.max(0, parseFloat(eventKm.value || '0'));
+      const rate = EVENT_PRICES[type] || EVENT_PRICES.other;
+
+      const selected = [];
+      selected.push('Тип: ' + (typeMap[type] || 'Друго събитие'));
+      selected.push('Часове: ' + hours);
+      selected.push('Хора в екипа: ' + people);
+      selected.push('Транспорт (км): ' + kmVal);
+      selected.push('Сурови файлове: ' + (eventRawFiles.checked ? 'Да' : 'Не'));
+      selected.push('Ставка на час: ' + rate + '€');
+      selected.push('Ориентировъчна сума: ' + eventTotalEUR.textContent + ' / ' + eventTotalBGN.textContent);
+
+      return selected.join('\n');
     }
 
-    if(kmVal > 0){
-      const val = kmVal * PRICES.transportPerKm;
-      total += val;
-      lines.push(line('Транспорт: ' + kmVal + ' км × 0.58€', val));
+    const inquirySection = document.getElementById('inquirySection');
+    const inquiryType = document.getElementById('inquiryType');
+    const selectedOffer = document.getElementById('selectedOffer');
+    const inquirySummary = document.getElementById('inquirySummary');
+    const clientName = document.getElementById('clientName');
+    const clientPhone = document.getElementById('clientPhone');
+    const clientEmail = document.getElementById('clientEmail');
+    const eventDateField = document.getElementById('eventDate');
+    const eventLocation = document.getElementById('eventLocation');
+    const clientNote = document.getElementById('clientNote');
+    const privacyConsent = document.getElementById('privacyConsent');
+    const sendInquiryBtn = document.getElementById('sendInquiry');
+    const sendStatus = document.getElementById('sendStatus');
+
+    function openInquirySection() {
+      inquirySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    totalEUR.textContent = moneyEUR(total);
-    totalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
-    breakdown.innerHTML = lines.length
-      ? lines.join('')
-      : '<div class=\"line\"><div>Няма избрани услуги.</div><div class=\"r\">0€</div></div>';
-  }
+    function fillPackageInquiry(name, price) {
+      inquiryType.value = 'Пакетна оферта';
+      selectedOffer.value = name + ' — ' + price;
+      inquirySummary.value =
+        'Избрана оферта: ' + name + '\n' +
+        'Цена: ' + price + '\n' +
+        'Тип: Пакетна оферта';
+      openInquirySection();
+    }
 
-  [photoTeam, videoTeam, otHours, km, droneMode, droneHours, rawFiles, afterSession].forEach(el => {
-    el.addEventListener('input', calcWedding);
-    el.addEventListener('change', calcWedding);
-  });
+    function fillWeddingInquiryFromCalculator() {
+      calcWedding();
+      inquiryType.value = 'Персонална конфигурация';
+      selectedOffer.value = 'Персонална конфигурация за сватба';
+      inquirySummary.value = getWeddingSummaryText();
+      openInquirySection();
+    }
 
-  droneMode.addEventListener('change', updateDroneField);
-  recalcWeddingBtn.addEventListener('click', calcWedding);
+    function fillEventInquiryFromCalculator() {
+      calcEvent();
+      inquiryType.value = 'Друго събитие';
+      selectedOffer.value = 'Персонална конфигурация за друго събитие';
+      inquirySummary.value = getEventSummaryText();
+      openInquirySection();
+    }
 
-  resetBtn.addEventListener('click', () => {
-    photoTeam.value = '0';
-    videoTeam.value = '0';
-    otHours.value = '0';
-    km.value = '0';
-    droneMode.value = 'none';
-    droneHours.value = '1';
-    rawFiles.checked = false;
-    afterSession.checked = false;
+    document.querySelectorAll('.package-inquiry-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        fillPackageInquiry(btn.dataset.package, btn.dataset.packagePrice);
+      });
+    });
+
+    const openWeddingInquiryBtn = document.getElementById('openWeddingInquiry');
+    if (openWeddingInquiryBtn) {
+      openWeddingInquiryBtn.addEventListener('click', fillWeddingInquiryFromCalculator);
+    }
+
+    const openEventInquiryBtn = document.getElementById('openEventInquiry');
+    if (openEventInquiryBtn) {
+      openEventInquiryBtn.addEventListener('click', fillEventInquiryFromCalculator);
+    }
+
+    async function sendInquiry() {
+      const name = clientName.value.trim();
+      const phone = clientPhone.value.trim();
+      const email = clientEmail.value.trim();
+      const eventDate = eventDateField.value.trim();
+      const location = eventLocation.value.trim();
+      const note = clientNote.value.trim();
+      const offer = selectedOffer.value.trim();
+      const summary = inquirySummary.value.trim();
+      const type = inquiryType.value;
+
+      if (!name) {
+        sendStatus.textContent = 'Моля, попълнете име.';
+        return;
+      }
+
+      if (!phone) {
+        sendStatus.textContent = 'Моля, попълнете телефон.';
+        return;
+      }
+
+      if (!email) {
+        sendStatus.textContent = 'Моля, попълнете имейл.';
+        return;
+      }
+
+      if (!eventDate) {
+        sendStatus.textContent = 'Моля, изберете дата на събитието.';
+        return;
+      }
+
+      if (!summary) {
+        sendStatus.textContent = 'Моля, първо изберете оферта или конфигурация.';
+        return;
+      }
+
+      if (!privacyConsent.checked) {
+        sendStatus.textContent = 'Моля, потвърдете съгласието за обработка на лични данни.';
+        return;
+      }
+
+      sendInquiryBtn.disabled = true;
+      sendInquiryBtn.style.opacity = '.7';
+      sendStatus.textContent = 'Изпращане...';
+
+      const payload = {
+        access_key: '33fb475c-9d44-449b-9fd0-1fc667dd170e',
+        subject: 'Ново запитване от сайта - Memory Photo & Video',
+        from_name: 'Memory Photo & Video',
+        name: name,
+        email: email,
+        phone: phone,
+        event_date: eventDate,
+        event_location: location,
+        inquiry_type: type,
+        selected_offer: offer,
+        calculator_summary: summary,
+        note: note
+      };
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          sendStatus.textContent = 'Запитването беше изпратено успешно.';
+          clientName.value = '';
+          clientPhone.value = '';
+          clientEmail.value = '';
+          eventDateField.value = '';
+          eventLocation.value = '';
+          clientNote.value = '';
+          privacyConsent.checked = false;
+        } else {
+          sendStatus.textContent = 'Възникна проблем при изпращането. Проверете настройките на формата.';
+        }
+      } catch (error) {
+        sendStatus.textContent = 'Грешка при връзката. Опитайте отново.';
+      } finally {
+        sendInquiryBtn.disabled = false;
+        sendInquiryBtn.style.opacity = '1';
+      }
+    }
+
+    sendInquiryBtn.addEventListener('click', sendInquiry);
+
     updateDroneField();
     calcWedding();
-  });
-
-  const EVENT_PRICES = {
-    birthday: 88,
-    baptism: 99,
-    corporate: 128,
-    other: 88,
-    rawFiles: 168,
-    transportPerKm: 0.58
-  };
-
-  const eventType = document.getElementById('eventType');
-  const eventHours = document.getElementById('eventHours');
-  const eventPeople = document.getElementById('eventPeople');
-  const eventKm = document.getElementById('eventKm');
-  const eventRawFiles = document.getElementById('eventRawFiles');
-  const eventTotalEUR = document.getElementById('eventTotalEUR');
-  const eventTotalBGN = document.getElementById('eventTotalBGN');
-  const eventBreakdown = document.getElementById('eventBreakdown');
-  const recalcEventBtn = document.getElementById('recalcEvent');
-  const resetEventCalc = document.getElementById('resetEventCalc');
-
-  function calcEvent(){
-    const type = eventType.value;
-    const hours = Math.max(1, parseInt(eventHours.value || '1', 10));
-    const people = Math.max(1, parseInt(eventPeople.value || '1', 10));
-    const kmVal = Math.max(0, parseFloat(eventKm.value || '0'));
-    const rate = EVENT_PRICES[type] || EVENT_PRICES.other;
-
-    let total = 0;
-    const lines = [];
-
-    const coverage = hours * people * rate;
-    total += coverage;
-    lines.push(line('Покритие: ' + hours + 'ч × ' + people + ' човек × ' + rate + '€', coverage));
-
-    if(kmVal > 0){
-      const transport = kmVal * EVENT_PRICES.transportPerKm;
-      total += transport;
-      lines.push(line('Транспорт: ' + kmVal + ' км × 0.58€', transport));
-    }
-
-    if(eventRawFiles.checked){
-      total += EVENT_PRICES.rawFiles;
-      lines.push(line('Сурови файлове', EVENT_PRICES.rawFiles));
-    }
-
-    eventTotalEUR.textContent = moneyEUR(total);
-    eventTotalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
-    eventBreakdown.innerHTML = lines.length
-      ? lines.join('')
-      : '<div class=\"line\"><div>Няма избрани услуги.</div><div class=\"r\">0€</div></div>';
-  }
-
-  [eventType, eventHours, eventPeople, eventKm, eventRawFiles].forEach(el => {
-    el.addEventListener('input', calcEvent);
-    el.addEventListener('change', calcEvent);
-  });
-
-  recalcEventBtn.addEventListener('click', calcEvent);
-
-  resetEventCalc.addEventListener('click', () => {
-    eventType.value = 'birthday';
-    eventHours.value = '2';
-    eventPeople.value = '1';
-    eventKm.value = '0';
-    eventRawFiles.checked = false;
     calcEvent();
-  });
-
-  updateDroneField();
-  calcWedding();
-  calcEvent();
-
-  
-  function getWeddingSummaryText() {
-    const p = parseInt(photoTeam.value, 10) || 0;
-    const v = parseInt(videoTeam.value, 10) || 0;
-    const ot = parseInt(otHours.value, 10) || 0;
-    const kmVal = parseFloat(km.value || '0') || 0;
-    const dMode = droneMode.value;
-    const dHours = parseInt(droneHours.value || '1', 10) || 1;
-
-    const selected = [];
-    selected.push('Тип: Сватба');
-    selected.push('Фотографи: ' + p);
-    selected.push('Оператори: ' + v);
-    selected.push('Допълнителни часове: ' + ot);
-    selected.push('Транспорт (км): ' + kmVal);
-
-    if (dMode === 'hour') {
-      selected.push('Дрон: По часове (' + dHours + ' ч)');
-    } else if (dMode === 'day') {
-      selected.push('Дрон: За целия ден');
-    } else {
-      selected.push('Дрон: Не');
-    }
-
-    selected.push('Сурови файлове: ' + (rawFiles.checked ? 'Да' : 'Не'));
-    selected.push('Фотосесия в отделен ден: ' + (afterSession.checked ? 'Да' : 'Не'));
-    selected.push('Ориентировъчна сума: ' + totalEUR.textContent + ' / ' + totalBGN.textContent);
-
-    return selected.join('\n');
-  }
-
-  function getEventSummaryText() {
-    const typeMap = {
-      birthday: 'Рожден ден / лично събитие',
-      baptism: 'Кръщене',
-      corporate: 'Фирмено събитие',
-      other: 'Друго'
-    };
-
-    const type = eventType.value;
-    const hours = Math.max(1, parseInt(eventHours.value || '1', 10));
-    const people = Math.max(1, parseInt(eventPeople.value || '1', 10));
-    const kmVal = Math.max(0, parseFloat(eventKm.value || '0'));
-    const rate = EVENT_PRICES[type] || EVENT_PRICES.other;
-
-    const selected = [];
-    selected.push('Тип: ' + (typeMap[type] || 'Друго събитие'));
-    selected.push('Часове: ' + hours);
-    selected.push('Хора в екипа: ' + people);
-    selected.push('Транспорт (км): ' + kmVal);
-    selected.push('Сурови файлове: ' + (eventRawFiles.checked ? 'Да' : 'Не'));
-    selected.push('Ставка на час: ' + rate + '€');
-    selected.push('Ориентировъчна сума: ' + eventTotalEUR.textContent + ' / ' + eventTotalBGN.textContent);
-
-    return selected.join('\n');
-  }
-
-  const inquirySection = document.getElementById('inquirySection');
-  const inquiryType = document.getElementById('inquiryType');
-  const selectedOffer = document.getElementById('selectedOffer');
-  const inquirySummary = document.getElementById('inquirySummary');
-  const clientName = document.getElementById('clientName');
-  const clientPhone = document.getElementById('clientPhone');
-  const clientEmail = document.getElementById('clientEmail');
-  const eventDateField = document.getElementById('eventDate');
-  const eventLocation = document.getElementById('eventLocation');
-  const clientNote = document.getElementById('clientNote');
-  const privacyConsent = document.getElementById('privacyConsent');
-  const sendInquiryBtn = document.getElementById('sendInquiry');
-  const sendStatus = document.getElementById('sendStatus');
-
-  function openInquirySection() {
-    inquirySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function fillPackageInquiry(name, price) {
-    inquiryType.value = 'Пакетна оферта';
-    selectedOffer.value = name + ' — ' + price;
-    inquirySummary.value =
-      'Избрана оферта: ' + name + '\n' +
-      'Цена: ' + price + '\n' +
-      'Тип: Пакетна оферта';
-    openInquirySection();
-  }
-
-  function fillWeddingInquiryFromCalculator() {
-    calcWedding();
-    inquiryType.value = 'Персонална конфигурация';
-    selectedOffer.value = 'Персонална конфигурация за сватба';
-    inquirySummary.value = getWeddingSummaryText();
-    openInquirySection();
-  }
-
-  function fillEventInquiryFromCalculator() {
-    calcEvent();
-    inquiryType.value = 'Друго събитие';
-    selectedOffer.value = 'Персонална конфигурация за друго събитие';
-    inquirySummary.value = getEventSummaryText();
-    openInquirySection();
-  }
-
-  document.querySelectorAll('.package-inquiry-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      fillPackageInquiry(btn.dataset.package, btn.dataset.packagePrice);
-    });
-  });
-
-  const openWeddingInquiryBtn = document.getElementById('openWeddingInquiry');
-  if (openWeddingInquiryBtn) {
-    openWeddingInquiryBtn.addEventListener('click', fillWeddingInquiryFromCalculator);
-  }
-
-  const openEventInquiryBtn = document.getElementById('openEventInquiry');
-  if (openEventInquiryBtn) {
-    openEventInquiryBtn.addEventListener('click', fillEventInquiryFromCalculator);
-  }
-
-  async function sendInquiry() {
-    const name = clientName.value.trim();
-    const phone = clientPhone.value.trim();
-    const email = clientEmail.value.trim();
-    const eventDate = eventDateField.value.trim();
-    const location = eventLocation.value.trim();
-    const note = clientNote.value.trim();
-    const offer = selectedOffer.value.trim();
-    const summary = inquirySummary.value.trim();
-    const type = inquiryType.value;
-
-    if (!name) {
-      sendStatus.textContent = 'Моля, попълнете име.';
-      return;
-    }
-
-    if (!phone) {
-      sendStatus.textContent = 'Моля, попълнете телефон.';
-      return;
-    }
-
-    if (!email) {
-      sendStatus.textContent = 'Моля, попълнете имейл.';
-      return;
-    }
-
-    if (!eventDate) {
-      sendStatus.textContent = 'Моля, изберете дата на събитието.';
-      return;
-    }
-
-    if (!summary) {
-      sendStatus.textContent = 'Моля, първо изберете оферта или конфигурация.';
-      return;
-    }
-
-    if (!privacyConsent.checked) {
-      sendStatus.textContent = 'Моля, потвърдете съгласието за обработка на лични данни.';
-      return;
-    }
-
-    sendInquiryBtn.disabled = true;
-    sendInquiryBtn.style.opacity = '.7';
-    sendStatus.textContent = 'Изпращане...';
-
-    const payload = {
-      access_key: '33fb475c-9d44-449b-9fd0-1fc667dd170e',
-      subject: 'Ново запитване от сайта - Memory Photo & Video',
-      from_name: 'Memory Photo & Video',
-      name: name,
-      email: email,
-      phone: phone,
-      event_date: eventDate,
-      event_location: location,
-      inquiry_type: type,
-      selected_offer: offer,
-      calculator_summary: summary,
-      note: note
-    };
-
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        sendStatus.textContent = 'Запитването беше изпратено успешно.';
-        clientName.value = '';
-        clientPhone.value = '';
-        clientEmail.value = '';
-        eventDateField.value = '';
-        eventLocation.value = '';
-        clientNote.value = '';
-        privacyConsent.checked = false;
-      } else {
-        sendStatus.textContent = 'Възникна проблем при изпращането. Проверете настройките на формата.';
-      }
-    } catch (error) {
-      sendStatus.textContent = 'Грешка при връзката. Опитайте отново.';
-    } finally {
-      sendInquiryBtn.disabled = false;
-      sendInquiryBtn.style.opacity = '1';
-    }
-  }
-
-  sendInquiryBtn.addEventListener('click', sendInquiry);
-
   </script>
 </body>
 </html>
