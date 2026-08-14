@@ -1,388 +1,513 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WJK01GL7PM');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJK01GL7PM');
+  </script>
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Портфолио | Memory Photo & Video</title>
-<link rel="icon" type="image/png" href="logo.png" />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Портфолио | Memory Photo & Video</title>
 
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Портфолио | Memory Photo & Video">
+  <meta property="og:description" content="Подбрани кадри от сватби, фотосесии и събития.">
+  <meta property="og:url" content="https://memoryphotoandvideo.com/portfolio.html">
+  <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
 
-:root{
-  --cream:#f5f0e8;
-  --dark:#0f0d0b;
-  --gold:#c9a96e;
-  --gold-light:#e8d5b0;
-  --nav:#1e5c86;
-}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Портфолио | Memory Photo & Video">
+  <meta name="twitter:description" content="Подбрани кадри от сватби, фотосесии и събития.">
+  <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
 
-body{
-  font-family:Montserrat,sans-serif;
-  background:var(--dark);
-  color:var(--cream);
-  min-height:100vh;
-}
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css">
 
-header{
-  background:var(--nav);
-  box-shadow:0 8px 24px rgba(0,0,0,.25);
-}
+  <style>
+    :root{
+      --page-bg:#0f0d0b;
+      --page-bg-2:#15110d;
+      --panel:rgba(255,255,255,.035);
+      --panel-soft:rgba(255,255,255,.02);
+      --line:rgba(245,240,232,.10);
+      --line-soft:rgba(245,240,232,.06);
+      --text-soft:rgba(245,240,232,.78);
+      --text-faint:rgba(245,240,232,.56);
+    }
 
-.nav-wrap{
-  max-width:1200px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 18px;
-  gap:14px;
-  flex-wrap:wrap;
-}
+    body{
+      background:
+        radial-gradient(circle at 12% 18%, rgba(201,169,110,.10), transparent 22%),
+        radial-gradient(circle at 84% 10%, rgba(201,169,110,.08), transparent 18%),
+        linear-gradient(180deg, var(--page-bg) 0%, var(--page-bg-2) 100%);
+      color: var(--cream);
+    }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-decoration:none;
-  color:var(--cream);
-}
+    .portfolio-page{
+      min-height: 100vh;
+      padding: 112px 20px 90px;
+    }
 
-.brand img{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  object-fit:cover;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(0,0,0,.10);
-}
+    .portfolio-wrap{
+      width: min(1200px, 100%);
+      margin: 0 auto;
+    }
 
-.brand span{
-  font-family:"Cormorant Garamond",serif;
-  letter-spacing:.10em;
-  font-weight:400;
-  font-size:1.05rem;
-  white-space:nowrap;
-  opacity:.95;
-}
+    .portfolio-hero{
+      margin-bottom: 24px;
+    }
 
-#menuToggle{display:none}
+    .portfolio-copy{
+      position: relative;
+      overflow: hidden;
+      padding: 34px 38px 30px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)),
+        radial-gradient(circle at top left, rgba(201,169,110,.09), transparent 36%);
+      box-shadow: 0 26px 70px rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
+    }
 
-.burger{
-  display:none;
-  width:44px;
-  height:44px;
-  border:1px solid rgba(255,255,255,.18);
-  border-radius:12px;
-  background:rgba(0,0,0,.12);
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-}
+    .portfolio-copy::after{
+      content:"";
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(201,169,110,.10), transparent 68%);
+      pointer-events:none;
+    }
 
-.burger div{
-  width:18px;
-  height:2px;
-  background:rgba(245,240,232,.92);
-  position:relative;
-}
+    .portfolio-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:.65rem;
+      margin-bottom:1rem;
+      color:var(--gold-light);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.72rem;
+    }
 
-.burger div::before,
-.burger div::after{
-  content:"";
-  position:absolute;
-  left:0;
-  width:18px;
-  height:2px;
-  background:rgba(245,240,232,.92);
-}
+    .portfolio-kicker::before{
+      content:"";
+      width:42px;
+      height:1px;
+      background:var(--gold);
+    }
 
-.burger div::before{top:-6px}
-.burger div::after{top:6px}
+    .portfolio-copy h1{
+      max-width: 10ch;
+      font-family:'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
+      line-height: .92;
+      font-weight: 400;
+      margin-bottom: 14px;
+      color: var(--cream);
+    }
 
-nav{
-  display:flex;
-  gap:18px;
-  align-items:center;
-  flex-wrap:wrap;
-}
+    .portfolio-copy p{
+      max-width: 68ch;
+      font-size: 1rem;
+      line-height: 1.78;
+      color: var(--text-soft);
+    }
 
-nav a{
-  color:rgba(245,240,232,.92);
-  text-decoration:none;
-  font-size:.80rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  padding:10px 10px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0);
-  transition:.15s ease;
-}
+    .portfolio-points{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:22px;
+    }
 
-nav a:hover{
-  background:rgba(0,0,0,.14);
-  border-color:rgba(255,255,255,.12);
-}
+    .portfolio-point{
+      min-width: 180px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid var(--line-soft);
+      background: var(--panel-soft);
+    }
 
-.nav-cta{
-  border:1px solid rgba(201,169,110,.55)!important;
-  background:rgba(0,0,0,.10);
-}
+    .portfolio-point strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:.92rem;
+      color:var(--cream);
+    }
 
-main{
-  max-width:1200px;
-  margin:0 auto;
-  padding:42px 18px 60px;
-}
+    .portfolio-point span{
+      display:block;
+      color:var(--text-faint);
+      font-size:.76rem;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+      line-height:1.5;
+    }
 
-.hero{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:18px;
-  flex-wrap:wrap;
-  margin-bottom:28px;
-}
+    .portfolio-topline{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+      padding:0 8px;
+    }
 
-.hero-text h1{
-  font-family:"Cormorant Garamond",serif;
-  font-weight:400;
-  letter-spacing:.10em;
-  color:var(--gold-light);
-  font-size:clamp(2rem,4vw,3rem);
-  margin-bottom:10px;
-}
+    .portfolio-title-wrap h2{
+      font-family:'Cormorant Garamond', serif;
+      font-size: clamp(1.95rem, 3vw, 2.6rem);
+      font-weight:400;
+      line-height:1;
+      color:var(--gold-light);
+      margin-bottom:6px;
+    }
 
-.hero-text p{
-  max-width:700px;
-  line-height:1.7;
-  opacity:.86;
-}
+    .portfolio-title-wrap p{
+      color:var(--text-faint);
+      line-height:1.6;
+      font-size:.95rem;
+    }
 
-.hero-actions{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
+    .portfolio-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
 
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:46px;
-  padding:0 18px;
-  border-radius:999px;
-  text-decoration:none;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  font-size:.74rem;
-  transition:.18s ease;
-  border:1px solid rgba(201,169,110,.35);
-}
+    .gallery-shell{
+      padding: 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(201,169,110,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+      box-shadow: 0 30px 80px rgba(0,0,0,.34);
+      backdrop-filter: blur(10px);
+    }
 
-.btn-primary{
-  background:rgba(201,169,110,.18);
-  color:var(--cream);
-}
+    .gallery{
+      column-count: 2;
+      column-gap: 12px;
+    }
 
-.btn-secondary{
-  background:rgba(255,255,255,.03);
-  color:var(--gold-light);
-}
+    @media (min-width: 900px){
+      .gallery{
+        column-count: 4;
+        column-gap: 16px;
+      }
+    }
 
-.btn:hover{
-  transform:translateY(-1px);
-  border-color:rgba(232,213,176,.65);
-}
+    .gallery-item{
+      position:relative;
+      margin-bottom:12px;
+      break-inside:avoid;
+      cursor:pointer;
+      border:none;
+      width:100%;
+      padding:0;
+      overflow:hidden;
+      border-radius:20px;
+      background:rgba(255,255,255,.02);
+      box-shadow:0 14px 34px rgba(0,0,0,.28);
+      transition:transform .18s ease;
+    }
 
-.gallery{
-  column-count:2;
-  column-gap:16px;
-}
+    .gallery-item:hover{
+      transform:translateY(-2px);
+    }
 
-@media(min-width:900px){
-  .gallery{ column-count:4; }
-}
+    .gallery-item::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.30), transparent 36%);
+      opacity:0;
+      transition:.2s ease;
+      pointer-events:none;
+    }
 
-.gallery-item{
-  position:relative;
-  margin-bottom:16px;
-  break-inside:avoid;
-  cursor:pointer;
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid rgba(201,169,110,.15);
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-  background:rgba(255,255,255,.02);
-}
+    .gallery-item:hover::after{
+      opacity:1;
+    }
 
-.gallery-item img{
-  width:100%;
-  display:block;
-  transition:transform .22s ease, filter .22s ease;
-}
+    .gallery-item img{
+      width:100%;
+      display:block;
+      transition:transform .25s ease, filter .25s ease;
+    }
 
-.gallery-item:hover img{
-  transform:scale(1.02);
-  filter:brightness(1.03);
-}
+    .gallery-item:hover img{
+      transform:scale(1.025);
+      filter:brightness(1.04);
+    }
 
-.gallery-item::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.22), transparent 40%);
-  opacity:0;
-  transition:.2s ease;
-}
+    .gallery-note{
+      margin-top:18px;
+      padding:18px 20px;
+      border-radius:20px;
+      border:1px solid var(--line-soft);
+      background:var(--panel-soft);
+      color:var(--text-soft);
+      line-height:1.72;
+    }
 
-.gallery-item:hover::after{
-  opacity:1;
-}
+    .gallery-note strong{
+      color:var(--gold-light);
+      font-weight:600;
+    }
 
-.empty-note{
-  margin-top:24px;
-  padding:16px 18px;
-  border-radius:18px;
-  border:1px solid rgba(201,169,110,.18);
-  background:rgba(255,255,255,.03);
-  color:rgba(245,240,232,.78);
-  line-height:1.7;
-}
+    .portfolio-cta{
+      margin-top:18px;
+      padding:24px 28px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      box-shadow:0 22px 55px rgba(0,0,0,.24);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
 
-footer{
-  max-width:1200px;
-  margin:20px auto 30px;
-  padding:0 18px;
-  color:rgba(245,240,232,.60);
-  font-size:.82rem;
-}
+    .portfolio-cta h3{
+      font-family:'Cormorant Garamond', serif;
+      font-size:clamp(1.65rem, 3vw, 2.15rem);
+      font-weight:400;
+      margin-bottom:6px;
+      color:var(--gold-light);
+    }
 
-.lightbox{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.88);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  opacity:0;
-  pointer-events:none;
-  transition:.2s ease;
-  z-index:1000;
-}
+    .portfolio-cta p{
+      max-width:60ch;
+      color:var(--text-soft);
+      line-height:1.72;
+    }
 
-.lightbox.open{
-  opacity:1;
-  pointer-events:auto;
-}
+    .portfolio-cta-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
 
-.lightbox img{
-  max-width:min(92vw,1200px);
-  max-height:86vh;
-  border-radius:18px;
-  border:1px solid rgba(201,169,110,.22);
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
-}
+    .portfolio-cta-actions .btn{
+      min-width: 190px;
+      justify-content:center;
+    }
 
-.lightbox-close{
-  position:absolute;
-  top:18px;
-  right:18px;
-  width:46px;
-  height:46px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.08);
-  color:var(--cream);
-  font-size:24px;
-  cursor:pointer;
-}
+    footer{
+      background:#000;
+      padding:30px 20px;
+      text-align:center;
+      font-size:.75rem;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      color:rgba(245,240,232,.6);
+      border-top:1px solid rgba(201,169,110,.2);
+    }
 
-@media (max-width: 880px){
-  .burger{display:flex}
-  nav{
-    display:none;
-    width:100%;
-    padding:12px 0 4px;
-    gap:8px;
-  }
-  #menuToggle:checked ~ nav{display:flex}
-  nav a{
-    width:100%;
-    text-align:left;
-    padding:12px 12px;
-  }
-}
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.90);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      opacity:0;
+      pointer-events:none;
+      transition:.2s ease;
+      z-index:1000;
+    }
 
-@media (max-width:640px){
-  main{padding-top:30px}
-  .gallery{column-count:2}
-  .hero{align-items:flex-start}
-}
-</style>
+    .lightbox.open{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .lightbox img{
+      max-width:min(92vw,1200px);
+      max-height:86vh;
+      border-radius:20px;
+      border:1px solid rgba(201,169,110,.22);
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .lightbox-close{
+      position:absolute;
+      top:18px;
+      right:18px;
+      width:46px;
+      height:46px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08);
+      color:var(--cream);
+      font-size:24px;
+      cursor:pointer;
+    }
+
+    @media (max-width: 820px){
+      .portfolio-page{
+        padding: 98px 16px 74px;
+      }
+
+      .portfolio-copy{
+        padding: 24px 20px 22px;
+      }
+
+      .portfolio-copy h1{
+        max-width:none;
+        font-size: clamp(2.2rem, 10vw, 3.4rem);
+      }
+
+      .gallery-shell{
+        padding:18px;
+      }
+
+      .portfolio-cta{
+        padding:20px;
+      }
+
+      .portfolio-cta-actions{
+        width:100%;
+        flex-direction:column;
+      }
+
+      .portfolio-cta-actions .btn{
+        width:100%;
+        min-width:0;
+      }
+    }
+
+    @media (max-width: 560px){
+      .gallery{
+        column-count:2;
+        column-gap:8px;
+      }
+
+      .portfolio-point{
+        width:100%;
+      }
+    }
+  </style>
 </head>
-
 <body>
-<header>
-  <div class="nav-wrap">
-    <a class="brand" href="index.html" aria-label="Начало">
-      <img src="icon.png" alt="Икона">
-      <span>Memory Photo &amp; Video</span>
-    </a>
+  <a class="skip-link" href="#main-content">Към съдържанието</a>
 
-    <input id="menuToggle" type="checkbox" />
-    <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="Начало">
+        <img src="icon.png" alt="Икона на Memory Photo & Video">
+        <span>Memory Photo &amp; Video</span>
+      </a>
 
-    <nav>
-      <a href="index.html">Начало</a>
-      <a href="portfolio.html" class="nav-cta">Портфолио</a>
-      <a href="videos.html">Видео</a>
-      <a href="uslugi-ceni.html">Ценоразпис</a>
-      <a href="availability.html">Свободни дати</a>
-      <a href="about.html">За нас</a>
-    </nav>
+      <input id="menuToggle" type="checkbox" />
+      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+
+      <nav>
+        <a href="index.html">Начало</a>
+        <a href="portfolio.html" class="nav-cta">Портфолио</a>
+        <a href="videos.html">Видео</a>
+        <a href="uslugi-ceni.html">Ценоразпис</a>
+        <a href="availability.html">Свободни дати</a>
+        <a href="about.html">За нас</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="portfolio-page">
+    <div class="portfolio-wrap">
+      <section class="portfolio-hero">
+        <div class="portfolio-copy">
+          <span class="portfolio-kicker">Selected Work</span>
+          <h1>Кадри, които носят атмосфера, емоция и стил.</h1>
+          <p>
+            Тук ще откриеш подбрани моменти от сватби, фотосесии и специални събития.
+            Портфолиото е селекция от истински истории, заснети с внимание към светлина,
+            емоция, движение и всеки малък детайл, който прави деня незабравим.
+          </p>
+
+          <div class="portfolio-points">
+            <div class="portfolio-point">
+              <strong>Подбрани кадри</strong>
+              <span>Сватби и събития</span>
+            </div>
+
+            <div class="portfolio-point">
+              <strong>Истински моменти</strong>
+              <span>Емоция и атмосфера</span>
+            </div>
+
+            <div class="portfolio-point">
+              <strong>Премиум визия</strong>
+              <span>Детайл и обработка</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="portfolio-topline">
+          <div class="portfolio-title-wrap">
+            <h2>Галерия</h2>
+            <p>Подбрана селекция от кадри, които показват стила и усещането на Memory Photo &amp; Video.</p>
+          </div>
+
+          <div class="portfolio-actions">
+            <a class="btn btn--secondary" href="https://www.facebook.com/MemoryPhotoAndVideo/photos/" target="_blank" rel="noopener noreferrer">Facebook снимки</a>
+            <a class="btn btn--primary" href="availability.html">Свободни дати</a>
+          </div>
+        </div>
+
+        <div class="gallery-shell">
+          <section class="gallery" id="gallery"></section>
+
+          <div class="gallery-note">
+            <strong>Важно:</strong> Това е подбрана селекция. За още кадри, по-нови албуми и пълни галерии можеш да разгледаш и Facebook страницата.
+          </div>
+        </div>
+
+        <div class="portfolio-cta">
+          <div>
+            <h3>Харесва ли ти тази визия?</h3>
+            <p>
+              Провери свободните дати или разгледай ценовите пакети, за да продължиш към
+              следващата стъпка и да запазиш своята дата навреме.
+            </p>
+          </div>
+
+          <div class="portfolio-cta-actions">
+            <a class="btn btn--secondary" href="availability.html">Провери дати</a>
+            <a class="btn btn--primary" href="uslugi-ceni.html">Виж цени</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Memory Photo & Video. All rights reserved.
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Затвори">×</button>
+    <img id="lightboxImage" src="" alt="">
   </div>
-</header>
 
-<main>
-  <section class="hero">
-    <div class="hero-text">
-      <h1>Портфолио</h1>
-      <p>
-        Подбрани кадри от сватби, фотосесии и събития. За още публикации и най-нови албуми разгледайте и Facebook галерията ни.
-      </p>
-    </div>
-
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="https://www.facebook.com/MemoryPhotoAndVideo/photos/" target="_blank" rel="noopener noreferrer">Facebook снимки</a>
-      <a class="btn btn-secondary" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Страница във Facebook</a>
-    </div>
-  </section>
-
-  <section class="gallery" id="gallery"></section>
-
- 
-</main>
-
-<footer>© 2026 Memory Photo & Video</footer>
-
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Затвори">×</button>
-  <img id="lightboxImage" src="" alt="">
-</div>
-
-<script>
+  <script>
 const photos = [
   { src: "assets/01.jpg", alt: "Сватбен кадър 1" },
   { src: "assets/02.jpg", alt: "Сватбен кадър 2" },
@@ -426,6 +551,7 @@ photos.forEach(photo => {
   img.decoding = "async";
 
   item.appendChild(img);
+
   item.addEventListener("click", () => {
     lightboxImage.src = photo.src;
     lightboxImage.alt = photo.alt;
@@ -443,13 +569,14 @@ function closeLightbox(){
 }
 
 lightboxClose.addEventListener("click", closeLightbox);
+
 lightbox.addEventListener("click", (e) => {
-  if(e.target === lightbox) closeLightbox();
+  if (e.target === lightbox) closeLightbox();
 });
 
 document.addEventListener("keydown", (e) => {
-  if(e.key === "Escape") closeLightbox();
+  if (e.key === "Escape") closeLightbox();
 });
-</script>
+  </script>
 </body>
 </html>
