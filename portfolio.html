@@ -16,13 +16,13 @@
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Портфолио | Memory Photo & Video">
-  <meta property="og:description" content="Подбрани кадри от сватби, фотосесии и събития.">
+  <meta property="og:description" content="Подбрани кадри от сватби, фотосесии и специални събития.">
   <meta property="og:url" content="https://memoryphotoandvideo.com/portfolio.html">
   <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Портфолио | Memory Photo & Video">
-  <meta name="twitter:description" content="Подбрани кадри от сватби, фотосесии и събития.">
+  <meta name="twitter:description" content="Подбрани кадри от сватби, фотосесии и специални събития.">
   <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
 
   <link rel="icon" type="image/png" href="icon.png" />
@@ -34,65 +34,49 @@
   <style>
     :root{
       --page-bg:#0f0d0b;
-      --page-bg-2:#15110d;
+      --page-bg-2:#16110d;
       --panel:rgba(255,255,255,.035);
-      --panel-soft:rgba(255,255,255,.02);
+      --panel-soft:rgba(255,255,255,.022);
       --line:rgba(245,240,232,.10);
       --line-soft:rgba(245,240,232,.06);
-      --text-soft:rgba(245,240,232,.78);
+      --text-soft:rgba(245,240,232,.80);
       --text-faint:rgba(245,240,232,.56);
     }
 
     body{
       background:
-        radial-gradient(circle at 12% 18%, rgba(201,169,110,.10), transparent 22%),
-        radial-gradient(circle at 84% 10%, rgba(201,169,110,.08), transparent 18%),
+        radial-gradient(circle at 10% 20%, rgba(201,169,110,.10), transparent 24%),
+        radial-gradient(circle at 85% 18%, rgba(201,169,110,.07), transparent 20%),
         linear-gradient(180deg, var(--page-bg) 0%, var(--page-bg-2) 100%);
       color: var(--cream);
     }
 
     .portfolio-page{
-      min-height: 100vh;
-      padding: 112px 20px 90px;
+      min-height:100vh;
+      padding:112px 20px 90px;
     }
 
     .portfolio-wrap{
-      width: min(1200px, 100%);
-      margin: 0 auto;
+      width:min(1240px, 100%);
+      margin:0 auto;
     }
 
     .portfolio-hero{
-      margin-bottom: 24px;
+      display:grid;
+      grid-template-columns:minmax(0, 1.2fr) minmax(280px, .8fr);
+      gap:22px;
+      align-items:end;
+      margin-bottom:28px;
     }
 
-    .portfolio-copy{
-      position: relative;
-      overflow: hidden;
-      padding: 34px 38px 30px;
-      border-radius: 30px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)),
-        radial-gradient(circle at top left, rgba(201,169,110,.09), transparent 36%);
-      box-shadow: 0 26px 70px rgba(0,0,0,.28);
-      backdrop-filter: blur(10px);
-    }
-
-    .portfolio-copy::after{
-      content:"";
-      position:absolute;
-      inset:auto -60px -60px auto;
-      width:240px;
-      height:240px;
-      border-radius:50%;
-      background: radial-gradient(circle, rgba(201,169,110,.10), transparent 68%);
-      pointer-events:none;
+    .portfolio-intro{
+      padding:0 6px;
     }
 
     .portfolio-kicker{
       display:inline-flex;
       align-items:center;
-      gap:.65rem;
+      gap:.7rem;
       margin-bottom:1rem;
       color:var(--gold-light);
       text-transform:uppercase;
@@ -107,46 +91,54 @@
       background:var(--gold);
     }
 
-    .portfolio-copy h1{
-      max-width: 10ch;
+    .portfolio-intro h1{
+      max-width:14ch;
       font-family:'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
-      line-height: .92;
-      font-weight: 400;
-      margin-bottom: 14px;
-      color: var(--cream);
+      font-size:clamp(3.1rem, 6vw, 6rem);
+      line-height:.92;
+      font-weight:400;
+      color:var(--cream);
+      margin-bottom:18px;
+      text-wrap:balance;
     }
 
-    .portfolio-copy p{
-      max-width: 68ch;
-      font-size: 1rem;
-      line-height: 1.78;
-      color: var(--text-soft);
+    .portfolio-lead{
+      max-width:58ch;
+      color:var(--text-soft);
+      font-size:1rem;
+      line-height:1.82;
+      margin-bottom:22px;
     }
 
-    .portfolio-points{
+    .portfolio-actions{
       display:flex;
-      flex-wrap:wrap;
       gap:12px;
-      margin-top:22px;
+      flex-wrap:wrap;
+      margin-bottom:22px;
     }
 
-    .portfolio-point{
-      min-width: 180px;
+    .portfolio-metrics{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .metric{
+      min-width:170px;
       padding:12px 14px;
       border-radius:18px;
       border:1px solid var(--line-soft);
-      background: var(--panel-soft);
+      background:var(--panel-soft);
     }
 
-    .portfolio-point strong{
+    .metric strong{
       display:block;
       margin-bottom:5px;
-      font-size:.92rem;
       color:var(--cream);
+      font-size:.92rem;
     }
 
-    .portfolio-point span{
+    .metric span{
       display:block;
       color:var(--text-faint);
       font-size:.76rem;
@@ -155,86 +147,157 @@
       line-height:1.5;
     }
 
-    .portfolio-topline{
+    .portfolio-side{
+      position:relative;
+      overflow:hidden;
+      min-height:360px;
+      border-radius:30px;
+      border:1px solid rgba(201,169,110,.16);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)),
+        linear-gradient(135deg, rgba(201,169,110,.12), transparent 40%);
+      box-shadow:0 24px 60px rgba(0,0,0,.30);
+      padding:22px;
       display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      margin-bottom:14px;
-      padding:0 8px;
+      flex-direction:column;
+      justify-content:flex-end;
+      isolation:isolate;
     }
 
-    .portfolio-title-wrap h2{
+    .portfolio-side::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.46)),
+        url("assets/05.jpg") center/cover no-repeat;
+      z-index:-2;
+      transform:scale(1.04);
+    }
+
+    .portfolio-side::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at top right, rgba(201,169,110,.18), transparent 34%),
+        linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.06));
+      z-index:-1;
+    }
+
+    .side-card{
+      padding:18px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(12,10,8,.42);
+      backdrop-filter:blur(10px);
+    }
+
+    .side-card small{
+      display:block;
+      margin-bottom:8px;
+      color:rgba(232,213,176,.92);
+      font-size:.72rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    .side-card h2{
       font-family:'Cormorant Garamond', serif;
-      font-size: clamp(1.95rem, 3vw, 2.6rem);
-      font-weight:400;
+      font-size:1.9rem;
       line-height:1;
-      color:var(--gold-light);
-      margin-bottom:6px;
+      font-weight:400;
+      margin-bottom:10px;
+      color:var(--cream);
     }
 
-    .portfolio-title-wrap p{
-      color:var(--text-faint);
-      line-height:1.6;
+    .side-card p{
+      color:rgba(245,240,232,.82);
+      line-height:1.72;
       font-size:.95rem;
     }
 
-    .portfolio-actions{
+    .section-head{
       display:flex;
-      gap:12px;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:16px;
       flex-wrap:wrap;
+      margin-bottom:16px;
+      padding:0 6px;
+    }
+
+    .section-head h3{
+      font-family:'Cormorant Garamond', serif;
+      font-size:clamp(1.95rem, 3vw, 2.6rem);
+      font-weight:400;
+      color:var(--gold-light);
+      line-height:1;
+      margin-bottom:6px;
+    }
+
+    .section-head p{
+      color:var(--text-faint);
+      line-height:1.6;
+      font-size:.95rem;
+      max-width:60ch;
     }
 
     .gallery-shell{
-      padding: 24px;
-      border-radius: 30px;
-      border: 1px solid rgba(201,169,110,.18);
+      padding:18px;
+      border-radius:30px;
+      border:1px solid rgba(201,169,110,.18);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
-      box-shadow: 0 30px 80px rgba(0,0,0,.34);
-      backdrop-filter: blur(10px);
+        linear-gradient(180deg, rgba(255,255,255,.042), rgba(255,255,255,.015));
+      box-shadow:0 28px 75px rgba(0,0,0,.34);
+      backdrop-filter:blur(10px);
     }
 
     .gallery{
-      column-count: 2;
-      column-gap: 12px;
+      column-count:2;
+      column-gap:12px;
     }
 
-    @media (min-width: 900px){
+    @media (min-width: 860px){
       .gallery{
-        column-count: 4;
-        column-gap: 16px;
+        column-count:3;
+        column-gap:14px;
+      }
+    }
+
+    @media (min-width: 1180px){
+      .gallery{
+        column-count:4;
+        column-gap:16px;
       }
     }
 
     .gallery-item{
       position:relative;
-      margin-bottom:12px;
-      break-inside:avoid;
-      cursor:pointer;
-      border:none;
       width:100%;
       padding:0;
+      margin:0 0 12px;
+      break-inside:avoid;
+      border:none;
+      border-radius:22px;
       overflow:hidden;
-      border-radius:20px;
+      cursor:pointer;
       background:rgba(255,255,255,.02);
-      box-shadow:0 14px 34px rgba(0,0,0,.28);
+      box-shadow:0 16px 34px rgba(0,0,0,.24);
       transition:transform .18s ease;
     }
 
     .gallery-item:hover{
-      transform:translateY(-2px);
+      transform:translateY(-3px);
     }
 
     .gallery-item::after{
       content:"";
       position:absolute;
       inset:0;
-      background:
-        linear-gradient(to top, rgba(0,0,0,.30), transparent 36%);
+      background:linear-gradient(to top, rgba(0,0,0,.30), transparent 38%);
       opacity:0;
-      transition:.2s ease;
+      transition:.22s ease;
       pointer-events:none;
     }
 
@@ -245,7 +308,7 @@
     .gallery-item img{
       width:100%;
       display:block;
-      transition:transform .25s ease, filter .25s ease;
+      transition:transform .28s ease, filter .28s ease;
     }
 
     .gallery-item:hover img{
@@ -253,36 +316,38 @@
       filter:brightness(1.04);
     }
 
-    .gallery-note{
-      margin-top:18px;
-      padding:18px 20px;
-      border-radius:20px;
-      border:1px solid var(--line-soft);
-      background:var(--panel-soft);
-      color:var(--text-soft);
-      line-height:1.72;
-    }
-
-    .gallery-note strong{
-      color:var(--gold-light);
-      font-weight:600;
-    }
-
-    .portfolio-cta{
-      margin-top:18px;
-      padding:24px 28px;
-      border-radius:24px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      box-shadow:0 22px 55px rgba(0,0,0,.24);
+    .gallery-footer{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:18px;
+      gap:16px;
       flex-wrap:wrap;
+      margin-top:16px;
+      padding:10px 6px 0;
     }
 
-    .portfolio-cta h3{
+    .gallery-footer p{
+      max-width:62ch;
+      color:var(--text-soft);
+      line-height:1.72;
+      font-size:.95rem;
+    }
+
+    .portfolio-cta{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:18px;
+      align-items:center;
+      padding:24px 28px;
+      border-radius:26px;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      box-shadow:0 22px 55px rgba(0,0,0,.24);
+    }
+
+    .portfolio-cta h4{
       font-family:'Cormorant Garamond', serif;
       font-size:clamp(1.65rem, 3vw, 2.15rem);
       font-weight:400;
@@ -291,7 +356,7 @@
     }
 
     .portfolio-cta p{
-      max-width:60ch;
+      max-width:58ch;
       color:var(--text-soft);
       line-height:1.72;
     }
@@ -300,11 +365,7 @@
       display:flex;
       gap:12px;
       flex-wrap:wrap;
-    }
-
-    .portfolio-cta-actions .btn{
-      min-width: 190px;
-      justify-content:center;
+      justify-content:flex-end;
     }
 
     footer{
@@ -359,47 +420,88 @@
       cursor:pointer;
     }
 
+    @media (max-width: 980px){
+      .portfolio-hero{
+        grid-template-columns:1fr;
+      }
+
+      .portfolio-intro h1{
+        max-width:16ch;
+      }
+
+      .portfolio-side{
+        min-height:300px;
+      }
+
+      .portfolio-cta{
+        grid-template-columns:1fr;
+      }
+
+      .portfolio-cta-actions{
+        justify-content:flex-start;
+      }
+    }
+
     @media (max-width: 820px){
       .portfolio-page{
-        padding: 98px 16px 74px;
+        padding:98px 16px 74px;
       }
 
-      .portfolio-copy{
-        padding: 24px 20px 22px;
-      }
-
-      .portfolio-copy h1{
+      .portfolio-intro h1{
         max-width:none;
-        font-size: clamp(2.2rem, 10vw, 3.4rem);
+        font-size:clamp(2.5rem, 11vw, 4rem);
+        line-height:.96;
+      }
+
+      .portfolio-lead{
+        max-width:none;
+      }
+
+      .portfolio-side{
+        min-height:250px;
+        padding:16px;
+        border-radius:24px;
+      }
+
+      .side-card{
+        padding:16px;
       }
 
       .gallery-shell{
-        padding:18px;
+        padding:12px;
+        border-radius:24px;
       }
 
       .portfolio-cta{
         padding:20px;
       }
-
-      .portfolio-cta-actions{
-        width:100%;
-        flex-direction:column;
-      }
-
-      .portfolio-cta-actions .btn{
-        width:100%;
-        min-width:0;
-      }
     }
 
     @media (max-width: 560px){
+      .portfolio-actions,
+      .portfolio-metrics,
+      .portfolio-cta-actions{
+        flex-direction:column;
+      }
+
+      .portfolio-actions .btn,
+      .portfolio-cta-actions .btn{
+        width:100%;
+        justify-content:center;
+      }
+
+      .metric{
+        width:100%;
+      }
+
       .gallery{
         column-count:2;
         column-gap:8px;
       }
 
-      .portfolio-point{
-        width:100%;
+      .gallery-item{
+        margin-bottom:8px;
+        border-radius:16px;
       }
     }
   </style>
@@ -431,61 +533,78 @@
   <main id="main-content" class="portfolio-page">
     <div class="portfolio-wrap">
       <section class="portfolio-hero">
-        <div class="portfolio-copy">
+        <div class="portfolio-intro">
           <span class="portfolio-kicker">Selected Work</span>
           <h1>Кадри, които носят атмосфера, емоция и стил.</h1>
-          <p>
-            Тук ще откриеш подбрани моменти от сватби, фотосесии и специални събития.
-            Портфолиото е селекция от истински истории, заснети с внимание към светлина,
-            емоция, движение и всеки малък детайл, който прави деня незабравим.
+
+          <p class="portfolio-lead">
+            Това е селекция от подбрани моменти от сватби, фотосесии и специални събития.
+            Вместо просто да показва снимки, портфолиото трябва да предава усещане —
+            светлина, движение, близост и онзи тип детайл, който прави един ден незабравим.
           </p>
 
-          <div class="portfolio-points">
-            <div class="portfolio-point">
+          <div class="portfolio-actions">
+            <a class="btn btn--secondary" href="https://www.facebook.com/MemoryPhotoAndVideo/photos/" target="_blank" rel="noopener noreferrer">Facebook снимки</a>
+            <a class="btn btn--primary" href="availability.html">Свободни дати</a>
+          </div>
+
+          <div class="portfolio-metrics">
+            <div class="metric">
               <strong>Подбрани кадри</strong>
               <span>Сватби и събития</span>
             </div>
 
-            <div class="portfolio-point">
+            <div class="metric">
               <strong>Истински моменти</strong>
               <span>Емоция и атмосфера</span>
             </div>
 
-            <div class="portfolio-point">
+            <div class="metric">
               <strong>Премиум визия</strong>
               <span>Детайл и обработка</span>
             </div>
           </div>
         </div>
+
+        <aside class="portfolio-side" aria-label="Акцент от портфолиото">
+          <div class="side-card">
+            <small>Memory Signature</small>
+            <h2>История, разказана визуално.</h2>
+            <p>
+              Вместо статична галерия, страницата поставя акцент върху самите изображения,
+              а текстът остава подкрепящ елемент — точно както трябва да бъде за фото и видео студио.
+            </p>
+          </div>
+        </aside>
       </section>
 
       <section>
-        <div class="portfolio-topline">
-          <div class="portfolio-title-wrap">
-            <h2>Галерия</h2>
-            <p>Подбрана селекция от кадри, които показват стила и усещането на Memory Photo &amp; Video.</p>
-          </div>
-
-          <div class="portfolio-actions">
-            <a class="btn btn--secondary" href="https://www.facebook.com/MemoryPhotoAndVideo/photos/" target="_blank" rel="noopener noreferrer">Facebook снимки</a>
-            <a class="btn btn--primary" href="availability.html">Свободни дати</a>
+        <div class="section-head">
+          <div>
+            <h3>Галерия</h3>
+            <p>Селекция от кадри, които показват стила, ритъма и емоционалния почерк на Memory Photo &amp; Video.</p>
           </div>
         </div>
 
         <div class="gallery-shell">
           <section class="gallery" id="gallery"></section>
 
-          <div class="gallery-note">
-            <strong>Важно:</strong> Това е подбрана селекция. За още кадри, по-нови албуми и пълни галерии можеш да разгледаш и Facebook страницата.
+          <div class="gallery-footer">
+            <p>
+              За още публикации и по-нови албуми можеш да разгледаш Facebook страницата.
+              Тази селекция е подбрана така, че да даде ясен поглед върху стила и визуалната атмосфера.
+            </p>
+
+            <a class="btn btn--primary" href="uslugi-ceni.html">Виж пакети</a>
           </div>
         </div>
 
         <div class="portfolio-cta">
           <div>
-            <h3>Харесва ли ти тази визия?</h3>
+            <h4>Харесва ли ти тази визия?</h4>
             <p>
-              Провери свободните дати или разгледай ценовите пакети, за да продължиш към
-              следващата стъпка и да запазиш своята дата навреме.
+              Следващата логична стъпка е да провериш свободните дати или да разгледаш
+              пакетите, за да прецениш най-подходящото покритие за вашия ден.
             </p>
           </div>
 
