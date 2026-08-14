@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 
+    const selectedCopy = homeHero.parentElement.querySelector('.home-section .home-copy');
+    if (selectedCopy) selectedCopy.textContent = 'Няколко от любимите ни кадри от истински сватбени дни.';
+
     const collageImg = homeHero.parentElement.querySelector('img[src="assets/weddings/selected-collage.webp"]');
     if (collageImg) {
       const link = collageImg.closest('a') || collageImg.parentElement;
