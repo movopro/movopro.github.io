@@ -125,6 +125,16 @@
       line-height: 1.78;
       color: var(--text-soft);
     }
+.availability-copy h1{
+  max-width: 14ch;
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(2.8rem, 5.2vw, 4.8rem);
+  line-height:1.03;
+  font-weight:400;
+  margin-bottom:14px;
+  color:var(--cream);
+  text-wrap:balance;
+}
 
     .availability-points{
       display:flex;
@@ -429,6 +439,11 @@
         width:100%;
         min-width:0;
       }
+      .availability-copy h1{
+  max-width:none;
+  font-size:clamp(2.2rem, 10vw, 3.4rem);
+}
+
     }
 
     @media (max-width: 560px){
