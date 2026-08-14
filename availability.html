@@ -15,422 +15,436 @@
   <title>Свободни дати | Memory Photo & Video</title>
   <link rel="icon" type="image/png" href="icon.png" />
 
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Свободни дати | Memory Photo & Video">
+  <meta property="og:description" content="Провери свободните дати за сватбена фотография и видеография.">
+  <meta property="og:url" content="https://memoryphotoandvideo.com/availability.html">
+  <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Свободни дати | Memory Photo & Video">
+  <meta name="twitter:description" content="Актуален календар със свободни, частично заети и заети дати.">
+  <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="assets/css/main.css">
+
   <style>
-    .availability-page {
-      position: relative;
+    :root{
+      --page-bg:#0f0d0b;
+      --page-bg-2:#15110d;
+      --panel:rgba(255,255,255,.035);
+      --panel-soft:rgba(255,255,255,.02);
+      --line:rgba(245,240,232,.10);
+      --line-soft:rgba(245,240,232,.06);
+      --text-soft:rgba(245,240,232,.78);
+      --text-faint:rgba(245,240,232,.56);
+      --busy:rgba(150, 44, 44, .18);
+      --partial:rgba(195, 143, 33, .18);
+      --free:rgba(31, 116, 77, .20);
+    }
+
+    body{
+      background:
+        radial-gradient(circle at 12% 18%, rgba(201,169,110,.10), transparent 22%),
+        radial-gradient(circle at 84% 10%, rgba(201,169,110,.08), transparent 18%),
+        linear-gradient(180deg, var(--page-bg) 0%, var(--page-bg-2) 100%);
+      color: var(--cream);
+    }
+
+    .availability-page{
+      padding: 112px 20px 90px;
       min-height: 100vh;
-      padding: 110px 20px 100px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(201,169,110,.10), transparent 24%),
-        radial-gradient(circle at 85% 10%, rgba(255,255,255,.05), transparent 18%),
-        linear-gradient(180deg, #0f0d0b 0%, #14110e 100%);
     }
 
-    .availability-wrap {
-      width: min(1100px, 100%);
+    .availability-wrap{
+      width: min(1180px, 100%);
       margin: 0 auto;
-      position: relative;
-      z-index: 2;
     }
 
-    .availability-hero {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 24px;
-      align-items: stretch;
-      margin-bottom: 28px;
+    .availability-hero{
+      margin-bottom: 22px;
     }
 
-    .availability-copy,
-    .availability-aside,
-    .calendar-shell,
-    .availability-cta {
-      border-radius: 28px;
-      border: 1px solid rgba(245,240,232,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      backdrop-filter: blur(14px);
-      box-shadow: 0 24px 60px rgba(0,0,0,.35);
-    }
-
-    .availability-copy {
-      padding: clamp(1.5rem, 3vw, 2.5rem);
-    }
-
-    .availability-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      margin-bottom: 1rem;
-      color: var(--gold-light);
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      font-size: .78rem;
-    }
-
-    .availability-kicker::before {
-      content: "";
-      width: 42px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    .availability-copy h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.6rem, 7vw, 5rem);
-      line-height: .94;
-      font-weight: 400;
-      color: var(--cream);
-      margin-bottom: 1rem;
-    }
-
-    .availability-copy p {
-      max-width: 60ch;
-      color: rgba(245,240,232,.82);
-      line-height: 1.75;
-      font-size: 1rem;
-    }
-
-    .availability-points {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 1.5rem;
-    }
-
-    .availability-point {
-      border-radius: 18px;
-      border: 1px solid rgba(245,240,232,.08);
-      background: rgba(255,255,255,.03);
-      padding: 14px 16px;
-    }
-
-    .availability-point strong {
-      display: block;
-      color: var(--cream);
-      font-size: .95rem;
-      margin-bottom: 6px;
-    }
-
-    .availability-point span {
-      display: block;
-      color: rgba(245,240,232,.66);
-      font-size: .82rem;
-      text-transform: uppercase;
-      letter-spacing: .10em;
-    }
-
-    .availability-aside {
+    .availability-copy{
       position: relative;
       overflow: hidden;
-      min-height: 100%;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .availability-aside::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+      padding: 34px 38px 30px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
       background:
-        linear-gradient(rgba(0,0,0,.16), rgba(0,0,0,.48)),
-        url("hero.jpg") center/cover no-repeat;
-      transform: scale(1.05);
-      opacity: .9;
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)),
+        radial-gradient(circle at top left, rgba(201,169,110,.09), transparent 36%);
+      box-shadow: 0 26px 70px rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
     }
 
-    .availability-aside-content {
-      position: relative;
-      z-index: 1;
-      max-width: 360px;
+    .availability-copy::after{
+      content:"";
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(201,169,110,.10), transparent 68%);
+      pointer-events:none;
     }
 
-    .availability-aside-label {
-      display: inline-block;
-      margin-bottom: 12px;
-      padding: .55rem .8rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(15,13,11,.45);
-      color: var(--gold-light);
-      font-size: .72rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
+    .availability-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:.65rem;
+      margin-bottom:1rem;
+      color:var(--gold-light);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.72rem;
     }
 
-    .availability-aside h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    .availability-kicker::before{
+      content:"";
+      width:42px;
+      height:1px;
+      background:var(--gold);
+    }
+
+    .availability-copy h1{
+      max-width: 11ch;
+      font-family:'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
+      line-height: .92;
       font-weight: 400;
-      line-height: 1.06;
-      margin-bottom: .7rem;
-    }
-
-    .availability-aside p {
-      color: rgba(245,240,232,.80);
-      line-height: 1.7;
-    }
-
-    .calendar-shell {
-      padding: 28px;
-    }
-
-    .calendar-topline {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-
-    .calendar-title-wrap h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      font-weight: 400;
-      color: var(--gold-light);
-      letter-spacing: .06em;
-    }
-
-    .calendar-title-wrap p {
-      margin-top: 6px;
-      color: rgba(245,240,232,.72);
-      line-height: 1.6;
-    }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: rgba(245,240,232,.86);
-      font-size: .86rem;
-    }
-
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      display: inline-block;
-      box-shadow: 0 0 0 1px rgba(255,255,255,.14);
-    }
-
-    .dot-free { background: rgba(0, 180, 90, .92); }
-    .dot-busy { background: rgba(220, 60, 60, .92); }
-    .dot-partial { background: rgba(230, 170, 40, .95); }
-
-    .card {
-      border-radius: 22px;
-      border: 1px solid rgba(201,169,110,.22);
-      background: rgba(255,255,255,.02);
-      backdrop-filter: blur(8px);
-      padding: 28px;
-      box-shadow: 0 18px 50px rgba(0,0,0,.28);
-      max-width: 100%;
-    }
-
-    .cal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      gap: 10px;
-    }
-
-    .cal-month {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      letter-spacing: .08em;
-      color: var(--gold-light);
-      text-align: center;
-      flex: 1;
-    }
-
-    .cal-btn {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      border: 1px solid rgba(201,169,110,.36);
-      background: rgba(0,0,0,.20);
-      color: var(--gold-light);
-      font-size: 20px;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .cal-btn:hover {
-      background: rgba(201,169,110,.15);
-      transform: translateY(-1px);
-    }
-
-    .year-switch {
-      display: flex;
-      justify-content: center;
-      margin: 22px 0 10px;
-    }
-
-    .year-toggle {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(201,169,110,.45);
-      background: linear-gradient(135deg, rgba(201,169,110,.18), rgba(30,92,134,.16));
+      margin-bottom: 14px;
       color: var(--cream);
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      cursor: pointer;
-      overflow: hidden;
-      box-shadow: 0 14px 34px rgba(0,0,0,.28);
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
 
-    .year-toggle:hover {
-      transform: translateY(-1px);
-      border-color: rgba(201,169,110,.65);
-      box-shadow: 0 18px 38px rgba(0,0,0,.34);
+    .availability-copy p{
+      max-width: 66ch;
+      font-size: 1rem;
+      line-height: 1.78;
+      color: var(--text-soft);
     }
 
-    .weekdays,
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 10px;
+    .availability-points{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:22px;
     }
 
-    .weekdays {
-      margin-bottom: 10px;
+    .availability-point{
+      min-width: 180px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid var(--line-soft);
+      background: var(--panel-soft);
     }
 
-    .weekdays div {
-      text-align: center;
-      color: rgba(245,240,232,.58);
-      font-size: .78rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      padding: 8px 0;
+    .availability-point strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:.92rem;
+      color:var(--cream);
     }
 
-    .cell {
-      min-height: 74px;
-      border-radius: 18px;
-      border: 1px solid rgba(245,240,232,.06);
+    .availability-point span{
+      display:block;
+      color:var(--text-faint);
+      font-size:.76rem;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+      line-height:1.5;
+    }
+
+    .calendar-shell{
+      margin-top: 10px;
+    }
+
+    .calendar-topline{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+      padding:0 8px;
+    }
+
+    .calendar-title-wrap h2{
+      font-family:'Cormorant Garamond', serif;
+      font-size: clamp(1.95rem, 3vw, 2.6rem);
+      font-weight:400;
+      line-height:1;
+      color:var(--gold-light);
+      margin-bottom:6px;
+    }
+
+    .calendar-title-wrap p{
+      color:var(--text-faint);
+      line-height:1.6;
+      font-size:.95rem;
+    }
+
+    .legend{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .legend-item{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:.82rem;
+      color:rgba(245,240,232,.82);
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      display:inline-block;
+      box-shadow:0 0 0 1px rgba(255,255,255,.14);
+    }
+
+    .dot-free{ background:#27b36c; }
+    .dot-partial{ background:#d39a2d; }
+    .dot-busy{ background:#d85a5a; }
+
+    .card{
+      padding: 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(201,169,110,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+      box-shadow: 0 30px 80px rgba(0,0,0,.34);
+      backdrop-filter: blur(10px);
+    }
+
+    .cal-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .cal-btn{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      border:1px solid rgba(201,169,110,.28);
+      background:rgba(255,255,255,.02);
+      color:var(--gold-light);
+      font-size:20px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .cal-btn:hover{
+      transform:translateY(-1px);
+      background:rgba(201,169,110,.08);
+      border-color:rgba(201,169,110,.45);
+    }
+
+    .cal-month{
+      flex:1;
+      text-align:center;
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.65rem;
+      letter-spacing:.06em;
+      color:var(--cream);
+    }
+
+    .year-switch{
+      display:flex;
+      justify-content:center;
+      margin-bottom:18px;
+    }
+
+    .year-toggle{
+      padding: .78rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201,169,110,.34);
       background: rgba(255,255,255,.03);
-      padding: 10px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-end;
-      position: relative;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .74rem;
+      cursor: pointer;
       transition: .18s ease;
     }
 
-    .cell:hover {
+    .year-toggle:hover{
       transform: translateY(-1px);
-      border-color: rgba(245,240,232,.14);
+      border-color: rgba(201,169,110,.56);
+      background: rgba(201,169,110,.08);
     }
 
-    .cell.empty {
-      background: transparent;
-      border-color: transparent;
-      box-shadow: none;
+    .weekdays{
+      display:grid;
+      grid-template-columns:repeat(7, minmax(0, 1fr));
+      gap:8px;
+      margin-bottom:10px;
     }
 
-    .cell.free { background: rgba(0, 180, 90, .11); }
-    .cell.busy { background: rgba(190, 40, 40, .12); }
-    .cell.partial { background: rgba(215, 158, 28, .12); }
-
-    .day-number {
-      font-size: .92rem;
-      color: var(--cream);
-      font-weight: 600;
+    .weekdays div{
+      text-align:center;
+      padding:8px 0;
+      font-size:.72rem;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      color:var(--text-faint);
     }
 
-    .availability-cta {
-      margin-top: 24px;
-      padding: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
+    .calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7, minmax(0, 1fr));
+      gap:8px;
     }
 
-    .availability-cta h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 400;
-      margin-bottom: 6px;
-      color: var(--gold-light);
+    .cell{
+      min-height:82px;
+      padding:10px;
+      border-radius:16px;
+      border:1px solid var(--line-soft);
+      background:rgba(255,255,255,.028);
+      display:flex;
+      justify-content:flex-end;
+      align-items:flex-start;
+      transition:.18s ease;
     }
 
-    .availability-cta p {
-      color: rgba(245,240,232,.76);
-      line-height: 1.7;
-      max-width: 58ch;
+    .cell:hover{
+      transform:translateY(-1px);
+      border-color:rgba(245,240,232,.12);
     }
 
-    .availability-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    .cell.empty{
+      background:transparent;
+      border-color:transparent;
+      box-shadow:none;
     }
 
-    @media (max-width: 980px) {
-      .availability-hero {
-        grid-template-columns: 1fr;
+    .cell.free{ background: var(--free); }
+    .cell.partial{ background: var(--partial); }
+    .cell.busy{ background: var(--busy); }
+
+    .day-number{
+      font-size:.88rem;
+      font-weight:600;
+      color:var(--cream);
+    }
+
+    .availability-cta{
+      margin-top:18px;
+      padding:24px 28px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      box-shadow:0 22px 55px rgba(0,0,0,.24);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .availability-cta h3{
+      font-family:'Cormorant Garamond', serif;
+      font-size:clamp(1.65rem, 3vw, 2.15rem);
+      font-weight:400;
+      margin-bottom:6px;
+      color:var(--gold-light);
+    }
+
+    .availability-cta p{
+      max-width:60ch;
+      color:var(--text-soft);
+      line-height:1.72;
+    }
+
+    .availability-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .availability-actions .btn{
+      min-width: 190px;
+      justify-content:center;
+    }
+
+    footer{
+      background:#000;
+      padding:30px 20px;
+      text-align:center;
+      font-size:.75rem;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      color:rgba(245,240,232,.6);
+      border-top:1px solid rgba(201,169,110,.2);
+    }
+
+    @media (max-width: 820px){
+      .availability-page{
+        padding: 98px 16px 74px;
       }
 
-      .availability-points {
-        grid-template-columns: 1fr;
+      .availability-copy{
+        padding: 24px 20px 22px;
+      }
+
+      .availability-copy h1{
+        max-width: none;
+        font-size: clamp(2.2rem, 10vw, 3.4rem);
+      }
+
+      .card{
+        padding: 18px;
+      }
+
+      .cell{
+        min-height:58px;
+        padding:8px;
+        border-radius:14px;
+      }
+
+      .availability-cta{
+        padding:20px;
+      }
+
+      .availability-actions{
+        width:100%;
+        flex-direction:column;
+      }
+
+      .availability-actions .btn{
+        width:100%;
+        min-width:0;
       }
     }
 
-    @media (max-width: 720px) {
-      .availability-page {
-        padding-top: 96px;
-      }
-
-      .calendar-shell,
-      .availability-copy,
-      .availability-aside,
-      .availability-cta,
-      .card {
-        padding: 20px;
-      }
-
+    @media (max-width: 560px){
       .weekdays,
-      .calendar-grid {
-        gap: 6px;
+      .calendar-grid{
+        gap:6px;
       }
 
-      .cell {
-        min-height: 56px;
-        padding: 8px;
-        border-radius: 14px;
+      .weekdays div{
+        font-size:.62rem;
+        letter-spacing:.10em;
       }
 
-      .availability-actions {
-        flex-direction: column;
-        width: 100%;
+      .cal-month{
+        font-size:1.3rem;
       }
 
-      .availability-actions .btn {
-        width: 100%;
+      .availability-point{
+        width:100%;
       }
     }
   </style>
@@ -466,35 +480,28 @@
           <span class="availability-kicker">Booking Calendar</span>
           <h1>Провери свободните дати за вашето събитие.</h1>
           <p>
-            Тук можеш бързо да видиш кои дни са свободни, заети или частично ангажирани.
-            Ако откриеш подходяща дата, премини към контакт с нас и ще уточним всички детайли.
+            Виж актуалната заетост по месеци и се ориентирай бързо кои дати са свободни,
+            частично ангажирани или вече запазени. Така следващата стъпка към резервацията
+            е по-лесна и по-уверена.
           </p>
 
           <div class="availability-points">
             <div class="availability-point">
-              <strong>Бърза проверка</strong>
+              <strong>Актуален календар</strong>
               <span>Свободни дати</span>
             </div>
+
             <div class="availability-point">
-              <strong>Ясни статуси</strong>
+              <strong>Ясен статус</strong>
               <span>Свободно / Частично / Заето</span>
             </div>
+
             <div class="availability-point">
-              <strong>Лесна следваща стъпка</strong>
-              <span>Контакт и резервация</span>
+              <strong>Бърза следваща стъпка</strong>
+              <span>Портфолио, цени, контакт</span>
             </div>
           </div>
         </div>
-
-        <aside class="availability-aside">
-          <div class="availability-aside-content">
-            <span class="availability-aside-label">Memory Schedule</span>
-            <h2>Избери дата с увереност и я запази навреме.</h2>
-            <p>
-              Най-търсените уикенди се резервират първи, затова е добре да провериш календара възможно най-рано.
-            </p>
-          </div>
-        </aside>
       </section>
 
       <section class="calendar-shell">
@@ -519,7 +526,7 @@
           </div>
 
           <div class="year-switch">
-            <button class="year-toggle" id="yearToggle" type="button">Смени година</button>
+            <button class="year-toggle" id="yearToggle" type="button">Виж 2027</button>
           </div>
 
           <div class="weekdays">
@@ -537,15 +544,16 @@
 
         <div class="availability-cta">
           <div>
-            <h3>Хареса ли ти свободна дата?</h3>
+            <h3>Откри подходяща дата?</h3>
             <p>
-              Запази интереса си навреме и продължи към портфолиото или цените, за да избереш най-подходящия вариант.
+              Продължи към портфолиото или виж цените, за да избереш подходящия пакет
+              и след това се свържи с нас за потвърждение.
             </p>
           </div>
 
           <div class="availability-actions">
-            <a class="btn btn--primary" href="portfolio.html">Виж портфолио</a>
-            <a class="btn btn--secondary" href="uslugi-ceni.html">Виж цени</a>
+            <a class="btn btn--secondary" href="portfolio.html">Виж портфолио</a>
+            <a class="btn btn--primary" href="uslugi-ceni.html">Виж цени</a>
           </div>
         </div>
       </section>
@@ -556,7 +564,7 @@
     © 2026 Memory Photo & Video. All rights reserved.
   </footer>
 
-<script>
+  <script>
 (function(){
   const calendarData = {
     2026: {
@@ -764,7 +772,6 @@
 
   render();
 })();
-</script>
-
+  </script>
 </body>
 </html>
