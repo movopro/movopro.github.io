@@ -1,0 +1,34 @@
+name: Final final language cleanup
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/language-last.yml'
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix video meta description
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('videos.html')
+          text = p.read_text(encoding='utf-8')
+          text = text.replace(
+              'Сватбени филми, сватбен трейлър с кино визия, бизнес видеа и prom трейлъри от Memory Photo & Video.',
+              'Сватбени филми, сватбени трейлъри с кино визия, бизнес видеа и трейлъри за балове от Memory Photo & Video.'
+          )
+          p.write_text(text, encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add videos.html
+          git commit -m 'Polish video meta description' || true
+          git rm .github/workflows/language-last.yml || true
+          git add -A
+          git commit -m 'Remove final language workflow' || true
+          git push
