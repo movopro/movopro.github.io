@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJK01GL7PM');
+  </script>
 
-  gtag('config', 'G-WJK01GL7PM');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Memory Photo & Video</title>
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="Memory Photo & Video">
   <meta property="og:description" content="Сватбена фотография и видеография. Професионално заснемане до 10 часа.">
@@ -22,410 +23,38 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Memory Photo & Video">
-<meta name="twitter:description" content="Сватбена фотография и видеография до 10 часа ангажимент.">
-<meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Memory Photo & Video">
+  <meta name="twitter:description" content="Сватбена фотография и видеография до 10 часа ангажимент.">
+  <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+
   <link rel="icon" type="image/png" href="icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    :root{
-      --cream:#f5f0e8;
-      --dark:#0f0d0b;
-      --gold:#c9a96e;
-      --gold-light:#e8d5b0;
-      --nav:#1e5c86; /* синьото от примера */
-    }
-
-    body{
-      font-family:'Montserrat', sans-serif;
-      background: var(--dark);
-      color: var(--cream);
-      min-height: 100vh;
-    }
-
-    /* ===== TOP NAV ===== */
-    header{
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: var(--nav);
-      z-index: 50;
-      box-shadow: 0 8px 24px rgba(0,0,0,.25);
-    }
-    .nav-wrap{
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      text-decoration:none;
-      color: var(--cream);
-    }
-    .brand img{
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.10);
-    }
-    .brand span{
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      letter-spacing: .10em;
-      font-size: 1.05rem;
-      white-space: nowrap;
-      opacity: .95;
-    }
-
-    /* Mobile menu toggle */
-    #menuToggle{display:none}
-    .burger{
-      display:none;
-      width:44px; height:44px;
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:12px;
-      background:rgba(0,0,0,.12);
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-    }
-    .burger div{
-      width:18px; height:2px;
-      background:rgba(245,240,232,.92);
-      position:relative;
-    }
-    .burger div::before,.burger div::after{
-      content:"";
-      position:absolute; left:0;
-      width:18px; height:2px;
-      background:rgba(245,240,232,.92);
-    }
-    .burger div::before{top:-6px}
-    .burger div::after{top:6px}
-
-    nav{
-      display:flex;
-      gap:18px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    nav a{
-      color: rgba(245,240,232,.92);
-      text-decoration:none;
-      font-size: .80rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0);
-      transition: .15s ease;
-    }
-    nav a:hover{
-      background: rgba(0,0,0,.14);
-      border-color: rgba(255,255,255,.12);
-    }
-    .nav-cta{
-      border: 1px solid rgba(201,169,110,.55) !important;
-      background: rgba(0,0,0,.10);
-    }
-
-    @media (max-width: 880px){
-      .burger{display:flex}
-      nav{
-        display:none;
-        width:100%;
-        padding: 12px 0 4px;
-        gap: 8px;
-      }
-      #menuToggle:checked ~ nav{display:flex}
-      nav a{width:100%; text-align:left; padding:12px 12px}
-    }
-
-    /* ===== HERO ===== */
-    .hero{
-      min-height: 100vh;
-      padding-top: 78px; /* височина на header */
-      display: grid;
-      place-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Fullscreen hero.png, както на примера */
-    .hero::before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        /* леко потъмняване за да изпъкнат бутоните */
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55)),
-        url("hero.jpg") center/cover no-repeat;
-      transform: scale(1.01);
-      z-index: 0;
-    }
-
-    .hero-inner{
-      position: relative;
-      z-index: 1;
-      width: min(900px, 92vw);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      animation: fadeUp .9s ease both;
-    }
-
-    /* Бутони тип "първите" (fill on hover) */
-    .buttons{
-      display:flex;
-      gap: 14px;
-      justify-content:center;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap: .6rem;
-      padding: .78rem 2.05rem;
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-      text-decoration: none;
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(6px);
-      transition: color .25s ease, transform .12s ease;
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.28);
-    }
-
-    .btn::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .28s ease;
-      z-index:0;
-    }
-
-    .btn:hover::before{ transform: scaleX(1); }
-    .btn:hover{
-      color: var(--dark);
-      transform: translateY(-1px);
-    }
-
-    .btn span{ position:relative; z-index:1; }
-
-    @keyframes fadeUp{
-      from{opacity:0; transform: translateY(18px);}
-      to{opacity:1; transform: translateY(0);}
-    }
-    /* ===== DJ PARTNER SECTION ===== */
-
-.partner-section{
-  padding: 120px 20px 100px;
-  background: linear-gradient(to bottom, #0f0d0b 0%, #14110e 100%);
-}
-
-.partner-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.partner-title{
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.2rem;
-  letter-spacing: .08em;
-  margin-bottom: 20px;
-  color: var(--gold-light);
-}
-
-.partner-card{
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.6fr .9fr;
-  gap: 40px;
-  padding: 40px;
-  border-radius: 22px;
-  border: 1px solid rgba(201,169,110,.25);
-  background: rgba(255,255,255,.02);
-  backdrop-filter: blur(8px);
-  transition: all .4s ease;
-}
-
-.partner-card:hover{
-  transform: translateY(-8px);
-  box-shadow: 0 30px 60px rgba(0,0,0,.6);
-  border-color: rgba(201,169,110,.6);
-}
-
-.partner-accent{
-  position:absolute;
-  left:0;
-  top:0;
-  width:4px;
-  height:100%;
-  background: var(--gold);
-  transition:.3s ease;
-}
-
-.partner-card:hover .partner-accent{
-  width:8px;
-}
-
-.partner-name{
-  font-family:'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-  color: var(--gold-light);
-}
-
-.partner-desc{
-  opacity:.85;
-  margin-bottom:18px;
-}
-
-.partner-meta{
-  margin-bottom: 22px;
-  padding-left:18px;
-  line-height:1.8;
-  opacity:.85;
-}
-
-.partner-actions{
-  display:flex;
-  gap:14px;
-}
-
-.partner-btn{
-  padding:.7rem 1.8rem;
-  border:1px solid var(--gold);
-  text-decoration:none;
-  color:var(--gold-light);
-  font-size:.75rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  border-radius:14px;
-  transition:.25s ease;
-}
-
-.partner-btn:hover{
-  background:var(--gold);
-  color:var(--dark);
-  box-shadow:0 10px 25px rgba(201,169,110,.4);
-}
-
-.partner-logo{
-  width:110px;
-  height:110px;
-  border-radius:22px;
-  display:grid;
-  place-items:center;
-  font-size:28px;
-  font-weight:600;
-  border:1px solid rgba(201,169,110,.3);
-  color:var(--gold-light);
-  background:rgba(0,0,0,.25);
-  transition:.3s ease;
-}
-
-.partner-card:hover .partner-logo{
-  transform:scale(1.08);
-  box-shadow:0 15px 35px rgba(201,169,110,.25);
-}
-
-.partner-note{
-  font-size:12px;
-  opacity:.6;
-  margin-top:20px;
-}
-
-/* ===== FOOTER ===== */
-
-footer{
-  background:#000;
-  padding:30px 20px;
-  text-align:center;
-  font-size:.75rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:rgba(245,240,232,.6);
-  border-top:1px solid rgba(201,169,110,.2);
-}
-
-@media (max-width: 820px){
-  .partner-card{
-    grid-template-columns:1fr;
-  }
-}
-    .partner-photo{
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 22px;
-  border: 1px solid rgba(201,169,110,.35);
-  background: rgba(0,0,0,.25);
-  transition: .35s ease;
-  box-shadow: 0 18px 40px rgba(0,0,0,.45);
-}
-
-.partner-card:hover .partner-photo{
-  transform: scale(1.06);
-  border-color: rgba(201,169,110,.70);
-  box-shadow: 0 22px 55px rgba(201,169,110,.18);
-}
-    /* ===== MOBILE FIX: DJ buttons ===== */
-@media (max-width: 520px){
-
-  .partner-actions{
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .partner-btn{
-    width: 100%;
-    text-align: center;
-  }
-
-}
-  </style>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <script defer src="assets/js/main.js"></script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Към съдържанието</a>
+
   <header>
     <div class="nav-wrap">
-      <!-- icon.png до надписа -->
       <a class="brand" href="index.html" aria-label="Начало">
-        <img src="icon.png" alt="Икона">
+        <img src="icon.png" alt="Икона на Memory Photo & Video">
         <span>Memory Photo &amp; Video</span>
       </a>
 
       <input id="menuToggle" type="checkbox" />
-      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+      <label class="burger" for="menuToggle" aria-label="Меню">
+        <div></div>
+      </label>
 
       <nav>
-        <a href="index.html"class="nav-cta">Начало</a>
+        <a href="index.html" class="nav-cta">Начало</a>
         <a href="portfolio.html">Портфолио</a>
         <a href="videos.html">Видео</a>
         <a href="uslugi-ceni.html">Ценоразпис</a>
@@ -435,57 +64,103 @@ footer{
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <!-- Само 2 бутона: Instagram + Facebook -->
-      <div class="buttons">
-        <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">
-          <span>Instagram</span>
-        </a>
-        <a class="btn" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">
-          <span>Facebook</span>
-        </a>
-      </div>
-    </div>
-  </section>
-  <section class="partner-section">
-  <div class="partner-wrap">
-    <h2 class="partner-title">DJ Партньор</h2>
+  <main id="main-content">
+    <section class="hero" id="top">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__grain" aria-hidden="true"></div>
 
-    <div class="partner-card">
-      <div class="partner-accent"></div>
+      <div class="hero__content" data-tilt>
+        <div class="hero__copy">
+          <span class="kicker">Wedding Photo &amp; Video</span>
 
-      <div>
-        <h3 class="partner-name">DJ PeppyStar</h3>
-        <p class="partner-desc">
-          Wedding & Event DJ • Енергия, стил и перфектен подбор на музика според публиката.
-        </p>
+          <h1>Кадри със стил, дълбочина и усещане за кино.</h1>
 
-        <ul class="partner-meta">
-          <li>Commercial • Pop • Balkan • Dance • By request</li>
-          <li>Сватби • Частни събития • Фирмени партита</li>
-          <li>Динамичен музикален flow и професионално излъчване</li>
-        </ul>
+          <p>
+            Заснемаме сватбени истории с внимание към атмосферата, детайла и емоцията —
+            така че денят ви да остане не просто запазен, а разказан красиво.
+          </p>
 
-        <div class="partner-actions">
-          <a class="partner-btn" href="https://www.instagram.com/dj_peppystar/" target="_blank">Instagram</a>
-          <a class="partner-btn" href="https://www.facebook.com/profile.php?id=61571705841656" target="_blank">Facebook</a>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="availability.html">Резервирай дата</a>
+            <a class="btn btn--secondary" href="portfolio.html">Виж портфолио</a>
+          </div>
+
+          <div class="hero__microcopy">
+            Провери свободните дати и избери удобно време за вашето събитие.
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat">
+              <strong>До 10 часа</strong>
+              <span>Ангажимент</span>
+            </div>
+            <div class="stat">
+              <strong>Фото + Видео</strong>
+              <span>Пълно покритие</span>
+            </div>
+            <div class="stat">
+              <strong>Премиум визия</strong>
+              <span>Обработка и стил</span>
+            </div>
+          </div>
+
+          <div class="hero__socials">
+            <a href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Facebook</a>
+          </div>
         </div>
 
-        <p class="partner-note">
-          *Партньорът е независим професионалист. Договорните условия се уточняват директно с него.
-        </p>
+        <div class="hero__panel" aria-hidden="true">
+          <div class="hero__frame">
+            <img src="hero.jpg" alt="Сватбена фотография Memory Photo & Video">
+          </div>
+          <div class="hero__tag">Memory Signature Look</div>
+        </div>
       </div>
 
-      <div style="display:flex; align-items:center; justify-content:center;">
-      <img class="partner-photo" src="dj-peppystar.jpg" alt="DJ PeppyStar">
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="hero__scroll">Scroll</div>
+    </section>
 
-<footer>
-  © 2026 Memory Photo & Video. All rights reserved.
-</footer>
+    <section class="partner-section">
+      <div class="partner-wrap">
+        <h2 class="partner-title">DJ Партньор</h2>
+
+        <div class="partner-card">
+          <div class="partner-accent"></div>
+
+          <div>
+            <h3 class="partner-name">DJ PeppyStar</h3>
+
+            <p class="partner-desc">
+              Wedding &amp; Event DJ • Енергия, стил и перфектен подбор на музика според публиката.
+            </p>
+
+            <ul class="partner-meta">
+              <li>Commercial • Pop • Balkan • Dance • By request</li>
+              <li>Сватби • Частни събития • Фирмени партита</li>
+              <li>Динамичен музикален flow и професионално излъчване</li>
+            </ul>
+
+            <div class="partner-actions">
+              <a class="partner-btn" href="https://www.instagram.com/dj_peppystar/" target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a class="partner-btn" href="https://www.facebook.com/profile.php?id=61571705841656" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </div>
+
+            <p class="partner-note">
+              *Партньорът е независим професионалист. Договорните условия се уточняват директно с него.
+            </p>
+          </div>
+
+          <div class="partner-photo-wrap">
+            <img class="partner-photo" src="dj-peppystar.jpg" alt="DJ PeppyStar">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Memory Photo & Video. All rights reserved.
+  </footer>
 </body>
 </html>
