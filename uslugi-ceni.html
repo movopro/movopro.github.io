@@ -1,253 +1,270 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WJK01GL7PM');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJK01GL7PM');
+  </script>
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Услуги и цени | Memory Photo &amp; Video</title>
-  <link rel="icon" type="image/png" href="logo.png" />
 
-  
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Услуги и цени | Memory Photo & Video">
+  <meta property="og:description" content="Сватбени фото и видео пакети, услуги за събития и ориентировъчен калкулатор.">
+  <meta property="og:url" content="https://memoryphotoandvideo.com/uslugi-ceni.html">
+  <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Услуги и цени | Memory Photo & Video">
+  <meta name="twitter:description" content="Сватбени фото и видео пакети, услуги за събития и ориентировъчен калкулатор.">
+  <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css">
 
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--cream:#f5f0e8;--dark:#0f0d0b;--gold:#c9a96e;--nav:#1e5c86}
-    body{font-family:Montserrat,sans-serif;background:var(--dark);color:var(--cream);min-height:100vh}
-
-    header{background:var(--nav);box-shadow:0 8px 24px rgba(0,0,0,.25)}
-    .nav-wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;gap:14px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream)}
-    .brand img{height:44px}
-    .brand span{font-family:"Cormorant Garamond",serif;letter-spacing:.10em;font-weight:400}
-
-    #menuToggle{display:none}
-    .burger{display:none;width:44px;height:44px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(0,0,0,.12);align-items:center;justify-content:center;cursor:pointer}
-    .burger div{width:18px;height:2px;background:rgba(245,240,232,.92);position:relative}
-    .burger div::before,.burger div::after{content:"";position:absolute;left:0;width:18px;height:2px;background:rgba(245,240,232,.92)}
-    .burger div::before{top:-6px}.burger div::after{top:6px}
-
-    nav{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-    nav a{color:rgba(245,240,232,.92);text-decoration:none;font-size:.80rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0);transition:.15s ease}
-    nav a:hover{background:rgba(0,0,0,.14);border-color:rgba(255,255,255,.12)}
-    .nav-cta{border:1px solid rgba(201,169,110,.55)!important;background:rgba(0,0,0,.10)}
-
-    main{max-width:1100px;margin:22px auto;padding:0 18px}
-    h1{font-family:"Cormorant Garamond",serif;font-weight:400;letter-spacing:.10em;margin:14px 0 10px}
-    .sub{opacity:.80;line-height:1.55;margin-bottom:18px}
-
-    .grid{display:grid;gap:14px}
-    @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
-
-    .card{
-      background:rgba(0,0,0,.22);
-      border:1px solid rgba(201,169,110,.16);
-      border-radius:20px;
-      box-shadow:0 14px 35px rgba(0,0,0,.35);
-      padding:18px;
-      margin-bottom:14px;
+    :root{
+      --page-bg:#0f0d0b;
+      --page-bg-2:#15110d;
+      --panel:rgba(255,255,255,.035);
+      --panel-soft:rgba(255,255,255,.02);
+      --line:rgba(245,240,232,.10);
+      --line-soft:rgba(245,240,232,.06);
+      --text-soft:rgba(245,240,232,.78);
+      --text-faint:rgba(245,240,232,.56);
+      --success-soft:rgba(39,179,108,.16);
+      --gold-strong:rgba(201,169,110,.30);
     }
 
-    .section-head{
+    body{
+      background:
+        radial-gradient(circle at 12% 18%, rgba(201,169,110,.10), transparent 22%),
+        radial-gradient(circle at 84% 10%, rgba(201,169,110,.08), transparent 18%),
+        linear-gradient(180deg, var(--page-bg) 0%, var(--page-bg-2) 100%);
+      color: var(--cream);
+    }
+
+    .pricing-page{
+      min-height: 100vh;
+      padding: 112px 20px 90px;
+    }
+
+    .pricing-wrap{
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .pricing-hero{
+      position: relative;
+      overflow: hidden;
+      padding: 34px 38px 30px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)),
+        radial-gradient(circle at top left, rgba(201,169,110,.09), transparent 36%);
+      box-shadow: 0 26px 70px rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
+    }
+
+    .pricing-hero::after{
+      content:"";
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(201,169,110,.10), transparent 68%);
+      pointer-events:none;
+    }
+
+    .pricing-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:.65rem;
+      margin-bottom:1rem;
+      color:var(--gold-light);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.72rem;
+    }
+
+    .pricing-kicker::before{
+      content:"";
+      width:42px;
+      height:1px;
+      background:var(--gold);
+    }
+
+    .pricing-hero h1{
+      max-width: 10ch;
+      font-family:'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
+      line-height: .92;
+      font-weight: 400;
+      margin-bottom: 14px;
+      color: var(--cream);
+    }
+
+    .pricing-hero p{
+      max-width: 68ch;
+      font-size: 1rem;
+      line-height: 1.78;
+      color: var(--text-soft);
+    }
+
+    .pricing-points{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .pricing-point{
+      min-width: 180px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid var(--line-soft);
+      background: var(--panel-soft);
+    }
+
+    .pricing-point strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:.92rem;
+      color:var(--cream);
+    }
+
+    .pricing-point span{
+      display:block;
+      color:var(--text-faint);
+      font-size:.76rem;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+      line-height:1.5;
+    }
+
+    .glass-card{
+      padding: 26px;
+      border-radius: 30px;
+      border: 1px solid rgba(201,169,110,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+      box-shadow: 0 30px 80px rgba(0,0,0,.34);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-topline{
       display:flex;
       align-items:flex-end;
       justify-content:space-between;
-      gap:12px;
+      gap:16px;
       flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .section-topline h2{
+      font-family:'Cormorant Garamond', serif;
+      font-size: clamp(1.95rem, 3vw, 2.6rem);
+      font-weight:400;
+      line-height:1;
+      color:var(--gold-light);
       margin-bottom:6px;
     }
 
-    h2{
-      font-family:"Cormorant Garamond",serif;
-      font-weight:400;
-      letter-spacing:.08em;
-      margin:0;
+    .section-topline p{
+      color:var(--text-faint);
+      line-height:1.6;
+      font-size:.95rem;
+      max-width: 60ch;
     }
 
     .pill{
       font-size:.75rem;
-      letter-spacing:.12em;
+      letter-spacing:.14em;
       text-transform:uppercase;
       color:rgba(232,213,176,.95);
       border:1px solid rgba(201,169,110,.45);
       background:rgba(0,0,0,.18);
-      padding:6px 10px;
+      padding:8px 12px;
       border-radius:999px;
       white-space:nowrap;
     }
 
-    .list{display:grid;gap:10px;margin-top:10px}
-
-    .row{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px;
-      border-radius:16px;
-      background:rgba(0,0,0,.16);
-      border:1px solid rgba(201,169,110,.10);
-      align-items:baseline;
-    }
-    .row b{font-weight:700}
-    .price{white-space:nowrap;color:rgba(232,213,176,.96);font-weight:700}
-
-    .mini{
-      margin:-4px 0 10px;
-      opacity:.78;
-      font-size:.90rem;
-      line-height:1.55;
-    }
-
-    .bullets{
-      margin-top:8px;
-      display:grid;
-      gap:8px;
-    }
-    .bullets li{
-      list-style:none;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      color:rgba(245,240,232,.82);
-      font-size:.90rem;
-      line-height:1.5;
-    }
-    .bullets li::before{
-      content:"✓";
-      color:rgba(232,213,176,.96);
-      margin-top:1px;
-      flex:0 0 auto;
-    }
-
-    .note{
-      opacity:.72;
-      font-size:.86rem;
-      line-height:1.5;
-      margin-top:12px;
-      border-top:1px solid rgba(201,169,110,.12);
-      padding-top:12px;
-    }
-
-    .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      display:inline-block;
-      padding:12px 18px;
-      border-radius:14px;
-      border:1px solid rgba(201,169,110,.55);
-      background:rgba(10,8,6,.58);
-      color:rgba(232,213,176,.96);
-      text-decoration:none;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:600;
-      font-size:.78rem;
-      transition:.15s ease;
-      cursor:pointer;
-    }
-    .btn:hover{background:rgba(0,0,0,.55);transform:translateY(-1px)}
-
-    footer{max-width:1200px;margin:24px auto 30px;padding:0 18px;color:rgba(245,240,232,.60);font-size:.82rem}
-
-    @media (max-width: 880px){
-      .burger{display:flex}
-      nav{display:none;width:100%;padding:12px 0 4px;gap:8px}
-      #menuToggle:checked ~ nav{display:flex}
-      nav a{width:100%;text-align:left;padding:12px 12px}
-    }
-
-    /* ===== INCLUDED IN ALL PACKAGES BANNER ===== */
     .included-all{
-      background:rgba(201,169,110,.07);
-      border:1px solid rgba(201,169,110,.30);
-      border-radius:16px;
-      padding:14px 16px;
-      margin-bottom:16px;
+      padding:18px;
+      border-radius:22px;
+      border:1px solid var(--line-soft);
+      background:var(--panel-soft);
+      margin-bottom:18px;
     }
-    .included-all .inc-title{
-      font-family:"Cormorant Garamond",serif;
-      font-size:1.05rem;
-      letter-spacing:.08em;
-      color:rgba(232,213,176,.98);
-      margin-bottom:8px;
+
+    .inc-title{
+      margin-bottom:12px;
+      color:var(--gold-light);
+      font-size:.82rem;
+      text-transform:uppercase;
+      letter-spacing:.16em;
     }
+
     .inc-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-      gap:6px 14px;
-    }
-    .inc-item{
-      display:flex;
-      align-items:flex-start;
-      gap:7px;
-      font-size:.84rem;
-      color:rgba(245,240,232,.80);
-      line-height:1.4;
-    }
-    .inc-item::before{
-      content:"★";
-      color:var(--gold);
-      font-size:.70rem;
-      margin-top:2px;
-      flex:0 0 auto;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:10px;
     }
 
-    /* ===== Wedding Packages Layout ===== */
+    .inc-item{
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(0,0,0,.16);
+      border:1px solid rgba(201,169,110,.08);
+      color:var(--text-soft);
+      line-height:1.55;
+      font-size:.92rem;
+    }
+
     .package-grid{
       display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
       gap:16px;
-      margin-top:14px;
     }
-    @media(min-width:900px){
-      .package-grid{
-        grid-template-columns:repeat(3,1fr);
-      }
-    }
+
     .package-card{
-      background:rgba(0,0,0,.18);
-      border:1px solid rgba(201,169,110,.18);
-      border-radius:20px;
-      padding:18px;
       position:relative;
-      transition:.2s ease;
       display:flex;
       flex-direction:column;
+      gap:12px;
+      padding:22px;
+      border-radius:24px;
+      border:1px solid rgba(201,169,110,.16);
+      background:rgba(0,0,0,.18);
+      box-shadow:0 16px 38px rgba(0,0,0,.28);
+      transition:.2s ease;
     }
+
     .package-card:hover{
       transform:translateY(-4px);
-      box-shadow:0 18px 40px rgba(0,0,0,.45);
+      box-shadow:0 22px 46px rgba(0,0,0,.35);
     }
-    .package-title{
-      font-family:"Cormorant Garamond",serif;
-      font-size:1.3rem;
-      margin-bottom:6px;
+
+    .package-card.recommended{
+      border:1px solid rgba(201,169,110,.62);
+      box-shadow:0 0 0 2px rgba(201,169,110,.12), 0 20px 48px rgba(0,0,0,.34);
+      background:
+        linear-gradient(180deg, rgba(201,169,110,.08), rgba(255,255,255,.02));
     }
-    .package-price{
-      font-weight:800;
-      color:rgba(232,213,176,.98);
-      margin-bottom:12px;
-    }
-    .package-diff-label{
-      font-size:.72rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:var(--gold);
-      opacity:.85;
-      margin-bottom:6px;
-      margin-top:4px;
-    }
-    .recommended{
-      border:1px solid rgba(201,169,110,.65);
-      box-shadow:0 0 0 2px rgba(201,169,110,.15);
-    }
+
     .badge{
       position:absolute;
       top:-12px;
@@ -262,510 +279,757 @@
       font-weight:700;
     }
 
-    /* ===== CALCULATOR ===== */
-    .calc-wrap{margin-top:0}
-    .calc-grid{display:grid;gap:14px;margin-top:12px}
-    @media(min-width:900px){.calc-grid{grid-template-columns:1.1fr .9fr}}
+    .package-title{
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.7rem;
+      color:var(--cream);
+    }
+
+    .package-price{
+      font-weight:800;
+      color:rgba(232,213,176,.98);
+      font-size:1.25rem;
+    }
+
+    .package-price span{
+      opacity:.65;
+      font-size:.82rem;
+      font-weight:400;
+    }
+
+    .package-diff-label{
+      font-size:.72rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      opacity:.9;
+      margin-top:2px;
+    }
+
+    .bullets{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+    }
+
+    .bullets li{
+      list-style:none;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:rgba(245,240,232,.84);
+      font-size:.93rem;
+      line-height:1.6;
+    }
+
+    .bullets li::before{
+      content:"✓";
+      color:rgba(232,213,176,.96);
+      margin-top:1px;
+      flex:0 0 auto;
+    }
+
+    .note{
+      opacity:.72;
+      font-size:.86rem;
+      line-height:1.6;
+      margin-top:14px;
+      border-top:1px solid rgba(201,169,110,.12);
+      padding-top:14px;
+      color:var(--text-faint);
+    }
+
+    .mode-tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .mode-tab{
+      padding:11px 16px;
+      border-radius:999px;
+      border:1px solid rgba(201,169,110,.24);
+      background:rgba(255,255,255,.02);
+      color:var(--gold-light);
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      font-size:.75rem;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .mode-tab.active{
+      background:rgba(201,169,110,.14);
+      border-color:rgba(201,169,110,.55);
+      color:var(--cream);
+    }
+
+    .mode-panel{
+      display:none;
+    }
+
+    .mode-panel.visible{
+      display:block;
+    }
+
+    .calc-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+    }
+
     .calc-card{
       background:rgba(0,0,0,.18);
-      border:1px solid rgba(201,169,110,.18);
-      border-radius:20px;
-      padding:18px;
-      box-shadow:0 14px 35px rgba(0,0,0,.30);
+      border:1px solid rgba(201,169,110,.14);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:0 14px 35px rgba(0,0,0,.26);
     }
+
     .calc-card h3{
-      font-family:"Cormorant Garamond",serif;
+      font-family:'Cormorant Garamond', serif;
       font-weight:400;
       letter-spacing:.08em;
       margin:0 0 12px;
       color:rgba(232,213,176,.98);
-      font-size:1.25rem;
+      font-size:1.45rem;
     }
-    .calc-row{display:grid;gap:8px;margin:10px 0}
+
+    .calc-mini{
+      color:var(--text-faint);
+      line-height:1.65;
+      margin-bottom:12px;
+      font-size:.93rem;
+    }
+
+    .calc-row{
+      display:grid;
+      gap:8px;
+      margin:12px 0;
+    }
+
     .calc-label{
       font-size:.78rem;
       letter-spacing:.14em;
       text-transform:uppercase;
-      opacity:.85
+      opacity:.85;
+      color:var(--gold-light);
     }
-    .calc-input, .calc-select{
+
+    .calc-input,
+    .calc-select{
       width:100%;
-      padding:12px 12px;
-      border-radius:14px;
+      padding:13px 14px;
+      border-radius:16px;
       border:1px solid rgba(255,255,255,.14);
       background:rgba(0,0,0,.25);
       color:var(--cream);
       font-family:Montserrat,sans-serif;
-      font-size:.88rem;
+      font-size:.92rem;
     }
-    .calc-input:focus, .calc-select:focus{outline:none;border-color:rgba(201,169,110,.75)}
-    .calc-two{display:grid;gap:12px}
-    @media(min-width:700px){.calc-two{grid-template-columns:1fr 1fr}}
-    .calc-check{display:flex;align-items:center;gap:10px;margin:10px 0}
-    .calc-check input{width:18px;height:18px;accent-color:var(--gold)}
-    .help{font-size:.82rem;opacity:.75;line-height:1.5;margin-top:8px}
-    .divider{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
 
-    /* Mode tabs */
-    .mode-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-    .mode-tab{
-      padding:9px 16px;
-      border-radius:12px;
-      border:1px solid rgba(201,169,110,.30);
-      background:rgba(0,0,0,.20);
-      color:rgba(245,240,232,.75);
-      font-size:.76rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      cursor:pointer;
-      transition:.15s ease;
-      font-family:Montserrat,sans-serif;
-      font-weight:600;
-    }
-    .mode-tab.active{
+    .calc-input:focus,
+    .calc-select:focus{
+      outline:none;
       border-color:rgba(201,169,110,.75);
-      background:rgba(201,169,110,.12);
-      color:rgba(232,213,176,.98);
+      box-shadow:0 0 0 3px rgba(201,169,110,.10);
     }
-    .mode-panel{display:none}
-    .mode-panel.visible{display:block}
 
-    .hourly-section{
-      background:rgba(201,169,110,.05);
-      border:1px solid rgba(201,169,110,.14);
-      border-radius:16px;
-      padding:14px;
-      margin-bottom:12px;
+    .calc-two{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
     }
-    .hourly-section-title{
-      font-size:.76rem;
-      letter-spacing:.14em;
+
+    .check-row{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      margin-top:10px;
+      color:var(--text-soft);
+      line-height:1.5;
+      font-size:.92rem;
+    }
+
+    .check-row input{
+      margin-top:3px;
+      accent-color: var(--gold);
+    }
+
+    .calc-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .result-card{
+      position:sticky;
+      top:94px;
+    }
+
+    .result-total{
+      padding:16px 18px;
+      border-radius:20px;
+      background:var(--success-soft);
+      border:1px solid rgba(39,179,108,.22);
+      margin-bottom:14px;
+    }
+
+    .result-total small{
+      display:block;
+      margin-bottom:6px;
       text-transform:uppercase;
-      color:var(--gold);
-      opacity:.90;
+      letter-spacing:.14em;
+      font-size:.72rem;
+      color:rgba(245,240,232,.72);
+    }
+
+    .result-eur{
+      font-size:2rem;
+      font-weight:800;
+      color:var(--cream);
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .result-bgn{
+      color:var(--gold-light);
+      font-size:.95rem;
+      letter-spacing:.06em;
+    }
+
+    .breakdown{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .line{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(201,169,110,.08);
+      color:var(--text-soft);
+      line-height:1.5;
+      font-size:.90rem;
+    }
+
+    .line .r{
+      white-space:nowrap;
+      color:var(--gold-light);
+      font-weight:700;
+    }
+
+    .event-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:16px;
+    }
+
+    .event-rate-card{
+      padding:20px;
+      border-radius:22px;
+      border:1px solid rgba(201,169,110,.14);
+      background:rgba(0,0,0,.18);
+      box-shadow:0 12px 28px rgba(0,0,0,.22);
+    }
+
+    .event-rate-card h3{
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.55rem;
+      font-weight:400;
+      color:var(--gold-light);
+      margin-bottom:8px;
+    }
+
+    .event-rate{
+      font-size:1.15rem;
+      font-weight:700;
+      color:var(--cream);
       margin-bottom:10px;
     }
 
-    .totalBox{
-      border-radius:18px;
-      border:1px solid rgba(201,169,110,.30);
-      background:rgba(0,0,0,.20);
-      padding:14px;
+    .cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .pricing-footer-cta{
       display:flex;
       justify-content:space-between;
-      align-items:baseline;
-      gap:12px;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+      padding:24px 28px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      box-shadow:0 22px 55px rgba(0,0,0,.24);
     }
-    .totalBox .lbl{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
-    .totalBox .val{
-      font-family:"Cormorant Garamond",serif;
-      font-size:2rem;
-      letter-spacing:.06em;
-      color:rgba(232,213,176,.98);
-      white-space:nowrap;
+
+    .pricing-footer-cta h3{
+      font-family:'Cormorant Garamond', serif;
+      font-size:clamp(1.65rem, 3vw, 2.15rem);
+      font-weight:400;
+      margin-bottom:6px;
+      color:var(--gold-light);
     }
-    .breakdown{display:grid;gap:10px;margin-top:12px}
-    .line{
+
+    .pricing-footer-cta p{
+      max-width:60ch;
+      color:var(--text-soft);
+      line-height:1.72;
+    }
+
+    .pricing-footer-actions{
       display:flex;
-      justify-content:space-between;
       gap:12px;
-      padding:12px;
-      border-radius:16px;
-      background:rgba(0,0,0,.16);
-      border:1px solid rgba(201,169,110,.10);
-      align-items:baseline;
-      font-size:.92rem;
-      opacity:.92
+      flex-wrap:wrap;
     }
-    .line .r{white-space:nowrap;color:rgba(232,213,176,.96);font-weight:800}
-    .calc-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
-    .calc-actions .btn{width:auto}
-    @media(max-width:520px){
-      .calc-actions{flex-direction:column}
-      .calc-actions .btn{width:100%;text-align:center}
+
+    footer{
+      background:#000;
+      padding:30px 20px;
+      text-align:center;
+      font-size:.75rem;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      color:rgba(245,240,232,.6);
+      border-top:1px solid rgba(201,169,110,.2);
+    }
+
+    @media (max-width: 1024px){
+      .package-grid{
+        grid-template-columns:1fr;
+      }
+
+      .calc-grid,
+      .event-grid{
+        grid-template-columns:1fr;
+      }
+
+      .result-card{
+        position:static;
+      }
+    }
+
+    @media (max-width: 820px){
+      .pricing-page{
+        padding: 98px 16px 74px;
+      }
+
+      .pricing-hero{
+        padding: 24px 20px 22px;
+      }
+
+      .pricing-hero h1{
+        max-width:none;
+        font-size: clamp(2.2rem, 10vw, 3.4rem);
+      }
+
+      .glass-card{
+        padding:20px;
+      }
+
+      .inc-grid,
+      .calc-two{
+        grid-template-columns:1fr;
+      }
+
+      .pricing-footer-actions{
+        width:100%;
+        flex-direction:column;
+      }
+
+      .pricing-footer-actions .btn{
+        width:100%;
+      }
+    }
+
+    @media (max-width: 560px){
+      .pricing-point{
+        width:100%;
+      }
+
+      .mode-tabs{
+        flex-direction:column;
+      }
+
+      .mode-tab{
+        width:100%;
+      }
     }
   </style>
 </head>
-
 <body>
-<header>
-  <div class="nav-wrap">
-    <a class="brand" href="index.html" aria-label="Начало">
-      <img src="icon.png" alt="Икона" style="width:34px;height:34px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.10);">
-      <span style="font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:.10em;font-size:1.05rem;white-space:nowrap;opacity:.95;">
-        Memory Photo &amp; Video
-      </span>
-    </a>
+  <a class="skip-link" href="#main-content">Към съдържанието</a>
 
-    <input id="menuToggle" type="checkbox" />
-    <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="Начало">
+        <img src="icon.png" alt="Икона на Memory Photo & Video">
+        <span>Memory Photo &amp; Video</span>
+      </a>
 
-    <nav>
-      <a href="index.html">Начало</a>
-      <a href="portfolio.html">Портфолио</a>
-      <a href="videos.html">Видео</a>
-      <a href="uslugi-ceni.html" class="nav-cta">Ценоразпис</a>
-      <a href="availability.html">Свободни дати</a>
-      <a href="about.html">За нас</a>
-    </nav>
-  </div>
-</header>
+      <input id="menuToggle" type="checkbox" />
+      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
 
-<main>
-  <h1>Услуги и цени</h1>
-  <div class="sub">Сватбени пакети (до 10 часа) + заснемане на други събития (2026).</div>
-
-  <!-- ===== WEDDING PACKAGES ===== -->
-  <div class="card">
-    <div class="section-head">
-      <h2>Сватбени фото + видео пакети</h2>
-      <div class="pill">до 10 часа ангажимент</div>
+      <nav>
+        <a href="index.html">Начало</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="videos.html">Видео</a>
+        <a href="uslugi-ceni.html" class="nav-cta">Ценоразпис</a>
+        <a href="availability.html">Свободни дати</a>
+        <a href="about.html">За нас</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Included in ALL packages -->
-    <div class="included-all">
-      <div class="inc-title">Всеки пакет включва:</div>
-      <div class="inc-grid">
-        <div class="inc-item">Неограничен брой кадри и обработка</div>
-        <div class="inc-item">Видео трейлър с най-важните моменти</div>
-        <div class="inc-item">Цял репортажен филм</div>
-        <div class="inc-item">Фотосесия в деня на сватбата</div>
-        <div class="inc-item">Заснемане до 10 часа</div>
-        <div class="inc-item">Запис на звук с външен рекордер</div>
-        <div class="inc-item">Репортажна фотография</div>
-        <div class="inc-item">Записан материал на флашка</div>
-      </div>
-    </div>
+  <main id="main-content" class="pricing-page">
+    <div class="pricing-wrap">
+      <section class="pricing-hero">
+        <span class="pricing-kicker">Services & Pricing</span>
+        <h1>Услуги и цени с ясна структура и премиум представяне.</h1>
+        <p>
+          Тук ще откриеш сватбените пакети на Memory Photo &amp; Video, както и ориентировъчни
+          цени за други събития. За по-гъвкав сценарий можеш да използваш калкулатора и да
+          добиеш реална представа за бюджета според екип, продължителност и допълнителни услуги.
+        </p>
 
-    <!-- Packages Grid — 3 columns -->
-    <div class="package-grid">
-
-      <!-- STANDARD -->
-      <div class="package-card">
-        <div class="package-title">Стандартен</div>
-        <div class="package-price">1 200 € <span style="opacity:.65;font-size:.82rem;font-weight:400">(1 956 лв.)</span></div>
-        <div class="package-diff-label">Какво е различното</div>
-        <ul class="bullets">
-          <li>Екип от 2 души — 1 фотограф + 1 оператор.</li>
-          <li>Пълно покритие на сватбения ден.</li>
-          <li>Материалът се записва на 1 флашка с кутийка.</li>
-        </ul>
-      </div>
-
-      <!-- PREMIUM -->
-      <div class="package-card recommended">
-        <div class="badge">Препоръчан</div>
-        <div class="package-title">Премиум</div>
-        <div class="package-price">1 600 € <span style="opacity:.65;font-size:.82rem;font-weight:400">(2 542 лв.)</span></div>
-        <div class="package-diff-label">Какво е различното</div>
-        <ul class="bullets">
-          <li>Екип от 3 души — избираш: 2 фотографи + 1 оператор, или 1 фотограф + 2 оператори.</li>
-          <li>По-широко покритие: заснемане на подготовката — грим, фризьор, детайли.</li>
-          <li>По-богат монтаж и по-динамичен трейлър.</li>
-          <li>Материалът се записва на 1 флашка с кутийка.</li>
-        </ul>
-      </div>
-
-      <!-- ULTRA -->
-      <div class="package-card">
-        <div class="package-title">Ултра</div>
-        <div class="package-price">2 200 € <span style="opacity:.65;font-size:.82rem;font-weight:400">(3 325 лв.)</span></div>
-        <div class="package-diff-label">Какво е различното</div>
-        <ul class="bullets">
-          <li>Пълен екип от 4 души — 2 фотографи + 2 оператори.</li>
-          <li>Максимално покритие: всеки момент, детайл и емоция от деня.</li>
-          <li>Заснемане с дрон включено.</li>
-          <li>Сватбена книга с размер 25×25.</li>
-          <li>Материалът се записва на 2 флашки с кутийки.</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="note">
-      * Съдържанието (дължина, стил, доставяне) се уточнява спрямо вашите желания и програмата на събитието.
-    </div>
-
-    <div class="cta">
-      <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
-    </div>
-  </div>
-
-  <!-- ===== CALCULATOR ===== -->
-  <div class="card calc-wrap" id="kalkulator">
-    <div class="section-head">
-      <h2>Калкулатор цена</h2>
-      <div class="pill">ориентировъчна цена</div>
-    </div>
-
-    <div class="mini">
-      Избери режим — сватбено заснемане (база до 10 часа) или почасово заснемане на събитие само с фотограф или само с оператор.
-    </div>
-
-    <!-- Mode Tabs -->
-    <div class="mode-tabs">
-      <button class="mode-tab active" data-mode="wedding" type="button">Сватба (до 10 ч.)</button>
-      <button class="mode-tab" data-mode="hourly" type="button">Почасово заснемане</button>
-    </div>
-
-    <!-- ===== MODE: WEDDING ===== -->
-    <div class="mode-panel visible" id="panel-wedding">
-      <div class="calc-grid">
-        <div class="calc-card">
-          <h3>Избор</h3>
-
-          <div class="calc-two">
-            <div class="calc-row">
-              <label class="calc-label" for="photoTeam">Сватбена фотография</label>
-              <select class="calc-select" id="photoTeam">
-                <option value="0">Не</option>
-                <option value="1">1 фотограф — 600€</option>
-                <option value="2">2 фотографи — 1000€</option>
-              </select>
-            </div>
-
-            <div class="calc-row">
-              <label class="calc-label" for="videoTeam">Сватбена видеография</label>
-              <select class="calc-select" id="videoTeam">
-                <option value="0">Не</option>
-                <option value="1">1 оператор — 650€</option>
-                <option value="2">2 оператора — 1100€</option>
-              </select>
-            </div>
+        <div class="pricing-points">
+          <div class="pricing-point">
+            <strong>До 10 часа</strong>
+            <span>Сватбено покритие</span>
           </div>
 
-          <div class="divider"></div>
-
-          <div class="calc-row">
-            <label class="calc-label" for="otHours">Overtime над 10 часа</label>
-            <select class="calc-select" id="otHours">
-              <option value="0">0 часа</option>
-              <option value="1">1 час</option>
-              <option value="2">2 часа</option>
-              <option value="3">3 часа</option>
-              <option value="4">4 часа</option>
-              <option value="5">5 часа</option>
-              <option value="6">6 часа</option>
-            </select>
-            <div class="help">
-              Overtime цена: <b>70€ / човек / час</b>. Човек = избрани фотографи + оператори.
-            </div>
+          <div class="pricing-point">
+            <strong>Фото + видео</strong>
+            <span>Пакети и комбинации</span>
           </div>
 
-          <div class="calc-two">
-            <div class="calc-row">
-              <label class="calc-label" for="km">Транспорт (км общо)</label>
-              <input class="calc-input" id="km" type="number" min="0" step="1" value="0" placeholder="пример: 40">
-              <div class="help">0.50€ / км</div>
-            </div>
-
-            <div class="calc-row">
-              <label class="calc-label" for="droneMode">Дрон</label>
-              <select class="calc-select" id="droneMode">
-                <option value="none">Без дрон</option>
-                <option value="hour">Дрон — 60€ / час</option>
-                <option value="day">Дрон — 200€ / ден</option>
-              </select>
-              <div class="help">При "на час" се умножава по (10 + overtime часовете).</div>
-            </div>
+          <div class="pricing-point">
+            <strong>Ориентировъчен калкулатор</strong>
+            <span>Ясна цена и breakdown</span>
           </div>
+        </div>
+      </section>
 
-          <div class="calc-check">
-            <input type="checkbox" id="rawFiles">
-            <label for="rawFiles">Сурови файлове (RAW / uncut) — <b>150€</b></label>
+      <section class="glass-card">
+        <div class="section-topline">
+          <div>
+            <h2>Сватбени пакети</h2>
+            <p>Три ясно разграничени варианта според мащаба на събитието и желаното покритие.</p>
           </div>
+          <div class="pill">до 10 часа ангажимент</div>
+        </div>
 
-          <div class="calc-check">
-            <input type="checkbox" id="afterSession">
-            <label for="afterSession">Фотосесия в отделен ден — <b>140€</b></label>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="help">
-            Ако не избереш нито фото, нито видео — калкулаторът ще покаже 0€.
-          </div>
-
-          <div class="calc-actions">
-            <button class="btn" type="button" id="resetCalc">Нулирай</button>
-            <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
+        <div class="included-all">
+          <div class="inc-title">Всеки пакет включва</div>
+          <div class="inc-grid">
+            <div class="inc-item">Неограничен брой кадри и обработка.</div>
+            <div class="inc-item">Видео трейлър с най-важните моменти.</div>
+            <div class="inc-item">Цял репортажен филм.</div>
+            <div class="inc-item">Фотосесия в деня на сватбата.</div>
+            <div class="inc-item">Заснемане до 10 часа.</div>
+            <div class="inc-item">Запис на звук с външен рекордер.</div>
+            <div class="inc-item">Репортажна фотография.</div>
+            <div class="inc-item">Записан материал на флашка.</div>
           </div>
         </div>
 
-        <!-- RIGHT: TOTAL (wedding) -->
-        <div class="calc-card">
-          <h3>Ориентировъчна цена</h3>
-          <div class="totalBox">
-            <div class="lbl">Общо</div>
-            <div class="val" id="totalEUR">0€</div>
-          </div>
-          <div class="help" style="margin-top:10px">
-            Приблизително: <b id="totalBGN">0 лв.</b> (1€ = 1.95583 лв)
-          </div>
-          <div class="breakdown" id="breakdown"></div>
-          <div class="note">
-            * Финалната оферта може да се промени спрямо локация, програма, достъп и специфични изисквания.
-          </div>
-        </div>
-      </div>
-    </div>
+        <div class="package-grid">
+          <article class="package-card">
+            <div class="package-title">Стандартен</div>
+            <div class="package-price">1 200 € <span>(1 956 лв.)</span></div>
+            <div class="package-diff-label">Какво е различното</div>
+            <ul class="bullets">
+              <li>Екип от 2 души — 1 фотограф + 1 оператор.</li>
+              <li>Пълно покритие на сватбения ден.</li>
+              <li>Материалът се записва на 1 флашка с кутийка.</li>
+            </ul>
+          </article>
 
-    <!-- ===== MODE: HOURLY ===== -->
-    <div class="mode-panel" id="panel-hourly">
-      <div class="calc-grid">
-        <div class="calc-card">
-          <h3>Почасово заснемане</h3>
+          <article class="package-card recommended">
+            <div class="badge">Препоръчан</div>
+            <div class="package-title">Премиум</div>
+            <div class="package-price">1 600 € <span>(2 542 лв.)</span></div>
+            <div class="package-diff-label">Какво е различното</div>
+            <ul class="bullets">
+              <li>Екип от 3 души — избираш: 2 фотографи + 1 оператор, или 1 фотограф + 2 оператори.</li>
+              <li>По-широко покритие: подготовка, грим, фризьор, детайли и повече паралелни моменти.</li>
+              <li>По-богат монтаж и по-динамичен трейлър.</li>
+              <li>Материалът се записва на 1 флашка с кутийка.</li>
+            </ul>
+          </article>
 
-          <!-- PHOTOGRAPHER SECTION -->
-          <div class="hourly-section">
-            <div class="hourly-section-title">Фотограф</div>
-            <div class="calc-two">
-              <div class="calc-row">
-                <label class="calc-label" for="hPhotoCount">Брой фотографи</label>
-                <select class="calc-select" id="hPhotoCount">
-                  <option value="0">Не</option>
-                  <option value="1">1 фотограф</option>
-                  <option value="2">2 фотографи</option>
-                </select>
-              </div>
-              <div class="calc-row">
-                <label class="calc-label" for="hPhotoHours">Часове</label>
-                <select class="calc-select" id="hPhotoHours">
-                  <option value="1">1 час</option>
-                  <option value="2">2 часа</option>
-                  <option value="3">3 часа</option>
-                  <option value="4">4 часа</option>
-                  <option value="5">5 часа</option>
-                  <option value="6">6 часа</option>
-                  <option value="7">7 часа</option>
-                  <option value="8">8 часа</option>
-                  <option value="9">9 часа</option>
-                  <option value="10">10 часа</option>
-                </select>
-              </div>
-            </div>
-            <div class="help">
-              1 фотограф: 100€ база + 60€ всеки допълнителен час.<br>
-              2 фотографи: 180€ база + 100€ всеки допълнителен час.
-            </div>
-          </div>
-
-          <!-- OPERATOR SECTION -->
-          <div class="hourly-section">
-            <div class="hourly-section-title">Оператор</div>
-            <div class="calc-two">
-              <div class="calc-row">
-                <label class="calc-label" for="hVideoCount">Брой оператори</label>
-                <select class="calc-select" id="hVideoCount">
-                  <option value="0">Не</option>
-                  <option value="1">1 оператор</option>
-                  <option value="2">2 оператора</option>
-                </select>
-              </div>
-              <div class="calc-row">
-                <label class="calc-label" for="hVideoHours">Часове</label>
-                <select class="calc-select" id="hVideoHours">
-                  <option value="1">1 час</option>
-                  <option value="2">2 часа</option>
-                  <option value="3">3 часа</option>
-                  <option value="4">4 часа</option>
-                  <option value="5">5 часа</option>
-                  <option value="6">6 часа</option>
-                  <option value="7">7 часа</option>
-                  <option value="8">8 часа</option>
-                  <option value="9">9 часа</option>
-                  <option value="10">10 часа</option>
-                </select>
-              </div>
-            </div>
-            <div class="help">
-              1 оператор: 120€ база + 80€ всеки допълнителен час.<br>
-              2 оператора: 200€ база + 100€ всеки допълнителен час.
-            </div>
-          </div>
-
-          <div class="calc-row">
-            <label class="calc-label" for="hKm">Транспорт (км общо)</label>
-            <input class="calc-input" id="hKm" type="number" min="0" step="1" value="0" placeholder="пример: 30">
-            <div class="help">0.50€ / км</div>
-          </div>
-
-          <div class="calc-actions">
-            <button class="btn" type="button" id="resetHourly">Нулирай</button>
-            <a class="btn" href="https://www.instagram.com/memoryphotoandvideo/" target="_blank" rel="noopener noreferrer">Запитване</a>
-          </div>
+          <article class="package-card">
+            <div class="package-title">Ултра</div>
+            <div class="package-price">2 200 € <span>(3 325 лв.)</span></div>
+            <div class="package-diff-label">Какво е различното</div>
+            <ul class="bullets">
+              <li>Екип от 4 души — 2 фотографи + 2 оператори.</li>
+              <li>Максимално покритие с още по-голяма свобода за различни ъгли и паралелни сцени.</li>
+              <li>Най-богат монтаж, по-пълно визуално разгръщане и по-силен cinematic резултат.</li>
+              <li>Материалът се записва на 1 флашка с кутийка.</li>
+            </ul>
+          </article>
         </div>
 
-        <!-- RIGHT: TOTAL (hourly) -->
-        <div class="calc-card">
-          <h3>Ориентировъчна цена</h3>
-          <div class="totalBox">
-            <div class="lbl">Общо</div>
-            <div class="val" id="hTotalEUR">0€</div>
+        <div class="note">
+          Посочените пакетни цени са за сватбено фото и видео покритие до 10 часа, както е структурирано в текущата ти страница. [cite:27]
+        </div>
+      </section>
+
+      <section class="glass-card">
+        <div class="section-topline">
+          <div>
+            <h2>Калкулатор</h2>
+            <p>Ориентировъчна сметка според избран екип, допълнителни часове и екстри.</p>
           </div>
-          <div class="help" style="margin-top:10px">
-            Приблизително: <b id="hTotalBGN">0 лв.</b> (1€ = 1.95583 лв)
-          </div>
-          <div class="breakdown" id="hBreakdown"></div>
-          <div class="note">
-            * Финалната оферта може да се промени спрямо локация, програма, достъп и специфични изисквания.
+          <div class="pill">актуална логика</div>
+        </div>
+
+        <div class="mode-tabs">
+          <button class="mode-tab active" type="button" data-mode="wedding">Сватба</button>
+          <button class="mode-tab" type="button" data-mode="event">Друго събитие</button>
+        </div>
+
+        <div class="mode-panel visible" id="panel-wedding">
+          <div class="calc-grid">
+            <div class="calc-card">
+              <h3>Сватбен калкулатор</h3>
+              <p class="calc-mini">
+                Комбинирай фото, видео и допълнителни услуги. Калкулацията използва
+                същата логика за цени като в текущата ти страница.
+              </p>
+
+              <div class="calc-two">
+                <div class="calc-row">
+                  <label class="calc-label" for="photoTeam">Фотографи</label>
+                  <select class="calc-select" id="photoTeam">
+                    <option value="0">0</option>
+                    <option value="1">1 фотограф</option>
+                    <option value="2">2 фотографи</option>
+                  </select>
+                </div>
+
+                <div class="calc-row">
+                  <label class="calc-label" for="videoTeam">Оператори</label>
+                  <select class="calc-select" id="videoTeam">
+                    <option value="0">0</option>
+                    <option value="1">1 оператор</option>
+                    <option value="2">2 оператори</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="calc-two">
+                <div class="calc-row">
+                  <label class="calc-label" for="otHours">Допълнителни часове</label>
+                  <input class="calc-input" id="otHours" type="number" min="0" value="0">
+                </div>
+
+                <div class="calc-row">
+                  <label class="calc-label" for="km">Транспорт (км)</label>
+                  <input class="calc-input" id="km" type="number" min="0" value="0">
+                </div>
+              </div>
+
+              <div class="calc-row">
+                <label class="calc-label" for="droneMode">Дрон</label>
+                <select class="calc-select" id="droneMode">
+                  <option value="none">Без дрон</option>
+                  <option value="hour">По часове</option>
+                  <option value="day">За ден</option>
+                </select>
+              </div>
+
+              <label class="check-row">
+                <input type="checkbox" id="rawFiles">
+                <span>Добави сурови файлове</span>
+              </label>
+
+              <label class="check-row">
+                <input type="checkbox" id="afterSession">
+                <span>Добави фотосесия в отделен ден</span>
+              </label>
+
+              <div class="calc-actions">
+                <button class="btn btn--primary" type="button" id="recalcWedding">Изчисли</button>
+                <button class="btn btn--secondary" type="button" id="resetCalc">Нулирай</button>
+              </div>
+            </div>
+
+            <div class="calc-card result-card">
+              <h3>Резултат</h3>
+
+              <div class="result-total">
+                <small>Обща ориентировъчна сума</small>
+                <div class="result-eur" id="totalEUR">0€</div>
+                <div class="result-bgn" id="totalBGN">0 лв.</div>
+              </div>
+
+              <div class="breakdown" id="breakdown">
+                <div class="line">
+                  <div>Избери параметри отляво, за да видиш разбивката.</div>
+                  <div class="r">—</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+
+        <div class="mode-panel" id="panel-event">
+          <div class="calc-grid">
+            <div class="calc-card">
+              <h3>Калкулатор за други събития</h3>
+              <p class="calc-mini">
+                Ориентировъчна сметка за рождени дни, кръщенета, фирмени събития и други ангажименти.
+              </p>
+
+              <div class="calc-row">
+                <label class="calc-label" for="eventType">Тип събитие</label>
+                <select class="calc-select" id="eventType">
+                  <option value="birthday">Рожден ден / лично събитие</option>
+                  <option value="baptism">Кръщене</option>
+                  <option value="corporate">Фирмено събитие</option>
+                  <option value="other">Друго</option>
+                </select>
+              </div>
+
+              <div class="calc-two">
+                <div class="calc-row">
+                  <label class="calc-label" for="eventHours">Часове</label>
+                  <input class="calc-input" id="eventHours" type="number" min="1" value="2">
+                </div>
+
+                <div class="calc-row">
+                  <label class="calc-label" for="eventPeople">Хора в екипа</label>
+                  <input class="calc-input" id="eventPeople" type="number" min="1" max="4" value="1">
+                </div>
+              </div>
+
+              <div class="calc-row">
+                <label class="calc-label" for="eventKm">Транспорт (км)</label>
+                <input class="calc-input" id="eventKm" type="number" min="0" value="0">
+              </div>
+
+              <div class="check-row">
+                <input type="checkbox" id="eventRawFiles">
+                <span>Добави сурови файлове</span>
+              </div>
+
+              <div class="calc-actions">
+                <button class="btn btn--primary" type="button" id="recalcEvent">Изчисли</button>
+                <button class="btn btn--secondary" type="button" id="resetEventCalc">Нулирай</button>
+              </div>
+            </div>
+
+            <div class="calc-card result-card">
+              <h3>Резултат</h3>
+
+              <div class="result-total">
+                <small>Обща ориентировъчна сума</small>
+                <div class="result-eur" id="eventTotalEUR">0€</div>
+                <div class="result-bgn" id="eventTotalBGN">0 лв.</div>
+              </div>
+
+              <div class="breakdown" id="eventBreakdown">
+                <div class="line">
+                  <div>Избери параметри отляво, за да видиш разбивката.</div>
+                  <div class="r">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass-card">
+        <div class="section-topline">
+          <div>
+            <h2>Други събития</h2>
+            <p>Ориентировъчни начални цени за по-кратки и различни типове ангажименти.</p>
+          </div>
+          <div class="pill">2026</div>
+        </div>
+
+        <div class="event-grid">
+          <article class="event-rate-card">
+            <h3>Рожден ден</h3>
+            <div class="event-rate">от 150 €</div>
+            <ul class="bullets">
+              <li>Подходящо за по-кратки лични събития.</li>
+              <li>Възможност за фото, видео или комбинация.</li>
+            </ul>
+          </article>
+
+          <article class="event-rate-card">
+            <h3>Кръщене</h3>
+            <div class="event-rate">от 180 €</div>
+            <ul class="bullets">
+              <li>Покритие на църковната част и избрани моменти след това.</li>
+              <li>Гъвкава конфигурация според нуждите.</li>
+            </ul>
+          </article>
+
+          <article class="event-rate-card">
+            <h3>Фирмено събитие</h3>
+            <div class="event-rate">от 220 €</div>
+            <ul class="bullets">
+              <li>Подходящо за корпоративни вечери, откривания и бранд събития.</li>
+              <li>Възможност за по-широко репортажно покритие.</li>
+            </ul>
+          </article>
+
+          <article class="event-rate-card">
+            <h3>Индивидуален проект</h3>
+            <div class="event-rate">по запитване</div>
+            <ul class="bullets">
+              <li>За специфични идеи, различни локации и нестандартен сценарий.</li>
+              <li>Оферта според обхват, време и екип.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note">
+          За събития извън стандартните сценарии цената се определя според часове, екип, транспорт и нужната постобработка. [cite:26]
+        </div>
+      </section>
+
+      <section class="pricing-footer-cta">
+        <div>
+          <h3>Готови ли сте да запазите дата?</h3>
+          <p>
+            Провери свободните дати и избери най-подходящия пакет, за да преминете
+            към следващата стъпка с ясна визия за обхвата и бюджета.
+          </p>
+        </div>
+
+        <div class="pricing-footer-actions">
+          <a class="btn btn--secondary" href="availability.html">Свободни дати</a>
+          <a class="btn btn--primary" href="portfolio.html">Виж портфолио</a>
+        </div>
+      </section>
     </div>
-  </div>
+  </main>
 
-  <!-- ===== OTHER EVENTS ===== -->
-  <div class="card">
-    <div class="section-head">
-      <h2>Други събития</h2>
-      <div class="pill">цени 2026</div>
-    </div>
+  <footer>
+    © 2026 Memory Photo & Video. All rights reserved.
+  </footer>
 
-    <div class="mini">
-      Кратки ангажименти и събития с професионална обработка и чист звук при видео (фото+видео).
-    </div>
-
-    <div class="list">
-      <div class="row"><div><b>Заснемане на къна</b></div><div class="price">600 € (978 лв.)</div></div>
-      <div class="row"><div><b>Заснемане на годеж</b></div><div class="price">800 € (1369 лв.)</div></div>
-      <div class="row"><div><b>Заснемане на абитуриентски бал</b></div><div class="price">600 € (1173 лв.)</div></div>
-      <div class="row"><div><b>Рожден ден / парти до 4 часа</b></div><div class="price">200 € (391 лв.)</div></div>
-      <div class="row"><div><b>Кръщене до 1 час</b></div><div class="price">180 € (352 лв.)</div></div>
-    </div>
-
-    <div class="note">
-      * При пътуване извън града – уточняване според локация и часове.
-    </div>
-
-    <div class="cta">
-      <a class="btn" href="https://www.facebook.com/MemoryPhotoAndVideo/" target="_blank" rel="noopener noreferrer">Контакт</a>
-    </div>
-  </div>
-
-  <!-- ===== ADDITIONAL INFO ===== -->
-  <div class="card">
-    <div class="section-head">
-      <h2>Допълнителна информация</h2>
-    </div>
-    <div class="list">
-      <div class="row"><div>За локации над 50 км или общ пропътуван път над 50 км — транспортни и командировъчни разходи.</div></div>
-      <div class="row"><div>За ангажиране над 10 снимачни часа се прилага овъртайм услуга — <b>70€ / човек / час</b>.</div></div>
-      <div class="row"><div>Предоставяне на сурови кадри (RAW снимки и видео файлове, проект) е отделна услуга — <b>150€</b>.</div></div>
-      <div class="row"><div>Фотосесия в отделен ден — <b>130€</b>.</div></div>
-      <div class="row"><div>Дрон — <b>53€ / час</b> или <b>203€ / ден</b>.</div></div>
-    </div>
-  </div>
-
-</main>
-
-<footer>© 2026 Memory Photo &amp; Video</footer>
-
-<script>
-(function(){
+  <script>
   const EUR_TO_BGN = 1.95583;
 
-  // ===== MODE TABS =====
   const tabs = document.querySelectorAll('.mode-tab');
   const panels = document.querySelectorAll('.mode-panel');
 
@@ -778,7 +1042,6 @@
     });
   });
 
-  // ===== WEDDING CALCULATOR =====
   const PRICES = {
     weddingPhoto: { 1: 600, 2: 1000 },
     weddingVideo: { 1: 650, 2: 1100 },
@@ -790,17 +1053,18 @@
     dronePerDay: 203
   };
 
-  const photoTeam   = document.getElementById('photoTeam');
-  const videoTeam   = document.getElementById('videoTeam');
-  const otHours     = document.getElementById('otHours');
-  const km          = document.getElementById('km');
-  const droneMode   = document.getElementById('droneMode');
-  const rawFiles    = document.getElementById('rawFiles');
-  const afterSession= document.getElementById('afterSession');
-  const totalEUR    = document.getElementById('totalEUR');
-  const totalBGN    = document.getElementById('totalBGN');
-  const breakdown   = document.getElementById('breakdown');
-  const resetBtn    = document.getElementById('resetCalc');
+  const photoTeam = document.getElementById('photoTeam');
+  const videoTeam = document.getElementById('videoTeam');
+  const otHours = document.getElementById('otHours');
+  const km = document.getElementById('km');
+  const droneMode = document.getElementById('droneMode');
+  const rawFiles = document.getElementById('rawFiles');
+  const afterSession = document.getElementById('afterSession');
+  const totalEUR = document.getElementById('totalEUR');
+  const totalBGN = document.getElementById('totalBGN');
+  const breakdown = document.getElementById('breakdown');
+  const resetBtn = document.getElementById('resetCalc');
+  const recalcWeddingBtn = document.getElementById('recalcWedding');
 
   function moneyEUR(n){ return Math.round(n) + '€'; }
   function moneyBGN(n){ return Math.round(n) + ' лв.'; }
@@ -825,32 +1089,38 @@
       total += val;
       lines.push(line('Сватбена фотография: ' + p + ' фотограф' + (p===1?'':'и') + ' (до 10ч)', val));
     }
+
     if(v > 0){
       const val = PRICES.weddingVideo[v] || 0;
       total += val;
       lines.push(line('Сватбена видеография: ' + v + ' оператор' + (v===1?'':'и') + ' (до 10ч)', val));
     }
+
     if(ot > 0 && people > 0){
       const val = ot * people * PRICES.overtimePerPersonPerHour;
       total += val;
       lines.push(line('Overtime: ' + ot + 'ч × ' + people + ' човек × 70€', val));
     }
+
     if(dMode === 'hour'){
       const val = totalHours * PRICES.dronePerHour;
       total += val;
-      lines.push(line('Дрон: ' + totalHours + 'ч × 60€', val));
+      lines.push(line('Дрон: ' + totalHours + 'ч × 53€', val));
     } else if(dMode === 'day'){
       total += PRICES.dronePerDay;
       lines.push(line('Дрон (ден)', PRICES.dronePerDay));
     }
+
     if(rawFiles.checked){
       total += PRICES.rawFiles;
       lines.push(line('Сурови файлове', PRICES.rawFiles));
     }
+
     if(afterSession.checked){
       total += PRICES.afterSession;
       lines.push(line('Фотосесия в отделен ден', PRICES.afterSession));
     }
+
     if(kmVal > 0){
       const val = kmVal * PRICES.transportPerKm;
       total += val;
@@ -859,10 +1129,19 @@
 
     totalEUR.textContent = moneyEUR(total);
     totalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
-    breakdown.innerHTML = lines.length ? lines.join('') : '<div class="help">Избери фото и/или видео, за да се калкулира цена.</div>';
+    breakdown.innerHTML = lines.length
+      ? lines.join('')
+      : '<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
   }
 
-  function resetWedding(){
+  [photoTeam, videoTeam, otHours, km, droneMode, rawFiles, afterSession].forEach(el => {
+    el.addEventListener('input', calcWedding);
+    el.addEventListener('change', calcWedding);
+  });
+
+  recalcWeddingBtn.addEventListener('click', calcWedding);
+
+  resetBtn.addEventListener('click', () => {
     photoTeam.value = '0';
     videoTeam.value = '0';
     otHours.value = '0';
@@ -871,92 +1150,78 @@
     rawFiles.checked = false;
     afterSession.checked = false;
     calcWedding();
-  }
-
-  [photoTeam, videoTeam, otHours, km, droneMode, rawFiles, afterSession].forEach(el => {
-    el.addEventListener('input', calcWedding);
-    el.addEventListener('change', calcWedding);
   });
-  resetBtn.addEventListener('click', resetWedding);
-  calcWedding();
 
-  // ===== HOURLY CALCULATOR =====
-  // Event photography: 1 person base 66€ + 47€/extra hour; 2 people base 120€ + 66€/extra hour
-  // Event videography: 1 person base 100€ + 53€/extra hour; 2 people base 133€ + 66€/extra hour
-
-  const HOURLY = {
-    photo: {
-      1: { base: 100, extra: 60 },
-      2: { base: 180, extra: 100 }
-    },
-    video: {
-      1: { base: 120, extra: 80 },
-      2: { base: 200, extra: 100 }
-    },
+  const EVENT_PRICES = {
+    birthday: 75,
+    baptism: 90,
+    corporate: 110,
+    other: 85,
+    rawFiles: 150,
     transportPerKm: 0.50
   };
 
-  const hPhotoCount = document.getElementById('hPhotoCount');
-  const hPhotoHours = document.getElementById('hPhotoHours');
-  const hVideoCount = document.getElementById('hVideoCount');
-  const hVideoHours = document.getElementById('hVideoHours');
-  const hKm         = document.getElementById('hKm');
-  const hTotalEUR   = document.getElementById('hTotalEUR');
-  const hTotalBGN   = document.getElementById('hTotalBGN');
-  const hBreakdown  = document.getElementById('hBreakdown');
-  const resetHourly = document.getElementById('resetHourly');
+  const eventType = document.getElementById('eventType');
+  const eventHours = document.getElementById('eventHours');
+  const eventPeople = document.getElementById('eventPeople');
+  const eventKm = document.getElementById('eventKm');
+  const eventRawFiles = document.getElementById('eventRawFiles');
+  const eventTotalEUR = document.getElementById('eventTotalEUR');
+  const eventTotalBGN = document.getElementById('eventTotalBGN');
+  const eventBreakdown = document.getElementById('eventBreakdown');
+  const recalcEventBtn = document.getElementById('recalcEvent');
+  const resetEventCalc = document.getElementById('resetEventCalc');
 
-  function calcHourly(){
-    const pc = parseInt(hPhotoCount.value, 10);
-    const ph = parseInt(hPhotoHours.value, 10);
-    const vc = parseInt(hVideoCount.value, 10);
-    const vh = parseInt(hVideoHours.value, 10);
-    const kmVal = Math.max(0, parseFloat(hKm.value || '0'));
+  function calcEvent(){
+    const type = eventType.value;
+    const hours = Math.max(1, parseInt(eventHours.value || '1', 10));
+    const people = Math.max(1, parseInt(eventPeople.value || '1', 10));
+    const kmVal = Math.max(0, parseFloat(eventKm.value || '0'));
+    const rate = EVENT_PRICES[type] || EVENT_PRICES.other;
 
     let total = 0;
     const lines = [];
 
-    if(pc > 0){
-      const r = HOURLY.photo[pc];
-      const val = r.base + Math.max(0, ph - 1) * r.extra;
-      total += val;
-      lines.push(line(pc + ' фотограф' + (pc===1?'':'и') + ' × ' + ph + 'ч', val));
-    }
-    if(vc > 0){
-      const r = HOURLY.video[vc];
-      const val = r.base + Math.max(0, vh - 1) * r.extra;
-      total += val;
-      lines.push(line(vc + ' оператор' + (vc===1?'':'и') + ' × ' + vh + 'ч', val));
-    }
+    const coverage = hours * people * rate;
+    total += coverage;
+    lines.push(line('Покритие: ' + hours + 'ч × ' + people + ' човек × ' + rate + '€', coverage));
+
     if(kmVal > 0){
-      const val = kmVal * HOURLY.transportPerKm;
-      total += val;
-      lines.push(line('Транспорт: ' + kmVal + ' км × 0.50€', val));
+      const transport = kmVal * EVENT_PRICES.transportPerKm;
+      total += transport;
+      lines.push(line('Транспорт: ' + kmVal + ' км × 0.50€', transport));
     }
 
-    hTotalEUR.textContent = moneyEUR(total);
-    hTotalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
-    hBreakdown.innerHTML = lines.length ? lines.join('') : '<div class="help">Избери поне фотограф или оператор.</div>';
+    if(eventRawFiles.checked){
+      total += EVENT_PRICES.rawFiles;
+      lines.push(line('Сурови файлове', EVENT_PRICES.rawFiles));
+    }
+
+    eventTotalEUR.textContent = moneyEUR(total);
+    eventTotalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
+    eventBreakdown.innerHTML = lines.length
+      ? lines.join('')
+      : '<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
   }
 
-  function doResetHourly(){
-    hPhotoCount.value = '0';
-    hPhotoHours.value = '1';
-    hVideoCount.value = '0';
-    hVideoHours.value = '1';
-    hKm.value = '0';
-    calcHourly();
-  }
-
-  [hPhotoCount, hPhotoHours, hVideoCount, hVideoHours, hKm].forEach(el => {
-    el.addEventListener('input', calcHourly);
-    el.addEventListener('change', calcHourly);
+  [eventType, eventHours, eventPeople, eventKm, eventRawFiles].forEach(el => {
+    el.addEventListener('input', calcEvent);
+    el.addEventListener('change', calcEvent);
   });
-  resetHourly.addEventListener('click', doResetHourly);
-  calcHourly();
 
-})();
-</script>
+  recalcEventBtn.addEventListener('click', calcEvent);
 
+  resetEventCalc.addEventListener('click', () => {
+    eventType.value = 'birthday';
+    eventHours.value = '2';
+    eventPeople.value = '1';
+    eventKm.value = '0';
+    eventRawFiles.checked = false;
+    calcEvent();
+  });
+
+  calcWedding();
+  calcEvent();
+  </script>
 </body>
 </html>
