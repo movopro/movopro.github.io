@@ -19,10 +19,12 @@ jobs:
               text = p.read_text(encoding='utf-8')
               css = 'assets/css/language-switch.css' if p.parent.name != 'en' else '../assets/css/language-switch.css'
               js = 'assets/js/language-switch.js' if p.parent.name != 'en' else '../assets/js/language-switch.js'
+              # Older commits accidentally wrote the two characters "\\n" into HTML.
+              text = text.replace('\\\\n', '\n').replace('\\n', '\n')
               if 'language-switch.css' not in text:
-                  text = text.replace('</head>', f'<link rel="stylesheet" href="{css}">\\n</head>', 1)
+                  text = text.replace('</head>', f'<link rel="stylesheet" href="{css}">\n</head>', 1)
               if 'language-switch.js' not in text:
-                  text = text.replace('</body>', f'<script defer src="{js}"></script>\\n</body>', 1)
+                  text = text.replace('</body>', f'<script defer src="{js}"></script>\n</body>', 1)
               p.write_text(text, encoding='utf-8')
       - name: Commit changes
         run: |
