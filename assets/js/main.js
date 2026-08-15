@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroImage = document.querySelector('.hero__frame img');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const isEnglishPage = location.pathname.startsWith('/en/');
 
   if (header) {
     const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 12);
@@ -23,7 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const reviewNote = document.querySelector('.v2-review-note');
   if (reviewNote) {
-    reviewNote.textContent = 'Публичният Google рейтинг в момента е 5.0/5 от 21 отзива.';
+    reviewNote.textContent = isEnglishPage
+      ? 'Our public Google rating is currently 5.0/5 from 21 reviews.'
+      : 'Публичният Google рейтинг в момента е 5.0/5 от 21 отзива.';
   }
 
   const revealItems = document.querySelectorAll('.v2-reveal');
@@ -44,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* English pages: make sure the original calculator logic is executed after dynamic page loading. */
-  const isEnglishPage = location.pathname.startsWith('/en/');
   const currentPage = location.pathname.split('/').pop() || 'index.html';
   if (isEnglishPage && currentPage === 'uslugi-ceni.html') {
     setTimeout(async () => {
@@ -90,7 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(style);
 
     const selectedCopy = homeHero.parentElement.querySelector('.home-section .home-copy');
-    if (selectedCopy) selectedCopy.textContent = 'Няколко от любимите ни кадри от истински сватбени дни.';
+    if (selectedCopy) {
+      selectedCopy.textContent = isEnglishPage
+        ? 'Some of our favourite frames from real wedding days.'
+        : 'Няколко от любимите ни кадри от истински сватбени дни.';
+    }
 
     const collageImg = homeHero.parentElement.querySelector('img[src="assets/weddings/selected-collage.webp"], img[src="/assets/weddings/selected-collage.webp"]');
     if (collageImg) {
@@ -100,10 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const files = ['01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg','09.jpg'];
       files.forEach((file, index) => {
         const card = document.createElement('a');
-        card.href = `/en/svatba-izbrani.html#kadyr-${index + 1}`;
+        card.href = `${isEnglishPage ? '/en' : ''}/svatba-izbrani.html#kadyr-${index + 1}`;
         const img = document.createElement('img');
         img.src = `/assets/${file}`;
-        img.alt = `Selected wedding photo ${index + 1}`;
+        img.alt = isEnglishPage ? `Selected wedding photo ${index + 1}` : `Избран сватбен кадър ${index + 1}`;
         img.loading = index < 3 ? 'eager' : 'lazy';
         img.decoding = 'async';
         card.appendChild(img);
