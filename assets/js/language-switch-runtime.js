@@ -12,6 +12,7 @@ const startLanguageRuntime=()=>{
   switchStyle.textContent=`
     .language-switch{position:fixed!important;top:10px!important;right:12px!important;z-index:99999!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-width:0!important;width:auto!important;height:42px!important;padding:8px 12px!important;box-sizing:border-box!important;border-radius:999px!important;white-space:nowrap!important;}
     @media (max-width:1100px) and (pointer:coarse){
+      .language-switch{right:68px!important;top:9px!important;}
       html,body{overflow-x:hidden!important;max-width:100%!important;}
       .home-filmstrip{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important;}
       .home-hero{display:flex!important;align-items:center!important;justify-content:center!important;min-height:100svh!important;overflow:hidden!important;padding:82px 12px 28px!important;box-sizing:border-box!important;}
