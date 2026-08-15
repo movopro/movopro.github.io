@@ -43,6 +43,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /* English pages: make sure the original calculator logic is executed after dynamic page loading. */
+  const isEnglishPage = location.pathname.startsWith('/en/');
+  const currentPage = location.pathname.split('/').pop() || 'index.html';
+  if (isEnglishPage && currentPage === 'uslugi-ceni.html') {
+    setTimeout(async () => {
+      const total = document.getElementById('totalEUR');
+      if (!total || total.textContent.trim() !== '0€') return;
+      try {
+        const html = await fetch('/uslugi-ceni.html', { cache: 'no-store' }).then(r => r.text());
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const scripts = Array.from(doc.querySelectorAll('script:not([src])'));
+        const pricingScript = scripts.find(s => s.textContent.includes('const PRICES') && s.textContent.includes('calcWedding'));
+        if (!pricingScript) return;
+        const script = document.createElement('script');
+        script.textContent = pricingScript.textContent;
+        document.body.appendChild(script);
+      } catch (error) {
+        console.warn('English pricing runtime could not be restored.', error);
+      }
+    }, 250);
+  }
+
   /* Homepage: keep both people visible and center the hero copy. */
   const homeHero = document.querySelector('.home-hero');
   if (homeHero) {
@@ -70,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedCopy = homeHero.parentElement.querySelector('.home-section .home-copy');
     if (selectedCopy) selectedCopy.textContent = 'Няколко от любимите ни кадри от истински сватбени дни.';
 
-    const collageImg = homeHero.parentElement.querySelector('img[src="assets/weddings/selected-collage.webp"]');
+    const collageImg = homeHero.parentElement.querySelector('img[src="assets/weddings/selected-collage.webp"], img[src="/assets/weddings/selected-collage.webp"]');
     if (collageImg) {
       const link = collageImg.closest('a') || collageImg.parentElement;
       const grid = document.createElement('div');
@@ -78,10 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const files = ['01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg','09.jpg'];
       files.forEach((file, index) => {
         const card = document.createElement('a');
-        card.href = `svatba-izbrani.html#kadyr-${index + 1}`;
+        card.href = `/en/svatba-izbrani.html#kadyr-${index + 1}`;
         const img = document.createElement('img');
-        img.src = `assets/${file}`;
-        img.alt = `Избран сватбен кадър ${index + 1}`;
+        img.src = `/assets/${file}`;
+        img.alt = `Selected wedding photo ${index + 1}`;
         img.loading = index < 3 ? 'eager' : 'lazy';
         img.decoding = 'async';
         card.appendChild(img);
