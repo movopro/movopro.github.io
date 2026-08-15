@@ -1,0 +1,124 @@
+/* MEMORY PHOTO & VIDEO — mobile polish layer */
+@media (max-width:760px){
+  html,body{overflow-x:hidden}
+  .nav-wrap{min-height:60px}
+  .brand span{font-size:.92rem!important;letter-spacing:.07em!important}
+  .brand img{width:30px!important;height:30px!important}
+  .burger{width:42px;height:42px}
+
+  .hero{min-height:100svh;padding:76px 14px 28px!important}
+  .hero__content{width:min(100%,620px)!important;gap:14px!important}
+  .hero__copy{padding:22px!important;border-radius:22px!important}
+  .hero h1{font-size:clamp(2.5rem,11vw,3.8rem)!important;line-height:.98!important;max-width:none!important}
+  .hero p{font-size:.9rem!important;line-height:1.7!important}
+  .hero__panel{min-height:300px!important;border-radius:22px!important}
+  .hero__frame{inset:10px!important;border-radius:17px!important}
+  .hero__stats{gap:8px!important}
+  .stat{padding:10px 12px!important}
+  .hero__actions,.hero__socials,.partner-actions{gap:8px!important}
+  .btn,.partner-btn{min-height:46px;padding:.75rem 1rem!important;font-size:.64rem!important}
+
+  .gallery-strip,.partner-section,.cta-section,.portfolio-section,.videos-section,.about-section,.calculator-section,.inquiry-section,.events-section,.pricing-section{padding-left:14px!important;padding-right:14px!important}
+  .gallery-strip{padding-top:64px!important;padding-bottom:64px!important}
+  .gallery-strip__header{margin-bottom:22px!important;gap:14px!important}
+  .section-title{font-size:clamp(2rem,9vw,3rem)!important}
+  .gallery-strip__grid{gap:8px!important}
+  .partner-card{padding:22px!important;border-radius:22px!important;gap:18px!important}
+  .partner-photo{width:120px!important;height:120px!important;border-radius:20px!important}
+  .partner-name{font-size:1.75rem!important}
+  .partner-desc{font-size:.88rem!important}
+  .cta-section{padding-top:70px!important;padding-bottom:70px!important}
+
+  .page-hero{min-height:34vh!important;padding:90px 14px 54px!important}
+  .page-hero h1{font-size:clamp(2.4rem,10vw,4rem)!important;max-width:none!important}
+  .page-hero p{font-size:.9rem!important}
+  .page-hero__badges{gap:8px!important}
+  .badge{font-size:.58rem!important;padding:7px 10px!important}
+
+  .pricing-grid{gap:12px!important}
+  .pricing-card{padding:22px 18px!important;border-radius:22px!important}
+  .pricing-features{gap:9px!important;margin-bottom:20px!important}
+  .pricing-features li{font-size:.82rem!important}
+  .calculator-section,.inquiry-section,.events-section{padding-top:64px!important;padding-bottom:64px!important}
+  .calc-card{padding:20px!important;border-radius:20px!important}
+  .calc-title{margin-bottom:22px!important}
+  .calc-result{padding:18px!important}
+  .form-card{padding:20px!important;border-radius:20px!important}
+  .events-grid{gap:10px!important}
+  .event-card{padding:18px!important;border-radius:20px!important}
+
+  .portfolio-section{padding-top:64px!important;padding-bottom:64px!important}
+  .portfolio-grid{gap:8px!important}
+  .portfolio-item{border-radius:14px!important}
+  .lightbox{padding:12px!important}
+  .lightbox img{max-width:96vw!important;max-height:84vh!important;border-radius:12px!important}
+  .lightbox__prev,.lightbox__next{width:42px!important;height:42px!important}
+  .lightbox__prev{left:10px!important}.lightbox__next{right:10px!important}
+
+  .videos-grid{gap:12px!important;margin-top:24px!important}
+  .video-card{border-radius:20px!important}
+  .video-info{padding:16px!important}
+  .video-title{font-size:1.45rem!important}
+  .video-play-icon{width:52px!important;height:52px!important}
+
+  .about-grid{gap:24px!important;margin-top:26px!important}
+  .about-photo{max-width:100%!important}
+  .about-team{gap:10px!important;margin-top:24px!important}
+  .team-card{padding:18px!important;border-radius:20px!important}
+  .footer-inner{gap:24px!important;padding-bottom:28px!important}
+  .footer-bottom{font-size:.62rem!important;line-height:1.6!important}
+
+  .v2-section{width:min(92vw,620px)!important;padding:64px 0!important}
+  .v2-section--tight{padding:48px 0!important}
+  .v2-title{font-size:clamp(2.35rem,10vw,4rem)!important}
+  .v2-lead{font-size:.9rem!important;line-height:1.72!important}
+  .v2-actions{gap:8px!important;margin-top:22px!important}
+  .v2-btn{width:100%!important;min-height:46px!important;padding:.75rem 1rem!important;font-size:.63rem!important}
+  .v2-hero{padding:90px 0 28px!important}
+  .v2-hero__copy{padding:22px!important;border-radius:22px!important}
+  .v2-hero__frame{min-height:300px!important;border-radius:22px!important}
+  .v2-gallery{grid-auto-rows:145px!important;gap:8px!important}
+  .v2-gallery a{border-radius:14px!important}
+  .v2-video-grid,.v2-intro-grid,.v2-cta{gap:14px!important}
+  .v2-video-info{padding:16px!important}
+  .v2-video-info h3{font-size:1.7rem!important}
+  .v2-video-side{padding:22px!important;border-radius:22px!important}
+  .v2-services,.v2-process{gap:10px!important}
+  .v2-service{padding:20px!important;border-radius:20px!important}
+  .v2-service h3{font-size:1.75rem!important}
+  .v2-process{grid-template-columns:1fr!important}
+  .v2-step{padding:18px!important}
+  .v2-cta{padding:24px!important;border-radius:22px!important}
+  .v2-footer{padding:30px 14px 26px!important;font-size:.6rem!important}
+
+  .home-section{width:min(92vw,620px)!important;padding:62px 0!important}
+  .home-section__head{gap:16px!important;margin-bottom:20px!important}
+  .home-title{font-size:clamp(2.1rem,9vw,3.25rem)!important}
+  .home-copy{font-size:.88rem!important;line-height:1.7!important}
+  .home-photo-grid{gap:5px!important}
+  .home-photo-grid a{border-radius:12px!important}
+  .home-review{gap:10px!important}
+  .review-summary,.review-box{padding:20px!important;border-radius:20px!important}
+  .review-grid{gap:10px!important}
+  .home-video{gap:10px!important}
+  .video-card,.video-copy{border-radius:20px!important}
+  .video-copy{padding:20px!important}
+  .video-copy h3{font-size:1.7rem!important}
+  .dj-card{border-radius:20px!important}
+  .dj-card__copy{padding:22px!important}
+  .dj-card__copy h3{font-size:2rem!important}
+  .home-cta{padding:24px!important;border-radius:22px!important}
+
+  .calc-label,.pricing-kicker,.availability-kicker,.portfolio-head p,.video-info-v2 p,.package-diff-label{overflow-wrap:anywhere}
+}
+@media (max-width:420px){
+  .brand span{font-size:.82rem!important}
+  .nav-wrap{gap:8px!important}
+  .hero h1,.home-title,.v2-title{letter-spacing:0!important}
+  .hero__copy,.home-hero__copy{padding:18px!important}
+  .home-hero h1{font-size:clamp(2.25rem,11vw,3.2rem)!important}
+  .home-photo-grid a{height:138px!important}
+  .calendar-grid,.weekdays{gap:4px!important}
+  .cell{min-height:48px!important;padding:6px!important}
+  .day-number{font-size:.74rem!important}
+}
