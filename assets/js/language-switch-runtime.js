@@ -5,9 +5,40 @@ const startLanguageRuntime=()=>{
   const map={'':'index.html','index.html':'index.html','portfolio.html':'portfolio.html','videos.html':'videos.html','uslugi-ceni.html':'uslugi-ceni.html','availability.html':'availability.html','about.html':'about.html','svatba-izbrani.html':'svatba-izbrani.html'};
   const file=map[clean]||'index.html';
   const href=isEnglish?`/${file}`:`/en/${file}`;
-  const old=document.querySelector('.language-switch');if(old)old.remove();
-  const a=document.createElement('a');a.className='language-switch';a.href=href;a.setAttribute('aria-label',isEnglish?'Switch to Bulgarian':'Switch to English');a.innerHTML=isEnglish?'<span class="flag">🇧🇬</span><span class="code">BG</span>':'<span class="flag">🇬🇧</span><span class="code">EN</span>';document.body.appendChild(a);
+
+  /* Remove every old switcher before creating the one canonical control. */
+  document.querySelectorAll('.language-switch').forEach(el=>el.remove());
+  const switchStyle=document.createElement('style');
+  switchStyle.textContent=`
+    .language-switch{position:fixed!important;top:10px!important;right:12px!important;z-index:99999!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-width:0!important;width:auto!important;height:42px!important;padding:8px 12px!important;box-sizing:border-box!important;border-radius:999px!important;white-space:nowrap!important;}
+    @media (max-width:1100px) and (pointer:coarse){
+      html,body{overflow-x:hidden!important;max-width:100%!important;}
+      .home-filmstrip{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important;}
+      .home-hero{display:flex!important;align-items:center!important;justify-content:center!important;min-height:100svh!important;overflow:hidden!important;padding:82px 12px 28px!important;box-sizing:border-box!important;}
+      .home-hero__inner{position:relative!important;inset:auto!important;width:min(680px,calc(100% - 24px))!important;max-width:680px!important;display:block!important;margin:0 auto!important;}
+      .home-hero__photo{display:none!important;}
+      .home-hero__copy{position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;transform:none!important;width:100%!important;max-width:680px!important;margin:0 auto!important;box-sizing:border-box!important;text-align:center!important;padding:26px 20px 24px!important;}
+      .home-kicker,.home-hero h1,.home-hero p{display:block!important;text-align:center!important;margin-left:auto!important;margin-right:auto!important;}
+      .home-hero h1{max-width:18ch!important;line-height:1.02!important;}
+      .home-hero p{max-width:58ch!important;line-height:1.7!important;}
+      .home-hero .home-actions,.home-hero .home-socials{display:flex!important;justify-content:center!important;align-items:center!important;}
+      .home-hero .home-btn{transform:none!important;}
+      .home-section,.home-section__head,.home-review,.home-video,.dj-card,.home-cta{text-align:center!important;}
+      .home-section__head{grid-template-columns:1fr!important;}
+      .home-review,.home-video,.dj-card{grid-template-columns:1fr!important;}
+      .home-actions,.home-socials,.dj-links{justify-content:center!important;}
+    }
+  `;
+  document.head.appendChild(switchStyle);
+
+  const a=document.createElement('a');
+  a.className='language-switch';
+  a.href=href;
+  a.setAttribute('aria-label',isEnglish?'Switch to Bulgarian':'Switch to English');
+  a.innerHTML=isEnglish?'<span class="flag">🇧🇬</span><span class="code">BG</span>':'<span class="flag">🇬🇧</span><span class="code">EN</span>';
+  document.body.appendChild(a);
   if(!isEnglish)return;
+
   const extra={
     'Истории, които започват с един кадър.':'Stories that begin with a single frame.',
     'Наблюдаваме, предвиждаме и се намесваме само когато моментът го изисква. Така кадрите остават живи, а не постановъчни.':'We observe, anticipate and step in only when the moment calls for it. That way, the images stay alive rather than staged.',
