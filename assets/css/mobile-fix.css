@@ -1,0 +1,22 @@
+/* Final mobile fixes */
+.home-filmstrip{display:none!important}
+@media (max-width:760px){
+  .home-hero{overflow:hidden!important}
+  .home-hero__copy{
+    left:50%!important;
+    right:auto!important;
+    width:calc(100% - 20px)!important;
+    margin:0!important;
+    text-align:center!important;
+    transform:translateX(-50%)!important;
+  }
+  .home-kicker,.home-hero h1,.home-hero p{margin-left:auto!important;margin-right:auto!important;text-align:center!important}
+  .home-actions,.home-socials{justify-content:center!important;align-items:center!important}
+  .home-actions{width:100%!important}
+  .home-actions .home-btn{flex:0 1 auto!important}
+}
+@media (max-width:420px){
+  .home-hero__copy{width:calc(100% - 16px)!important;padding:22px 16px 20px!important}
+  .home-actions{flex-direction:column!important}
+  .home-actions .home-btn{width:min(100%,300px)!important}
+}
