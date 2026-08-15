@@ -2,3 +2,6 @@
 @import url("compact-pages.css");
 @import url("mobile-polish.css");
 @import url("home-effects.css");
+
+/* The experimental filmstrip is permanently disabled. */
+.home-filmstrip{display:none!important;}
