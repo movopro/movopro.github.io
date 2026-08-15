@@ -862,7 +862,8 @@
       .mode-tab { width: 100%; }
     }
   </style>
-<link rel="stylesheet" href="assets/css/language-switch.css">\n</head>
+<link rel="stylesheet" href="assets/css/language-switch.css">
+</head>
 <body>
   <a class="skip-link" href="#main-content">Към съдържанието</a>
 
@@ -1557,7 +1558,8 @@
         'Фотосесия в отделен ден: ' + (afterSession.checked ? 'Да' : 'Не'),
         'Ориентировъчна сума: ' + totalEUR.textContent + ' / ' + totalBGN.textContent
       ];
-      return lines.join('\n');
+      return lines.join('
+');
     }
 
     function getEventSummaryText(){
@@ -1575,7 +1577,8 @@
         'Ставка на час: ' + rate + '€',
         'Ориентировъчна сума: ' + eventTotalEUR.textContent + ' / ' + eventTotalBGN.textContent
       ];
-      return lines.join('\n');
+      return lines.join('
+');
     }
 
     const inquirySection   = document.getElementById('inquirySection');
@@ -1601,8 +1604,10 @@
         inquiryType.value = 'Пакетна оферта';
         selectedOffer.value = btn.dataset.package + ' — ' + btn.dataset.packagePrice;
         inquirySummary.value =
-          'Избрана оферта: ' + btn.dataset.package + '\n' +
-          'Цена: ' + btn.dataset.packagePrice + '\n' +
+          'Избрана оферта: ' + btn.dataset.package + '
+' +
+          'Цена: ' + btn.dataset.packagePrice + '
+' +
           'Тип: Пакетна оферта';
         openInquirySection();
       });
@@ -1687,5 +1692,6 @@
     calcWedding();
     calcEvent();
   </script>
-<script defer src="assets/js/language-switch.js"></script>\n</body>
+<script defer src="assets/js/language-switch.js"></script>
+</body>
 </html>
