@@ -3,6 +3,7 @@
 @import url("mobile-polish.css");
 @import url("home-effects.css");
 @import url("mobile-fix.css");
+@import url("performance.css");
 
 /* The experimental filmstrip is permanently disabled. */
 .home-filmstrip{display:none!important;}
