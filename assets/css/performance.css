@@ -1,0 +1,64 @@
+/* Performance layer — shared across the site. */
+
+/* Avoid expensive blur/compositing on touch devices where it adds little visual value. */
+@media (max-width: 768px) {
+  header,
+  .hero__copy,
+  .home-hero__copy,
+  .portfolio-note,
+  .portfolio-bottom,
+  .v2-card,
+  .v2-panel {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .hero__bg {
+    will-change: auto;
+  }
+
+  .home-hero {
+    perspective: none !important;
+  }
+}
+
+/* Disable hover-only transforms on touch devices. */
+@media (hover: none), (pointer: coarse) {
+  .gallery-item:hover img,
+  .home-photo-grid a:hover img,
+  .btn:hover,
+  .v2-btn:hover {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* Keep below-the-fold sections from competing with the initial viewport. */
+@media (min-width: 769px) {
+  main > section:not(:first-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
+  }
+}
+
+@media (max-width: 768px) {
+  main > section:not(:first-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 620px;
+  }
+}
+
+/* Respect users who prefer less motion and reduce unnecessary paint work. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Prevent lazy images from affecting text rendering while they are decoded. */
+img[loading="lazy"] {
+  content-visibility: auto;
+}
