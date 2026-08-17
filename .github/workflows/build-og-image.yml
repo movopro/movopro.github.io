@@ -1,0 +1,32 @@
+name: Build OG image
+on:
+  push:
+    paths:
+      - "og-image.svg"
+      - "hero.jpg"
+      - "logo.png"
+      - ".github/workflows/build-og-image.yml"
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render OG image
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin python3-pil
+          rsvg-convert -w 1200 -h 630 og-image.svg -o og-image.png
+          python3 - <<'PY'
+          from PIL import Image
+          im=Image.open('og-image.png').convert('RGB')
+          im.save('og-image.jpg','JPEG',quality=82,optimize=True,progressive=True)
+          PY
+      - name: Commit generated image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add og-image.jpg
+          git diff --cached --quiet || git commit -m "Update social sharing preview"
+          git push
