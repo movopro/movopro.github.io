@@ -15,10 +15,15 @@
   if(location.pathname.endsWith('/portfolio.html') || location.pathname==='/portfolio.html'){
     const transparent='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
     const preparePortfolioImages=()=>{
-      const images=[...document.querySelectorAll('.gallery-item img')];
-      if(!images.length)return;
+      const items=[...document.querySelectorAll('.gallery-item')];
+      if(!items.length)return;
 
-      images.forEach((img,index)=>{
+      const images=[];
+      items.forEach((item,index)=>{
+        const img=item.querySelector('img');
+        if(!img)return;
+        images.push(img);
+
         // Keep only the first 4 gallery images immediately available.
         // Everything else is deferred until it approaches the viewport.
         if(index<4){
@@ -30,6 +35,14 @@
 
         if(img.dataset.lazyPrepared==='1')return;
         img.dataset.lazyPrepared='1';
+
+        const picture=item.querySelector('picture');
+        const source=picture?.querySelector('source');
+        if(source?.getAttribute('srcset')){
+          source.dataset.lazySrcset=source.getAttribute('srcset');
+          source.removeAttribute('srcset');
+        }
+
         if(img.getAttribute('src'))img.dataset.src=img.getAttribute('src');
         if(img.getAttribute('srcset'))img.dataset.srcset=img.getAttribute('srcset');
         if(img.getAttribute('sizes'))img.dataset.sizes=img.getAttribute('sizes');
@@ -45,7 +58,15 @@
         if(img.dataset.loaded==='1')return;
         const src=img.dataset.src;
         if(!src)return;
+
         img.dataset.loaded='1';
+        const item=img.closest('.gallery-item');
+        const picture=item?.querySelector('picture');
+        const source=picture?.querySelector('source');
+        if(source?.dataset.lazySrcset){
+          source.setAttribute('srcset',source.dataset.lazySrcset);
+          delete source.dataset.lazySrcset;
+        }
         if(img.dataset.srcset)img.setAttribute('srcset',img.dataset.srcset);
         if(img.dataset.sizes)img.setAttribute('sizes',img.dataset.sizes);
         img.src=src;
@@ -66,7 +87,7 @@
       }
     };
 
-    // Run immediately because this script is loaded at the end of the page.
+    // This script is loaded at the end of the page, so the DOM is already ready.
     preparePortfolioImages();
   }
 
