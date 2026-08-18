@@ -17,20 +17,15 @@
         const img=item.querySelector('img');
         if(!img)return;
         images.push(img);
-        if(index<4){
-          img.loading='eager'; img.decoding='async'; img.removeAttribute('fetchpriority');
-          if(index===0)img.fetchPriority='high'; return;
-        }
+        if(index<4){img.loading='eager';img.decoding='async';img.removeAttribute('fetchpriority');if(index===0)img.fetchPriority='high';return;}
         if(img.dataset.lazyPrepared==='1')return;
         img.dataset.lazyPrepared='1';
-        const picture=item.querySelector('picture');
-        const source=picture?.querySelector('source');
+        const picture=item.querySelector('picture');const source=picture?.querySelector('source');
         if(source?.getAttribute('srcset')){source.dataset.lazySrcset=source.getAttribute('srcset');source.removeAttribute('srcset');}
         if(img.getAttribute('src'))img.dataset.src=img.getAttribute('src');
         if(img.getAttribute('srcset'))img.dataset.srcset=img.getAttribute('srcset');
         if(img.getAttribute('sizes'))img.dataset.sizes=img.getAttribute('sizes');
-        img.removeAttribute('srcset');img.removeAttribute('sizes');img.removeAttribute('fetchpriority');
-        img.loading='lazy';img.decoding='async';img.src=transparent;
+        img.removeAttribute('srcset');img.removeAttribute('sizes');img.removeAttribute('fetchpriority');img.loading='lazy';img.decoding='async';img.src=transparent;
       });
       const loadImage=(img)=>{
         if(img.dataset.loaded==='1')return;
@@ -56,14 +51,18 @@
     const pricingFix=document.createElement('script');pricingFix.src='/assets/js/pricing-fix.js?v=2026081623';pricingFix.defer=true;document.head.appendChild(pricingFix);
   }
 
-  const s=document.createElement('script');
-  s.src='/assets/js/language-switch-runtime.js?v=2026081623';
-  s.onerror=()=>{};
-  s.onload=()=>{
+  const loadComplete=()=>{
+    if(document.documentElement.dataset.memoryEnglishComplete==='1')return;
+    document.documentElement.dataset.memoryEnglishComplete='1';
     const complete=document.createElement('script');
-    complete.src='/assets/js/language-switch-complete.js?v=2026081801';
+    complete.src='/assets/js/language-switch-complete.js?v=2026081802';
     complete.onerror=()=>{};
     document.head.appendChild(complete);
   };
+
+  const s=document.createElement('script');
+  s.src='/assets/js/language-switch-runtime.js?v=2026081623';
+  s.onload=loadComplete;
+  s.onerror=loadComplete;
   document.head.appendChild(s);
 })();
