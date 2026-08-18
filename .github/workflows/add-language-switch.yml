@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inject switch and normalize HTML
+      - name: Inject switch and repair inline JavaScript
         shell: python
         run: |
           from pathlib import Path
@@ -20,9 +20,16 @@ jobs:
               css = 'assets/css/language-switch.css' if p.parent.name != 'en' else '../assets/css/language-switch.css'
               js = 'assets/js/language-switch.js' if p.parent.name != 'en' else '../assets/js/language-switch.js'
 
-              # IMPORTANT: preserve JavaScript escaped newlines (\\n).
-              # Converting them into real newlines inside JS string literals
-              # creates SyntaxError: Invalid or unexpected token.
+              # Repair the exact broken newline sequences introduced by older automation.
+              # These must remain the two characters backslash+n inside JavaScript strings.
+              repairs = {
+                  "return lines.join('\n');": "return lines.join('\\n');",
+                  "'Избрана оферта: ' + btn.dataset.package + '\n' +": "'Избрана оферта: ' + btn.dataset.package + '\\n' +",
+                  "'Цена: ' + btn.dataset.packagePrice + '\n' +": "'Цена: ' + btn.dataset.packagePrice + '\\n' +",
+              }
+              for broken, fixed in repairs.items():
+                  text = text.replace(broken, fixed)
+
               if 'language-switch.css' not in text:
                   text = text.replace('</head>', f'<link rel="stylesheet" href="{css}">\n</head>', 1)
               if 'language-switch.js' not in text:
@@ -55,5 +62,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add '*.html' 'en/*.html' 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Normalize HTML JavaScript safely [skip language switch]"
+          git commit -m "Repair inline JavaScript safely [skip language switch]"
           git push
