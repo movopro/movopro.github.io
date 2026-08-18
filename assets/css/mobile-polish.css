@@ -1,4 +1,5 @@
 /* MEMORY PHOTO & VIDEO — mobile polish layer */
+body.lightbox-open{overflow:hidden}
 @media(max-width:760px){
   html,body{overflow-x:hidden}
   body.menu-open{overflow:hidden;touch-action:none}
