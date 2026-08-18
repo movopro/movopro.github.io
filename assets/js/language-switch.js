@@ -2,16 +2,13 @@
   const params=new URLSearchParams(location.search);
   const isEnglish=params.get('lang')==='en' || location.pathname.startsWith('/en/');
 
-  // Never hide the document while the English runtime loads.
   if(isEnglish){
     document.documentElement.style.background='#0c0b09';
     if(document.body) document.body.style.background='#0c0b09';
   }
 
-  // Portfolio performance: do not let hundreds of large gallery images
-  // compete with navigation, CSS and the next page. Native lazy loading is
-  // not strict enough on every browser, so gallery images are promoted only
-  // when they are close to the viewport.
+  // Portfolio performance: keep the initial page interactive and let images
+  // load progressively. This is stricter than browser-native lazy loading.
   if(location.pathname.endsWith('/portfolio.html') || location.pathname==='/portfolio.html'){
     const transparent='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
     const preparePortfolioImages=()=>{
@@ -24,11 +21,11 @@
         if(!img)return;
         images.push(img);
 
-        // Keep only the first 4 gallery images immediately available.
-        // Everything else is deferred until it approaches the viewport.
+        // Only the first four are allowed into the initial request queue.
         if(index<4){
           img.loading='eager';
           img.decoding='async';
+          img.removeAttribute('fetchpriority');
           if(index===0)img.fetchPriority='high';
           return;
         }
@@ -87,12 +84,10 @@
       }
     };
 
-    // This script is loaded at the end of the page, so the DOM is already ready.
     preparePortfolioImages();
   }
 
-  // Pricing used a scroll-reveal rule that could leave the whole page invisible.
-  // Keep the content visible first; the pricing fallback also protects the calculator.
+  // Pricing fallback: keep the page and calculator visible.
   if(location.pathname.endsWith('/uslugi-ceni.html') || location.pathname === '/uslugi-ceni.html'){
     const showPricing=()=>document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale')
       .forEach(el=>{el.style.opacity='1';el.style.transform='none';});
