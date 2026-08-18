@@ -5,8 +5,6 @@
 
   if(location.pathname.endsWith('/portfolio.html') || location.pathname==='/portfolio.html' || location.pathname.includes('/portfolio.html')){
     const prepare=()=>{
-      // Keep the portfolio content visible even if the optional reveal animation
-      // script is unavailable or fails to initialize.
       document.querySelectorAll('.portfolio-v2 .v2-reveal').forEach(el=>{
         el.classList.add('v2-visible');
         el.style.opacity='1';
@@ -16,22 +14,36 @@
       const gallery=document.querySelector('.gallery');
       const nextItems=[...document.querySelectorAll('[data-next-pool="653"]')];
 
-      // Keep all new portfolio items inside the masonry grid.
       if(gallery && nextItems.length){
         const fragment=document.createDocumentFragment();
         nextItems.forEach(item=>fragment.appendChild(item));
         gallery.appendChild(fragment);
       }
 
-      // Do not replace image src/srcset with transparent placeholders.
-      // Native browser lazy-loading is reliable here and the lightbox continues
-      // to use each item's data-image attribute.
       document.querySelectorAll('.gallery-item img').forEach((img,index)=>{
         img.loading=index<4?'eager':'lazy';
         img.decoding='async';
       });
 
-      // Improve lightbox usability on desktop, mobile and keyboard navigation.
+      // New portfolio items are anchors for graceful fallback, but they must
+      // never navigate away from the gallery when the lightbox is available.
+      document.querySelectorAll('.gallery-item[data-next-pool="653"]').forEach(item=>{
+        item.addEventListener('click',event=>{
+          const lb=document.getElementById('lightbox');
+          const img= item.querySelector('img');
+          if(!lb || !img) return;
+          event.preventDefault();
+          const target=lb.querySelector('img');
+          if(target){
+            target.src=item.dataset.image || img.currentSrc || img.src;
+            target.alt=img.alt || '';
+          }
+          lb.classList.add('open');
+          lb.setAttribute('aria-hidden','false');
+          document.body.style.overflow='hidden';
+        },{capture:true});
+      });
+
       const lb=document.getElementById('lightbox');
       const close=document.getElementById('lightboxClose');
       if(lb && close){
@@ -61,6 +73,7 @@
             lb.setAttribute('aria-hidden','false');
           }else{
             lb.setAttribute('aria-hidden','true');
+            document.body.style.overflow='';
             if(lastTrigger && document.contains(lastTrigger)) lastTrigger.focus();
           }
         };
@@ -80,7 +93,6 @@
             close.click();
           }
           if(event.key==='Tab'){
-            // Keep keyboard focus inside the two lightbox controls.
             const focusables=[close,document.getElementById('lightboxBack')].filter(Boolean);
             if(!focusables.length) return;
             const first=focusables[0],last=focusables[focusables.length-1];
