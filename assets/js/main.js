@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.addEventListener('pointerdown', event => {
       if (!menuToggle.checked || !header.contains(event.target)) return;
+      /* Do not close the menu when the user is interacting with the burger or a nav link. */
+      if (nav.contains(event.target) || burger?.contains(event.target) || event.target === menuToggle) return;
       menuToggle.checked = false;
       syncMenuState();
     });
