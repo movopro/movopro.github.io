@@ -4,75 +4,36 @@
   if(isEnglish){document.documentElement.style.background='#0c0b09';if(document.body)document.body.style.background='#0c0b09';}
 
   if(location.pathname.endsWith('/portfolio.html') || location.pathname==='/portfolio.html'){
-    const transparent='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
     const prepare=()=>{
+      // Keep the portfolio content visible even if the optional reveal animation
+      // script is unavailable or fails to initialize.
+      document.querySelectorAll('.portfolio-v2 .v2-reveal').forEach(el=>{
+        el.classList.add('v2-visible');
+        el.style.opacity='1';
+        el.style.transform='none';
+      });
+
       const gallery=document.querySelector('.gallery');
       const nextItems=[...document.querySelectorAll('[data-next-pool="653"]')];
 
-      // The 653 new items were appended after the inner .gallery container.
-      // Move them back into the same masonry grid before lazy-loading starts.
+      // Keep all new portfolio items inside the masonry grid.
       if(gallery && nextItems.length){
         const fragment=document.createDocumentFragment();
         nextItems.forEach(item=>fragment.appendChild(item));
         gallery.appendChild(fragment);
       }
 
-      const items=[...document.querySelectorAll('.gallery-item')];
-      if(!items.length)return;
-      const images=[];
-      items.forEach((item,index)=>{
-        const img=item.querySelector('img');
-        if(!img)return;
-        images.push(img);
-        if(index<4){
-          img.loading='eager';
-          img.decoding='async';
-          img.removeAttribute('fetchpriority');
-          if(index===0)img.fetchPriority='high';
-          return;
-        }
-        if(img.dataset.lazyPrepared==='1')return;
-        img.dataset.lazyPrepared='1';
-        const picture=item.querySelector('picture');
-        const source=picture?.querySelector('source');
-        if(source?.getAttribute('srcset')){
-          source.dataset.lazySrcset=source.getAttribute('srcset');
-          source.removeAttribute('srcset');
-        }
-        if(img.getAttribute('src'))img.dataset.src=img.getAttribute('src');
-        if(img.getAttribute('srcset'))img.dataset.srcset=img.getAttribute('srcset');
-        if(img.getAttribute('sizes'))img.dataset.sizes=img.getAttribute('sizes');
-        img.removeAttribute('srcset');
-        img.removeAttribute('sizes');
-        img.removeAttribute('fetchpriority');
-        img.loading='lazy';
+      // Do not replace image src/srcset with transparent placeholders.
+      // Native browser lazy-loading is reliable here and the lightbox continues
+      // to use each item's data-image attribute.
+      document.querySelectorAll('.gallery-item img').forEach((img,index)=>{
+        img.loading=index<4?'eager':'lazy';
         img.decoding='async';
-        img.src=transparent;
       });
-      const load=img=>{
-        if(img.dataset.loaded==='1')return;
-        const src=img.dataset.src;
-        if(!src)return;
-        img.dataset.loaded='1';
-        const item=img.closest('.gallery-item');
-        const picture=item?.querySelector('picture');
-        const source=picture?.querySelector('source');
-        if(source?.dataset.lazySrcset){
-          source.setAttribute('srcset',source.dataset.lazySrcset);
-          delete source.dataset.lazySrcset;
-        }
-        if(img.dataset.srcset)img.setAttribute('srcset',img.dataset.srcset);
-        if(img.dataset.sizes)img.setAttribute('sizes',img.dataset.sizes);
-        img.src=src;
-      };
-      if('IntersectionObserver'in window){
-        const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-          if(entry.isIntersecting){load(entry.target);observer.unobserve(entry.target);}
-        }),{rootMargin:'900px 0px'});
-        images.slice(4).forEach(img=>observer.observe(img));
-      }else images.slice(4).forEach(load);
     };
-    prepare();
+
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepare,{once:true});
+    else prepare();
   }
 
   if(location.pathname.endsWith('/uslugi-ceni.html') || location.pathname==='/uslugi-ceni.html'){
