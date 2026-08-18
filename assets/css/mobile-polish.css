@@ -1,6 +1,7 @@
 /* MEMORY PHOTO & VIDEO — mobile polish layer */
-@media (max-width:760px){
+@media(max-width:760px){
   html,body{overflow-x:hidden}
+  body.menu-open{overflow:hidden;touch-action:none}
   .nav-wrap{min-height:60px}
   .brand span{font-size:.92rem!important;letter-spacing:.07em!important}
   .brand img{width:30px!important;height:30px!important}
@@ -18,7 +19,7 @@
   .hero__actions,.hero__socials,.partner-actions{gap:8px!important}
   .btn,.partner-btn{min-height:46px;padding:.75rem 1rem!important;font-size:.64rem!important}
 
-  .gallery-strip,.partner-section,.cta-section,.portfolio-section,.videos-section,.about-section,.calculator-section,.inquiry-section,.events-section,.pricing-section{padding-left:14px!important;padding-right:14px!important}
+  .gallery-strip,.partner-section,.cta-section,.portfolio-section,.videos-section,.about-section,.calculator-section,.inquiry-section,.events-section{padding-left:14px!important;padding-right:14px!important}
   .gallery-strip{padding-top:64px!important;padding-bottom:64px!important}
   .gallery-strip__header{margin-bottom:22px!important;gap:14px!important}
   .section-title{font-size:clamp(2rem,9vw,3rem)!important}
@@ -54,6 +55,7 @@
   .lightbox img{max-width:96vw!important;max-height:84vh!important;border-radius:12px!important}
   .lightbox__prev,.lightbox__next{width:42px!important;height:42px!important}
   .lightbox__prev{left:10px!important}.lightbox__next{right:10px!important}
+  #lightboxBack{left:12px!important;bottom:max(12px,env(safe-area-inset-bottom))!important;max-width:calc(100vw - 24px)!important;padding:11px 15px!important;font-size:12px!important}
 
   .videos-grid{gap:12px!important;margin-top:24px!important}
   .video-card{border-radius:20px!important}
@@ -125,7 +127,7 @@
   .home-hero .home-socials{justify-content:center!important;align-items:center!important}
   .home-hero__photo{width:min(100%,560px)!important;margin:0 auto!important}
 }
-@media (max-width:420px){
+@media(max-width:420px){
   .brand span{font-size:.82rem!important}
   .nav-wrap{gap:8px!important}
   .hero h1,.home-title,.v2-title{letter-spacing:0!important}
