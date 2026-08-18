@@ -3,134 +3,105 @@
   const en=p.get('lang')==='en'||location.pathname.startsWith('/en/');
   if(!en)return;
 
-  // Final pass for copy generated after the initial runtime translation.
-  // Keep this dictionary focused on phrases/fragments that are actually
-  // created by main.js, pricing-fix.js, or pages added later.
   const M={
-    'Вашият ден. Вашата история.':'Your day. Your story.',
-    'Снимаме истинските моменти — тихите, шумните, красивите и неподправените. Фото и видео, които не просто показват как е изглеждал денят, а ви връщат в него.':'We capture the real moments — the quiet, the loud, the beautiful and the unfiltered. Photo and video that do not simply show what the day looked like, but take you back to it.',
-    'Разгледай портфолиото':'Browse the portfolio',
-    'Няколко мига, които си струва да останат.':'Some moments are worth keeping.',
-    'Новата серия вече е подредена в отделна история — емоция, детайли, светлина и истински моменти.':'The new series is now arranged as a separate story — emotion, details, light and real moments.',
-    'Виж всички избрани кадри':'View all selected frames',
-    'Колаж от избрани сватбени кадри на Memory Photo & Video':'Collage of selected wedding photos by Memory Photo & Video',
-    'Публичният Google рейтинг в момента е 5.0/5 от 21 отзива.':'Our public Google rating is currently 5.0/5 from 21 reviews.',
-    'Доверието е едно от най-важните неща, когато някой поверява спомените си на нас.':'Trust is one of the most important things when someone entrusts us with their memories.',
-    'Избрана серия':'Selected series',
-    'Избрани сватбени кадри':'Selected wedding photos',
-    'Избрани сватбени фотографии от Memory Photo & Video.':'Selected wedding photographs by Memory Photo & Video.',
-    'Подбрани кадри от реални сватбени моменти — емоция, детайли, портрети и атмосфера.':'Selected frames from real wedding moments — emotion, details, portraits and atmosphere.',
-    'Избран сватбен кадър':'Selected wedding photo',
-    'Цялото портфолио':'Full portfolio',
+    /* Portfolio */
+    'Подбрано сватбено фото портфолио на Memory Photo & Video — емоция, светлина, детайл и естествени моменти.':'A curated wedding photography portfolio by Memory Photo & Video — emotion, light, detail and authentic moments.',
+    'Подбрани кадри от сватби, фотосесии и специални събития.':'Selected frames from weddings, photo sessions and special events.',
+    'Подбрани кадри':'Selected frames','Истории, които започват с един кадър.':'Stories that begin with a single frame.',
+    'Тук не търсим просто „перфектната“ снимка. Търсим онази, която след години ще ви върне мириса на букета, погледа на човека до вас и начина, по който е звучала онази вечер.':'We are not simply looking for the “perfect” photo. We are looking for the one that years from now will bring back the scent of the bouquet, the look of the person beside you and the way that evening sounded.',
+    'Философията на Memory':'The Memory philosophy','Естествено. Емоционално. Вечно.':'Natural. Emotional. Timeless.',
+    'Наблюдаваме, предвиждаме и се намесваме само когато моментът го изисква. Така кадрите остават живи, а не постановъчни.':'We observe, anticipate and step in only when the moment requires it. That keeps the frames alive rather than staged.',
+    'Сватбена фотогалерия':'Wedding photo gallery','Отвори снимка':'Open photo','Memory Photo & Video — портфолио':'Memory Photo & Video — portfolio',
+    'Сватбена фотография — нов кадър':'Wedding photography — new frame','Wedding photography — нов кадър':'Wedding photography — new frame','нов кадър':'new frame',
+    'Сватбена фотография':'Wedding photography',
+    'Това е само част от работата ни. В реалния ден вниманието ни е върху вас — не върху това колко снимки ще направим.':'This is only a selection of our work. On the actual day, our attention is on you — not on how many photos we take.',
 
-    // Dynamic wedding calculator output
+    /* Videos */
+    'Сватбени видеа | Memory Photo & Video':'Wedding Videos | Memory Photo & Video','Сватбени филми, сватбени трейлъри с кино визия, бизнес видеа и трейлъри за балове от Memory Photo & Video.':'Wedding films, cinematic wedding trailers, business videos and prom trailers by Memory Photo & Video.',
+    'Сватбени филми':'Wedding films','Денят ви, разказан в движение.':'Your day, told in motion.','Сватбен филм не е просто монтаж от кадри. Той е ритъм, звук, погледи и онези секунди, които иначе минават твърде бързо.':'A wedding film is more than an edit of footage. It is rhythm, sound, glances and those seconds that otherwise pass too quickly.',
+    'Вижте историята':'See the story','Пуснете звука.':'Turn up the sound.','Тук е мястото да усетите атмосферата, преди още да сме се запознали.':'This is where you can feel the atmosphere before we have even met.',
+    'Сватби':'Weddings','Сватбени истории':'Wedding stories','Подбрани трейлъри и тийзъри от истински сватбени дни.':'Selected trailers and teasers from real wedding days.',
+    'Емоционален сватбен трейлър с кино атмосфера.':'An emotional wedding trailer with a cinematic atmosphere.','Сватбен трейлър с кино визия':'Cinematic wedding trailer','Емоционален сватбен трейлър.':'An emotional wedding trailer.','Сватбен трейлър':'Wedding trailer','Кратък сватбен трейлър с кино визия.':'A short cinematic wedding trailer.','Елегантно и естествено сватбено усещане.':'An elegant and natural wedding feeling.','Сватбен тийзър':'Wedding teaser','Една нестандартна сватба дълбоко в Родопите.':'A unique wedding deep in the Rhodopes.','Моменти на нежност, блестящи от любов.':'Moments of tenderness, glowing with love.',
+    'Бизнес и реклама':'Business & Advertising','Бизнес и рекламни видеа':'Business & Advertising Videos','Истории за брандове, места и услуги.':'Stories for brands, places and services.','Представително документално видео.':'A documentary-style presentation video.','Промо видео':'Promo video','Динамично промо видео.':'A dynamic promotional video.','Балове':'Proms','Балове и училищни трейлъри':'Proms & School Trailers','Енергия, хора и моменти, които заслужават да останат.':'Energy, people and moments worth keeping.','Трейлър за бал 2026.':'Prom trailer 2026.','Трейлър за бал':'Prom trailer','Проверете датата си и ни разкажете накратко как си представяте вашия ден.':'Check your date and briefly tell us how you imagine your day.',
+
+    /* Shared / accessibility */
+    'Икона на Memory Photo & Video':'Memory Photo & Video icon','Отвори менюто':'Open menu','Затвори':'Close','Начало':'Home','Портфолио':'Portfolio','Видео':'Videos','Цени':'Pricing','Свободни дати':'Availability','За нас':'About','Проверете свободна дата':'Check availability','Проверете свободната дата':'Check availability','Вижте снимките':'View photos','Вижте цените':'View pricing','Към съдържанието':'Skip to content','Меню':'Menu',
+
+    /* Availability / calendar */
+    'Свободни дати | Memory Photo & Video':'Availability | Memory Photo & Video','Проверете свободните дати за вашето събитие и вижте актуалната заетост по месеци.':'Check availability for your event and see the current schedule by month.','Проверете свободните дати за вашето събитие и се ориентирайте бързо кои дати са свободни.':'Check availability for your event and quickly see which dates are available.',
+    'Актуален календар':'Live calendar','Ясен статус':'Clear status','Бърза следваща стъпка':'Quick next step','СВОБОДНО / ЧАСТИЧНО / ЗАЕТО':'AVAILABLE / PARTIALLY / BOOKED','Предишен месец':'Previous month','Следващ месец':'Next month','Свободен':'Available','Свободна':'Available','Свободни':'Available','Частично':'Partially booked','Частично свободен':'Partially booked','Зает':'Booked','Заето':'Booked','Януари':'January','Февруари':'February','Март':'March','Април':'April','Май':'May','Юни':'June','Юли':'July','Август':'August','Септември':'September','Октомври':'October','Ноември':'November','Декември':'December','Пн':'Mon','Вт':'Tue','Ср':'Wed','Чт':'Thu','Пт':'Fri','Сб':'Sat','Нд':'Sun',
+
+    /* Forms / calculator */
+    'Изпращане...':'Sending...','Резултат':'Result','Обща ориентировъчна сума':'Estimated total','Няма избрани услуги.':'No services selected.','Изчисли':'Calculate','Нулирай':'Reset','Калкулатор':'Calculator','Други събития':'Other events','Тип събитие':'Event type','Часове':'Hours','Хора в екипа':'Team members','Рожден ден':'Birthday','Кръщене':'Baptism','Фирмено събитие':'Corporate event','Друго':'Other','Индивидуален проект':'Individual project','Име':'Name','Телефон':'Phone','Имейл':'Email','Дата на събитието':'Event date','Локация':'Location','Избрана оферта':'Selected offer','Обобщение':'Summary','Допълнителни детайли':'Additional details','Съгласен/на съм личните ми данни да бъдат използвани за връзка по това запитване.':'I agree that my personal data may be used to contact me regarding this inquiry.','Моля, попълнете име.':'Please enter your name.','Моля, попълнете телефон.':'Please enter your phone number.','Моля, попълнете имейл.':'Please enter your email.','Моля, изберете дата на събитието.':'Please select the event date.','Запитването беше изпратено успешно.':'Your inquiry was sent successfully.','Възникна проблем при изпращането.':'There was a problem sending your inquiry.','Грешка при връзката. Опитайте отново.':'Connection error. Please try again.',
+
+    /* Pricing page — static + dynamic calculator output */
+    'Ясни пакети, професионално покритие и гъвкав калкулатор.':'Clear packages, professional coverage and a flexible calculator.',
+    'Тук ще откриеш актуалните сватбени пакети, ориентировъчни цени за други събития и калкулатор, с който можеш да изчислиш приблизителна стойност според екип, допълнителни часове, транспорт, дрон и допълнителни услуги.':'Here you can find our current wedding packages, indicative prices for other events and a calculator to estimate the cost based on team size, additional hours, transport, drone and extra services.',
     'Сватбена фотография:':'Wedding photography:',
     'Сватбена видеография:':'Wedding videography:',
-    'Доп. часове:':'Extra hours:',
-    'Допълнителни часове:':'Extra hours:',
+    'Доп. часове:':'Additional hours:',
     'Дрон за целия ден':'Drone for the full day',
     'Дрон:':'Drone:',
     'Сурови файлове':'Raw files',
     'Фотосесия в отделен ден':'Photo session on a separate day',
-    'Транспорт:':'Travel:',
-    'Покритие:':'Coverage:',
-    'По часове':'Hourly',
-    'За целия ден':'Full day',
-    'Тип: Сватба':'Type: Wedding',
-    'Тип:':'Type:',
-    'Фотографи:':'Photographers:',
-    'Оператори:':'Videographers:',
-    'Транспорт (км):':'Travel (km):',
-    'Дрон: По часове':'Drone: Hourly',
-    'Дрон: За целия ден':'Drone: Full day',
-    'Дрон: Не':'Drone: No',
-    'Сурови файлове: Да':'Raw files: Yes',
-    'Сурови файлове: Не':'Raw files: No',
-    'Фотосесия в отделен ден: Да':'Photo session on a separate day: Yes',
-    'Фотосесия в отделен ден: Не':'Photo session on a separate day: No',
-    'Ориентировъчна сума:':'Estimated total:',
-    'Пакетна оферта':'Package quote',
-    'Персонална конфигурация':'Custom configuration',
-    'Друго събитие':'Other event',
-    'Персонална конфигурация за сватба':'Custom wedding configuration',
-    'Персонална конфигурация за друго събитие':'Custom configuration for another event',
-    'Избрана оферта:':'Selected offer:',
-    'Цена:':'Price:',
-    'Тип: Пакетна оферта':'Type: Package quote',
+    'Транспорт:':'Transport:',
+    'Сватбена фотография: 1 фотограф (до 10ч)':'Wedding photography: 1 photographer (up to 10h)',
+    'Сватбена фотография: 2 фотографи (до 10ч)':'Wedding photography: 2 photographers (up to 10h)',
+    'Сватбена видеография: 1 оператор (до 10ч)':'Wedding videography: 1 videographer (up to 10h)',
+    'Сватбена видеография: 2 оператори (до 10ч)':'Wedding videography: 2 videographers (up to 10h)',
+    'Комбинирай фото, видео, допълнителни часове, транспорт, сурови файлове и още.':'Combine photo, video, additional hours, transport, raw files and more.',
+    'Изпрати запитване за конкретен пакет или за персонална конфигурация.':'Send an inquiry for a specific package or a custom configuration.',
+    'актуални цени':'current pricing',
+    'подходящо за по-кратки лични събития и семейни поводи.':'suitable for shorter personal events and family occasions.',
+    'Възможност за фото, видео или комбиниран вариант.':'Photo, video or combined option available.',
+    'подходящо за църковна част и selected moments след нея.':'suitable for the church ceremony and selected moments afterwards.',
+    'Гъвкава конфигурация според програмата и локацията.':'Flexible configuration based on the schedule and location.',
+    'подходящо за корпоративни вечери, откривания и бранд събития.':'suitable for corporate evenings, openings and brand events.',
+    'Възможност за по-широко репортажно покритие и по-динамична визия.':'Option for broader documentary coverage and a more dynamic look.',
+    'За нестандартни идеи, различни локации и по-специфични сценарии.':'For unconventional ideas, different locations and more specific scenarios.',
+    'Финалната оферта се определя според обхват, team и transport.':'The final quote is determined by scope, team and transport.',
+    'Проверете свободните дати, разгледайте портфолиото и използвай калкулатора.':'Check availability, browse the portfolio and use the calculator.',
+    'Проверете свободни дати, разгледайте портфолиото и използвай калкулатора.':'Check availability, browse the portfolio and use the calculator.',
 
-    // Small dynamic fragments used by the calculator
-    ' фотографи':' photographers',
-    ' фотограф':' photographer',
-    ' оператори':' videographers',
-    ' оператор':' videographer',
-    ' (до 10ч)':' (up to 10h)',
-    ' ч':' h',
-    ' км':' km',
+    /* Dynamic calculator fragments */
+    'фотограф':'photographer','фотографи':'photographers','оператор':'videographer','оператори':'videographers','ч.':'h','ч':'h','лв.':'BGN','Покритие:':'Coverage:','Ставка на час:':'Hourly rate:','Ориентировъчна сума:':'Estimated total:','Тип: Сватба':'Type: Wedding','Тип:':'Type:','По часове':'Hourly','За целия ден':'For the full day','Не':'No','Да':'Yes','Няма избрани услуги.':'No services selected.',
 
-    // Home / common content that can be inserted dynamically
-    'Google отзиви':'Google reviews',
-    'Следвайте ни':'Follow us',
-    'Бързи връзки':'Quick links',
-    'Контакти':'Contact',
-    'Всички права запазени.':'All rights reserved.',
-    'Музиката е част от атмосферата.':'Music is part of the atmosphere.',
-    'Вашият ден е на първо място.':'Your day comes first.',
-    'DJ партньор':'DJ partner',
-    'Кърджали и цяла България':'Kardzhali and all of Bulgaria',
-
-    // Accessibility / navigation fallbacks
-    'Начало':'Home','Портфолио':'Portfolio','Видео':'Videos','Цени':'Pricing','Свободни дати':'Availability','За нас':'About','Меню':'Menu','Отвори менюто':'Open menu','Към съдържанието':'Skip to content','Проверете свободна дата':'Check availability','Проверете свободната дата':'Check availability','Вижте снимките':'View photos','Вижте цените':'View pricing','Вижте работата ни':'View our work','Изпрати запитване':'Send inquiry','Запитване за пакета':'Ask about this package','Нулирай':'Reset','Изчисли':'Calculate','Изпращане...':'Sending...','Резултат':'Result','Обща ориентировъчна сума':'Estimated total','Няма избрани услуги.':'No services selected.'
+    /* Residual phrases after the original runtime performs partial replacements */
+    'Кадри':'Frames','снимки':'photos','снимка':'photo','сватба':'wedding','сватбени':'wedding','фотосесия':'photo session','фотосесии':'photo sessions','емоция':'emotion','светлина':'light','детайл':'detail','естествени моменти':'authentic moments','момент':'moment','моменти':'moments','видео':'video','видеа':'videos','филм':'film','филми':'films','трейлър':'trailer','трейлъри':'trailers','тийзър':'teaser','тийзъри':'teasers','брандове':'brands','услуги':'services','реклама':'advertising','училищни':'school','хора':'people','енергия':'energy','любов':'love','нежност':'tenderness','нов':'new','кадър':'frame','дата':'date','цени':'pricing','пакет':'package','пакети':'packages','екип':'team','час':'hour','часа':'hours','локация':'location','проверете':'check','вижте':'view','разгледайте':'browse','избрани':'selected','истински':'real','история':'story','истории':'stories','Вашият':'Your','вашия':'your','вашето':'your','ден':'day','деня':'day','работата':'work','само':'only','част':'part','включена':'included','включено':'included','включен':'included'
   };
 
   const keys=Object.keys(M).sort((a,b)=>b.length-a.length);
-  const tr=value=>keys.reduce((text,key)=>text.includes(key)?text.split(key).join(M[key]):text,value||'');
+  const tr=v=>keys.reduce((x,k)=>x.includes(k)?x.split(k).join(M[k]):x,v||'');
+
+  function translateNodeText(node){
+    if(!node.nodeValue||!/[А-Яа-яЁё]/.test(node.nodeValue))return;
+    const parent=node.parentElement;
+    if(parent?.closest('script,style,noscript,template'))return;
+    const next=tr(node.nodeValue);
+    if(next!==node.nodeValue)node.nodeValue=next;
+  }
 
   function translateAll(){
-    const walker=document.createTreeWalker(document.body||document.documentElement,NodeFilter.SHOW_TEXT);
-    const nodes=[];let node;
-    while(node=walker.nextNode())nodes.push(node);
-    nodes.forEach(n=>{
-      if(!n.nodeValue||!/[А-Яа-яЁё]/.test(n.nodeValue))return;
-      if(n.parentElement?.closest('script,style,noscript,template'))return;
-      const next=tr(n.nodeValue);
-      if(next!==n.nodeValue)n.nodeValue=next;
-    });
-
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const nodes=[];let n;while(n=walker.nextNode())nodes.push(n);nodes.forEach(translateNodeText);
     document.querySelectorAll('title,meta[content],img[alt],iframe[title],[aria-label],[title],[placeholder],input[value],textarea[placeholder]').forEach(el=>{
-      ['content','alt','title','aria-label','placeholder','value'].forEach(attr=>{
-        if(!el.hasAttribute(attr))return;
-        const old=el.getAttribute(attr)||'',next=tr(old);
-        if(next!==old)el.setAttribute(attr,next);
-      });
+      ['content','alt','title','aria-label','placeholder','value'].forEach(a=>{if(el.hasAttribute(a)){const old=el.getAttribute(a),next=tr(old);if(next!==old)el.setAttribute(a,next);}});
     });
-    document.title=tr(document.title);
-    document.documentElement.lang='en';
+    document.title=tr(document.title);document.documentElement.lang='en';
   }
 
   function audit(){
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const remaining=[];let node;
-    while(node=walker.nextNode()){
-      if(node.parentElement?.closest('script,style,noscript,template'))continue;
-      const value=(node.nodeValue||'').trim();
-      if(value&&/[А-Яа-яЁё]/.test(value))remaining.push(value);
+    if(!document.body)return;
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const remaining=[];let n;
+    while(n=walker.nextNode()){
+      if(n.parentElement?.closest('script,style,noscript,template'))continue;
+      if(/[А-Яа-яЁё]/.test(n.nodeValue||''))remaining.push(n.nodeValue.trim());
     }
-    const unique=[...new Set(remaining)];
-    if(unique.length)console.warn('[Memory EN audit] Remaining Bulgarian text:',unique);
-    else console.info('[Memory EN audit] PASS — no Bulgarian text nodes remain.');
+    const unique=[...new Set(remaining.filter(Boolean))];
+    if(unique.length)console.warn('[Memory EN audit] Untranslated Bulgarian text:',unique);else console.info('[Memory EN audit] PASS — no Bulgarian text nodes remain.');
   }
 
-  const run=()=>{
-    translateAll();
-    setTimeout(translateAll,100);
-    setTimeout(translateAll,400);
-    setTimeout(audit,800);
-  };
+  const run=()=>{translateAll();setTimeout(()=>translateAll(),120);setTimeout(()=>{translateAll();audit()},600)};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
-
-  let timer=0;
-  new MutationObserver(()=>{
-    clearTimeout(timer);
-    timer=setTimeout(translateAll,40);
-  }).observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['content','alt','title','aria-label','placeholder','value']});
+  let timer=0;new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(translateAll,60)}).observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['content','alt','title','aria-label','placeholder','value']});
 })();
