@@ -3,47 +3,27 @@
   const en=p.get('lang')==='en'||location.pathname.startsWith('/en/');
   if(!en)return;
 
-  /*
-   * Final translation pass.
-   * The main runtime handles the static site copy. This layer is intentionally
-   * focused on copy that is created later by main.js / pricing-fix.js and on
-   * pages/phrases that were previously outside the original dictionary.
-   */
+  // Final pass for copy generated after the initial runtime translation.
+  // Keep this dictionary focused on phrases/fragments that are actually
+  // created by main.js, pricing-fix.js, or pages added later.
   const M={
-    /* Home */
     'Вашият ден. Вашата история.':'Your day. Your story.',
     'Снимаме истинските моменти — тихите, шумните, красивите и неподправените. Фото и видео, които не просто показват как е изглеждал денят, а ви връщат в него.':'We capture the real moments — the quiet, the loud, the beautiful and the unfiltered. Photo and video that do not simply show what the day looked like, but take you back to it.',
     'Разгледай портфолиото':'Browse the portfolio',
-    'Избрани кадри':'Selected frames',
     'Няколко мига, които си струва да останат.':'Some moments are worth keeping.',
     'Новата серия вече е подредена в отделна история — емоция, детайли, светлина и истински моменти.':'The new series is now arranged as a separate story — emotion, details, light and real moments.',
     'Виж всички избрани кадри':'View all selected frames',
-    'Виж всички избрани кадри':'View all selected frames',
     'Колаж от избрани сватбени кадри на Memory Photo & Video':'Collage of selected wedding photos by Memory Photo & Video',
     'Публичният Google рейтинг в момента е 5.0/5 от 21 отзива.':'Our public Google rating is currently 5.0/5 from 21 reviews.',
-    'Google отзиви':'Google reviews',
     'Доверието е едно от най-важните неща, когато някой поверява спомените си на нас.':'Trust is one of the most important things when someone entrusts us with their memories.',
-    'Вашият ден е на първо място.':'Your day comes first.',
-    'Музиката е част от атмосферата.':'Music is part of the atmosphere.',
-    'DJ партньор':'DJ partner',
-    'Следвайте ни':'Follow us',
-    'Бързи връзки':'Quick links',
-    'Контакти':'Contact',
-    'Телефон':'Phone',
-    'Имейл':'Email',
-    'Кърджали и цяла България':'Kardzhali and all of Bulgaria',
-    'Всички права запазени.':'All rights reserved.',
-
-    /* Selected wedding gallery */
-    'Избрани сватбени кадри | Memory Photo & Video':'Selected Wedding Photos | Memory Photo & Video',
-    'Избрани сватбени фотографии от Memory Photo & Video.':'Selected wedding photographs by Memory Photo & Video.',
     'Избрана серия':'Selected series',
-    'Подбрани кадри от реални сватбени моменти — емоция, детайли, портрети и атмосфера.':'Selected frames from real wedding moments — emotion, details, portraits and atmosphere.',
     'Избрани сватбени кадри':'Selected wedding photos',
+    'Избрани сватбени фотографии от Memory Photo & Video.':'Selected wedding photographs by Memory Photo & Video.',
+    'Подбрани кадри от реални сватбени моменти — емоция, детайли, портрети и атмосфера.':'Selected frames from real wedding moments — emotion, details, portraits and atmosphere.',
     'Избран сватбен кадър':'Selected wedding photo',
     'Цялото портфолио':'Full portfolio',
 
-    /* Pricing calculator: generated after the translation scripts load */
+    // Dynamic wedding calculator output
     'Сватбена фотография:':'Wedding photography:',
     'Сватбена видеография:':'Wedding videography:',
     'Доп. часове:':'Extra hours:',
@@ -56,8 +36,6 @@
     'Покритие:':'Coverage:',
     'По часове':'Hourly',
     'За целия ден':'Full day',
-    'Не':'No',
-    'Да':'Yes',
     'Тип: Сватба':'Type: Wedding',
     'Тип:':'Type:',
     'Фотографи:':'Photographers:',
@@ -79,55 +57,43 @@
     'Избрана оферта:':'Selected offer:',
     'Цена:':'Price:',
     'Тип: Пакетна оферта':'Type: Package quote',
-    'Моля, потвърдете съгласието за лични данни.':'Please confirm your consent for personal data.',
 
-    /* Common fragments used by generated calculator output */
-    ' фотограф':' photographer',
+    // Small dynamic fragments used by the calculator
     ' фотографи':' photographers',
-    ' оператор':' videographer',
+    ' фотограф':' photographer',
     ' оператори':' videographers',
+    ' оператор':' videographer',
     ' (до 10ч)':' (up to 10h)',
     ' ч':' h',
     ' км':' km',
-    'Публичният':'Public',
-    'отзив':'review',
-    'отзиви':'reviews',
 
-    /* About / team */
-    'Хората зад кадрите':'The people behind the frames',
-    'Не сме просто зад камерата.':'We are more than people behind the camera.',
-    'Нашата история':'Our story',
-    'От 2017 г. създаваме СПОМЕНИ.':'Since 2017, we have been creating MEMORIES.',
-    'Видеограф · Основател':'Videographer · Founder',
-    'Фотограф и видеооператор · Съосновател':'Photographer & Videographer · Co-founder',
-    'Асистент-оператор и монтажист':'Assistant Camera Operator & Editor',
-    'Професионалният ми път започна още през 2010 г. с местния фотоклуб в Кърджали, а през 2012 г. направих първите си стъпки в събитийната фотография. По-късно работих по различни фото и видео проекти, включително проекти в НАТФИЗ и рекламни клипове.':'My professional journey began in 2010 with the local photography club in Kardzhali, and in 2012 I took my first steps into event photography. Later, I worked on various photo and video projects, including projects at NATFIZ and commercial productions.',
-    'През последните години фокусът ми е основно видеографията — светлина, ритъм, емоция и детайл, които превръщат едно събитие в история.':'In recent years, my focus has been primarily on videography — light, rhythm, emotion and detail that turn an event into a story.',
-    'Виктор навлиза във фотографията през 2015–2016 г. и бързо развива свой поглед към динамичните и емоционални моменти.':'Viktor entered photography in 2015–2016 and quickly developed his own eye for dynamic and emotional moments.',
-    'Днес той е равностоен партньор и ключова част от екипа — от фотозаснемането до режисурата и монтажа.':'Today he is an equal partner and a key part of the team — from photography to directing and editing.',
-    'Светлан снима от 2020 г. и се присъедини към екипа с нов поглед и сериозни технически умения.':'Svetlan has been shooting since 2020 and joined the team with a fresh perspective and strong technical skills.',
-    'Със собствен опит в дигиталната среда и силен усет към монтажа допринася за завършения вид на всяко видео.':'With experience in the digital space and a strong sense for editing, he contributes to the finished look of every video.',
-    'През 2017 г. обединихме уменията и страстта си и основахме':'In 2017, we brought our skills and passion together and founded',
-    'Работим по сватби, кръщенета, годежи, рождени дни и фирмени събития. Целта ни е да бъдем спокойната част от деня ви, докато създаваме кадрите, които ще останат.':'We work on weddings, baptisms, engagements, birthdays and corporate events. Our goal is to be the calm part of your day while creating the frames that will last.',
-    'Нашата цел е проста: когато гледате снимките и филма след години, да не виждате просто красиво съдържание. Да видите себе си.':'Our goal is simple: when you look at your photos and film years later, we do not want you to see simply beautiful content. We want you to see yourselves.',
+    // Home / common content that can be inserted dynamically
+    'Google отзиви':'Google reviews',
+    'Следвайте ни':'Follow us',
+    'Бързи връзки':'Quick links',
+    'Контакти':'Contact',
+    'Всички права запазени.':'All rights reserved.',
+    'Музиката е част от атмосферата.':'Music is part of the atmosphere.',
+    'Вашият ден е на първо място.':'Your day comes first.',
+    'DJ партньор':'DJ partner',
+    'Кърджали и цяла България':'Kardzhali and all of Bulgaria',
 
-    /* Navigation / accessibility */
-    'Начало':'Home','Портфолио':'Portfolio','Видео':'Videos','Цени':'Pricing','Свободни дати':'Availability','За нас':'About','Меню':'Menu','Отвори менюто':'Open menu','Към съдържанието':'Skip to content','Проверете свободна дата':'Check availability','Проверете свободната дата':'Check availability','Вижте снимките':'View photos','Вижте цените':'View pricing','Вижте работата ни':'View our work','Изпрати запитване':'Send inquiry','Запитване за пакета':'Ask about this package','Нулирай':'Reset','Изчисли':'Calculate'
+    // Accessibility / navigation fallbacks
+    'Начало':'Home','Портфолио':'Portfolio','Видео':'Videos','Цени':'Pricing','Свободни дати':'Availability','За нас':'About','Меню':'Menu','Отвори менюто':'Open menu','Към съдържанието':'Skip to content','Проверете свободна дата':'Check availability','Проверете свободната дата':'Check availability','Вижте снимките':'View photos','Вижте цените':'View pricing','Вижте работата ни':'View our work','Изпрати запитване':'Send inquiry','Запитване за пакета':'Ask about this package','Нулирай':'Reset','Изчисли':'Calculate','Изпращане...':'Sending...','Резултат':'Result','Обща ориентировъчна сума':'Estimated total','Няма избрани услуги.':'No services selected.'
   };
 
   const keys=Object.keys(M).sort((a,b)=>b.length-a.length);
-  const tr=v=>keys.reduce((x,k)=>x.includes(k)?x.split(k).join(M[k]):x,v||'');
+  const tr=value=>keys.reduce((text,key)=>text.includes(key)?text.split(key).join(M[key]):text,value||'');
 
   function translateAll(){
-    const root=document.body||document.documentElement;
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
-    const nodes=[];let n;
-    while(n=walker.nextNode())nodes.push(n);
-    nodes.forEach(node=>{
-      if(!node.nodeValue||!/[А-Яа-яЁё]/.test(node.nodeValue))return;
-      if(node.parentElement?.closest('script,style,noscript,template'))return;
-      const next=tr(node.nodeValue);
-      if(next!==node.nodeValue)node.nodeValue=next;
+    const walker=document.createTreeWalker(document.body||document.documentElement,NodeFilter.SHOW_TEXT);
+    const nodes=[];let node;
+    while(node=walker.nextNode())nodes.push(node);
+    nodes.forEach(n=>{
+      if(!n.nodeValue||!/[А-Яа-яЁё]/.test(n.nodeValue))return;
+      if(n.parentElement?.closest('script,style,noscript,template'))return;
+      const next=tr(n.nodeValue);
+      if(next!==n.nodeValue)n.nodeValue=next;
     });
 
     document.querySelectorAll('title,meta[content],img[alt],iframe[title],[aria-label],[title],[placeholder],input[value],textarea[placeholder]').forEach(el=>{
@@ -142,29 +108,25 @@
   }
 
   function audit(){
-    if(!document.body)return;
     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const remaining=[];let n;
-    while(n=walker.nextNode()){
-      if(n.parentElement?.closest('script,style,noscript,template'))continue;
-      const value=(n.nodeValue||'').trim();
+    const remaining=[];let node;
+    while(node=walker.nextNode()){
+      if(node.parentElement?.closest('script,style,noscript,template'))continue;
+      const value=(node.nodeValue||'').trim();
       if(value&&/[А-Яа-яЁё]/.test(value))remaining.push(value);
     }
     const unique=[...new Set(remaining)];
-    if(unique.length){
-      console.warn('[Memory EN audit] Remaining Bulgarian text:',unique);
-    }else{
-      console.info('[Memory EN audit] PASS — no Bulgarian text nodes remain.');
-    }
+    if(unique.length)console.warn('[Memory EN audit] Remaining Bulgarian text:',unique);
+    else console.info('[Memory EN audit] PASS — no Bulgarian text nodes remain.');
   }
 
   const run=()=>{
     translateAll();
-    setTimeout(translateAll,80);
-    setTimeout(audit,500);
+    setTimeout(translateAll,100);
+    setTimeout(translateAll,400);
+    setTimeout(audit,800);
   };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});
-  else run();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
 
   let timer=0;
   new MutationObserver(()=>{
