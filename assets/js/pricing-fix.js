@@ -10,9 +10,35 @@
 
     const q=id=>document.getElementById(id);
     const EUR_TO_BGN=1.95583;
+    const MAX_HOURS=24;
     const moneyEUR=n=>Math.round(n)+'€';
     const moneyBGN=n=>Math.round(n*EUR_TO_BGN)+' лв.';
     const line=(label,value)=>`<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
+
+    // Keep every hour-based input within a sensible 24-hour maximum.
+    const hourInputs=[q('otHours'),q('droneHours'),q('eventHours')].filter(Boolean);
+    hourInputs.forEach(input=>{
+      input.max=String(MAX_HOURS);
+      input.step=input.step || '1';
+      input.addEventListener('input',()=>{
+        const n=Number(input.value);
+        if(Number.isFinite(n) && n>MAX_HOURS) input.value=String(MAX_HOURS);
+      });
+      input.addEventListener('change',()=>{
+        let n=Number(input.value);
+        if(!Number.isFinite(n)) n=0;
+        n=Math.min(MAX_HOURS,Math.max(0,n));
+        input.value=String(n);
+      });
+    });
+
+    // On phones, after calculating, take the user directly to the result.
+    const scrollToResult=(target)=>{
+      if(!target) return;
+      if(window.matchMedia('(max-width: 768px)').matches){
+        window.setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'center'}),80);
+      }
+    };
 
     // Tabs
     const tabs=[...document.querySelectorAll('.mode-tab')];
@@ -37,8 +63,11 @@
 
     const calcWedding=()=>{
       if(!photoTeam||!videoTeam||!totalEUR) return;
-      const p=+photoTeam.value||0,v=+videoTeam.value||0,ot=Math.max(0,+otHours.value||0),kmv=Math.max(0,+km.value||0);
-      const people=p+v,dm=droneMode.value,dh=Math.max(1,+droneHours.value||1);
+      const p=+photoTeam.value||0,v=+videoTeam.value||0,ot=Math.min(MAX_HOURS,Math.max(0,+otHours.value||0)),kmv=Math.max(0,+km.value||0);
+      const people=p+v,dm=droneMode.value,dh=Math.min(MAX_HOURS,Math.max(1,+droneHours.value||1));
+      if(otHours) otHours.value=String(ot);
+      if(droneHours) droneHours.value=String(dh);
+      const droneResult=q('droneHours');
       let total=0,lines=[];
       if(p){const x=PRICES.photo[p]||0;total+=x;lines.push(line(`Сватбена фотография: ${p} фотограф${p===1?'':'и'} (до 10ч)`,x));}
       if(v){const x=PRICES.video[v]||0;total+=x;lines.push(line(`Сватбена видеография: ${v} оператор${v===1?'':'и'} (до 10ч)`,x));}
@@ -50,6 +79,7 @@
       if(kmv){const x=kmv*PRICES.transport;total+=x;lines.push(line(`Транспорт: ${kmv} км × 0.58€`,x));}
       totalEUR.textContent=moneyEUR(total); if(totalBGN) totalBGN.textContent=moneyBGN(total);
       if(breakdown) breakdown.innerHTML=lines.join('')||'<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
+      scrollToResult(breakdown || totalEUR);
     };
 
     const updateDrone=()=>{
@@ -73,12 +103,14 @@
     const EVENT={birthday:88,baptism:99,corporate:128,other:88,raw:168,transport:.58};
     const calcEvent=()=>{
       if(!eventType||!eventTotalEUR)return;
-      const type=eventType.value,h=Math.max(1,+eventHours.value||1),people=Math.max(1,+eventPeople.value||1),kmv=Math.max(0,+eventKm.value||0),rate=EVENT[type]||EVENT.other;
+      const type=eventType.value,h=Math.min(MAX_HOURS,Math.max(1,+eventHours.value||1)),people=Math.max(1,+eventPeople.value||1),kmv=Math.max(0,+eventKm.value||0),rate=EVENT[type]||EVENT.other;
+      if(eventHours) eventHours.value=String(h);
       let total=h*people*rate,lines=[line(`Покритие: ${h}ч × ${people} × ${rate}€`,total)];
       if(kmv){const x=kmv*EVENT.transport;total+=x;lines.push(line(`Транспорт: ${kmv} км × 0.58€`,x));}
       if(eventRaw.checked){total+=EVENT.raw;lines.push(line('Сурови файлове',EVENT.raw));}
       eventTotalEUR.textContent=moneyEUR(total);if(eventTotalBGN)eventTotalBGN.textContent=moneyBGN(total);
       if(eventBreakdown)eventBreakdown.innerHTML=lines.join('');
+      scrollToResult(eventBreakdown || eventTotalEUR);
     };
     [eventType,eventHours,eventPeople,eventKm,eventRaw].filter(Boolean).forEach(el=>{el.addEventListener('input',calcEvent);el.addEventListener('change',calcEvent);});
     if(q('recalcEvent'))q('recalcEvent').addEventListener('click',calcEvent);
@@ -88,8 +120,8 @@
     const inquirySection=q('inquirySection'),inquiryType=q('inquiryType'),selectedOffer=q('selectedOffer'),inquirySummary=q('inquirySummary');
     const clientName=q('clientName'),clientPhone=q('clientPhone'),clientEmail=q('clientEmail'),eventDate=q('eventDate'),eventLocation=q('eventLocation'),clientNote=q('clientNote'),privacy=q('privacyConsent'),send=q('sendInquiry'),status=q('sendStatus');
     const openInquiry=()=>inquirySection?.scrollIntoView({behavior:'smooth',block:'start'});
-    const weddingSummary=()=>`Тип: Сватба\nФотографи: ${+photoTeam.value||0}\nОператори: ${+videoTeam.value||0}\nДопълнителни часове: ${+otHours.value||0}\nТранспорт (км): ${+km.value||0}\nДрон: ${droneMode.value==='hour'?'По часове ('+(+droneHours.value||1)+' ч)':droneMode.value==='day'?'За целия ден':'Не'}\nСурови файлове: ${rawFiles.checked?'Да':'Не'}\nФотосесия в отделен ден: ${afterSession.checked?'Да':'Не'}\nОриентировъчна сума: ${totalEUR.textContent} / ${totalBGN.textContent}`;
-    const eventSummary=()=>`Тип: ${({birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'})[eventType.value]||'Друго'}\nЧасове: ${+eventHours.value||1}\nХора в екипа: ${+eventPeople.value||1}\nТранспорт (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`;
+    const weddingSummary=()=>`Тип: Сватба\nФотографи: ${+photoTeam.value||0}\nОператори: ${+videoTeam.value||0}\nДопълнителни часове: ${Math.min(MAX_HOURS,+otHours.value||0)}\nТранспорт (км): ${+km.value||0}\nДрон: ${droneMode.value==='hour'?'По часове ('+Math.min(MAX_HOURS,(+droneHours.value||1))+' ч)':droneMode.value==='day'?'За целия ден':'Не'}\nСурови файлове: ${rawFiles.checked?'Да':'Не'}\nФотосесия в отделен ден: ${afterSession.checked?'Да':'Не'}\nОриентировъчна сума: ${totalEUR.textContent} / ${totalBGN.textContent}`;
+    const eventSummary=()=>`Тип: ${({birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'})[eventType.value]||'Друго'}\nЧасове: ${Math.min(MAX_HOURS,+eventHours.value||1)}\nХора в екипа: ${+eventPeople.value||1}\nТранспорт (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`;
 
     document.querySelectorAll('.package-inquiry-btn').forEach(btn=>{
       if(btn.dataset.pricingFixBound) return;btn.dataset.pricingFixBound='1';
