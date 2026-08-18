@@ -16,10 +16,41 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateHeader, { passive: true });
   }
 
+  /* Mobile navigation: keep keyboard/screen-reader state in sync and make Escape/outside-click close it. */
   if (menuToggle && nav) {
+    const burger = document.querySelector('.burger');
+    const syncMenuState = () => {
+      const open = menuToggle.checked;
+      menuToggle.setAttribute('aria-expanded', String(open));
+      if (burger) burger.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('menu-open', open);
+    };
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-controls', 'site-navigation');
+    nav.id = nav.id || 'site-navigation';
+    if (burger) burger.setAttribute('aria-controls', nav.id);
+    menuToggle.addEventListener('change', syncMenuState);
     nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => { menuToggle.checked = false; });
+      link.addEventListener('click', () => {
+        if (menuToggle.checked) {
+          menuToggle.checked = false;
+          syncMenuState();
+        }
+      });
     });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menuToggle.checked) {
+        menuToggle.checked = false;
+        syncMenuState();
+        menuToggle.focus();
+      }
+    });
+    document.addEventListener('pointerdown', event => {
+      if (!menuToggle.checked || !header.contains(event.target)) return;
+      menuToggle.checked = false;
+      syncMenuState();
+    });
+    syncMenuState();
   }
 
   const reviewNote = document.querySelector('.v2-review-note');
@@ -120,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* Cinematic hero entrance + subtle desktop parallax. */
     if (!reduceMotion) {
       homeHero.classList.add('cinematic-ready');
-      requestAnimationFrame(() => homeHero.classList.add('cinematic-in')); 
+      requestAnimationFrame(() => homeHero.classList.add('cinematic-in'));
       if (canHover) {
         let raf=0;
         const onMove=(e)=>{
