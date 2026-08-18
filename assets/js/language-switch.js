@@ -30,6 +30,22 @@
         img.loading=index<4?'eager':'lazy';
         img.decoding='async';
       });
+
+      // Add a clearly visible way back to the gallery on desktop and mobile.
+      const lb=document.getElementById('lightbox');
+      const close=document.getElementById('lightboxClose');
+      if(lb && close && !document.getElementById('lightboxBack')){
+        const back=document.createElement('button');
+        back.id='lightboxBack';
+        back.type='button';
+        back.textContent='← Назад към галерията';
+        back.setAttribute('aria-label','Назад към галерията');
+        back.style.cssText='position:absolute;left:20px;bottom:20px;z-index:2;padding:12px 18px;border:1px solid rgba(195,152,90,.45);border-radius:999px;background:rgba(9,8,6,.72);backdrop-filter:blur(12px);color:#f3ecdc;font:500 13px Montserrat,Arial,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35);';
+        back.addEventListener('mouseenter',()=>{back.style.background='rgba(195,152,90,.18)';});
+        back.addEventListener('mouseleave',()=>{back.style.background='rgba(9,8,6,.72)';});
+        back.addEventListener('click',()=>close.click());
+        lb.appendChild(back);
+      }
     };
 
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepare,{once:true});
