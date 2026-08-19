@@ -12,37 +12,70 @@
       });
 
       const gallery=document.querySelector('.gallery');
-      const nextItems=[...document.querySelectorAll('[data-next-pool="653"]')];
+      const pool=document.getElementById('portfolioNextPool');
+      if(gallery){
+        const initialItems=[...gallery.querySelectorAll('.gallery-item')];
+        const nextItems=pool?[...pool.content.querySelectorAll('.gallery-item')]:[...document.querySelectorAll('[data-next-pool="653"]')];
+        const items=initialItems.concat(nextItems);
+        const total=items.length;
+        const batchSize=48;
+        let visible=Math.min(batchSize,total);
 
-      if(gallery && nextItems.length){
-        const fragment=document.createDocumentFragment();
-        nextItems.forEach(item=>fragment.appendChild(item));
-        gallery.appendChild(fragment);
-      }
+        const configureImage=(item,index)=>{
+          item.querySelectorAll('img').forEach(img=>{
+            img.loading=index<2?'eager':'lazy';
+            img.decoding='async';
+            if(index>=2)img.removeAttribute('fetchpriority');
+          });
+        };
 
-      document.querySelectorAll('.gallery-item img').forEach((img,index)=>{
-        img.loading=index<4?'eager':'lazy';
-        img.decoding='async';
-      });
-
-      // New portfolio items are anchors for graceful fallback, but they must
-      // never navigate away from the gallery when the lightbox is available.
-      document.querySelectorAll('.gallery-item[data-next-pool="653"]').forEach(item=>{
-        item.addEventListener('click',event=>{
-          const lb=document.getElementById('lightbox');
-          const img= item.querySelector('img');
-          if(!lb || !img) return;
-          event.preventDefault();
-          const target=lb.querySelector('img');
-          if(target){
-            target.src=item.dataset.image || img.currentSrc || img.src;
-            target.alt=img.alt || '';
+        initialItems.forEach((item,index)=>{
+          if(index<visible)configureImage(item,index);
+          else{
+            item.hidden=true;
+            configureImage(item,index);
           }
-          lb.classList.add('open');
-          lb.setAttribute('aria-hidden','false');
-          document.body.style.overflow='hidden';
-        },{capture:true});
-      });
+        });
+
+        if(total>visible){
+          const controls=document.createElement('div');
+          controls.className='portfolio-gallery-controls';
+          controls.setAttribute('role','group');
+          controls.setAttribute('aria-label',isEnglish?'More portfolio photos':'Още снимки от портфолиото');
+
+          const status=document.createElement('p');
+          status.className='portfolio-gallery-status';
+          status.id='portfolioGalleryStatus';
+          status.setAttribute('aria-live','polite');
+
+          const more=document.createElement('button');
+          more.type='button';
+          more.className='portfolio-load-more';
+          more.textContent=isEnglish?'Load more photos':'Виж още снимки';
+
+          const update=()=>{
+            status.textContent=isEnglish?`Showing ${visible} of ${total} photos`:`Показани ${visible} от ${total} снимки`;
+            more.hidden=visible>=total;
+          };
+
+          more.addEventListener('click',()=>{
+            const end=Math.min(visible+batchSize,total);
+            for(let index=visible;index<end;index++){
+              const item=items[index];
+              if(!item.isConnected)gallery.appendChild(item);
+              item.hidden=false;
+              configureImage(item,index);
+            }
+            visible=end;
+            update();
+          });
+
+          controls.append(status,more);
+          gallery.insertAdjacentElement('afterend',controls);
+          gallery.setAttribute('aria-describedby',status.id);
+          update();
+        }
+      }
 
       const lb=document.getElementById('lightbox');
       const close=document.getElementById('lightboxClose');
@@ -78,9 +111,10 @@
           }
         };
 
-        document.querySelectorAll('.gallery-item').forEach(item=>{
-          item.addEventListener('click',()=>{lastTrigger=item;},true);
-        });
+        gallery?.addEventListener('click',event=>{
+          const item=event.target.closest('.gallery-item');
+          if(item&&gallery.contains(item))lastTrigger=item;
+        },true);
 
         const observer=new MutationObserver(syncLightboxState);
         observer.observe(lb,{attributes:true,attributeFilter:['class']});
