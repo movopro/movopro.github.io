@@ -142,7 +142,23 @@
   }
 
   if(location.pathname.endsWith('/uslugi-ceni.html') || location.pathname==='/uslugi-ceni.html' || location.pathname.includes('/uslugi-ceni.html')){
-    const showPricing=()=>document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale').forEach(el=>{el.style.opacity='1';el.style.transform='none';});
+    const showPricing=()=>{
+      document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale').forEach(el=>{el.style.opacity='1';el.style.transform='none';});
+
+      // The calculator initializes itself on page load. On phones that initialization can
+      // trigger its result-scroll helper. A normal navigation to Pricing should always
+      // open at the top; result scrolling remains available after an actual Calculate tap.
+      if(!location.hash && window.matchMedia('(max-width: 768px)').matches){
+        let interacted=false;
+        const markInteraction=()=>{interacted=true;};
+        document.addEventListener('pointerdown',markInteraction,{once:true,capture:true});
+        document.addEventListener('keydown',markInteraction,{once:true,capture:true});
+        document.addEventListener('touchstart',markInteraction,{once:true,capture:true,passive:true});
+        window.setTimeout(()=>{
+          if(!interacted && window.scrollY>0) window.scrollTo({top:0,left:0,behavior:'auto'});
+        },260);
+      }
+    };
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',showPricing,{once:true});else showPricing();
   }
 
