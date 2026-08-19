@@ -13,6 +13,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Услуги и цени | Memory Photo &amp; Video</title>
+  <meta name="description" content="Сватбени фото и видео пакети, услуги за други събития и ориентировъчен калкулатор.">
+  <link rel="canonical" href="https://memoryphotoandvideo.com/uslugi-ceni.html">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Услуги и цени | Memory Photo & Video">
@@ -1353,7 +1355,10 @@
     © 2026 Memory Photo &amp; Video. Всички права запазени.
   </footer>
 
+  <!-- The maintained calculator lives in assets/js/pricing-fix.js. -->
+  <script>window.__pricingFixEnabled = true;</script>
   <script>
+    if (!window.__pricingFixEnabled) {
     /* ── REVEAL ON SCROLL ── */
     const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
     const io = new IntersectionObserver((entries) => {
@@ -1558,8 +1563,7 @@
         'Фотосесия в отделен ден: ' + (afterSession.checked ? 'Да' : 'Не'),
         'Ориентировъчна сума: ' + totalEUR.textContent + ' / ' + totalBGN.textContent
       ];
-      return lines.join('
-');
+      return lines.join('\n');
     }
 
     function getEventSummaryText(){
@@ -1577,8 +1581,7 @@
         'Ставка на час: ' + rate + '€',
         'Ориентировъчна сума: ' + eventTotalEUR.textContent + ' / ' + eventTotalBGN.textContent
       ];
-      return lines.join('
-');
+      return lines.join('\n');
     }
 
     const inquirySection   = document.getElementById('inquirySection');
@@ -1604,10 +1607,8 @@
         inquiryType.value = 'Пакетна оферта';
         selectedOffer.value = btn.dataset.package + ' — ' + btn.dataset.packagePrice;
         inquirySummary.value =
-          'Избрана оферта: ' + btn.dataset.package + '
-' +
-          'Цена: ' + btn.dataset.packagePrice + '
-' +
+          'Избрана оферта: ' + btn.dataset.package + '\n' +
+          'Цена: ' + btn.dataset.packagePrice + '\n' +
           'Тип: Пакетна оферта';
         openInquirySection();
       });
@@ -1691,7 +1692,10 @@
     updateDroneField();
     calcWedding();
     calcEvent();
+    }
   </script>
+<script defer src="assets/js/pricing-fix.js?v=2026081901"></script>
+<script defer src="assets/js/main.js"></script>
 <script defer src="assets/js/language-switch.js"></script>
 </body>
 </html>

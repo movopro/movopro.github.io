@@ -13,6 +13,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Свободни дати | Memory Photo &amp; Video</title>
+  <meta name="description" content="Проверете свободните дати за вашето събитие и вижте актуалната заетост по месеци.">
+  <link rel="canonical" href="https://memoryphotoandvideo.com/availability.html">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Свободни дати | Memory Photo & Video">
@@ -527,7 +529,7 @@
         <div class="calendar-card">
           <div class="cal-header">
             <button class="cal-btn" id="prevMonth" aria-label="Предишен месец">‹</button>
-            <div class="cal-month" id="monthLabel">Месец</div>
+          <div class="cal-month" id="monthLabel" aria-live="polite">Месец</div>
             <button class="cal-btn" id="nextMonth" aria-label="Следващ месец">›</button>
           </div>
 
@@ -596,10 +598,10 @@
         }
       };
 
-      const monthNames = [
-        'Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни',
-        'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'
-      ];
+      const isEnglish = new URLSearchParams(location.search).get('lang') === 'en' || location.pathname.startsWith('/en/');
+      const monthNames = isEnglish
+        ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        : ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
 
       const grid = document.getElementById('calendarGrid');
       const label = document.getElementById('monthLabel');
@@ -657,7 +659,7 @@
 
         const nextYear = activeYear === 2026 ? 2027 : 2026;
         yearToggle.dataset.targetYear = String(nextYear);
-        yearToggle.setAttribute('aria-label', `Покажи ${nextYear}`);
+        yearToggle.setAttribute('aria-label', isEnglish ? `Show ${nextYear}` : `Покажи ${nextYear}`);
         yearToggle.textContent = String(nextYear);
       }
 
@@ -691,7 +693,13 @@
           const isBusy = busy.has(key);
           const isPartial = partial.has(key);
 
+          const status = isBusy
+            ? (isEnglish ? 'Booked' : 'Заето')
+            : isPartial
+              ? (isEnglish ? 'Partially booked' : 'Частично заето')
+              : (isEnglish ? 'Available' : 'Свободно');
           cell.className = `cell ${isBusy ? 'busy' : isPartial ? 'partial' : 'free'}`;
+          cell.setAttribute('aria-label', `${d} ${monthNames[m]} ${y}: ${status}`);
           dayNumber.className = 'day-number';
           dayNumber.textContent = d;
 
@@ -727,6 +735,7 @@
       render();
     })();
   </script>
+<script defer src="assets/js/main.js"></script>
 <script defer src="assets/js/language-switch.js"></script>
 </body>
 </html>

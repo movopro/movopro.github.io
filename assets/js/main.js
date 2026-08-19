@@ -28,7 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.setAttribute('aria-expanded', 'false');
     menuToggle.setAttribute('aria-controls', 'site-navigation');
     nav.id = nav.id || 'site-navigation';
-    if (burger) burger.setAttribute('aria-controls', nav.id);
+    if (burger) {
+      burger.setAttribute('aria-controls', nav.id);
+      burger.setAttribute('role', 'button');
+      burger.setAttribute('tabindex', '0');
+      burger.addEventListener('keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        menuToggle.checked = !menuToggle.checked;
+        syncMenuState();
+      });
+    }
     menuToggle.addEventListener('change', syncMenuState);
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
@@ -77,26 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
       revealItems.forEach(el => observer.observe(el));
     }
-  }
-
-  const currentPage = location.pathname.split('/').pop() || 'index.html';
-  if (isEnglishPage && currentPage === 'uslugi-ceni.html') {
-    setTimeout(async () => {
-      const total = document.getElementById('totalEUR');
-      if (!total || total.textContent.trim() !== '0€') return;
-      try {
-        const html = await fetch('/uslugi-ceni.html', { cache: 'no-store' }).then(r => r.text());
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const scripts = Array.from(doc.querySelectorAll('script:not([src])'));
-        const pricingScript = scripts.find(s => s.textContent.includes('const PRICES') && s.textContent.includes('calcWedding'));
-        if (!pricingScript) return;
-        const script = document.createElement('script');
-        script.textContent = pricingScript.textContent;
-        document.body.appendChild(script);
-      } catch (error) {
-        console.warn('English pricing runtime could not be restored.', error);
-      }
-    }, 250);
   }
 
   /* Homepage: keep both people visible and center the hero copy. */

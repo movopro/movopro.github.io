@@ -110,9 +110,8 @@
   if(location.pathname.endsWith('/uslugi-ceni.html') || location.pathname==='/uslugi-ceni.html' || location.pathname.includes('/uslugi-ceni.html')){
     const showPricing=()=>document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale').forEach(el=>{el.style.opacity='1';el.style.transform='none';});
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',showPricing,{once:true});else showPricing();
-    const pricingFix=document.createElement('script');pricingFix.src='/assets/js/pricing-fix.js?v=2026081623';pricingFix.defer=true;document.head.appendChild(pricingFix);
   }
 
-  const loadComplete=()=>{if(document.documentElement.dataset.memoryEnglishComplete==='1')return;document.documentElement.dataset.memoryEnglishComplete='1';const complete=document.createElement('script');complete.src='/assets/js/language-switch-complete.js?v=2026081804';complete.onerror=()=>{};document.head.appendChild(complete);};
-  const s=document.createElement('script');s.src='/assets/js/language-switch-runtime.js?v=2026081623';s.onload=loadComplete;s.onerror=loadComplete;document.head.appendChild(s);
+  const loadComplete=()=>{if(document.documentElement.dataset.memoryEnglishComplete==='1')return;document.documentElement.dataset.memoryEnglishComplete='1';const complete=document.createElement('script');complete.src='/assets/js/language-switch-complete.js?v=2026081901';complete.onerror=()=>{};document.head.appendChild(complete);};
+  const s=document.createElement('script');s.src='/assets/js/language-switch-runtime.js?v=2026081901';s.onload=loadComplete;s.onerror=loadComplete;document.head.appendChild(s);
 })();

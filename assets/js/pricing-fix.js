@@ -4,6 +4,8 @@
     if(window.__pricingFixLoaded) return;
     window.__pricingFixLoaded=true;
 
+    const isEnglish=new URLSearchParams(location.search).get('lang')==='en'||location.pathname.startsWith('/en/');
+
     // Never let the reveal animation make the pricing page unusable.
     document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale')
       .forEach(el=>{el.style.opacity='1';el.style.transform='none';});
@@ -12,7 +14,7 @@
     const EUR_TO_BGN=1.95583;
     const MAX_HOURS=24;
     const moneyEUR=n=>Math.round(n)+'€';
-    const moneyBGN=n=>Math.round(n*EUR_TO_BGN)+' лв.';
+    const moneyBGN=n=>Math.round(n*EUR_TO_BGN)+(isEnglish?' BGN':' лв.');
     const line=(label,value)=>`<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
 
     // Keep every hour-based input within a sensible 24-hour maximum.
@@ -69,16 +71,16 @@
       if(droneHours) droneHours.value=String(dh);
       const droneResult=q('droneHours');
       let total=0,lines=[];
-      if(p){const x=PRICES.photo[p]||0;total+=x;lines.push(line(`Сватбена фотография: ${p} фотограф${p===1?'':'и'} (до 10ч)`,x));}
-      if(v){const x=PRICES.video[v]||0;total+=x;lines.push(line(`Сватбена видеография: ${v} оператор${v===1?'':'и'} (до 10ч)`,x));}
-      if(ot&&people){const x=ot*people*PRICES.overtime;total+=x;lines.push(line(`Доп. часове: ${ot}ч × ${people} × 78€`,x));}
-      if(dm==='hour'){const x=dh*PRICES.droneHour;total+=x;lines.push(line(`Дрон: ${dh}ч × 58€`,x));}
-      else if(dm==='day'){total+=PRICES.droneDay;lines.push(line('Дрон за целия ден',PRICES.droneDay));}
-      if(rawFiles.checked){total+=PRICES.raw;lines.push(line('Сурови файлове',PRICES.raw));}
-      if(afterSession.checked){total+=PRICES.after;lines.push(line('Фотосесия в отделен ден',PRICES.after));}
-      if(kmv){const x=kmv*PRICES.transport;total+=x;lines.push(line(`Транспорт: ${kmv} км × 0.58€`,x));}
+      if(p){const x=PRICES.photo[p]||0;total+=x;lines.push(line(isEnglish?`Wedding photography: ${p} photographer${p===1?'':'s'} (up to 10h)`:`Сватбена фотография: ${p} фотограф${p===1?'':'и'} (до 10ч)`,x));}
+      if(v){const x=PRICES.video[v]||0;total+=x;lines.push(line(isEnglish?`Wedding videography: ${v} videographer${v===1?'':'s'} (up to 10h)`:`Сватбена видеография: ${v} оператор${v===1?'':'и'} (до 10ч)`,x));}
+      if(ot&&people){const x=ot*people*PRICES.overtime;total+=x;lines.push(line(isEnglish?`Extra hours: ${ot}h × ${people} × 78€`:`Доп. часове: ${ot}ч × ${people} × 78€`,x));}
+      if(dm==='hour'){const x=dh*PRICES.droneHour;total+=x;lines.push(line(isEnglish?`Drone: ${dh}h × 58€`:`Дрон: ${dh}ч × 58€`,x));}
+      else if(dm==='day'){total+=PRICES.droneDay;lines.push(line(isEnglish?'Full-day drone':'Дрон за целия ден',PRICES.droneDay));}
+      if(rawFiles.checked){total+=PRICES.raw;lines.push(line(isEnglish?'Raw files':'Сурови файлове',PRICES.raw));}
+      if(afterSession.checked){total+=PRICES.after;lines.push(line(isEnglish?'Photo session on a separate day':'Фотосесия в отделен ден',PRICES.after));}
+      if(kmv){const x=kmv*PRICES.transport;total+=x;lines.push(line(isEnglish?`Travel: ${kmv} km × 0.58€`:`Транспорт: ${kmv} км × 0.58€`,x));}
       totalEUR.textContent=moneyEUR(total); if(totalBGN) totalBGN.textContent=moneyBGN(total);
-      if(breakdown) breakdown.innerHTML=lines.join('')||'<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
+      if(breakdown) breakdown.innerHTML=lines.join('')||`<div class="line"><div>${isEnglish?'No services selected.':'Няма избрани услуги.'}</div><div class="r">0€</div></div>`;
       scrollToResult(breakdown || totalEUR);
     };
 
@@ -105,9 +107,9 @@
       if(!eventType||!eventTotalEUR)return;
       const type=eventType.value,h=Math.min(MAX_HOURS,Math.max(1,+eventHours.value||1)),people=Math.max(1,+eventPeople.value||1),kmv=Math.max(0,+eventKm.value||0),rate=EVENT[type]||EVENT.other;
       if(eventHours) eventHours.value=String(h);
-      let total=h*people*rate,lines=[line(`Покритие: ${h}ч × ${people} × ${rate}€`,total)];
-      if(kmv){const x=kmv*EVENT.transport;total+=x;lines.push(line(`Транспорт: ${kmv} км × 0.58€`,x));}
-      if(eventRaw.checked){total+=EVENT.raw;lines.push(line('Сурови файлове',EVENT.raw));}
+      let total=h*people*rate,lines=[line(isEnglish?`Coverage: ${h}h × ${people} × ${rate}€`:`Покритие: ${h}ч × ${people} × ${rate}€`,total)];
+      if(kmv){const x=kmv*EVENT.transport;total+=x;lines.push(line(isEnglish?`Travel: ${kmv} km × 0.58€`:`Транспорт: ${kmv} км × 0.58€`,x));}
+      if(eventRaw.checked){total+=EVENT.raw;lines.push(line(isEnglish?'Raw files':'Сурови файлове',EVENT.raw));}
       eventTotalEUR.textContent=moneyEUR(total);if(eventTotalBGN)eventTotalBGN.textContent=moneyBGN(total);
       if(eventBreakdown)eventBreakdown.innerHTML=lines.join('');
       scrollToResult(eventBreakdown || eventTotalEUR);
@@ -120,8 +122,8 @@
     const inquirySection=q('inquirySection'),inquiryType=q('inquiryType'),selectedOffer=q('selectedOffer'),inquirySummary=q('inquirySummary');
     const clientName=q('clientName'),clientPhone=q('clientPhone'),clientEmail=q('clientEmail'),eventDate=q('eventDate'),eventLocation=q('eventLocation'),clientNote=q('clientNote'),privacy=q('privacyConsent'),send=q('sendInquiry'),status=q('sendStatus');
     const openInquiry=()=>inquirySection?.scrollIntoView({behavior:'smooth',block:'start'});
-    const weddingSummary=()=>`Тип: Сватба\nФотографи: ${+photoTeam.value||0}\nОператори: ${+videoTeam.value||0}\nДопълнителни часове: ${Math.min(MAX_HOURS,+otHours.value||0)}\nТранспорт (км): ${+km.value||0}\nДрон: ${droneMode.value==='hour'?'По часове ('+Math.min(MAX_HOURS,(+droneHours.value||1))+' ч)':droneMode.value==='day'?'За целия ден':'Не'}\nСурови файлове: ${rawFiles.checked?'Да':'Не'}\nФотосесия в отделен ден: ${afterSession.checked?'Да':'Не'}\nОриентировъчна сума: ${totalEUR.textContent} / ${totalBGN.textContent}`;
-    const eventSummary=()=>`Тип: ${({birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'})[eventType.value]||'Друго'}\nЧасове: ${Math.min(MAX_HOURS,+eventHours.value||1)}\nХора в екипа: ${+eventPeople.value||1}\nТранспорт (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`;
+    const weddingSummary=()=>isEnglish?`Type: Wedding\nPhotographers: ${+photoTeam.value||0}\nVideographers: ${+videoTeam.value||0}\nExtra hours: ${Math.min(MAX_HOURS,+otHours.value||0)}\nTravel (km): ${+km.value||0}\nDrone: ${droneMode.value==='hour'?'Hourly ('+Math.min(MAX_HOURS,(+droneHours.value||1))+' h)':droneMode.value==='day'?'Full day':'No'}\nRaw files: ${rawFiles.checked?'Yes':'No'}\nSeparate-day photo session: ${afterSession.checked?'Yes':'No'}\nEstimated total: ${totalEUR.textContent} / ${totalBGN.textContent}`:`Тип: Сватба\nФотографи: ${+photoTeam.value||0}\nОператори: ${+videoTeam.value||0}\nДопълнителни часове: ${Math.min(MAX_HOURS,+otHours.value||0)}\nТранспорт (км): ${+km.value||0}\nДрон: ${droneMode.value==='hour'?'По часове ('+Math.min(MAX_HOURS,(+droneHours.value||1))+' ч)':droneMode.value==='day'?'За целия ден':'Не'}\nСурови файлове: ${rawFiles.checked?'Да':'Не'}\nФотосесия в отделен ден: ${afterSession.checked?'Да':'Не'}\nОриентировъчна сума: ${totalEUR.textContent} / ${totalBGN.textContent}`;
+    const eventSummary=()=>isEnglish?`Type: ${({birthday:'Birthday',baptism:'Baptism',corporate:'Corporate event',other:'Other'})[eventType.value]||'Other'}\nHours: ${Math.min(MAX_HOURS,+eventHours.value||1)}\nTeam members: ${+eventPeople.value||1}\nTravel (km): ${+eventKm.value||0}\nRaw files: ${eventRaw.checked?'Yes':'No'}\nEstimated total: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`:`Тип: ${({birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'})[eventType.value]||'Друго'}\nЧасове: ${Math.min(MAX_HOURS,+eventHours.value||1)}\nХора в екипа: ${+eventPeople.value||1}\nТранспорт (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`;
 
     document.querySelectorAll('.package-inquiry-btn').forEach(btn=>{
       if(btn.dataset.pricingFixBound) return;btn.dataset.pricingFixBound='1';
