@@ -13,7 +13,7 @@
     document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale')
       .forEach(el=>{el.style.opacity='1';el.style.transform='none';});
 
-    const moneyEUR=n=>Math.round(n)+'€';
+    const moneyEUR=n=>n.toLocaleString(isEnglish?'en-US':'bg-BG',{minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2})+' €';
     const moneyBGN=n=>Math.round(n*EUR_TO_BGN)+(isEnglish?' BGN':' лв.');
     const line=(label,value)=>`<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
 
@@ -160,7 +160,7 @@
 
       totalEUR.textContent=moneyEUR(total);
       if(totalBGN) totalBGN.textContent=moneyBGN(total);
-      if(breakdown) breakdown.innerHTML=lines.join('')||`<div class="line"><div>${isEnglish?'No services selected.':'Няма избрани услуги.'}</div><div class="r">0€</div></div>`;
+      if(breakdown) breakdown.innerHTML=lines.join('')||`<div class="line"><div>${isEnglish?'No services selected.':'Няма избрани услуги.'}</div><div class="r">0 €</div></div>`;
       if(shouldScroll) scrollToResult(breakdown||totalEUR);
     };
 
@@ -243,7 +243,7 @@
       if(btn.dataset.pricingFixBound) return;
       btn.dataset.pricingFixBound='1';
       btn.addEventListener('click',()=>{
-        inquiryType.value=isEnglish?'Package offer':'Пакетна оферта';
+        inquiryType.value='Пакетна оферта';
         selectedOffer.value=btn.dataset.package+' — '+btn.dataset.packagePrice;
         inquirySummary.value=isEnglish
           ?'Selected offer: '+btn.dataset.package+'\nPrice: '+btn.dataset.packagePrice+'\nType: Package offer'
@@ -253,10 +253,10 @@
     });
 
     q('openWeddingInquiry')?.addEventListener('click',()=>{
-      calcWedding(false);inquiryType.value=isEnglish?'Custom configuration':'Персонална конфигурация';selectedOffer.value=isEnglish?'Custom wedding configuration':'Персонална конфигурация за сватба';inquirySummary.value=weddingSummary();openInquiry();
+      calcWedding(false);inquiryType.value='Персонална конфигурация';selectedOffer.value=isEnglish?'Custom wedding configuration':'Персонална конфигурация за сватба';inquirySummary.value=weddingSummary();openInquiry();
     });
     q('openEventInquiry')?.addEventListener('click',()=>{
-      calcEvent(false);inquiryType.value=isEnglish?'Other event':'Друго събитие';selectedOffer.value=isEnglish?'Custom configuration for another event':'Персонална конфигурация за друго събитие';inquirySummary.value=eventSummary();openInquiry();
+      calcEvent(false);inquiryType.value='Друго събитие';selectedOffer.value=isEnglish?'Custom configuration for another event':'Персонална конфигурация за друго събитие';inquirySummary.value=eventSummary();openInquiry();
     });
 
     if(send) send.addEventListener('click',async()=>{
