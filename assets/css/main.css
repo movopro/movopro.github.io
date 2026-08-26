@@ -4,6 +4,7 @@
 @import url("home-effects.css");
 @import url("mobile-fix.css");
 @import url("performance.css");
+@import url("wow-polish.css");
 
 /* The experimental filmstrip is permanently disabled. */
 .home-filmstrip{display:none!important;}
