@@ -83,25 +83,26 @@
 }
 
 /* Buttons feel tactile on phones and refined on desktop. */
-.home-btn,.btn,.v2-btn,.partner-btn,.package-inquiry-btn,.mode-tab{
+.home-btn,.btn,.v2-btn,.partner-btn,.package-inquiry-btn,.mode-tab,.portfolio-load-more{
   -webkit-tap-highlight-color:transparent;
   transform:translateZ(0);
 }
-.home-btn:active,.btn:active,.v2-btn:active,.partner-btn:active,.package-inquiry-btn:active,.mode-tab:active{
+.home-btn:active,.btn:active,.v2-btn:active,.partner-btn:active,.package-inquiry-btn:active,.mode-tab:active,.portfolio-load-more:active{
   transform:scale(.975)!important;
 }
 
-/* Cards/images get depth only where it is safe. */
-.review-summary,.review-box,.video-card,.video-copy,.dj-card,.home-cta,
-.v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card{
+/* Cards get depth only where it is safe. */
+.review-summary,.review-box,.video-card,.video-copy,.video-card-v2,.dj-card,.home-cta,
+.v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card,.portfolio-note,.videos-note,.videos-final{
   transition:transform .36s var(--wow-ease),border-color .36s ease,box-shadow .36s ease,background-color .36s ease;
 }
 
-.home-photo-grid a,.gallery-item,.v2-gallery a,.portfolio-item{
+/* Sheen only on surfaces that do not already use ::after for functional styling. */
+.home-photo-grid a,.v2-gallery a{
   position:relative;
   isolation:isolate;
 }
-.home-photo-grid a::after,.gallery-item::after,.v2-gallery a::after,.portfolio-item::after{
+.home-photo-grid a::after,.v2-gallery a::after{
   content:"";
   position:absolute;
   inset:0;
@@ -158,14 +159,23 @@ header::after{
 }
 header.scrolled::after{opacity:1}
 
+/* Portfolio keeps its own overlay; add depth without touching its pseudo-elements. */
+.gallery-item,.portfolio-item{
+  transition:transform .28s var(--wow-ease),box-shadow .28s ease,border-color .28s ease;
+}
+
 @media (hover:hover) and (pointer:fine){
-  .review-summary:hover,.review-box:hover,.video-card:hover,.video-copy:hover,.dj-card:hover,.home-cta:hover,
-  .v2-service:hover,.v2-step:hover,.package-card:hover,.calc-card:hover,.event-card:hover,.team-card:hover{
+  .review-summary:hover,.review-box:hover,.video-card:hover,.video-copy:hover,.video-card-v2:hover,.dj-card:hover,.home-cta:hover,
+  .v2-service:hover,.v2-step:hover,.package-card:hover,.calc-card:hover,.event-card:hover,.team-card:hover,.portfolio-note:hover,.videos-note:hover,.videos-final:hover{
     transform:translateY(-5px);
     border-color:rgba(195,152,90,.30)!important;
     box-shadow:0 20px 55px rgba(0,0,0,.28);
   }
-  .home-photo-grid a:hover::after,.gallery-item:hover::after,.v2-gallery a:hover::after,.portfolio-item:hover::after{
+  .gallery-item:hover,.portfolio-item:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 34px rgba(0,0,0,.28);
+  }
+  .home-photo-grid a:hover::after,.v2-gallery a:hover::after{
     transform:translateX(130%);
   }
 }
@@ -188,6 +198,7 @@ header.scrolled::after{opacity:1}
   .home-hero::after,.home-hero__copy::before,.wow-scroll-cue::after{animation:none!important}
   .home-hero::after{transform:none!important}
   .wow-scroll-cue{display:none}
-  .review-summary,.review-box,.video-card,.video-copy,.dj-card,.home-cta,
-  .v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card{transition:none}
+  .review-summary,.review-box,.video-card,.video-copy,.video-card-v2,.dj-card,.home-cta,
+  .v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card,.portfolio-note,.videos-note,.videos-final,
+  .gallery-item,.portfolio-item{transition:none}
 }
