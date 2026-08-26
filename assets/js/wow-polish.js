@@ -7,12 +7,30 @@
   const q=(s,r=document)=>r.querySelector(s);
   const qa=(s,r=document)=>[...r.querySelectorAll(s)];
 
+  const ensureAnalytics=()=>{
+    if(typeof window.gtag==='function') return;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=function(){window.dataLayer.push(arguments);};
+    window.gtag('js',new Date());
+    window.gtag('config','G-WJK01GL7PM');
+    if(!q('script[src*="googletagmanager.com/gtag/js?id=G-WJK01GL7PM"]')){
+      const ga=document.createElement('script');
+      ga.async=true;
+      ga.src='https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM';
+      document.head.appendChild(ga);
+    }
+  };
+
   const init=()=>{
+    ensureAnalytics();
+
     /* Scroll progress */
-    const progress=document.createElement('div');
-    progress.id='wowScrollProgress';
-    progress.setAttribute('aria-hidden','true');
-    document.body.appendChild(progress);
+    if(!q('#wowScrollProgress')){
+      const progress=document.createElement('div');
+      progress.id='wowScrollProgress';
+      progress.setAttribute('aria-hidden','true');
+      document.body.appendChild(progress);
+    }
 
     let raf=0;
     const syncScroll=()=>{
@@ -51,7 +69,7 @@
       '.home-section__head','.review-summary','.review-box','.video-card','.video-copy','.dj-card','.home-cta',
       '.v2-section > *','.v2-service','.v2-step','.v2-cta',
       '.pricing-hero','.included-all','.package-card','.calc-card','.event-card',
-      '.about-grid > *','.team-card','.portfolio-head','.video-info-v2'
+      '.about-grid > *','.team-card','.portfolio-head','.video-info-v2','.video-card-v2','.videos-final'
     ];
     const revealTargets=[];
     selectors.forEach(sel=>qa(sel).forEach(el=>{if(!revealTargets.includes(el)) revealTargets.push(el);}));
@@ -96,12 +114,20 @@
       },{passive:true});
     }
 
-    /* Defensive UX audit fixes: external links and image decoding only. */
+    /* Defensive audit fixes: security, current-page semantics and image decoding. */
     qa('a[target="_blank"]').forEach(link=>{
       const rel=new Set((link.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
       rel.add('noopener');rel.add('noreferrer');
       link.setAttribute('rel',[...rel].join(' '));
     });
+
+    const current=(location.pathname.split('/').pop()||'index.html');
+    qa('header nav a').forEach(link=>{
+      const href=(link.getAttribute('href')||'').split('?')[0].split('#')[0];
+      if(href===current || (current==='index.html' && (href==='/'||href==='index.html'))) link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    });
+
     qa('img').forEach((img,index)=>{
       if(index>1 && !img.hasAttribute('decoding')) img.decoding='async';
     });
