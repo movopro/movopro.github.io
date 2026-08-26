@@ -24,7 +24,6 @@
   const init=()=>{
     ensureAnalytics();
 
-    /* Scroll progress */
     if(!q('#wowScrollProgress')){
       const progress=document.createElement('div');
       progress.id='wowScrollProgress';
@@ -55,7 +54,6 @@
     addEventListener('resize',syncScroll,{passive:true});
     syncScroll();
 
-    /* Decorative hero cue, no text/content changes. */
     const homeHero=q('.home-hero');
     if(homeHero && !reduceMotion && !q('.wow-scroll-cue',homeHero)){
       const cue=document.createElement('span');
@@ -64,12 +62,13 @@
       homeHero.appendChild(cue);
     }
 
-    /* Progressive scroll reveals. Only classes/styles, never text. */
     const selectors=[
-      '.home-section__head','.review-summary','.review-box','.video-card','.video-copy','.dj-card','.home-cta',
+      '.home-section__head','.home-photo-grid a','.review-summary','.review-box','.video-card','.video-copy','.dj-card','.home-cta',
       '.v2-section > *','.v2-service','.v2-step','.v2-cta',
       '.pricing-hero','.included-all','.package-card','.calc-card','.event-card',
-      '.about-grid > *','.team-card','.portfolio-head','.video-info-v2','.video-card-v2','.videos-final'
+      '.availability-hero','.availability-point','.calendar-card',
+      '.about-grid > *','.team-card','.person','.story-v2',
+      '.portfolio-head','.video-info-v2','.video-card-v2','.videos-final'
     ];
     const revealTargets=[];
     selectors.forEach(sel=>qa(sel).forEach(el=>{if(!revealTargets.includes(el)) revealTargets.push(el);}));
@@ -94,7 +93,6 @@
       qa('.wow-reveal').forEach(el=>observer.observe(el));
     }
 
-    /* Desktop-only ambient pointer glow on the hero. */
     if(homeHero && canHover && !reduceMotion){
       let heroRaf=0;
       homeHero.addEventListener('pointermove',event=>{
@@ -114,7 +112,6 @@
       },{passive:true});
     }
 
-    /* Defensive audit fixes: security, current-page semantics and image decoding. */
     qa('a[target="_blank"]').forEach(link=>{
       const rel=new Set((link.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
       rel.add('noopener');rel.add('noreferrer');
