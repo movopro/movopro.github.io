@@ -164,4 +164,11 @@
 
   const loadComplete=()=>{if(document.documentElement.dataset.memoryEnglishComplete==='1')return;document.documentElement.dataset.memoryEnglishComplete='1';const complete=document.createElement('script');complete.src='/assets/js/language-switch-complete.js?v=2026081901';complete.onerror=()=>{};document.head.appendChild(complete);};
   const s=document.createElement('script');s.src='/assets/js/language-switch-runtime.js?v=2026081901';s.onload=loadComplete;s.onerror=loadComplete;document.head.appendChild(s);
+
+  // Independent enhancement layer: never blocks navigation, pricing, or language switching.
+  const wow=document.createElement('script');
+  wow.src='/assets/js/wow-polish.js?v=2026082601';
+  wow.defer=true;
+  wow.onerror=()=>{};
+  document.head.appendChild(wow);
 })();
