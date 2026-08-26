@@ -1,0 +1,193 @@
+/* MEMORY PHOTO & VIDEO — cinematic interaction polish
+   Mobile-first, progressive enhancement only. No copy changes. */
+
+:root{
+  --wow-gold:195,152,90;
+  --wow-cream:240,233,216;
+  --wow-ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* Thin progress indicator: useful, subtle, and never blocks interaction. */
+#wowScrollProgress{
+  position:fixed;
+  z-index:1600;
+  top:0;
+  left:0;
+  width:100%;
+  height:2px;
+  pointer-events:none;
+  transform:scaleX(var(--wow-progress,0));
+  transform-origin:left center;
+  background:linear-gradient(90deg,rgba(var(--wow-gold),.35),rgba(232,201,138,.98),rgba(255,245,216,.92));
+  box-shadow:0 0 16px rgba(var(--wow-gold),.28);
+  will-change:transform;
+}
+
+/* Scroll reveal is added by JS only after the page has loaded. */
+.wow-reveal{
+  opacity:0;
+  transform:translate3d(0,24px,0) scale(.988);
+  transition:opacity .72s var(--wow-ease),transform .72s var(--wow-ease);
+  will-change:opacity,transform;
+}
+.wow-reveal.wow-visible{
+  opacity:1;
+  transform:none;
+  will-change:auto;
+}
+.wow-reveal[data-wow-delay="1"]{transition-delay:70ms}
+.wow-reveal[data-wow-delay="2"]{transition-delay:140ms}
+.wow-reveal[data-wow-delay="3"]{transition-delay:210ms}
+
+/* A restrained ambient highlight on the homepage hero. */
+.home-hero::after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:-28%;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 22% 28%,rgba(232,201,138,.13),transparent 22%),
+    radial-gradient(circle at 78% 60%,rgba(195,152,90,.09),transparent 25%);
+  transform:translate3d(var(--wow-hero-x,0),calc(var(--wow-hero-y,0) + var(--wow-hero-scroll,0px)),0) rotate(-7deg);
+  transition:transform .9s var(--wow-ease);
+  animation:wowAmbient 10s ease-in-out infinite alternate;
+}
+@keyframes wowAmbient{
+  from{opacity:.62;filter:blur(0)}
+  to{opacity:1;filter:blur(2px)}
+}
+
+/* Premium animated edge on the hero card, without changing its layout. */
+.home-hero__copy{isolation:isolate;overflow:hidden}
+.home-hero__copy::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-1px;
+  border-radius:inherit;
+  pointer-events:none;
+  padding:1px;
+  background:linear-gradient(115deg,transparent 8%,rgba(232,201,138,.52) 35%,rgba(255,255,255,.12) 50%,rgba(195,152,90,.34) 68%,transparent 92%);
+  background-size:220% 100%;
+  animation:wowBorderSweep 7s ease-in-out infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  opacity:.66;
+}
+@keyframes wowBorderSweep{
+  0%,24%{background-position:120% 0;opacity:.28}
+  50%{background-position:0 0;opacity:.78}
+  76%,100%{background-position:-120% 0;opacity:.28}
+}
+
+/* Buttons feel tactile on phones and refined on desktop. */
+.home-btn,.btn,.v2-btn,.partner-btn,.package-inquiry-btn,.mode-tab{
+  -webkit-tap-highlight-color:transparent;
+  transform:translateZ(0);
+}
+.home-btn:active,.btn:active,.v2-btn:active,.partner-btn:active,.package-inquiry-btn:active,.mode-tab:active{
+  transform:scale(.975)!important;
+}
+
+/* Cards/images get depth only where it is safe. */
+.review-summary,.review-box,.video-card,.video-copy,.dj-card,.home-cta,
+.v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card{
+  transition:transform .36s var(--wow-ease),border-color .36s ease,box-shadow .36s ease,background-color .36s ease;
+}
+
+.home-photo-grid a,.gallery-item,.v2-gallery a,.portfolio-item{
+  position:relative;
+  isolation:isolate;
+}
+.home-photo-grid a::after,.gallery-item::after,.v2-gallery a::after,.portfolio-item::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,244,214,.13) 48%,transparent 66%);
+  transform:translateX(-130%);
+  transition:transform .75s var(--wow-ease);
+}
+
+/* Decorative scroll cue: no text, no layout shift. */
+.wow-scroll-cue{
+  position:absolute;
+  z-index:4;
+  left:50%;
+  bottom:9px;
+  width:22px;
+  height:34px;
+  transform:translateX(-50%);
+  border:1px solid rgba(232,201,138,.38);
+  border-radius:999px;
+  pointer-events:none;
+  opacity:.72;
+  transition:opacity .35s ease,transform .35s ease;
+}
+.wow-scroll-cue::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:7px;
+  width:3px;
+  height:7px;
+  border-radius:999px;
+  background:#e8c98a;
+  transform:translateX(-50%);
+  animation:wowCue 1.7s ease-in-out infinite;
+}
+.wow-scroll-cue.wow-cue-hidden{opacity:0;transform:translate(-50%,8px)}
+@keyframes wowCue{
+  0%{transform:translate(-50%,0);opacity:.2}
+  45%{opacity:1}
+  100%{transform:translate(-50%,11px);opacity:0}
+}
+
+/* Header gains a tiny premium light line when scrolling. */
+header::after{
+  content:"";
+  position:absolute;
+  left:10%;right:10%;bottom:-1px;height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(232,201,138,.28),transparent);
+  opacity:0;
+  transition:opacity .3s ease;
+}
+header.scrolled::after{opacity:1}
+
+@media (hover:hover) and (pointer:fine){
+  .review-summary:hover,.review-box:hover,.video-card:hover,.video-copy:hover,.dj-card:hover,.home-cta:hover,
+  .v2-service:hover,.v2-step:hover,.package-card:hover,.calc-card:hover,.event-card:hover,.team-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(195,152,90,.30)!important;
+    box-shadow:0 20px 55px rgba(0,0,0,.28);
+  }
+  .home-photo-grid a:hover::after,.gallery-item:hover::after,.v2-gallery a:hover::after,.portfolio-item:hover::after{
+    transform:translateX(130%);
+  }
+}
+
+/* Mobile: strong enough to feel premium, light enough to remain fast. */
+@media (max-width:760px){
+  #wowScrollProgress{height:2px}
+  .wow-reveal{transform:translate3d(0,17px,0) scale(.993);transition-duration:.58s}
+  .home-hero::after{inset:-18%;opacity:.8;animation-duration:12s}
+  .home-hero__copy::before{animation-duration:8.5s}
+  .wow-scroll-cue{bottom:max(7px,env(safe-area-inset-bottom))}
+  .home-photo-grid a:active img,.gallery-item:active img,.v2-gallery a:active img,.portfolio-item:active img{
+    transform:scale(1.018)!important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #wowScrollProgress{display:none}
+  .wow-reveal,.wow-reveal.wow-visible{opacity:1;transform:none;transition:none}
+  .home-hero::after,.home-hero__copy::before,.wow-scroll-cue::after{animation:none!important}
+  .home-hero::after{transform:none!important}
+  .wow-scroll-cue{display:none}
+  .review-summary,.review-box,.video-card,.video-copy,.dj-card,.home-cta,
+  .v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card{transition:none}
+}
