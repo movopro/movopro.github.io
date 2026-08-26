@@ -45,7 +45,12 @@ jobs:
           import re, subprocess, tempfile
           for p in list(Path('.').glob('*.html')) + list(Path('en').glob('*.html')):
               text=p.read_text(encoding='utf-8')
-              for i,code in enumerate(re.findall(r'<script(?![^>]*src=)[^>]*>(.*?)</script>', text, re.S),1):
+              scripts=re.findall(r'<script([^>]*)>(.*?)</script>', text, re.S | re.I)
+              for i,(attrs,code) in enumerate(scripts,1):
+                  if re.search(r'\bsrc\s*=', attrs, re.I):
+                      continue
+                  if re.search(r'type\s*=\s*["\']application/ld\+json["\']', attrs, re.I):
+                      continue
                   if not code.strip():
                       continue
                   f=Path(tempfile.gettempdir())/f'memory-inline-{i}.js'
@@ -53,7 +58,7 @@ jobs:
                   r=subprocess.run(['node','--check',str(f)],capture_output=True,text=True)
                   if r.returncode:
                       raise SystemExit(f'JavaScript syntax error in {p}, inline script {i}:\n{r.stderr}')
-          print('All inline JavaScript blocks passed syntax validation.')
+          print('All executable inline JavaScript blocks passed syntax validation.')
           PY
 
       - name: Commit changes
