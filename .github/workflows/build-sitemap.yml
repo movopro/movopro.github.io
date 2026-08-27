@@ -1,0 +1,53 @@
+name: Build SEO sitemap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'portfolio.html'
+      - 'videos.html'
+      - 'uslugi-ceni.html'
+      - 'availability.html'
+      - 'about.html'
+      - 'svatba-izbrani.html'
+      - 'en/*.html'
+      - 'scripts/build_sitemap.py'
+      - '.github/workflows/build-sitemap.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip sitemap]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate sitemap
+        run: python3 scripts/build_sitemap.py
+
+      - name: Validate sitemap
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('sitemap.xml')
+          root = tree.getroot()
+          urls = root.findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url')
+          if len(urls) != 14:
+              raise SystemExit(f'Expected 14 page URLs, found {len(urls)}')
+          print(f'Validated sitemap with {len(urls)} page URLs.')
+          PY
+
+      - name: Commit sitemap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml
+          if git diff --cached --quiet; then
+            echo 'Sitemap already up to date.'
+            exit 0
+          fi
+          git commit -m "Refresh sitemap and image discovery [skip sitemap]"
+          git push
