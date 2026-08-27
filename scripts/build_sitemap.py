@@ -24,6 +24,12 @@ PAGES = [
     ('en/svatba-izbrani.html', '/en/svatba-izbrani.html'),
 ]
 
+# Dedicated wedding watch pages are intentionally discovered dynamically so
+# future stories are added to the sitemap automatically when a new HTML file
+# is created under /weddings/.
+for wedding_page in sorted(Path('weddings').glob('*.html')):
+    PAGES.append((wedding_page.as_posix(), '/' + wedding_page.as_posix()))
+
 IMG_RE = re.compile(r'<img\b[^>]*?\bsrc=["\']([^"\']+)["\']', re.I)
 
 
@@ -43,7 +49,6 @@ def local_image_urls(path: Path):
             continue
         if parsed.netloc not in ('memoryphotoandvideo.com', 'www.memoryphotoandvideo.com'):
             continue
-        # Canonicalise to the preferred HTTPS/non-www host.
         absolute = HOST + parsed.path
         if parsed.query:
             absolute += '?' + parsed.query
