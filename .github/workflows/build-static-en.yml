@@ -58,17 +58,15 @@ jobs:
               > "/tmp/memory-en-render/${page}"
           done
 
+      - name: Install HTML parser
+        run: python3 -m pip install --disable-pip-version-check beautifulsoup4
+
       - name: Make rendered pages canonical and crawlable
         shell: python
         run: |
           from pathlib import Path
           import re
-          from html import escape
-
-          try:
-              from bs4 import BeautifulSoup
-          except ImportError:
-              raise SystemExit('BeautifulSoup is required on the runner but was not available.')
+          from bs4 import BeautifulSoup
 
           host = 'https://memoryphotoandvideo.com'
           pages = {
