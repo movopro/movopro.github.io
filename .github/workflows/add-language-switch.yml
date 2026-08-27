@@ -10,18 +10,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inject switch and repair inline JavaScript
+      - name: Inject switch, SEO alternates and repair inline JavaScript
         shell: python
         run: |
           from pathlib import Path
+          import re
+
           files = list(Path('.').glob('*.html')) + list(Path('en').glob('*.html'))
+          host = 'https://memoryphotoandvideo.com'
+          pairs = {
+              'index.html': ('/', '/en/'),
+              'portfolio.html': ('/portfolio.html', '/en/portfolio.html'),
+              'videos.html': ('/videos.html', '/en/videos.html'),
+              'uslugi-ceni.html': ('/uslugi-ceni.html', '/en/uslugi-ceni.html'),
+              'availability.html': ('/availability.html', '/en/availability.html'),
+              'about.html': ('/about.html', '/en/about.html'),
+              'svatba-izbrani.html': ('/svatba-izbrani.html', '/en/svatba-izbrani.html'),
+          }
+
           for p in files:
               text = p.read_text(encoding='utf-8')
               css = 'assets/css/language-switch.css' if p.parent.name != 'en' else '../assets/css/language-switch.css'
               js = 'assets/js/language-switch.js' if p.parent.name != 'en' else '../assets/js/language-switch.js'
 
               # Repair the exact broken newline sequences introduced by older automation.
-              # These must remain the two characters backslash+n inside JavaScript strings.
               repairs = {
                   "return lines.join('\n');": "return lines.join('\\n');",
                   "'Избрана оферта: ' + btn.dataset.package + '\n' +": "'Избрана оферта: ' + btn.dataset.package + '\\n' +",
@@ -34,6 +46,19 @@ jobs:
                   text = text.replace('</head>', f'<link rel="stylesheet" href="{css}">\n</head>', 1)
               if 'language-switch.js' not in text:
                   text = text.replace('</body>', f'<script defer src="{js}"></script>\n</body>', 1)
+
+              # Bulgarian source pages receive static hreflang tags so Google can discover
+              # the equivalent crawlable English pages without relying on JavaScript.
+              if p.parent.name != 'en' and p.name in pairs:
+                  bg_path, en_path = pairs[p.name]
+                  text = re.sub(r'\s*<link\b[^>]*\bhreflang=["\'][^"\']+["\'][^>]*>', '', text, flags=re.I)
+                  alternates = (
+                      f'\n<link rel="alternate" hreflang="bg" href="{host}{bg_path}">'
+                      f'\n<link rel="alternate" hreflang="en" href="{host}{en_path}">'
+                      f'\n<link rel="alternate" hreflang="x-default" href="{host}{bg_path}">\n'
+                  )
+                  text = text.replace('</head>', alternates + '</head>', 1)
+
               p.write_text(text, encoding='utf-8')
 
       - name: Validate JavaScript blocks
@@ -67,5 +92,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add '*.html' 'en/*.html' 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Repair inline JavaScript safely [skip language switch]"
+          git commit -m "Sync language switch and SEO alternates [skip language switch]"
           git push
