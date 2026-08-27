@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inject switch, SEO metadata and repair inline JavaScript
+      - name: Inject switch, SEO alternates and repair inline JavaScript
         shell: python
         run: |
           from pathlib import Path
@@ -27,42 +27,12 @@ jobs:
               'about.html': ('/about.html', '/en/about.html'),
               'svatba-izbrani.html': ('/svatba-izbrani.html', '/en/svatba-izbrani.html'),
           }
-          business_schema = '''
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "@id": "https://memoryphotoandvideo.com/#business",
-  "name": "Memory Photo & Video",
-  "url": "https://memoryphotoandvideo.com/",
-  "image": "https://memoryphotoandvideo.com/og-image.jpg",
-  "description": "Professional wedding photography and videography in Kardzhali and Bulgaria.",
-  "areaServed": [
-    {"@type": "City", "name": "Kardzhali"},
-    {"@type": "Country", "name": "Bulgaria"}
-  ],
-  "sameAs": [
-    "https://www.instagram.com/memoryphotoandvideo/",
-    "https://www.facebook.com/MemoryPhotoAndVideo/"
-  ]
-}
-</script>
-'''
-
-          def ensure_alt(match):
-              tag = match.group(0)
-              if re.search(r'\balt\s*=', tag, re.I):
-                  return tag
-              closing = '/>' if tag.rstrip().endswith('/>') else '>'
-              body = tag.rstrip()[:-2] if closing == '/>' else tag.rstrip()[:-1]
-              return body + ' alt="Memory Photo & Video"' + closing
 
           for p in files:
               text = p.read_text(encoding='utf-8')
               css = 'assets/css/language-switch.css' if p.parent.name != 'en' else '../assets/css/language-switch.css'
               js = 'assets/js/language-switch.js' if p.parent.name != 'en' else '../assets/js/language-switch.js'
 
-              # Repair the exact broken newline sequences introduced by older automation.
               repairs = {
                   "return lines.join('\n');": "return lines.join('\\n');",
                   "'Избрана оферта: ' + btn.dataset.package + '\n' +": "'Избрана оферта: ' + btn.dataset.package + '\\n' +",
@@ -76,8 +46,6 @@ jobs:
               if 'language-switch.js' not in text:
                   text = text.replace('</body>', f'<script defer src="{js}"></script>\n</body>', 1)
 
-              # Bulgarian source pages receive static hreflang tags so Google can discover
-              # the equivalent crawlable English pages without relying on JavaScript.
               if p.parent.name != 'en' and p.name in pairs:
                   bg_path, en_path = pairs[p.name]
                   text = re.sub(r'\s*<link\b[^>]*\bhreflang=["\'][^"\']+["\'][^>]*>', '', text, flags=re.I)
@@ -87,13 +55,6 @@ jobs:
                       f'\n<link rel="alternate" hreflang="x-default" href="{host}{bg_path}">\n'
                   )
                   text = text.replace('</head>', alternates + '</head>', 1)
-
-              # Add the business entity schema to pages that do not already carry JSON-LD.
-              if 'application/ld+json' not in text.lower():
-                  text = text.replace('</head>', business_schema + '</head>', 1)
-
-              # Ensure every content image has an alt attribute without changing visible copy.
-              text = re.sub(r'<img\b[^>]*>', ensure_alt, text, flags=re.I)
 
               p.write_text(text, encoding='utf-8')
 
@@ -128,5 +89,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add '*.html' 'en/*.html' 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Sync language switch and SEO metadata [skip language switch]"
+          git commit -m "Sync language switch and SEO alternates [skip language switch]"
           git push
