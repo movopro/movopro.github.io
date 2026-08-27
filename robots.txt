@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://memoryphotoandvideo.com/sitemap.xml
+Sitemap: https://memoryphotoandvideo.com/video-sitemap.xml
