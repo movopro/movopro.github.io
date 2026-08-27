@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://memoryphotoandvideo.com/videos.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/LTlmSOUu_t8/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Milena &amp; Petar — Сватбен трейлър с кино визия</video:title>
+      <video:description>Емоционален сватбен трейлър с кино атмосфера от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/LTlmSOUu_t8</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/lBLyu7b1u20/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Magdalena &amp; Rosen — Сватбен трейлър</video:title>
+      <video:description>Емоционален сватбен трейлър от реален сватбен ден, заснет от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/lBLyu7b1u20</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/avLL1z2iOAI/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Toni &amp; Petko — Сватбен трейлър</video:title>
+      <video:description>Кратък сватбен трейлър с кино визия от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/avLL1z2iOAI</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/n17x24EwzOU/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Valeria &amp; Yanko — Сватбен трейлър</video:title>
+      <video:description>Елегантен сватбен трейлър с естествено усещане от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/n17x24EwzOU</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/2naSIAqtxfs/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Ralitsa &amp; Hristos — Сватбен тийзър</video:title>
+      <video:description>Сватбен тийзър от нестандартна сватба в Родопите, заснет от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/2naSIAqtxfs</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/QPQqpR-VLag/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Emi &amp; Fran — Сватбен тийзър</video:title>
+      <video:description>Сватбен тийзър с нежни и емоционални моменти от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/QPQqpR-VLag</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/ksPOem87z8g/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Гърнатскине Конаци — Представително видео</video:title>
+      <video:description>Представително документално промо видео, създадено от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/ksPOem87z8g</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/DP87gRhc1AM/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Футболна школа 999 — Промо видео</video:title>
+      <video:description>Динамично промо видео за Футболна школа 999, създадено от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/DP87gRhc1AM</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/vyMDGrQRdPI/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Hristo Botev Language School — Трейлър за бал 2026</video:title>
+      <video:description>Трейлър за бал 2026, създаден от Memory Photo &amp; Video.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/vyMDGrQRdPI</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader>Memory Photo &amp; Video</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+</urlset>
