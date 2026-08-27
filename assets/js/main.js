@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* Mobile navigation: keep keyboard/screen-reader state in sync and make Escape/outside-click close it. */
-  if (menuToggle && nav) {
+  if (menuToggle && nav && header) {
     const burger = document.querySelector('.burger');
     const syncMenuState = () => {
       const open = menuToggle.checked;
@@ -25,9 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (burger) burger.setAttribute('aria-expanded', String(open));
       document.body.classList.toggle('menu-open', open);
     };
+
+    const closeMenu = ({ focusToggle = false } = {}) => {
+      if (!menuToggle.checked) return;
+      menuToggle.checked = false;
+      syncMenuState();
+      if (focusToggle) menuToggle.focus();
+    };
+
     menuToggle.setAttribute('aria-expanded', 'false');
     menuToggle.setAttribute('aria-controls', 'site-navigation');
     nav.id = nav.id || 'site-navigation';
+
     if (burger) {
       burger.setAttribute('aria-controls', nav.id);
       burger.setAttribute('role', 'button');
@@ -39,27 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
         syncMenuState();
       });
     }
+
     menuToggle.addEventListener('change', syncMenuState);
-    nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        if (menuToggle.checked) {
-          menuToggle.checked = false;
-          syncMenuState();
-        }
-      });
-    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMenu()));
+
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && menuToggle.checked) {
-        menuToggle.checked = false;
-        syncMenuState();
-        menuToggle.focus();
-      }
+      if (event.key === 'Escape') closeMenu({ focusToggle: true });
     });
+
     document.addEventListener('pointerdown', event => {
-      if (!menuToggle.checked || header.contains(event.target)) return;
-      menuToggle.checked = false;
-      syncMenuState();
-    });
+      if (!menuToggle.checked) return;
+      if (nav.contains(event.target) || burger?.contains(event.target) || event.target === menuToggle) return;
+      closeMenu();
+    }, { passive: true });
+
     syncMenuState();
   }
 
@@ -87,98 +89,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* Homepage: keep both people visible and center the hero copy. */
+  /* Homepage content enhancements. The final hero layout now lives in CSS so it is stable from first paint. */
   const homeHero = document.querySelector('.home-hero');
   if (homeHero) {
-    const style = document.createElement('style');
-    style.textContent = `
-      .home-hero{min-height:100svh;position:relative;display:block;overflow:hidden;padding:0!important;}
-      .home-hero::before{background-position:center top!important;}
-      .home-hero__inner{position:absolute!important;inset:0!important;width:100%!important;max-width:none!important;display:block!important;}
-      .home-hero__photo{display:none!important;}
-      .home-hero__copy{position:absolute;left:50%;bottom:46px;transform:translateX(-50%);width:min(820px,calc(100% - 40px));padding:34px 36px 30px!important;border-radius:24px;background:linear-gradient(145deg,rgba(10,9,7,.78),rgba(10,9,7,.58))!important;backdrop-filter:blur(14px);box-shadow:0 24px 70px rgba(0,0,0,.48);text-align:center;}
-      .home-kicker{display:block!important;text-align:center;}
-      .home-hero h1{font-size:clamp(3rem,5.7vw,5.8rem)!important;max-width:18ch!important;margin:0 auto!important;line-height:1.02!important;text-wrap:balance;}
-      .home-hero p{max-width:680px!important;margin:20px auto 0!important;}
-      .home-actions{justify-content:center!important;margin-top:28px!important;}
-      .home-socials{justify-content:center!important;margin-top:16px!important;}
-      .home-photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;aspect-ratio:16/7;}
-      .home-photo-grid a{display:block;overflow:hidden;border-radius:14px;background:#111;min-height:0;}
-      .home-photo-grid img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .4s ease,filter .4s ease;}
-      .home-photo-grid a:hover img{transform:scale(1.035);filter:brightness(1.04);}
-      @media(max-width:900px){.home-hero__copy{bottom:28px;width:min(700px,calc(100% - 28px));}.home-hero h1{font-size:clamp(2.7rem,9vw,4.2rem)!important;}.home-photo-grid{aspect-ratio:4/3;}}
-      @media(max-width:560px){.home-hero__copy{bottom:18px;padding:26px 20px 24px!important;width:calc(100% - 20px);}.home-hero h1{font-size:clamp(2.4rem,11vw,3.5rem)!important;max-width:18ch!important;}.home-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));aspect-ratio:auto;}.home-photo-grid a{height:170px;}.home-photo-grid a:nth-child(9){display:none;}}
-    `;
-    document.head.appendChild(style);
-
-    const selectedCopy = homeHero.parentElement.querySelector('.home-section .home-copy');
+    const selectedCopy = homeHero.parentElement?.querySelector('.home-section .home-copy');
     if (selectedCopy) {
       selectedCopy.textContent = isEnglishPage
         ? 'Some of our favourite frames from real wedding days.'
         : 'Няколко от любимите ни кадри от истински сватбени дни.';
     }
 
-    const collageImg = homeHero.parentElement.querySelector('img[src="assets/weddings/selected-collage.webp"], img[src="/assets/weddings/selected-collage.webp"]');
+    const collageImg = homeHero.parentElement?.querySelector('img[src="assets/weddings/selected-collage.webp"], img[src="/assets/weddings/selected-collage.webp"]');
     if (collageImg) {
       const link = collageImg.closest('a') || collageImg.parentElement;
       const grid = document.createElement('div');
       grid.className = 'home-photo-grid';
       const files = ['01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg','09.jpg'];
+
       files.forEach((file, index) => {
         const card = document.createElement('a');
         card.href = `${isEnglishPage ? '/svatba-izbrani.html?lang=en' : '/svatba-izbrani.html'}#kadyr-${index + 1}`;
+
         const img = document.createElement('img');
         img.src = `/assets/${file}`;
         img.alt = isEnglishPage ? `Selected wedding photo ${index + 1}` : `Избран сватбен кадър ${index + 1}`;
-        img.loading = index < 3 ? 'eager' : 'lazy';
+        img.loading = 'lazy';
         img.decoding = 'async';
+        img.fetchPriority = 'low';
+
         card.appendChild(img);
         grid.appendChild(card);
       });
-      link.replaceWith(grid);
+
+      link?.replaceWith(grid);
     }
 
-    /* Cinematic hero entrance + subtle desktop parallax. */
-    if (!reduceMotion) {
-      homeHero.classList.add('cinematic-ready');
-      requestAnimationFrame(() => homeHero.classList.add('cinematic-in'));
-      if (canHover) {
-        let raf=0;
-        const onMove=(e)=>{
-          if (raf) return;
-          raf=requestAnimationFrame(()=>{
-            const r=homeHero.getBoundingClientRect();
-            const x=(e.clientX-r.left)/r.width-.5;
-            const y=(e.clientY-r.top)/r.height-.5;
-            homeHero.style.setProperty('--hero-x',`${x*10}px`);
-            homeHero.style.setProperty('--hero-y',`${y*7}px`);
-            raf=0;
-          });
-        };
-        homeHero.addEventListener('pointermove',onMove,{passive:true});
-        homeHero.addEventListener('pointerleave',()=>{homeHero.style.setProperty('--hero-x','0px');homeHero.style.setProperty('--hero-y','0px');},{passive:true});
-      }
-    }
-
-    homeHero.querySelectorAll('.home-btn').forEach(btn=>{
-      if (canHover) {
-        btn.addEventListener('mouseenter',()=>btn.classList.add('is-hovered'));
-        btn.addEventListener('mouseleave',()=>btn.classList.remove('is-hovered'));
-      }
+    homeHero.querySelectorAll('.home-btn').forEach(btn => {
+      if (!canHover) return;
+      btn.addEventListener('mouseenter', () => btn.classList.add('is-hovered'));
+      btn.addEventListener('mouseleave', () => btn.classList.remove('is-hovered'));
     });
   }
 
   const strip = document.querySelector('.home-filmstrip');
   if (strip) strip.remove();
 
+  /* The legacy 653-photo template is not used by the gallery script. Remove it from memory after parsing. */
+  document.getElementById('portfolioNextPool')?.remove();
+
   if (hero && heroContent && !reduceMotion && canHover) {
-    hero.addEventListener('pointermove', (e) => {
+    hero.addEventListener('pointermove', event => {
       const rect = hero.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
       heroContent.style.transform = `perspective(1200px) rotateX(${(-y * 2.5).toFixed(2)}deg) rotateY(${(x * 3.2).toFixed(2)}deg) translate3d(${(x * 4).toFixed(1)}px,${(y * 3).toFixed(1)}px,0)`;
       if (heroBg) heroBg.style.transform = `scale(1.03) translate3d(${(x * 8).toFixed(1)}px,${(y * 6).toFixed(1)}px,0)`;
     }, { passive: true });
+
     hero.addEventListener('pointerleave', () => {
       heroContent.style.transform = '';
       if (heroBg) heroBg.style.transform = '';
@@ -186,6 +153,61 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (heroImage && !reduceMotion) {
-    heroImage.addEventListener('load', () => heroImage.classList.add('is-loaded'), { once: true });
+    if (heroImage.complete) heroImage.classList.add('is-loaded');
+    else heroImage.addEventListener('load', () => heroImage.classList.add('is-loaded'), { once: true });
+  }
+
+  /* Consent-first GA4. Nothing is requested from Google Analytics until the visitor accepts. */
+  const GA_ID = 'G-WJK01GL7PM';
+  const CONSENT_KEY = 'mpv_analytics_consent_v1';
+  const getStoredConsent = () => {
+    try { return localStorage.getItem(CONSENT_KEY); }
+    catch { return null; }
+  };
+  const storeConsent = value => {
+    try { localStorage.setItem(CONSENT_KEY, value); }
+    catch { /* Browsing can continue even when storage is unavailable. */ }
+  };
+  const loadAnalytics = () => {
+    if (window.__mpvAnalyticsLoaded) return;
+    window.__mpvAnalyticsLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function gtag(){ window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID);
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`;
+    document.head.appendChild(script);
+  };
+
+  const savedConsent = getStoredConsent();
+  if (savedConsent === 'granted') {
+    loadAnalytics();
+  } else if (savedConsent !== 'denied') {
+    const notice = document.createElement('div');
+    notice.className = 'mpv-consent';
+    notice.setAttribute('role', 'dialog');
+    notice.setAttribute('aria-label', isEnglishPage ? 'Analytics preferences' : 'Настройки за анализ');
+    notice.innerHTML = `
+      <p>${isEnglishPage
+        ? 'We use optional analytics only to understand which pages are useful. No analytics is loaded unless you accept.'
+        : 'Използваме незадължителна статистика само за да разбираме кои страници са полезни. Анализ не се зарежда без вашето съгласие.'}</p>
+      <div class="mpv-consent__actions">
+        <button type="button" data-consent="decline">${isEnglishPage ? 'Decline' : 'Отказвам'}</button>
+        <button type="button" data-consent="accept">${isEnglishPage ? 'Accept' : 'Приемам'}</button>
+      </div>`;
+
+    notice.addEventListener('click', event => {
+      const action = event.target.closest('[data-consent]')?.dataset.consent;
+      if (!action) return;
+      const granted = action === 'accept';
+      storeConsent(granted ? 'granted' : 'denied');
+      notice.remove();
+      if (granted) loadAnalytics();
+    });
+
+    document.body.appendChild(notice);
   }
 });
