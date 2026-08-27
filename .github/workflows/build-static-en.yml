@@ -1,0 +1,211 @@
+name: Build static English pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'portfolio.html'
+      - 'videos.html'
+      - 'uslugi-ceni.html'
+      - 'availability.html'
+      - 'about.html'
+      - 'svatba-izbrani.html'
+      - 'assets/js/language-switch*.js'
+      - '.github/workflows/build-static-en.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip static en]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Start local site
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/memory-http.log 2>&1 &
+          echo $! >/tmp/memory-http.pid
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8000/index.html >/dev/null; then exit 0; fi
+            sleep .25
+          done
+          cat /tmp/memory-http.log
+          exit 1
+
+      - name: Render English pages with Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME" ]; then
+            echo 'Chrome/Chromium not found on runner.' >&2
+            exit 1
+          fi
+          mkdir -p /tmp/memory-en-render
+          pages=(index.html portfolio.html videos.html uslugi-ceni.html availability.html about.html svatba-izbrani.html)
+          for page in "${pages[@]}"; do
+            echo "Rendering $page"
+            "$CHROME" \
+              --headless=new \
+              --no-sandbox \
+              --disable-gpu \
+              --disable-dev-shm-usage \
+              --virtual-time-budget=7000 \
+              --dump-dom "http://127.0.0.1:8000/${page}?lang=en" \
+              > "/tmp/memory-en-render/${page}"
+          done
+
+      - name: Make rendered pages canonical and crawlable
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          from html import escape
+
+          try:
+              from bs4 import BeautifulSoup
+          except ImportError:
+              raise SystemExit('BeautifulSoup is required on the runner but was not available.')
+
+          host = 'https://memoryphotoandvideo.com'
+          pages = {
+              'index.html': {
+                  'out': 'en/index.html', 'bg': '/', 'en': '/en/',
+                  'title': 'Wedding Photographer & Videographer | Memory Photo & Video',
+                  'description': 'Wedding photography and videography by Memory Photo & Video. Natural emotion, cinematic wedding films and professional coverage in Bulgaria.'
+              },
+              'portfolio.html': {
+                  'out': 'en/portfolio.html', 'bg': '/portfolio.html', 'en': '/en/portfolio.html',
+                  'title': 'Wedding Photography Portfolio | Memory Photo & Video',
+                  'description': 'Explore selected wedding photography by Memory Photo & Video — natural moments, emotion, light and timeless wedding stories.'
+              },
+              'videos.html': {
+                  'out': 'en/videos.html', 'bg': '/videos.html', 'en': '/en/videos.html',
+                  'title': 'Wedding Films & Trailers | Memory Photo & Video',
+                  'description': 'Watch cinematic wedding films, trailers and selected video stories created by Memory Photo & Video.'
+              },
+              'uslugi-ceni.html': {
+                  'out': 'en/uslugi-ceni.html', 'bg': '/uslugi-ceni.html', 'en': '/en/uslugi-ceni.html',
+                  'title': 'Wedding Photography & Video Pricing | Memory Photo & Video',
+                  'description': 'Current wedding photography and videography packages, pricing and a flexible event cost calculator from Memory Photo & Video.'
+              },
+              'availability.html': {
+                  'out': 'en/availability.html', 'bg': '/availability.html', 'en': '/en/availability.html',
+                  'title': 'Wedding Availability Calendar | Memory Photo & Video',
+                  'description': 'Check current availability for wedding photography and videography and see which dates are still open.'
+              },
+              'about.html': {
+                  'out': 'en/about.html', 'bg': '/about.html', 'en': '/en/about.html',
+                  'title': 'About Memory Photo & Video | Wedding Photo & Film Team',
+                  'description': 'Meet the team behind Memory Photo & Video and learn how we approach wedding photography, videography and real emotional storytelling.'
+              },
+              'svatba-izbrani.html': {
+                  'out': 'en/svatba-izbrani.html', 'bg': '/svatba-izbrani.html', 'en': '/en/svatba-izbrani.html',
+                  'title': 'Selected Wedding Frames | Memory Photo & Video',
+                  'description': 'A curated selection of wedding photographs from real celebrations captured by Memory Photo & Video.'
+              },
+          }
+
+          known = {
+              'index.html': '/en/',
+              'portfolio.html': '/en/portfolio.html',
+              'videos.html': '/en/videos.html',
+              'uslugi-ceni.html': '/en/uslugi-ceni.html',
+              'availability.html': '/en/availability.html',
+              'about.html': '/en/about.html',
+              'svatba-izbrani.html': '/en/svatba-izbrani.html',
+          }
+
+          Path('en').mkdir(exist_ok=True)
+          for src, cfg in pages.items():
+              raw = Path('/tmp/memory-en-render', src).read_text(encoding='utf-8')
+              soup = BeautifulSoup(raw, 'html.parser')
+              if soup.html:
+                  soup.html['lang'] = 'en'
+
+              head = soup.head
+              if not head:
+                  raise SystemExit(f'Missing <head> after rendering {src}')
+
+              for tag in head.find_all('base'):
+                  tag.decompose()
+              base = soup.new_tag('base', href='/')
+              head.insert(0, base)
+
+              title = head.find('title')
+              if title:
+                  title.string = cfg['title']
+              else:
+                  title = soup.new_tag('title')
+                  title.string = cfg['title']
+                  head.append(title)
+
+              desc = head.find('meta', attrs={'name': re.compile(r'^description$', re.I)})
+              if not desc:
+                  desc = soup.new_tag('meta')
+                  desc['name'] = 'description'
+                  head.append(desc)
+              desc['content'] = cfg['description']
+
+              for tag in head.find_all('link', attrs={'rel': lambda v: v and 'canonical' in v}):
+                  tag.decompose()
+              canonical = soup.new_tag('link', rel='canonical', href=host + cfg['en'])
+              head.append(canonical)
+
+              for tag in head.find_all('link', attrs={'hreflang': True}):
+                  tag.decompose()
+              for lang, path in [('bg', cfg['bg']), ('en', cfg['en']), ('x-default', cfg['bg'])]:
+                  alt = soup.new_tag('link', rel='alternate', hreflang=lang, href=host + path)
+                  head.append(alt)
+
+              for meta in head.find_all('meta', attrs={'http-equiv': re.compile(r'^refresh$', re.I)}):
+                  meta.decompose()
+
+              # Keep English users inside the English section. The language-switch control
+              # itself is intentionally excluded so it continues to return to Bulgarian.
+              for a in soup.find_all('a', href=True):
+                  if 'language-switch' in (a.get('class') or []):
+                      continue
+                  href = a.get('href', '')
+                  if href.startswith(('http://', 'https://', 'mailto:', 'tel:', '#', 'javascript:')):
+                      continue
+                  clean = href.split('#', 1)[0].split('?', 1)[0].lstrip('/')
+                  anchor = ('#' + href.split('#', 1)[1]) if '#' in href else ''
+                  if clean in known:
+                      a['href'] = known[clean] + anchor
+                  elif clean == '':
+                      a['href'] = '/en/' + anchor
+
+              # Remove transient browser-only controls; scripts recreate them cleanly.
+              for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue'):
+                  transient.decompose()
+
+              out = Path(cfg['out'])
+              out.write_text(str(soup), encoding='utf-8')
+              print(f'Wrote {out}')
+
+      - name: Validate generated English pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html; do
+            grep -q '<h1' "$f" || { echo "Missing H1 in $f"; exit 1; }
+            grep -q 'rel="canonical"' "$f" || { echo "Missing canonical in $f"; exit 1; }
+            grep -q 'hreflang="en"' "$f" || { echo "Missing hreflang in $f"; exit 1; }
+            if grep -qi 'http-equiv="refresh"' "$f"; then echo "Refresh redirect still present in $f"; exit 1; fi
+          done
+
+      - name: Commit generated English pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html
+          if git diff --cached --quiet; then
+            echo 'English pages already up to date.'
+            exit 0
+          fi
+          git commit -m "Generate crawlable static English pages [skip static en]"
+          git push
