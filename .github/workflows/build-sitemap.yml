@@ -6,6 +6,7 @@ on:
     paths:
       - 'index.html'
       - 'svatben-fotograf-kardzhali.html'
+      - 'svatben-fotograf-plovdiv.html'
       - 'portfolio.html'
       - 'videos.html'
       - 'uslugi-ceni.html'
@@ -50,12 +51,13 @@ jobs:
           expected_pages = {
               host + '/',
               host + '/svatben-fotograf-kardzhali.html',
+              host + '/svatben-fotograf-plovdiv.html',
           }
           missing = sorted((expected_weddings | expected_pages) - locs)
           if missing:
               raise SystemExit('Expected URLs missing from sitemap: ' + ', '.join(missing))
-          if len(urls) < 15 + len(expected_weddings):
-              raise SystemExit(f'Expected at least {15 + len(expected_weddings)} page URLs, found {len(urls)}')
+          if len(urls) < 16 + len(expected_weddings):
+              raise SystemExit(f'Expected at least {16 + len(expected_weddings)} page URLs, found {len(urls)}')
           print(f'Validated sitemap with {len(urls)} page URLs including {len(expected_weddings)} wedding watch pages.')
           PY
 
@@ -69,4 +71,6 @@ jobs:
             exit 0
           fi
           git commit -m "Refresh sitemap and image discovery [skip sitemap]"
+          git fetch origin main
+          git rebase origin/main
           git push
