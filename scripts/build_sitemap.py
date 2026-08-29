@@ -10,6 +10,7 @@ TODAY = datetime.now(timezone.utc).date().isoformat()
 PAGES = [
     ('index.html', '/'),
     ('svatben-fotograf-kardzhali.html', '/svatben-fotograf-kardzhali.html'),
+    ('svatben-fotograf-plovdiv.html', '/svatben-fotograf-plovdiv.html'),
     ('portfolio.html', '/portfolio.html'),
     ('videos.html', '/videos.html'),
     ('uslugi-ceni.html', '/uslugi-ceni.html'),
