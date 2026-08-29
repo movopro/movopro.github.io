@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Local SEO: keep key BG pages aligned with the searches already visible in Search Console. */
   const seoPages = {
     '/': {
-      title: 'Сватбен фотограф и видеограф в Кърджали | Memory Photo & Video',
+      title: 'Сватбен фотограф и видеограф Кърджали | Memory Photo & Video',
       description: 'Memory Photo & Video — сватбен фотограф и видеограф в Кърджали. Професионално фото и видео за сватби и събития в региона и цяла България.'
     },
     '/portfolio.html': {
