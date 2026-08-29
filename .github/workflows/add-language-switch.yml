@@ -90,4 +90,6 @@ jobs:
           git add '*.html' 'en/*.html' 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Sync language switch and SEO alternates [skip language switch]"
+          git fetch origin main
+          git rebase origin/main
           git push
