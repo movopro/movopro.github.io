@@ -18,6 +18,8 @@ jobs:
 
           files = list(Path('.').glob('*.html')) + list(Path('en').glob('*.html'))
           host = 'https://memoryphotoandvideo.com'
+          old_local_title = 'Сватбен фотограф и видеограф в Кърджали | Memory Photo & Video'
+          new_local_title = 'Сватбен фотограф и видеограф Кърджали | Memory Photo & Video'
           pairs = {
               'index.html': ('/', '/en/'),
               'portfolio.html': ('/portfolio.html', '/en/portfolio.html'),
@@ -37,6 +39,7 @@ jobs:
                   "return lines.join('\n');": "return lines.join('\\n');",
                   "'Избрана оферта: ' + btn.dataset.package + '\n' +": "'Избрана оферта: ' + btn.dataset.package + '\\n' +",
                   "'Цена: ' + btn.dataset.packagePrice + '\n' +": "'Цена: ' + btn.dataset.packagePrice + '\\n' +",
+                  old_local_title: new_local_title,
               }
               for broken, fixed in repairs.items():
                   text = text.replace(broken, fixed)
@@ -57,6 +60,12 @@ jobs:
                   text = text.replace('</head>', alternates + '</head>', 1)
 
               p.write_text(text, encoding='utf-8')
+
+          main_js = Path('assets/js/main.js')
+          if main_js.exists():
+              js_text = main_js.read_text(encoding='utf-8')
+              js_text = js_text.replace(old_local_title, new_local_title)
+              main_js.write_text(js_text, encoding='utf-8')
 
       - name: Validate JavaScript blocks
         shell: bash
@@ -87,7 +96,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add '*.html' 'en/*.html' 2>/dev/null || true
+          git add '*.html' 'en/*.html' 'assets/js/main.js' 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Sync language switch and SEO alternates [skip language switch]"
           git fetch origin main
