@@ -19,7 +19,9 @@ jobs:
           files = list(Path('.').glob('*.html')) + list(Path('en').glob('*.html'))
           host = 'https://memoryphotoandvideo.com'
           old_local_title = 'Сватбен фотограф и видеограф в Кърджали | Memory Photo & Video'
+          old_local_title_html = 'Сватбен фотограф и видеограф в Кърджали | Memory Photo &amp; Video'
           new_local_title = 'Сватбен фотограф и видеограф Кърджали | Memory Photo & Video'
+          new_local_title_html = 'Сватбен фотограф и видеограф Кърджали | Memory Photo &amp; Video'
           pairs = {
               'index.html': ('/', '/en/'),
               'portfolio.html': ('/portfolio.html', '/en/portfolio.html'),
@@ -40,6 +42,7 @@ jobs:
                   "'Избрана оферта: ' + btn.dataset.package + '\n' +": "'Избрана оферта: ' + btn.dataset.package + '\\n' +",
                   "'Цена: ' + btn.dataset.packagePrice + '\n' +": "'Цена: ' + btn.dataset.packagePrice + '\\n' +",
                   old_local_title: new_local_title,
+                  old_local_title_html: new_local_title_html,
               }
               for broken, fixed in repairs.items():
                   text = text.replace(broken, fixed)
