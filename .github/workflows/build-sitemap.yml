@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'svatben-fotograf-kardzhali.html'
       - 'portfolio.html'
       - 'videos.html'
       - 'uslugi-ceni.html'
@@ -46,11 +47,15 @@ jobs:
               host + '/' + p.as_posix()
               for p in Path('weddings').glob('*.html')
           }
-          missing = sorted(expected_weddings - locs)
+          expected_pages = {
+              host + '/',
+              host + '/svatben-fotograf-kardzhali.html',
+          }
+          missing = sorted((expected_weddings | expected_pages) - locs)
           if missing:
-              raise SystemExit('Wedding URLs missing from sitemap: ' + ', '.join(missing))
-          if len(urls) < 14 + len(expected_weddings):
-              raise SystemExit(f'Expected at least {14 + len(expected_weddings)} page URLs, found {len(urls)}')
+              raise SystemExit('Expected URLs missing from sitemap: ' + ', '.join(missing))
+          if len(urls) < 15 + len(expected_weddings):
+              raise SystemExit(f'Expected at least {15 + len(expected_weddings)} page URLs, found {len(urls)}')
           print(f'Validated sitemap with {len(urls)} page URLs including {len(expected_weddings)} wedding watch pages.')
           PY
 
