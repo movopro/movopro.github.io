@@ -15,8 +15,6 @@
     const row=(label,value)=>`<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
     const clampHours=(input,min=0)=>{if(!input)return min;let n=Number(input.value);if(!Number.isFinite(n))n=min;n=Math.min(MAX_HOURS,Math.max(min,Math.ceil(n)));input.value=String(n);return n;};
 
-    // Mobile safeguard: calculator result areas are never allowed to pull the page down
-    // unless the user explicitly taps a Calculate button.
     let allowResultScroll=false;
     const nativeScrollIntoView=Element.prototype.scrollIntoView;
     Element.prototype.scrollIntoView=function(options){
@@ -62,7 +60,6 @@
     setLabel('eventHours','Започнати часове','Started hours');
     setLabel('eventPeople','Фотографи / оператори','Photographers / videographers');
 
-    // Keep package cards and inquiry metadata synchronized with the calculator pricing.
     const PACKAGE_PRICES=[1450,1950,2700];
     [...document.querySelectorAll('.package-card')].slice(0,3).forEach((card,index)=>{
       const eur=PACKAGE_PRICES[index];
@@ -72,10 +69,9 @@
       const display=`${moneyEUR(eur)} <span>(${moneyBGN(eur)})</span>`;
       if(price)price.innerHTML=display;
       if(btn)btn.dataset.packagePrice=`${moneyEUR(eur)} (${moneyBGN(eur)})`;
-      if(index===0){
-        const firstBullet=card.querySelector('.bullets li');
-        if(firstBullet)firstBullet.textContent=en?'Team of 3 — 1 photographer + 1 videographer + 1 assistant.':'Екип от 3 души — 1 фотограф + 1 оператор + 1 асистент.';
-      }
+      const firstBullet=card.querySelector('.bullets li');
+      if(index===0&&firstBullet)firstBullet.textContent=en?'Team of 2 — 1 photographer + 1 videographer.':'Екип от 2 души — 1 фотограф + 1 оператор.';
+      if(index===1&&firstBullet)firstBullet.textContent=en?'Team of 3 — 1 photographer + 1 videographer + 1 assistant.':'Екип от 3 души — 1 фотограф + 1 оператор + 1 асистент.';
     });
 
     const other=[...document.querySelectorAll('.glass-card')].find(s=>['Други събития','Other events'].includes(s.querySelector('h2')?.textContent.trim()));
