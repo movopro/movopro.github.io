@@ -62,11 +62,27 @@
     setLabel('eventHours','Започнати часове','Started hours');
     setLabel('eventPeople','Фотографи / оператори','Photographers / videographers');
 
+    // Keep package cards and inquiry metadata synchronized with the calculator pricing.
+    const PACKAGE_PRICES=[1450,1950,2700];
+    [...document.querySelectorAll('.package-card')].slice(0,3).forEach((card,index)=>{
+      const eur=PACKAGE_PRICES[index];
+      if(!eur)return;
+      const price=card.querySelector('.package-price');
+      const btn=card.querySelector('.package-inquiry-btn');
+      const display=`${moneyEUR(eur)} <span>(${moneyBGN(eur)})</span>`;
+      if(price)price.innerHTML=display;
+      if(btn)btn.dataset.packagePrice=`${moneyEUR(eur)} (${moneyBGN(eur)})`;
+      if(index===0){
+        const firstBullet=card.querySelector('.bullets li');
+        if(firstBullet)firstBullet.textContent=en?'Team of 3 — 1 photographer + 1 videographer + 1 assistant.':'Екип от 3 души — 1 фотограф + 1 оператор + 1 асистент.';
+      }
+    });
+
     const other=[...document.querySelectorAll('.glass-card')].find(s=>['Други събития','Other events'].includes(s.querySelector('h2')?.textContent.trim()));
     if(other){
       const p=other.querySelector('.section-topline p');
-      if(p)p.textContent=en?'For one photographer or one videographer: €120 for the first started hour and €80 for each subsequent started hour.':'За 1 фотограф или 1 оператор: 120 € за първия започнат час и 80 € за всеки следващ започнат час.';
-      other.querySelectorAll('.event-rate').forEach(el=>el.textContent=en?'€120 first hour · €80 each next hour':'120 € първи час · 80 € всеки следващ');
+      if(p)p.textContent=en?'For one photographer or one videographer: €130 for the first started hour and €90 for each subsequent started hour.':'За 1 фотограф или 1 оператор: 130 € за първия започнат час и 90 € за всеки следващ започнат час.';
+      other.querySelectorAll('.event-rate').forEach(el=>el.textContent=en?'€130 first hour · €90 each next hour':'130 € първи час · 90 € всеки следващ');
     }
 
     const tabs=[...document.querySelectorAll('.mode-tab')],panels=[...document.querySelectorAll('.mode-panel')];
@@ -74,7 +90,7 @@
 
     const photo=q('photoTeam'),video=q('videoTeam'),ot=q('otHours'),km=q('km'),droneMode=q('droneMode'),droneHours=q('droneHours'),raw=q('rawFiles'),after=q('afterSession');
     const totalEUR=q('totalEUR'),totalBGN=q('totalBGN'),breakdown=q('breakdown');
-    const P={photo:{1:656,2:1106},video:{1:719,2:1214},overtime:78,raw:168,after:143,transport:TRANSPORT,droneHour:58,droneDay:224};
+    const P={photo:{1:720,2:1220},video:{1:790,2:1340},overtime:85,raw:185,after:160,transport:TRANSPORT,droneHour:65,droneDay:250};
 
     const calcWedding=()=>{
       if(!photo||!video||!totalEUR)return;
@@ -82,8 +98,8 @@
       let total=0,lines=[];
       if(p){const x=P.photo[p]||0;total+=x;lines.push(row(en?`Wedding photography: ${p} photographer${p===1?'':'s'} (up to 10h)`:`Сватбена фотография: ${p} фотограф${p===1?'':'и'} (до 10ч)`,x));}
       if(v){const x=P.video[v]||0;total+=x;lines.push(row(en?`Wedding videography: ${v} videographer${v===1?'':'s'} (up to 10h)`:`Сватбена видеография: ${v} оператор${v===1?'':'и'} (до 10ч)`,x));}
-      if(h&&people){const x=h*people*P.overtime;total+=x;lines.push(row(en?`Extra hours: ${h}h × ${people} × 78€`:`Доп. часове: ${h}ч × ${people} × 78€`,x));}
-      if(dm==='hour'){const x=dh*P.droneHour;total+=x;lines.push(row(en?`Drone: ${dh}h × 58€`:`Дрон: ${dh}ч × 58€`,x));}
+      if(h&&people){const x=h*people*P.overtime;total+=x;lines.push(row(en?`Extra hours: ${h}h × ${people} × €85`:`Доп. часове: ${h}ч × ${people} × 85 €`,x));}
+      if(dm==='hour'){const x=dh*P.droneHour;total+=x;lines.push(row(en?`Drone: ${dh}h × €65`:`Дрон: ${dh}ч × 65 €`,x));}
       else if(dm==='day'){total+=P.droneDay;lines.push(row(en?'Full-day drone':'Дрон за целия ден',P.droneDay));}
       if(raw?.checked){total+=P.raw;lines.push(row(en?'Raw files':'Сурови файлове',P.raw));}
       if(after?.checked){total+=P.after;lines.push(row(en?'Photo session on a separate day':'Фотосесия в отделен ден',P.after));}
@@ -98,13 +114,13 @@
     q('resetCalc')?.addEventListener('click',()=>{photo.value='0';video.value='0';ot.value='0';km.value='0';droneMode.value='none';droneHours.value='1';raw.checked=false;after.checked=false;updateDrone();calcWedding();});
 
     const eventType=q('eventType'),eventHours=q('eventHours'),eventPeople=q('eventPeople'),eventKm=q('eventKm'),eventRaw=q('eventRawFiles'),eventTotalEUR=q('eventTotalEUR'),eventTotalBGN=q('eventTotalBGN'),eventBreakdown=q('eventBreakdown');
-    const E={first:120,next:80,raw:168,transport:TRANSPORT};
+    const E={first:130,next:90,raw:185,transport:TRANSPORT};
     const calcEvent=()=>{
       if(!eventTotalEUR)return;
       const h=clampHours(eventHours,1),team=Math.min(4,Math.max(1,Math.ceil(+eventPeople.value||1))),kmv=Math.max(0,+eventKm.value||0);eventPeople.value=String(team);
       const first=team*E.first,extraHours=Math.max(0,h-1),extra=extraHours*team*E.next;let total=first+extra;
-      const lines=[row(en?`First started hour: ${team} × €120`:`Първи започнат час: ${team} × 120 €`,first)];
-      if(extraHours)lines.push(row(en?`Next hours: ${extraHours}h × ${team} × €80`:`Следващи часове: ${extraHours}ч × ${team} × 80 €`,extra));
+      const lines=[row(en?`First started hour: ${team} × €130`:`Първи започнат час: ${team} × 130 €`,first)];
+      if(extraHours)lines.push(row(en?`Next hours: ${extraHours}h × ${team} × €90`:`Следващи часове: ${extraHours}ч × ${team} × 90 €`,extra));
       if(kmv){const x=kmv*E.transport;total+=x;lines.push(row(en?`Travel: ${kmv} km × €0.51 (one way)`:`Транспорт: ${kmv} км × 0,51 € (еднопосочно)`,x));}
       if(eventRaw?.checked){total+=E.raw;lines.push(row(en?'Raw files':'Сурови файлове',E.raw));}
       eventTotalEUR.textContent=moneyEUR(total);if(eventTotalBGN)eventTotalBGN.textContent=moneyBGN(total);if(eventBreakdown)eventBreakdown.innerHTML=lines.join('');
@@ -116,7 +132,7 @@
     const inquiry=q('inquirySection'),inquiryType=q('inquiryType'),selected=q('selectedOffer'),summary=q('inquirySummary'),name=q('clientName'),phone=q('clientPhone'),email=q('clientEmail'),date=q('eventDate'),locationField=q('eventLocation'),note=q('clientNote'),privacy=q('privacyConsent'),send=q('sendInquiry'),status=q('sendStatus');
     const openInquiry=()=>inquiry?.scrollIntoView({behavior:'smooth',block:'start'});
     const weddingSummary=()=>en?`Type: Wedding\nPhotographers: ${+photo.value||0}\nVideographers: ${+video.value||0}\nExtra hours: ${clampHours(ot,0)}\nOne-way distance from Kardzhali (km): ${+km.value||0}\nDrone: ${droneMode.value==='hour'?'Hourly ('+clampHours(droneHours,1)+' h)':droneMode.value==='day'?'Full day':'No'}\nRaw files: ${raw.checked?'Yes':'No'}\nSeparate-day photo session: ${after.checked?'Yes':'No'}\nEstimated total: ${totalEUR.textContent} / ${totalBGN.textContent}`:`Тип: Сватба\nФотографи: ${+photo.value||0}\nОператори: ${+video.value||0}\nДопълнителни часове: ${clampHours(ot,0)}\nРазстояние от Кърджали, еднопосочно (км): ${+km.value||0}\nДрон: ${droneMode.value==='hour'?'По часове ('+clampHours(droneHours,1)+' ч)':droneMode.value==='day'?'За целия ден':'Не'}\nСурови файлове: ${raw.checked?'Да':'Не'}\nФотосесия в отделен ден: ${after.checked?'Да':'Не'}\nОриентировъчна сума: ${totalEUR.textContent} / ${totalBGN.textContent}`;
-    const eventSummary=()=>{const m=en?{birthday:'Birthday',baptism:'Baptism',corporate:'Corporate event',other:'Other'}:{birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'};return en?`Type: ${m[eventType.value]||'Other'}\nStarted hours: ${clampHours(eventHours,1)}\nPhotographers / videographers: ${+eventPeople.value||1}\nRate: €120 first started hour + €80 each next started hour\nOne-way distance from Kardzhali (km): ${+eventKm.value||0}\nRaw files: ${eventRaw.checked?'Yes':'No'}\nEstimated total: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`:`Тип: ${m[eventType.value]||'Друго'}\nЗапочнати часове: ${clampHours(eventHours,1)}\nФотографи / оператори: ${+eventPeople.value||1}\nТарифа: 120 € първи започнат час + 80 € всеки следващ започнат час\nРазстояние от Кърджали, еднопосочно (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`;};
+    const eventSummary=()=>{const m=en?{birthday:'Birthday',baptism:'Baptism',corporate:'Corporate event',other:'Other'}:{birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'};return en?`Type: ${m[eventType.value]||'Other'}\nStarted hours: ${clampHours(eventHours,1)}\nPhotographers / videographers: ${+eventPeople.value||1}\nRate: €130 first started hour + €90 each next started hour\nOne-way distance from Kardzhali (km): ${+eventKm.value||0}\nRaw files: ${eventRaw.checked?'Yes':'No'}\nEstimated total: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`:`Тип: ${m[eventType.value]||'Друго'}\nЗапочнати часове: ${clampHours(eventHours,1)}\nФотографи / оператори: ${+eventPeople.value||1}\nТарифа: 130 € първи започнат час + 90 € всеки следващ започнат час\nРазстояние от Кърджали, еднопосочно (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent} / ${eventTotalBGN.textContent}`;};
 
     document.querySelectorAll('.package-inquiry-btn').forEach(btn=>{if(btn.dataset.pricingFixBound)return;btn.dataset.pricingFixBound='1';btn.addEventListener('click',()=>{inquiryType.value='Пакетна оферта';selected.value=btn.dataset.package+' — '+btn.dataset.packagePrice;summary.value=en?'Selected offer: '+btn.dataset.package+'\nPrice: '+btn.dataset.packagePrice+'\nType: Package offer':'Избрана оферта: '+btn.dataset.package+'\nЦена: '+btn.dataset.packagePrice+'\nТип: Пакетна оферта';openInquiry();});});
     q('openWeddingInquiry')?.addEventListener('click',()=>{calcWedding();inquiryType.value='Персонална конфигурация';selected.value=en?'Custom wedding configuration':'Персонална конфигурация за сватба';summary.value=weddingSummary();openInquiry();});
