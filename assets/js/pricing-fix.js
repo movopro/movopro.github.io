@@ -71,7 +71,7 @@
       if(btn)btn.dataset.packagePrice=`${moneyEUR(eur)} (${moneyBGN(eur)})`;
       const firstBullet=card.querySelector('.bullets li');
       if(index===0&&firstBullet)firstBullet.textContent=en?'Team of 2 — 1 photographer + 1 videographer.':'Екип от 2 души — 1 фотограф + 1 оператор.';
-      if(index===1&&firstBullet)firstBullet.textContent=en?'Team of 3 — 1 photographer + 1 videographer + 1 assistant.':'Екип от 3 души — 1 фотограф + 1 оператор + 1 асистент.';
+      if(index===1&&firstBullet)firstBullet.textContent=en?'Team of 4 — choose between 2 photographers + 1 videographer + 1 assistant, or 1 photographer + 2 videographers + 1 assistant.':'Екип от 4 души — по избор: 2 фотографи + 1 оператор + 1 асистент или 1 фотограф + 2 оператори + 1 асистент.';
     });
 
     const other=[...document.querySelectorAll('.glass-card')].find(s=>['Други събития','Other events'].includes(s.querySelector('h2')?.textContent.trim()));
