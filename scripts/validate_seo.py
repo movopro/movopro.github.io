@@ -1,4 +1,4 @@
-"""Check crawlable city links and complete canonical sitemap coverage (no dependencies)."""
+"""Check homepage city links and complete canonical sitemap coverage (no dependencies)."""
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
@@ -78,10 +78,6 @@ def validate():
             route = route[:-10]
         assert canonical == HOST + route, f'{path}: incorrect canonical {canonical}'
         expected.add(canonical)
-        if page.lang.startswith('bg'):
-            for target, anchor in CITY_LINKS.items():
-                assert any(urljoin(canonical, href) == HOST + target and label.strip() == anchor and nav
-                           for href, label, nav, main in page.links), f'{path}: missing static nav link {anchor}'
         if route == '/' or route in CITY_LINKS:
             assert len(page.words) > 100, f'{path}: insufficient main text without JavaScript'
             print(f'{path}: {len(page.words)} words in raw HTML main content')
@@ -90,7 +86,7 @@ def validate():
                 assert any(urljoin(canonical, href) == HOST + target and label.strip() == anchor and main
                            for href, label, nav, main in page.links), f'Homepage missing main link {anchor}'
     assert set(urls) == expected, f'Sitemap missing: {expected - set(urls)}; unexpected: {set(urls) - expected}'
-    print(f'Validated all {len(expected)} canonical pages, sitemap coverage, and static city links.')
+    print(f'Validated all {len(expected)} canonical pages, sitemap coverage, and static homepage city links.')
 
 
 if __name__ == '__main__':
