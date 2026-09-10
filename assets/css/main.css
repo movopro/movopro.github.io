@@ -8,3 +8,14 @@
 
 /* The experimental filmstrip is permanently disabled. */
 .home-filmstrip{display:none!important;}
+
+/* Native disclosure keeps city links in the HTML and usable without JavaScript. */
+header .nav-cities{position:relative;flex-shrink:0}
+header .nav-cities summary{cursor:pointer;padding:8px 12px;border:1px solid transparent;border-radius:8px;color:var(--cream-muted);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+header .nav-cities summary:hover,header .nav-cities[open] summary{color:var(--cream);border-color:var(--line-gold)}
+header .nav-cities__links{position:absolute;right:0;top:100%;min-width:290px;padding:8px;background:#0c0b09;border:1px solid var(--line-gold);border-radius:12px;box-shadow:0 16px 32px rgba(0,0,0,.35)}
+header .nav-cities__links a{display:block;white-space:normal}
+@media(min-width:881px){header .nav-wrap:has(.nav-cities)>nav{gap:2px}header .nav-wrap:has(.nav-cities)>nav>a{padding-left:7px;padding-right:7px}}
+@media(max-width:880px){header .nav-cities summary{display:list-item;list-style-position:inside;min-height:48px;padding:12px 16px}header .nav-cities__links{position:static;min-width:0;box-shadow:none}header .nav-cities__links a+a{margin-top:7px!important}}
+@media(min-width:881px){header .nav-wrap:has(.nav-cities)>nav{margin-right:72px}}
+@media(min-width:881px) and (max-width:1100px){header .nav-wrap:has(.nav-cities) .brand span{display:none}}

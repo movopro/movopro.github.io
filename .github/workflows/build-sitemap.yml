@@ -16,6 +16,9 @@ on:
       - 'weddings/*.html'
       - 'en/*.html'
       - 'scripts/build_sitemap.py'
+      - 'scripts/validate_seo.py'
+      - 'header.html'
+      - 'sitemap.xml'
       - '.github/workflows/build-sitemap.yml'
 
 permissions:
@@ -32,34 +35,7 @@ jobs:
         run: python3 scripts/build_sitemap.py
 
       - name: Validate sitemap
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import xml.etree.ElementTree as ET
-
-          host = 'https://memoryphotoandvideo.com'
-          tree = ET.parse('sitemap.xml')
-          root = tree.getroot()
-          ns = '{http://www.sitemaps.org/schemas/sitemap/0.9}'
-          urls = root.findall(f'{ns}url')
-          locs = {u.find(f'{ns}loc').text for u in urls}
-
-          expected_weddings = {
-              host + '/' + p.as_posix()
-              for p in Path('weddings').glob('*.html')
-          }
-          expected_pages = {
-              host + '/',
-              host + '/svatben-fotograf-kardzhali.html',
-              host + '/svatben-fotograf-plovdiv.html',
-          }
-          missing = sorted((expected_weddings | expected_pages) - locs)
-          if missing:
-              raise SystemExit('Expected URLs missing from sitemap: ' + ', '.join(missing))
-          if len(urls) < 16 + len(expected_weddings):
-              raise SystemExit(f'Expected at least {16 + len(expected_weddings)} page URLs, found {len(urls)}')
-          print(f'Validated sitemap with {len(urls)} page URLs including {len(expected_weddings)} wedding watch pages.')
-          PY
+        run: python3 scripts/validate_seo.py
 
       - name: Commit sitemap
         run: |
