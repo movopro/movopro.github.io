@@ -2,8 +2,8 @@
    Mobile-first, progressive enhancement only. No copy changes. */
 
 :root{
-  --wow-gold:195,152,90;
-  --wow-cream:240,233,216;
+  --wow-gold:117,165,232;
+  --wow-cream:245,247,251;
   --wow-ease:cubic-bezier(.16,1,.3,1);
 }
 
@@ -18,7 +18,7 @@
   pointer-events:none;
   transform:scaleX(var(--wow-progress,0));
   transform-origin:left center;
-  background:linear-gradient(90deg,rgba(var(--wow-gold),.35),rgba(232,201,138,.98),rgba(255,245,216,.92));
+  background:linear-gradient(90deg,rgba(var(--wow-gold),.35),rgba(171,202,241,.98),rgba(255,245,216,.92));
   box-shadow:0 0 16px rgba(var(--wow-gold),.28);
   will-change:transform;
 }
@@ -47,8 +47,8 @@
   inset:-28%;
   pointer-events:none;
   background:
-    radial-gradient(circle at 22% 28%,rgba(232,201,138,.13),transparent 22%),
-    radial-gradient(circle at 78% 60%,rgba(195,152,90,.09),transparent 25%);
+    radial-gradient(circle at 22% 28%,rgba(171,202,241,.13),transparent 22%),
+    radial-gradient(circle at 78% 60%,rgba(117,165,232,.09),transparent 25%);
   transform:translate3d(var(--wow-hero-x,0),calc(var(--wow-hero-y,0) + var(--wow-hero-scroll,0px)),0) rotate(-7deg);
   transition:transform .9s var(--wow-ease);
   animation:wowAmbient 10s ease-in-out infinite alternate;
@@ -68,7 +68,7 @@
   border-radius:inherit;
   pointer-events:none;
   padding:1px;
-  background:linear-gradient(115deg,transparent 8%,rgba(232,201,138,.52) 35%,rgba(255,255,255,.12) 50%,rgba(195,152,90,.34) 68%,transparent 92%);
+  background:linear-gradient(115deg,transparent 8%,rgba(171,202,241,.52) 35%,rgba(255,255,255,.12) 50%,rgba(117,165,232,.34) 68%,transparent 92%);
   background-size:220% 100%;
   animation:wowBorderSweep 7s ease-in-out infinite;
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
@@ -122,7 +122,7 @@
   width:22px;
   height:34px;
   transform:translateX(-50%);
-  border:1px solid rgba(232,201,138,.38);
+  border:1px solid rgba(171,202,241,.38);
   border-radius:999px;
   pointer-events:none;
   opacity:.72;
@@ -136,7 +136,7 @@
   width:3px;
   height:7px;
   border-radius:999px;
-  background:#e8c98a;
+  background:#abcaf1;
   transform:translateX(-50%);
   animation:wowCue 1.7s ease-in-out infinite;
 }
@@ -153,7 +153,7 @@ header::after{
   position:absolute;
   left:10%;right:10%;bottom:-1px;height:1px;
   pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(232,201,138,.28),transparent);
+  background:linear-gradient(90deg,transparent,rgba(171,202,241,.28),transparent);
   opacity:0;
   transition:opacity .3s ease;
 }
@@ -168,7 +168,7 @@ header.scrolled::after{opacity:1}
   .review-summary:hover,.review-box:hover,.video-card:hover,.video-copy:hover,.video-card-v2:hover,.dj-card:hover,.home-cta:hover,
   .v2-service:hover,.v2-step:hover,.package-card:hover,.calc-card:hover,.event-card:hover,.team-card:hover,.portfolio-note:hover,.videos-note:hover,.videos-final:hover{
     transform:translateY(-5px);
-    border-color:rgba(195,152,90,.30)!important;
+    border-color:rgba(117,165,232,.30)!important;
     box-shadow:0 20px 55px rgba(0,0,0,.28);
   }
   .gallery-item:hover,.portfolio-item:hover{

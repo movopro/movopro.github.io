@@ -3,6 +3,13 @@
   const en=p.get('lang')==='en'||location.pathname.startsWith('/en/');
   if(!en)return;
   const M={
+    'Места и спомени':'Places & memories',
+    'Истории от цяла България.':'Stories across Bulgaria.',
+    'Снимали сме сватби и събития в Кърджали, Пловдив, Златоград, Шумен, Смолян и Стара Загора. Познаваме различни места, но винаги започваме от вашата история.':'We have photographed weddings and events in Kardzhali, Plovdiv, Zlatograd, Shumen, Smolyan and Stara Zagora. Every place is different. Every story starts with you.',
+    'Кърджали':'Kardzhali','Пловдив':'Plovdiv','Златоград':'Zlatograd','Шумен':'Shumen','Смолян':'Smolyan','Стара Загора':'Stara Zagora',
+    'Сватбен фотограф и видеограф · Кърджали':'Wedding photography & film · Bulgaria',
+    'Сватбен фотограф Кърджали':'Wedding photographer in Kardzhali',
+    'Сватбен фотограф Пловдив':'Wedding photographer in Plovdiv',
     'Ясни пакети, професионално покритие и гъвкав калкулатор.':'Clear packages, professional coverage and a flexible calculator.',
     'Тук ще откриеш актуалните сватбени пакети, ориентировъчни цени за други събития и калкулатор, с който можеш да изчислиш приблизителна стойност според екип, допълнителни часове, транспорт, дрон и допълнителни услуги.':'Here you can find our current wedding packages, indicative prices for other events and a calculator to estimate the cost based on team size, additional hours, transport, drone and extra services.',
     'Виж всички избрани кадри':'View all selected frames','Цялото портфолио':'Full portfolio','Свободни дати':'Availability','Услуги и цени':'Services & Pricing',
