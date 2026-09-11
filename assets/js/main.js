@@ -110,22 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     });
     document.head.appendChild(schema);
-
-    /* Add a crawlable local-service path without changing the main navigation. */
-    const localUrl = '/svatben-fotograf-kardzhali.html';
-    if (path !== localUrl) {
-      const footer = document.querySelector('.home-footer__bottom, .v2-footer, footer');
-      if (footer && !footer.querySelector('[data-local-seo-link]')) {
-        const separator = document.createTextNode(' · ');
-        const localLink = document.createElement('a');
-        localLink.href = localUrl;
-        localLink.textContent = 'Сватбен фотограф Кърджали';
-        localLink.dataset.localSeoLink = 'true';
-        localLink.style.display = 'inline';
-        localLink.style.marginLeft = '.2rem';
-        footer.append(separator, localLink);
-      }
-    }
   }
 
   if (header) {
