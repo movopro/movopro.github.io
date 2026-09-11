@@ -332,3 +332,166 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(notice);
   }
 });
+
+/* Homepage hero carousel 2026-09-11 */
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.querySelector('[data-home-slider]');
+  if (!slider || slider.dataset.sliderReady === 'true') return;
+
+  const slides = Array.from(slider.querySelectorAll('[data-home-slide]'));
+  const dots = Array.from(slider.querySelectorAll('[data-home-slide-to]'));
+  const previousButton = slider.querySelector('[data-home-slider-prev]');
+  const nextButton = slider.querySelector('[data-home-slider-next]');
+  const toggleButton = slider.querySelector('[data-home-slider-toggle]');
+  const pauseIcon = toggleButton?.querySelector('[data-slider-icon="pause"]');
+  const playIcon = toggleButton?.querySelector('[data-slider-icon="play"]');
+  const status = slider.querySelector('[data-home-slider-status]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (slides.length < 2) return;
+
+  slider.dataset.sliderReady = 'true';
+  let currentIndex = Math.max(0, slides.findIndex(slide => slide.classList.contains('is-active')));
+  let autoplayTimer = null;
+  let userPaused = reduceMotion;
+  let pointerInside = false;
+  let focusInside = false;
+  let touchStartX = null;
+
+  const updateToggle = () => {
+    if (!toggleButton) return;
+    if (reduceMotion) {
+      toggleButton.hidden = true;
+      return;
+    }
+
+    toggleButton.setAttribute('aria-pressed', String(userPaused));
+    toggleButton.setAttribute(
+      'aria-label',
+      userPaused ? 'Пусни автоматичната смяна' : 'Спри автоматичната смяна'
+    );
+    if (pauseIcon) pauseIcon.hidden = userPaused;
+    if (playIcon) playIcon.hidden = !userPaused;
+  };
+
+  const showSlide = (requestedIndex, announce = false) => {
+    currentIndex = (requestedIndex + slides.length) % slides.length;
+
+    slides.forEach((slide, index) => {
+      const active = index === currentIndex;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', String(!active));
+    });
+
+    dots.forEach((dot, index) => {
+      const active = index === currentIndex;
+      dot.classList.toggle('is-active', active);
+      if (active) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+
+    if (announce && status) {
+      status.textContent = `Снимка ${currentIndex + 1} от ${slides.length}`;
+    }
+  };
+
+  const stopAutoplay = () => {
+    if (autoplayTimer !== null) {
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  };
+
+  const canAutoplay = () => (
+    !reduceMotion &&
+    !userPaused &&
+    !pointerInside &&
+    !focusInside &&
+    !document.hidden
+  );
+
+  const startAutoplay = () => {
+    stopAutoplay();
+    if (!canAutoplay()) return;
+    autoplayTimer = window.setInterval(() => showSlide(currentIndex + 1), 5600);
+  };
+
+  const moveBy = direction => {
+    showSlide(currentIndex + direction, true);
+    startAutoplay();
+  };
+
+  previousButton?.addEventListener('click', () => moveBy(-1));
+  nextButton?.addEventListener('click', () => moveBy(1));
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index, true);
+      startAutoplay();
+    });
+  });
+
+  toggleButton?.addEventListener('click', () => {
+    userPaused = !userPaused;
+    updateToggle();
+    startAutoplay();
+  });
+
+  slider.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      moveBy(-1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      moveBy(1);
+    }
+  });
+
+  slider.addEventListener('pointerenter', () => {
+    pointerInside = true;
+    stopAutoplay();
+  });
+
+  slider.addEventListener('pointerleave', () => {
+    pointerInside = false;
+    startAutoplay();
+  });
+
+  slider.addEventListener('focusin', () => {
+    focusInside = true;
+    stopAutoplay();
+  });
+
+  slider.addEventListener('focusout', () => {
+    window.setTimeout(() => {
+      focusInside = slider.contains(document.activeElement);
+      startAutoplay();
+    }, 0);
+  });
+
+  slider.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') touchStartX = event.clientX;
+  }, { passive: true });
+
+  slider.addEventListener('pointerup', event => {
+    if (event.pointerType !== 'touch' || touchStartX === null) return;
+    const distance = event.clientX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(distance) < 42) return;
+    moveBy(distance > 0 ? -1 : 1);
+  }, { passive: true });
+
+  slider.addEventListener('pointercancel', () => {
+    touchStartX = null;
+  }, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
+  });
+
+  showSlide(currentIndex);
+  updateToggle();
+  startAutoplay();
+});
+
