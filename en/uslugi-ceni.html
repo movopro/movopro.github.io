@@ -306,11 +306,11 @@
 
     /* ── INCLUDED ── */
     .included-all {
-      padding: 24px;
-      border-radius: 24px;
-      border: 1px solid rgba(201,169,110,.12);
-      background: rgba(201,169,110,.04);
-      margin-bottom: 28px;
+      padding: 24px 0 8px;
+      border-top: 1px solid rgba(201,169,110,.18);
+      border-bottom: 1px solid rgba(201,169,110,.12);
+      background: transparent;
+      margin-bottom: 34px;
     }
 
     .inc-title {
@@ -326,27 +326,20 @@
     .inc-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 10px;
+      column-gap: 34px;
+      row-gap: 0;
     }
 
     .inc-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(0,0,0,.18);
-      border: 1px solid rgba(201,169,110,.08);
+      gap: 11px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(201,169,110,.09);
       color: var(--text-soft);
       line-height: 1.55;
       font-size: .91rem;
       font-weight: 300;
-      transition: border-color .2s, background .2s;
-    }
-
-    .inc-item:hover {
-      border-color: rgba(201,169,110,.16);
-      background: rgba(201,169,110,.05);
     }
 
     .inc-item::before {
@@ -943,38 +936,38 @@
 <div class="package-grid">
 <article class="package-card reveal" style="opacity: 1; transform: none;">
 <div class="package-title">Standard</div>
-<div class="package-price">1,450 € <span>(2836 BGN)</span></div>
+<div class="package-price">€1,450</div>
 <div class="gold-divider"></div>
-<div class="package-diff-label">Best for</div>
+<div class="package-diff-label">Includes</div>
 <ul class="bullets">
 <li>Team of 2 — 1 photographer + 1 videographer.</li>
 <li>Full wedding-day coverage with a clear balance between photography and video.</li>
 <li>A strong, clean all-round package for couples who want complete coverage.</li>
 </ul>
-<button class="btn btn--secondary package-inquiry-btn" data-package="Стандартен" data-package-price="1,450 € (2836 BGN)" data-pricing-fix-bound="1" type="button">
+<button class="btn btn--secondary package-inquiry-btn" data-package="Стандартен" data-package-price="€1,450" data-pricing-fix-bound="1" type="button">
               Ask about this package
             </button>
 </article>
 <article class="package-card recommended reveal" style="opacity: 1; transform: none;">
 <div class="badge">Recommended</div>
 <div class="package-title">Premium</div>
-<div class="package-price">1,950 € <span>(3814 BGN)</span></div>
+<div class="package-price">€1,950</div>
 <div class="gold-divider"></div>
-<div class="package-diff-label">Best for</div>
+<div class="package-diff-label">Includes</div>
 <ul class="bullets">
 <li>Team of 4 — choose between 2 photographers + 1 videographer + 1 assistant, or 1 photographer + 2 videographers + 1 assistant.</li>
 <li>Wider coverage of preparations, details and simultaneous moments.</li>
 <li>Richer editing, a stronger trailer and greater visual freedom.</li>
 </ul>
-<button class="btn btn--primary package-inquiry-btn" data-package="Премиум" data-package-price="1,950 € (3814 BGN)" data-pricing-fix-bound="1" type="button">
+<button class="btn btn--primary package-inquiry-btn" data-package="Премиум" data-package-price="€1,950" data-pricing-fix-bound="1" type="button">
               Ask about this package
             </button>
 </article>
 <article class="package-card reveal" style="opacity: 1; transform: none;">
 <div class="package-title">Ultra</div>
-<div class="package-price">2,700 € <span>(5281 BGN)</span></div>
+<div class="package-price">€2,700</div>
 <div class="gold-divider"></div>
-<div class="package-diff-label">Best for</div>
+<div class="package-diff-label">Includes</div>
 <ul class="bullets">
 <li>Team of 4 — 2 photographers + 2 videographers.</li>
 <li>Maximum coverage with more angles, more dynamics and a fuller story.</li>
@@ -983,7 +976,7 @@
 <li><strong>Photo album up to 25 × 25 cm — included in the package.</strong></li>
 <li><strong>Post-wedding photo session — included in the package.</strong></li>
 </ul>
-<button class="btn btn--secondary package-inquiry-btn" data-package="Ултра" data-package-price="2,700 € (5281 BGN)" data-pricing-fix-bound="1" type="button">
+<button class="btn btn--secondary package-inquiry-btn" data-package="Ултра" data-package-price="€2,700" data-pricing-fix-bound="1" type="button">
               Ask about this package
             </button>
 </article>
@@ -997,7 +990,7 @@
 <div class="section-topline"><div><h2>Additional information</h2><p>Travel and accommodation conditions for events outside Kardzhali.</p></div><div class="pill">travel &amp; accommodation</div></div>
 <div class="included-all wow-reveal" data-wow-delay="2" style="margin-bottom:0"><div class="inc-grid">
 <div class="inc-item">No travel fee for events within the city of Kardzhali.</div>
-<div class="inc-item">Outside Kardzhali: €0.51 per km, calculated one way (about BGN 1.00/km).</div>
+<div class="inc-item">Outside Kardzhali: €0.51 per km, calculated one way.</div>
 <div class="inc-item">More than 100 km from Kardzhali: accommodation for the team is required after the wedding.</div>
 <div class="inc-item">More than 200 km from Kardzhali: accommodation must be arranged and paid for before and after the wedding.</div>
 </div></div></section><section class="glass-card reveal" style="opacity: 1; transform: none;">
@@ -1080,7 +1073,6 @@
 <div class="result-total">
 <small>Estimated total</small>
 <div class="result-eur" id="totalEUR">0 €</div>
-<div class="result-bgn" id="totalBGN">0 BGN</div>
 </div>
 <div class="breakdown" id="breakdown"><div class="line"><div>No services selected.</div><div class="r">0 €</div></div></div>
 </div>
@@ -1131,7 +1123,6 @@
 <div class="result-total">
 <small>Estimated total</small>
 <div class="result-eur" id="eventTotalEUR">220 €</div>
-<div class="result-bgn" id="eventTotalBGN">430 BGN</div>
 </div>
 <div class="breakdown" id="eventBreakdown"><div class="line"><div>First started hour: 1 × €130</div><div class="r">130 €</div></div><div class="line"><div>Next hours: 1h × 1 × €90</div><div class="r">90 €</div></div></div>
 </div>
@@ -1280,347 +1271,10 @@
 <footer>
     © 2026 Memory Photo &amp; Video. All rights reserved.
   </footer>
-<!-- The maintained calculator lives in assets/js/pricing-fix.js. -->
+<!-- The maintained calculator lives in assets/js/pricing-fix.js?v=20260911-eur. -->
 <script>window.__pricingFixEnabled = true;</script>
-<script>
-    if (!window.__pricingFixEnabled) {
-    /* ── REVEAL ON SCROLL ── */
-    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    revealEls.forEach(el => io.observe(el));
-
-    /* ── CALCULATOR ── */
-    const EUR_TO_BGN = 1.95583;
-
-    const tabs = document.querySelectorAll('.mode-tab');
-    const panels = document.querySelectorAll('.mode-panel');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('visible'));
-        tab.classList.add('active');
-        document.getElementById('panel-' + tab.dataset.mode).classList.add('visible');
-      });
-    });
-
-    const PRICES = {
-      weddingPhoto: { 1: 656, 2: 1106 },
-      weddingVideo: { 1: 719, 2: 1214 },
-      overtimePerPersonPerHour: 78,
-      rawFiles: 168,
-      afterSession: 143,
-      transportPerKm: 0.58,
-      dronePerHour: 58,
-      dronePerDay: 224
-    };
-
-    const photoTeam   = document.getElementById('photoTeam');
-    const videoTeam   = document.getElementById('videoTeam');
-    const otHours     = document.getElementById('otHours');
-    const km          = document.getElementById('km');
-    const droneMode   = document.getElementById('droneMode');
-    const droneHours  = document.getElementById('droneHours');
-    const rawFiles    = document.getElementById('rawFiles');
-    const afterSession = document.getElementById('afterSession');
-    const totalEUR    = document.getElementById('totalEUR');
-    const totalBGN    = document.getElementById('totalBGN');
-    const breakdown   = document.getElementById('breakdown');
-
-    function moneyEUR(n){ return Math.round(n) + '€'; }
-    function moneyBGN(n){ return Math.round(n) + ' лв.'; }
-    function makeLine(label, value){
-      return '<div class="line"><div>' + label + '</div><div class="r">' + moneyEUR(value) + '</div></div>';
-    }
-
-    function updateDroneField(){
-      const hourly = droneMode.value === 'hour';
-      droneHours.disabled = !hourly;
-      droneHours.style.opacity = hourly ? '1' : '.45';
-    }
-
-    function calcWedding(){
-      const p = parseInt(photoTeam.value, 10);
-      const v = parseInt(videoTeam.value, 10);
-      const ot = parseInt(otHours.value, 10);
-      const kmVal = Math.max(0, parseFloat(km.value || '0'));
-      const dMode = droneMode.value;
-      const dHours = Math.max(1, parseInt(droneHours.value || '1', 10));
-      const people = (isNaN(p)?0:p) + (isNaN(v)?0:v);
-
-      let total = 0;
-      const lines = [];
-
-      if(p > 0){
-        const val = PRICES.weddingPhoto[p] || 0;
-        total += val;
-        lines.push(makeLine('Сватбена фотография: ' + p + ' фотограф' + (p===1?'':'и') + ' (до 10ч)', val));
-      }
-      if(v > 0){
-        const val = PRICES.weddingVideo[v] || 0;
-        total += val;
-        lines.push(makeLine('Сватбена видеография: ' + v + ' оператор' + (v===1?'':'и') + ' (до 10ч)', val));
-      }
-      if(ot > 0 && people > 0){
-        const val = ot * people * PRICES.overtimePerPersonPerHour;
-        total += val;
-        lines.push(makeLine('Доп. часове: ' + ot + 'ч × ' + people + ' × 78€', val));
-      }
-      if(dMode === 'hour'){
-        const val = dHours * PRICES.dronePerHour;
-        total += val;
-        lines.push(makeLine('Дрон: ' + dHours + 'ч × 58€', val));
-      } else if(dMode === 'day'){
-        total += PRICES.dronePerDay;
-        lines.push(makeLine('Дрон за целия ден', PRICES.dronePerDay));
-      }
-      if(rawFiles.checked){
-        total += PRICES.rawFiles;
-        lines.push(makeLine('Сурови файлове', PRICES.rawFiles));
-      }
-      if(afterSession.checked){
-        total += PRICES.afterSession;
-        lines.push(makeLine('Фотосесия в отделен ден', PRICES.afterSession));
-      }
-      if(kmVal > 0){
-        const val = kmVal * PRICES.transportPerKm;
-        total += val;
-        lines.push(makeLine('Транспорт: ' + kmVal + ' км × 0.58€', val));
-      }
-
-      totalEUR.textContent = moneyEUR(total);
-      totalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
-      breakdown.innerHTML = lines.length
-        ? lines.join('')
-        : '<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
-    }
-
-    [photoTeam, videoTeam, otHours, km, droneMode, droneHours, rawFiles, afterSession].forEach(el => {
-      el.addEventListener('input', calcWedding);
-      el.addEventListener('change', calcWedding);
-    });
-    droneMode.addEventListener('change', updateDroneField);
-    document.getElementById('recalcWedding').addEventListener('click', calcWedding);
-    document.getElementById('resetCalc').addEventListener('click', () => {
-      photoTeam.value = '0'; videoTeam.value = '0';
-      otHours.value = '0'; km.value = '0';
-      droneMode.value = 'none'; droneHours.value = '1';
-      rawFiles.checked = false; afterSession.checked = false;
-      updateDroneField(); calcWedding();
-    });
-
-    const EVENT_PRICES = {
-      birthday: 88, baptism: 99, corporate: 128, other: 88,
-      rawFiles: 168, transportPerKm: 0.58
-    };
-
-    const eventType      = document.getElementById('eventType');
-    const eventHours     = document.getElementById('eventHours');
-    const eventPeople    = document.getElementById('eventPeople');
-    const eventKm        = document.getElementById('eventKm');
-    const eventRawFiles  = document.getElementById('eventRawFiles');
-    const eventTotalEUR  = document.getElementById('eventTotalEUR');
-    const eventTotalBGN  = document.getElementById('eventTotalBGN');
-    const eventBreakdown = document.getElementById('eventBreakdown');
-
-    function calcEvent(){
-      const type   = eventType.value;
-      const hours  = Math.max(1, parseInt(eventHours.value || '1', 10));
-      const people = Math.max(1, parseInt(eventPeople.value || '1', 10));
-      const kmVal  = Math.max(0, parseFloat(eventKm.value || '0'));
-      const rate   = EVENT_PRICES[type] || EVENT_PRICES.other;
-
-      let total = 0;
-      const lines = [];
-
-      const coverage = hours * people * rate;
-      total += coverage;
-      lines.push(makeLine('Покритие: ' + hours + 'ч × ' + people + ' × ' + rate + '€', coverage));
-
-      if(kmVal > 0){
-        const transport = kmVal * EVENT_PRICES.transportPerKm;
-        total += transport;
-        lines.push(makeLine('Транспорт: ' + kmVal + ' км × 0.58€', transport));
-      }
-      if(eventRawFiles.checked){
-        total += EVENT_PRICES.rawFiles;
-        lines.push(makeLine('Сурови файлове', EVENT_PRICES.rawFiles));
-      }
-
-      eventTotalEUR.textContent = moneyEUR(total);
-      eventTotalBGN.textContent = moneyBGN(total * EUR_TO_BGN);
-      eventBreakdown.innerHTML = lines.length
-        ? lines.join('')
-        : '<div class="line"><div>Няма избрани услуги.</div><div class="r">0€</div></div>';
-    }
-
-    [eventType, eventHours, eventPeople, eventKm, eventRawFiles].forEach(el => {
-      el.addEventListener('input', calcEvent);
-      el.addEventListener('change', calcEvent);
-    });
-    document.getElementById('recalcEvent').addEventListener('click', calcEvent);
-    document.getElementById('resetEventCalc').addEventListener('click', () => {
-      eventType.value = 'birthday'; eventHours.value = '2';
-      eventPeople.value = '1'; eventKm.value = '0';
-      eventRawFiles.checked = false; calcEvent();
-    });
-
-    /* ── INQUIRY HELPERS ── */
-    function getWeddingSummaryText(){
-      const p = parseInt(photoTeam.value, 10) || 0;
-      const v = parseInt(videoTeam.value, 10) || 0;
-      const ot = parseInt(otHours.value, 10) || 0;
-      const kmVal = parseFloat(km.value || '0') || 0;
-      const dMode = droneMode.value;
-      const dHours = parseInt(droneHours.value || '1', 10) || 1;
-      const lines = [
-        'Тип: Сватба',
-        'Фотографи: ' + p, 'Оператори: ' + v,
-        'Допълнителни часове: ' + ot, 'Транспорт (км): ' + kmVal,
-        'Дрон: ' + (dMode==='hour' ? 'По часове (' + dHours + ' ч)' : dMode==='day' ? 'За целия ден' : 'Не'),
-        'Сурови файлове: ' + (rawFiles.checked ? 'Да' : 'Не'),
-        'Фотосесия в отделен ден: ' + (afterSession.checked ? 'Да' : 'Не'),
-        'Ориентировъчна сума: ' + totalEUR.textContent + ' / ' + totalBGN.textContent
-      ];
-      return lines.join('\n');
-    }
-
-    function getEventSummaryText(){
-      const typeMap = { birthday:'Рожден ден', baptism:'Кръщене', corporate:'Фирмено събитие', other:'Друго' };
-      const type   = eventType.value;
-      const hours  = Math.max(1, parseInt(eventHours.value || '1', 10));
-      const people = Math.max(1, parseInt(eventPeople.value || '1', 10));
-      const kmVal  = Math.max(0, parseFloat(eventKm.value || '0'));
-      const rate   = EVENT_PRICES[type] || EVENT_PRICES.other;
-      const lines = [
-        'Тип: ' + (typeMap[type] || 'Друго'),
-        'Часове: ' + hours, 'Хора в екипа: ' + people,
-        'Транспорт (км): ' + kmVal,
-        'Сурови файлове: ' + (eventRawFiles.checked ? 'Да' : 'Не'),
-        'Ставка на час: ' + rate + '€',
-        'Ориентировъчна сума: ' + eventTotalEUR.textContent + ' / ' + eventTotalBGN.textContent
-      ];
-      return lines.join('\n');
-    }
-
-    const inquirySection   = document.getElementById('inquirySection');
-    const inquiryType      = document.getElementById('inquiryType');
-    const selectedOffer    = document.getElementById('selectedOffer');
-    const inquirySummary   = document.getElementById('inquirySummary');
-    const clientName       = document.getElementById('clientName');
-    const clientPhone      = document.getElementById('clientPhone');
-    const clientEmail      = document.getElementById('clientEmail');
-    const eventDateField   = document.getElementById('eventDate');
-    const eventLocation    = document.getElementById('eventLocation');
-    const clientNote       = document.getElementById('clientNote');
-    const privacyConsent   = document.getElementById('privacyConsent');
-    const sendInquiryBtn   = document.getElementById('sendInquiry');
-    const sendStatus       = document.getElementById('sendStatus');
-
-    function openInquirySection(){
-      inquirySection.scrollIntoView({ behavior:'smooth', block:'start' });
-    }
-
-    document.querySelectorAll('.package-inquiry-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        inquiryType.value = 'Пакетна оферта';
-        selectedOffer.value = btn.dataset.package + ' — ' + btn.dataset.packagePrice;
-        inquirySummary.value =
-          'Избрана оферта: ' + btn.dataset.package + '\n' +
-          'Цена: ' + btn.dataset.packagePrice + '\n' +
-          'Тип: Пакетна оферта';
-        openInquirySection();
-      });
-    });
-
-    document.getElementById('openWeddingInquiry').addEventListener('click', () => {
-      calcWedding();
-      inquiryType.value = 'Персонална конфигурация';
-      selectedOffer.value = 'Персонална конфигурация за сватба';
-      inquirySummary.value = getWeddingSummaryText();
-      openInquirySection();
-    });
-
-    document.getElementById('openEventInquiry').addEventListener('click', () => {
-      calcEvent();
-      inquiryType.value = 'Друго събитие';
-      selectedOffer.value = 'Персонална конфигурация за друго събитие';
-      inquirySummary.value = getEventSummaryText();
-      openInquirySection();
-    });
-
-    sendInquiryBtn.addEventListener('click', async () => {
-      const name      = clientName.value.trim();
-      const phone     = clientPhone.value.trim();
-      const email     = clientEmail.value.trim();
-      const evDate    = eventDateField.value.trim();
-      const location  = eventLocation.value.trim();
-      const note      = clientNote.value.trim();
-      const offer     = selectedOffer.value.trim();
-      const summary   = inquirySummary.value.trim();
-      const type      = inquiryType.value;
-
-      if(!name)    { sendStatus.textContent = 'Моля, попълнете име.'; return; }
-      if(!phone)   { sendStatus.textContent = 'Моля, попълнете телефон.'; return; }
-      if(!email)   { sendStatus.textContent = 'Моля, попълнете имейл.'; return; }
-      if(!evDate)  { sendStatus.textContent = 'Моля, изберете дата на събитието.'; return; }
-      if(!summary) { sendStatus.textContent = 'Моля, първо изберете оферта или конфигурация.'; return; }
-      if(!privacyConsent.checked){ sendStatus.textContent = 'Моля, потвърдете съгласието за лични данни.'; return; }
-
-      sendInquiryBtn.disabled = true;
-      sendInquiryBtn.style.opacity = '.7';
-      sendStatus.textContent = 'Изпращане...';
-
-      const payload = {
-        access_key: '33fb475c-9d44-449b-9fd0-1fc667dd170e',
-        subject: 'Ново запитване от сайта - Memory Photo & Video',
-        from_name: 'Memory Photo & Video',
-        name, email, phone,
-        event_date: evDate,
-        event_location: location,
-        inquiry_type: type,
-        selected_offer: offer,
-        calculator_summary: summary,
-        note
-      };
-
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-        if(result.success){
-          sendStatus.textContent = 'Запитването беше изпратено успешно.';
-          [clientName, clientPhone, clientEmail, eventDateField, eventLocation, clientNote]
-            .forEach(el => el.value = '');
-          privacyConsent.checked = false;
-        } else {
-          sendStatus.textContent = 'Възникна проблем при изпращането.';
-        }
-      } catch(e) {
-        sendStatus.textContent = 'Грешка при връзката. Опитайте отново.';
-      } finally {
-        sendInquiryBtn.disabled = false;
-        sendInquiryBtn.style.opacity = '1';
-      }
-    });
-
-    /* init */
-    updateDroneField();
-    calcWedding();
-    calcEvent();
-    }
-  </script>
-<script defer="" src="assets/js/pricing-fix.js?v=2026081901"></script>
-<script defer="" src="assets/js/main.js"></script>
+<script defer="" src="assets/js/pricing-fix.js?v=20260911-eur"></script>
+<script defer="" src="assets/js/main.js?v=20260911c"></script>
 <script defer="" src="assets/js/language-switch.js"></script>
 <div aria-label="Analytics preferences" class="mpv-consent" role="dialog">
 <p>We use optional analytics only to understand which pages are useful. No analytics is loaded unless you accept.</p>
