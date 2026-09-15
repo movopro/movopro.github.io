@@ -215,6 +215,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('a');
         card.href = `${isEnglishPage ? '/svatba-izbrani.html?lang=en' : '/svatba-izbrani.html'}#kadyr-${index + 1}`;
 
+        const picture = document.createElement('picture');
+        picture.style.display = 'block';
+
+        const mobileSource = document.createElement('source');
+        mobileSource.media = '(max-width: 768px)';
+        mobileSource.srcset = `/assets/mobile/${file}`;
+
         const img = document.createElement('img');
         img.src = `/assets/${file}`;
         img.alt = isEnglishPage ? `Selected wedding photo ${index + 1}` : `Избран сватбен кадър ${index + 1}`;
@@ -222,7 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
         img.decoding = 'async';
         img.fetchPriority = 'low';
 
-        card.appendChild(img);
+        picture.append(mobileSource, img);
+        card.appendChild(picture);
         grid.appendChild(card);
       });
 
@@ -239,8 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const strip = document.querySelector('.home-filmstrip');
   if (strip) strip.remove();
 
-  /* The legacy 653-photo template is not used by the gallery script. Remove it from memory after parsing. */
-  document.getElementById('portfolioNextPool')?.remove();
 
   if (hero && heroContent && !reduceMotion && canHover) {
     hero.addEventListener('pointermove', event => {
