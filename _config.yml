@@ -1,0 +1,10 @@
+# GitHub Pages/Jekyll deployment configuration.
+# Keep source/archive assets in the repository without publishing them when no live page uses them.
+exclude:
+  - assets/portfolio_next
+  - assets/portfolio_next_mobile
+  - assets/portfolio/.DS_Store
+  - mario.jpg
+  - victor.jpg
+  - svetlan.jpg
+  - icon.png
