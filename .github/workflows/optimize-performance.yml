@@ -82,17 +82,17 @@ jobs:
               if dst.stat().st_size >= src.stat().st_size:
                   raise SystemExit(f'{dst} is not smaller than its source')
 
-          # 4) Stop every source HTML page from downloading the 719 KB icon for a 32 px logo.
-          # English pages are generated from these sources by build-static-en.yml.
+          # 4) Keep both source and generated English HTML on the lightweight assets.
+          # Bot commits made by one workflow do not reliably trigger another workflow,
+          # so performance correctness must not depend on the English generator rerunning.
           icon_ref = re.compile(r'(?P<attr>(?:src|href)=)(?P<q>["\'])(?:\.\./|/)?icon\.png(?P=q)')
           for path in Path('.').rglob('*.html'):
-              if path.parts and path.parts[0] == 'en':
-                  continue
               text = path.read_text(encoding='utf-8')
               updated = icon_ref.sub(lambda m: f'{m.group("attr")}{m.group("q")}/assets/icon-64.png{m.group("q")}', text)
-              if path.name == 'about.html' and path.parent == Path('.'):
+              if path.name == 'about.html':
                   for stem in ('mario', 'victor', 'svetlan'):
                       updated = updated.replace(f'src="{stem}.jpg"', f'src="/assets/team/{stem}.webp"')
+                      updated = updated.replace(f"src='{stem}.jpg'", f"src='/assets/team/{stem}.webp'")
               if updated != text:
                   path.write_text(updated, encoding='utf-8')
                   print(f'Updated asset references in {path}')
@@ -121,11 +121,20 @@ jobs:
             echo 'Optimized icon is unexpectedly large.' >&2
             exit 1
           fi
-          grep -q '/assets/team/mario.webp' about.html
-          grep -q '/assets/team/victor.webp' about.html
-          grep -q '/assets/team/svetlan.webp' about.html
+          for f in about.html en/about.html; do
+            grep -q '/assets/team/mario.webp' "$f"
+            grep -q '/assets/team/victor.webp' "$f"
+            grep -q '/assets/team/svetlan.webp' "$f"
+          done
+          for f in index.html portfolio.html about.html en/index.html en/portfolio.html en/about.html; do
+            if grep -qE '(src|href)="(\.\./|/)?icon\.png"' "$f"; then
+              echo "Oversized icon reference remains in $f" >&2
+              exit 1
+            fi
+            grep -q '/assets/icon-64.png' "$f"
+          done
 
-      - name: Commit optimized assets and source pages
+      - name: Commit optimized assets and pages
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -134,5 +143,5 @@ jobs:
             echo 'Performance assets already optimized.'
             exit 0
           fi
-          git commit -m "Performance: shrink HTML and optimize UI images [skip performance]"
+          git commit -m "Performance: optimize BG and EN image delivery [skip performance]"
           git push
