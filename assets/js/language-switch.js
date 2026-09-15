@@ -14,8 +14,21 @@
       const gallery=document.querySelector('.gallery');
       const pool=document.getElementById('portfolioNextPool');
       if(gallery){
-        const initialItems=[...gallery.querySelectorAll('.gallery-item')];
-        const nextItems=pool?[...pool.content.querySelectorAll('.gallery-item')]:[...document.querySelectorAll('[data-next-pool="653"]')];
+        // Confirmed byte-for-byte duplicate desktop images. Keep the numbered originals
+        // and suppress their differently named copies before pagination/counting runs.
+        const duplicatePortfolioPaths=new Set([
+          ...Array.from({length:51},(_,index)=>`assets/portfolio/random_${String(index+1).padStart(3,'0')}.jpg`),
+          'assets/portfolio/092.jpg',
+          'assets/portfolio/096.jpg'
+        ]);
+        const isConfirmedDuplicate=item=>duplicatePortfolioPaths.has((item.dataset.image||'').replace(/^\/+/,''));
+
+        const initialItems=[...gallery.querySelectorAll('.gallery-item')].filter(item=>{
+          if(!isConfirmedDuplicate(item)) return true;
+          item.remove();
+          return false;
+        });
+        const nextItems=(pool?[...pool.content.querySelectorAll('.gallery-item')]:[...document.querySelectorAll('[data-next-pool="653"]')]).filter(item=>!isConfirmedDuplicate(item));
         const items=initialItems.concat(nextItems);
         const total=items.length;
         const batchSize=48;
