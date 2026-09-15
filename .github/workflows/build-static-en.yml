@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Remove legacy direct analytics loaders
+      - name: Sanitize source pages before rendering
         shell: python
         run: |
           from pathlib import Path
@@ -53,6 +53,21 @@ jobs:
               'Продължете към портфолиото или вижте цените, за да изберете подходящия пакет,\n              а след това се свържете с нас за потвърждение.'
           )
           availability.write_text(text, encoding='utf-8')
+
+          # Keep crawlable/no-JS pricing content aligned with the maintained calculator.
+          pricing = Path('uslugi-ceni.html')
+          text = pricing.read_text(encoding='utf-8')
+          text = text.replace(
+              'Екип от 3 души — 2 фотографи + 1 оператор или 1 фотограф + 2 оператори.',
+              'Екип от 4 души — по избор: 2 фотографи + 1 оператор + 1 асистент или 1 фотограф + 2 оператори + 1 асистент.'
+          )
+          for stale_rate in ('от 88 € / час', 'от 99 € / час', 'от 128 € / час'):
+              text = text.replace(stale_rate, '130 € първи час · 90 € всеки следващ')
+          text = text.replace(
+              'Ориентировъчни начални нива за различни типове ангажименти извън сватбения ден.',
+              'За 1 фотограф или 1 оператор: 130 € за първия започнат час и 90 € за всеки следващ започнат час.'
+          )
+          pricing.write_text(text, encoding='utf-8')
 
       - name: Start local site
         run: |
@@ -95,6 +110,7 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+          import json
           import re
           from bs4 import BeautifulSoup
 
@@ -220,10 +236,48 @@ jobs:
               for meta in head.find_all('meta', attrs={'http-equiv': re.compile(r'^refresh$', re.I)}):
                   meta.decompose()
 
-              # main.js intentionally does not rewrite SEO schema on English pages, so
-              # remove the Bulgarian runtime snapshot instead of publishing conflicting data.
+              # Replace the Bulgarian runtime schema snapshot with English structured data.
               for schema in head.select('#mpv-seo-schema'):
                   schema.decompose()
+              page_type = 'AboutPage' if src == 'about.html' else 'WebPage'
+              schema = soup.new_tag('script', id='mpv-seo-schema', type='application/ld+json')
+              schema.string = json.dumps({
+                  '@context': 'https://schema.org',
+                  '@graph': [
+                      {
+                          '@type': 'ProfessionalService',
+                          '@id': host + '/#business',
+                          'name': 'Memory Photo & Video',
+                          'url': host + '/',
+                          'logo': host + '/logo.png',
+                          'image': host + '/memory-og-2026.jpg',
+                          'description': 'Wedding photography and videography in Bulgaria.',
+                          'foundingDate': '2017',
+                          'areaServed': {'@type': 'Country', 'name': 'Bulgaria'},
+                          'serviceType': ['Wedding photography', 'Wedding videography', 'Event photography', 'Event videography'],
+                          'sameAs': ['https://www.instagram.com/memoryphotoandvideo/', 'https://www.facebook.com/MemoryPhotoAndVideo/']
+                      },
+                      {
+                          '@type': 'WebSite',
+                          '@id': host + '/#website-en',
+                          'url': host + '/en/',
+                          'name': 'Memory Photo & Video',
+                          'inLanguage': 'en',
+                          'publisher': {'@id': host + '/#business'}
+                      },
+                      {
+                          '@type': page_type,
+                          '@id': host + cfg['en'] + '#webpage',
+                          'url': host + cfg['en'],
+                          'name': cfg['title'],
+                          'description': cfg['description'],
+                          'isPartOf': {'@id': host + '/#website-en'},
+                          'about': {'@id': host + '/#business'},
+                          'inLanguage': 'en'
+                      }
+                  ]
+              }, ensure_ascii=False, separators=(',', ':'))
+              head.append(schema)
 
               # Keep English users inside the English section. The language-switch control
               # itself is intentionally excluded so it continues to return to Bulgarian.
@@ -239,6 +293,25 @@ jobs:
                       a['href'] = known[clean] + anchor
                   elif clean == '':
                       a['href'] = '/en/' + anchor
+
+              # Fix English accessibility labels that are not visible-text translations.
+              nav = soup.find('nav')
+              if nav:
+                  nav['aria-label'] = 'Primary navigation'
+              menu_toggle = soup.find(id='menuToggle')
+              if menu_toggle:
+                  menu_toggle['aria-label'] = 'Open menu'
+              burger = soup.select_one('label.burger')
+              if burger:
+                  burger['aria-label'] = 'Menu'
+              for social in soup.select('.home-socials'):
+                  social['aria-label'] = 'Social media'
+              for link in soup.find_all('a', href=True):
+                  href = link.get('href', '')
+                  if 'instagram.com/memoryphotoandvideo' in href:
+                      link['aria-label'] = 'Memory Photo & Video on Instagram'
+                  elif 'facebook.com/MemoryPhotoAndVideo' in href:
+                      link['aria-label'] = 'Memory Photo & Video on Facebook'
 
               # Remove browser-only/runtime controls; scripts recreate them cleanly.
               for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue, .mpv-consent'):
@@ -257,6 +330,7 @@ jobs:
             grep -q 'rel="canonical"' "$f" || { echo "Missing canonical in $f"; exit 1; }
             grep -q 'hreflang="en"' "$f" || { echo "Missing hreflang in $f"; exit 1; }
             grep -q 'content="en_US" property="og:locale"\|property="og:locale" content="en_US"' "$f" || { echo "Missing English OG locale in $f"; exit 1; }
+            grep -q 'id="mpv-seo-schema"' "$f" || { echo "Missing English schema in $f"; exit 1; }
             if grep -qi 'http-equiv="refresh"' "$f"; then echo "Refresh redirect still present in $f"; exit 1; fi
             if grep -q 'googletagmanager.com/gtag/js' "$f"; then echo "Direct GA loader leaked into $f"; exit 1; fi
             if grep -q 'mpv-consent' "$f"; then echo "Static consent dialog leaked into $f"; exit 1; fi
@@ -264,6 +338,8 @@ jobs:
           for f in uslugi-ceni.html availability.html; do
             if grep -q 'googletagmanager.com/gtag/js?id=G-WJK01GL7PM' "$f"; then echo "Direct GA loader still present in $f"; exit 1; fi
           done
+          grep -q 'Екип от 4 души — по избор:' uslugi-ceni.html || { echo 'Premium static content is stale'; exit 1; }
+          if grep -q 'от 88 € / час\|от 99 € / час\|от 128 € / час' uslugi-ceni.html; then echo 'Stale event rates remain'; exit 1; fi
 
       - name: Commit sanitized sources and generated English pages
         run: |
@@ -274,5 +350,5 @@ jobs:
             echo 'Source and English pages already up to date.'
             exit 0
           fi
-          git commit -m "Sanitize analytics and regenerate English pages [skip static en]"
+          git commit -m "Normalize pricing content and regenerate English pages [skip static en]"
           git push
