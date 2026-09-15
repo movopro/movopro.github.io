@@ -117,6 +117,15 @@ jobs:
               'svatba-izbrani.html': '/en/svatba-izbrani.html',
           }
 
+          def set_meta(soup, head, attrs, content):
+              tag = head.find('meta', attrs=attrs)
+              if not tag:
+                  tag = soup.new_tag('meta')
+                  for key, value in attrs.items():
+                      tag[key] = value
+                  head.append(tag)
+              tag['content'] = content
+
           Path('en').mkdir(exist_ok=True)
           for src, cfg in pages.items():
               raw = Path('/tmp/memory-en-render', src).read_text(encoding='utf-8')
@@ -127,6 +136,17 @@ jobs:
               head = soup.head
               if not head:
                   raise SystemExit(f'Missing <head> after rendering {src}')
+
+              # Do not persist browser/runtime analytics state in the static English HTML.
+              # main.js owns consent and loads GA only after the visitor accepts.
+              for script in list(soup.find_all('script')):
+                  script_src = script.get('src', '') or ''
+                  script_text = script.get_text(' ', strip=True)
+                  if 'googletagmanager.com/gtag/js' in script_src:
+                      script.decompose()
+                      continue
+                  if 'G-WJK01GL7PM' in script_text and ('gtag(' in script_text or 'dataLayer' in script_text):
+                      script.decompose()
 
               for tag in head.find_all('base'):
                   tag.decompose()
@@ -148,6 +168,14 @@ jobs:
                   head.append(desc)
               desc['content'] = cfg['description']
 
+              # Keep share previews aligned with the English canonical page.
+              set_meta(soup, head, {'property': 'og:locale'}, 'en_US')
+              set_meta(soup, head, {'property': 'og:title'}, cfg['title'])
+              set_meta(soup, head, {'property': 'og:description'}, cfg['description'])
+              set_meta(soup, head, {'property': 'og:url'}, host + cfg['en'])
+              set_meta(soup, head, {'name': 'twitter:title'}, cfg['title'])
+              set_meta(soup, head, {'name': 'twitter:description'}, cfg['description'])
+
               for tag in head.find_all('link', attrs={'rel': lambda v: v and 'canonical' in v}):
                   tag.decompose()
               canonical = soup.new_tag('link', rel='canonical', href=host + cfg['en'])
@@ -161,6 +189,11 @@ jobs:
 
               for meta in head.find_all('meta', attrs={'http-equiv': re.compile(r'^refresh$', re.I)}):
                   meta.decompose()
+
+              # main.js intentionally does not rewrite SEO schema on English pages, so
+              # remove the Bulgarian runtime snapshot instead of publishing conflicting data.
+              for schema in head.select('#mpv-seo-schema'):
+                  schema.decompose()
 
               # Keep English users inside the English section. The language-switch control
               # itself is intentionally excluded so it continues to return to Bulgarian.
@@ -177,8 +210,8 @@ jobs:
                   elif clean == '':
                       a['href'] = '/en/' + anchor
 
-              # Remove transient browser-only controls; scripts recreate them cleanly.
-              for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue'):
+              # Remove browser-only/runtime controls; scripts recreate them cleanly.
+              for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue, .mpv-consent'):
                   transient.decompose()
 
               out = Path(cfg['out'])
@@ -193,7 +226,10 @@ jobs:
             grep -q '<h1' "$f" || { echo "Missing H1 in $f"; exit 1; }
             grep -q 'rel="canonical"' "$f" || { echo "Missing canonical in $f"; exit 1; }
             grep -q 'hreflang="en"' "$f" || { echo "Missing hreflang in $f"; exit 1; }
+            grep -q 'content="en_US" property="og:locale"\|property="og:locale" content="en_US"' "$f" || { echo "Missing English OG locale in $f"; exit 1; }
             if grep -qi 'http-equiv="refresh"' "$f"; then echo "Refresh redirect still present in $f"; exit 1; fi
+            if grep -q 'googletagmanager.com/gtag/js' "$f"; then echo "Direct GA loader leaked into $f"; exit 1; fi
+            if grep -q 'mpv-consent' "$f"; then echo "Static consent dialog leaked into $f"; exit 1; fi
           done
 
       - name: Commit generated English pages
