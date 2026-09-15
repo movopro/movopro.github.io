@@ -1,0 +1,138 @@
+name: Optimize site performance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'icon.png'
+      - 'mario.jpg'
+      - 'victor.jpg'
+      - 'svetlan.jpg'
+      - '.github/workflows/optimize-performance.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    if: "!contains(github.event.head_commit.message, '[skip performance]') && !contains(github.event.head_commit.message, '[skip static en]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install image optimizer
+        run: python3 -m pip install --disable-pip-version-check pillow
+
+      - name: Optimize HTML and image delivery
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          from PIL import Image, ImageOps
+
+          # 1) Remove the legacy 653-photo template. It is not consumed by the current
+          # gallery code and main.js removes it from the DOM immediately after parsing.
+          portfolio = Path('portfolio.html')
+          if portfolio.exists():
+              text = portfolio.read_text(encoding='utf-8')
+              before = len(text.encode('utf-8'))
+              pool = re.compile(
+                  r'\s*<!-- NEXT_POOL_653_START -->.*?<!-- NEXT_POOL_653_END -->\s*',
+                  re.S,
+              )
+              text, count = pool.subn('\n', text, count=1)
+              if 'portfolioNextPool' in text or 'data-next-pool="653"' in text:
+                  raise SystemExit('Legacy portfolio pool still remains after cleanup')
+              if count:
+                  portfolio.write_text(text, encoding='utf-8')
+              after = len(text.encode('utf-8'))
+              print(f'portfolio.html: {before:,} -> {after:,} bytes ({count} pool removed)')
+
+          # 2) Create a tiny navigation/favicon asset while preserving the original logo.
+          icon_src = Path('icon.png')
+          icon_out = Path('assets/icon-64.png')
+          icon_out.parent.mkdir(parents=True, exist_ok=True)
+          if icon_src.exists():
+              with Image.open(icon_src) as original:
+                  image = ImageOps.exif_transpose(original).copy()
+                  image.thumbnail((64, 64), Image.Resampling.LANCZOS)
+                  if image.mode not in ('RGB', 'RGBA', 'L', 'LA', 'P'):
+                      image = image.convert('RGBA')
+                  image.save(icon_out, 'PNG', optimize=True, compress_level=9)
+              print(f'{icon_out}: {icon_out.stat().st_size:,} bytes')
+              if icon_out.stat().st_size >= icon_src.stat().st_size:
+                  raise SystemExit('Optimized icon is not smaller than the original')
+
+          # 3) Keep the original team portraits untouched and serve downsized WebP copies.
+          team_dir = Path('assets/team')
+          team_dir.mkdir(parents=True, exist_ok=True)
+          team_outputs = {}
+          for stem in ('mario', 'victor', 'svetlan'):
+              src = Path(f'{stem}.jpg')
+              dst = team_dir / f'{stem}.webp'
+              if not src.exists():
+                  continue
+              with Image.open(src) as original:
+                  image = ImageOps.exif_transpose(original).convert('RGB')
+                  image.thumbnail((1400, 1400), Image.Resampling.LANCZOS)
+                  image.save(dst, 'WEBP', quality=84, method=6)
+                  team_outputs[stem] = image.size
+              print(f'{src}: {src.stat().st_size:,} -> {dst.stat().st_size:,} bytes; {team_outputs[stem][0]}x{team_outputs[stem][1]}')
+              if dst.stat().st_size >= src.stat().st_size:
+                  raise SystemExit(f'{dst} is not smaller than its source')
+
+          # 4) Stop every source HTML page from downloading the 719 KB icon for a 32 px logo.
+          # English pages are generated from these sources by build-static-en.yml.
+          icon_ref = re.compile(r'(?P<attr>(?:src|href)=)(?P<q>["\'])(?:\.\./|/)?icon\.png(?P=q)')
+          for path in Path('.').rglob('*.html'):
+              if path.parts and path.parts[0] == 'en':
+                  continue
+              text = path.read_text(encoding='utf-8')
+              updated = icon_ref.sub(lambda m: f'{m.group("attr")}{m.group("q")}/assets/icon-64.png{m.group("q")}', text)
+              if path.name == 'about.html' and path.parent == Path('.'):
+                  for stem in ('mario', 'victor', 'svetlan'):
+                      updated = updated.replace(f'src="{stem}.jpg"', f'src="/assets/team/{stem}.webp"')
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+                  print(f'Updated asset references in {path}')
+
+      - name: Validate performance changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f assets/icon-64.png
+          test -f assets/team/mario.webp
+          test -f assets/team/victor.webp
+          test -f assets/team/svetlan.webp
+          if grep -q 'NEXT_POOL_653\|portfolioNextPool\|data-next-pool="653"' portfolio.html; then
+            echo 'Legacy 653-photo portfolio payload remains.' >&2
+            exit 1
+          fi
+          portfolio_size=$(wc -c < portfolio.html)
+          echo "portfolio.html size: ${portfolio_size} bytes"
+          if [ "$portfolio_size" -ge 120000 ]; then
+            echo 'portfolio.html is still unexpectedly large.' >&2
+            exit 1
+          fi
+          icon_size=$(wc -c < assets/icon-64.png)
+          echo "optimized icon size: ${icon_size} bytes"
+          if [ "$icon_size" -ge 120000 ]; then
+            echo 'Optimized icon is unexpectedly large.' >&2
+            exit 1
+          fi
+          grep -q '/assets/team/mario.webp' about.html
+          grep -q '/assets/team/victor.webp' about.html
+          grep -q '/assets/team/svetlan.webp' about.html
+
+      - name: Commit optimized assets and source pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'Performance assets already optimized.'
+            exit 0
+          fi
+          git commit -m "Performance: shrink HTML and optimize UI images [skip performance]"
+          git push
