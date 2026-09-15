@@ -24,6 +24,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Remove legacy direct analytics loaders
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          ga_block = re.compile(
+              r'\s*<!-- Google tag \(gtag\.js\) -->\s*'
+              r'<script async src="https://www\.googletagmanager\.com/gtag/js\?id=G-WJK01GL7PM"></script>\s*'
+              r'<script>.*?gtag\([\'\"]config[\'\"],\s*[\'\"]G-WJK01GL7PM[\'\"]\);\s*</script>\s*',
+              re.S,
+          )
+
+          for filename in ('uslugi-ceni.html', 'availability.html'):
+              path = Path(filename)
+              text = path.read_text(encoding='utf-8')
+              cleaned, count = ga_block.subn('\n', text, count=1)
+              if count == 0 and 'googletagmanager.com/gtag/js?id=G-WJK01GL7PM' in text:
+                  raise SystemExit(f'Could not safely remove direct GA loader from {filename}')
+              path.write_text(cleaned, encoding='utf-8')
+              print(f'Cleaned direct analytics loader from {filename}: {count} block(s)')
+
+          availability = Path('availability.html')
+          text = availability.read_text(encoding='utf-8')
+          text = text.replace(
+              'Продължете към портфолиото или виж цените, за да избереш подходящия пакет\n              и след това се свържете се с нас за потвърждение.',
+              'Продължете към портфолиото или вижте цените, за да изберете подходящия пакет,\n              а след това се свържете с нас за потвърждение.'
+          )
+          availability.write_text(text, encoding='utf-8')
+
       - name: Start local site
         run: |
           python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/memory-http.log 2>&1 &
@@ -231,15 +261,18 @@ jobs:
             if grep -q 'googletagmanager.com/gtag/js' "$f"; then echo "Direct GA loader leaked into $f"; exit 1; fi
             if grep -q 'mpv-consent' "$f"; then echo "Static consent dialog leaked into $f"; exit 1; fi
           done
+          for f in uslugi-ceni.html availability.html; do
+            if grep -q 'googletagmanager.com/gtag/js?id=G-WJK01GL7PM' "$f"; then echo "Direct GA loader still present in $f"; exit 1; fi
+          done
 
-      - name: Commit generated English pages
+      - name: Commit sanitized sources and generated English pages
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html
+          git add availability.html uslugi-ceni.html en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html
           if git diff --cached --quiet; then
-            echo 'English pages already up to date.'
+            echo 'Source and English pages already up to date.'
             exit 0
           fi
-          git commit -m "Generate crawlable static English pages [skip static en]"
+          git commit -m "Sanitize analytics and regenerate English pages [skip static en]"
           git push
