@@ -17,6 +17,11 @@ on:
 permissions:
   contents: write
 
+# A second push while this is running waits instead of racing it (two runs clashed on 2026-09-11).
+concurrency:
+  group: build-static-en
+  cancel-in-progress: false
+
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, '[skip static en]')"
@@ -395,4 +400,11 @@ jobs:
             exit 0
           fi
           git commit -m "Normalize pricing content and regenerate English pages [skip static en]"
-          git push
+          # Other site workflows can save to main at the same moment; catch up and retry.
+          for attempt in 1 2 3 4; do
+            git fetch origin main && git rebase origin/main && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 15))
+          done
+          echo 'Could not save changes after 4 attempts.' >&2
+          exit 1
