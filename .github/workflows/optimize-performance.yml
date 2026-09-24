@@ -98,52 +98,8 @@ jobs:
                   path.write_text(updated, encoding='utf-8')
                   print(f'Updated asset references in {path}')
 
-          # 5) The homepage selected-photo grid already has prepared mobile copies.
-          # Serve them below 768px without changing the desktop image or lightbox target.
-          main_js = Path('assets/js/main.js')
-          if main_js.exists():
-              text = main_js.read_text(encoding='utf-8')
-              old = (
-                  "        const img = document.createElement('img');\n"
-                  "        img.src = `/assets/${file}`;\n"
-                  "        img.alt = isEnglishPage ? `Selected wedding photo ${index + 1}` : `Избран сватбен кадър ${index + 1}`;\n"
-                  "        img.loading = 'lazy';\n"
-                  "        img.decoding = 'async';\n"
-                  "        img.fetchPriority = 'low';\n"
-                  "\n"
-                  "        card.appendChild(img);\n"
-                  "        grid.appendChild(card);"
-              )
-              new = (
-                  "        const picture = document.createElement('picture');\n"
-                  "        picture.style.display = 'block';\n"
-                  "\n"
-                  "        const mobileSource = document.createElement('source');\n"
-                  "        mobileSource.media = '(max-width: 768px)';\n"
-                  "        mobileSource.srcset = `/assets/mobile/${file}`;\n"
-                  "\n"
-                  "        const img = document.createElement('img');\n"
-                  "        img.src = `/assets/${file}`;\n"
-                  "        img.alt = isEnglishPage ? `Selected wedding photo ${index + 1}` : `Избран сватбен кадър ${index + 1}`;\n"
-                  "        img.loading = 'lazy';\n"
-                  "        img.decoding = 'async';\n"
-                  "        img.fetchPriority = 'low';\n"
-                  "\n"
-                  "        picture.append(mobileSource, img);\n"
-                  "        card.appendChild(picture);\n"
-                  "        grid.appendChild(card);"
-              )
-              if old in text:
-                  text = text.replace(old, new, 1)
-              elif 'mobileSource.srcset = `/assets/mobile/${file}`;' not in text:
-                  raise SystemExit('Could not safely patch homepage grid for mobile images')
-
-              # The old 653-photo template no longer exists, so this DOM cleanup is obsolete.
-              text = text.replace(
-                  "\n  /* The legacy 653-photo template is not used by the gallery script. Remove it from memory after parsing. */\n  document.getElementById('portfolioNextPool')?.remove();\n",
-                  "\n"
-              )
-              main_js.write_text(text, encoding='utf-8')
+          # 5) The homepage selected-photo grid is static HTML with mobile srcset copies
+          #    (see index.html .home-photo-grid); nothing to patch in main.js.
 
       - name: Validate performance changes
         shell: bash
@@ -181,7 +137,8 @@ jobs:
             fi
             grep -q '/assets/icon-64.png' "$f"
           done
-          grep -q 'mobileSource.srcset' assets/js/main.js || { echo 'Homepage mobile image source is missing.' >&2; exit 1; }
+          grep -q 'class="home-photo-grid"' index.html || { echo 'Homepage photo grid is missing.' >&2; exit 1; }
+          grep -q 'srcset="/assets/mobile/01.jpg' index.html || { echo 'Homepage mobile image source is missing.' >&2; exit 1; }
           if grep -q 'portfolioNextPool' assets/js/main.js; then
             echo 'Obsolete portfolioNextPool cleanup remains in main.js.' >&2
             exit 1

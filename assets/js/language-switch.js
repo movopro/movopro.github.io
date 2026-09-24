@@ -14,21 +14,18 @@
       const gallery=document.querySelector('.gallery');
       const pool=document.getElementById('portfolioNextPool');
       if(gallery){
-        // Confirmed byte-for-byte duplicate desktop images. Keep the numbered originals
-        // and suppress their differently named copies before pagination/counting runs.
-        const duplicatePortfolioPaths=new Set([
-          ...Array.from({length:51},(_,index)=>`assets/portfolio/random_${String(index+1).padStart(3,'0')}.jpg`),
-          'assets/portfolio/092.jpg',
-          'assets/portfolio/096.jpg'
-        ]);
-        const isConfirmedDuplicate=item=>duplicatePortfolioPaths.has((item.dataset.image||'').replace(/^\/+/,''));
-
-        const initialItems=[...gallery.querySelectorAll('.gallery-item')].filter(item=>{
-          if(!isConfirmedDuplicate(item)) return true;
-          item.remove();
-          return false;
+        // Remove runtime controls that may have been captured in a static snapshot.
+        document.querySelectorAll('.portfolio-gallery-controls').forEach(el=>el.remove());
+        const initialItems=[...gallery.querySelectorAll('.gallery-item')];
+        initialItems.forEach((item,index)=>{
+          item.hidden=false;
+          if(isEnglish){
+            item.setAttribute('aria-label',`Open photo ${index+1}`);
+            const img=item.querySelector('img');
+            if(img)img.alt=`Memory Photo & Video portfolio — photo ${index+1}`;
+          }
         });
-        const nextItems=(pool?[...pool.content.querySelectorAll('.gallery-item')]:[...document.querySelectorAll('[data-next-pool="653"]')]).filter(item=>!isConfirmedDuplicate(item));
+        const nextItems=pool?[...pool.content.querySelectorAll('.gallery-item')]:[];
         const items=initialItems.concat(nextItems);
         const total=items.length;
         const batchSize=48;
@@ -64,7 +61,7 @@
           const more=document.createElement('button');
           more.type='button';
           more.className='portfolio-load-more';
-          more.textContent=isEnglish?'Load more photos':'Виж още снимки';
+          more.textContent=isEnglish?'Load more photos':'Вижте още снимки';
 
           const update=()=>{
             status.textContent=isEnglish?`Showing ${visible} of ${total} photos`:`Показани ${visible} от ${total} снимки`;
@@ -175,12 +172,12 @@
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',showPricing,{once:true});else showPricing();
   }
 
-  const loadComplete=()=>{if(document.documentElement.dataset.memoryEnglishComplete==='1')return;document.documentElement.dataset.memoryEnglishComplete='1';const complete=document.createElement('script');complete.src='/assets/js/language-switch-complete.js?v=2026081901';complete.onerror=()=>{};document.head.appendChild(complete);};
-  const s=document.createElement('script');s.src='/assets/js/language-switch-runtime.js?v=2026081901';s.onload=loadComplete;s.onerror=loadComplete;document.head.appendChild(s);
+  const loadComplete=()=>{if(!isEnglish||document.documentElement.dataset.memoryEnglishComplete==='1')return;document.documentElement.dataset.memoryEnglishComplete='1';const complete=document.createElement('script');complete.src='/assets/js/language-switch-complete.js?v=20260924';complete.onerror=()=>{};document.head.appendChild(complete);};
+  const s=document.createElement('script');s.src='/assets/js/language-switch-runtime.js?v=20260924';s.onload=loadComplete;s.onerror=loadComplete;document.head.appendChild(s);
 
   // Independent enhancement layer: never blocks navigation, pricing, or language switching.
   const wow=document.createElement('script');
-  wow.src='/assets/js/wow-polish.js?v=2026082601';
+  wow.src='/assets/js/wow-polish.js?v=20260924';
   wow.defer=true;
   wow.onerror=()=>{};
   document.head.appendChild(wow);

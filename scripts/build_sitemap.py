@@ -1,6 +1,6 @@
 from pathlib import Path
 from html import escape
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin, urlparse, unquote
 import re
 from datetime import datetime, timezone
 
@@ -32,6 +32,34 @@ PAGES = [
 for wedding_page in sorted(Path('weddings').glob('*.html')):
     PAGES.append((wedding_page.as_posix(), '/' + wedding_page.as_posix()))
 
+def deploy_excludes():
+    """Paths listed under `exclude:` in _config.yml are not published by GitHub Pages."""
+    config = Path('_config.yml')
+    if not config.exists():
+        return []
+    items, active = [], False
+    for line in config.read_text(encoding='utf-8').splitlines():
+        if re.match(r'^exclude:\s*$', line):
+            active = True
+        elif active and re.match(r'^\s+-\s+', line):
+            items.append(re.sub(r'^\s+-\s+', '', line).strip().strip('"\'').rstrip('/'))
+        elif active and line.strip() and not line.startswith((' ', '\t')):
+            active = False
+    return items
+
+
+EXCLUDED = deploy_excludes()
+# The 64px navigation icon is interface chrome, not content worth indexing.
+SKIP_IMAGES = {'assets/icon-64.png'}
+
+
+def is_published_image(url_path: str) -> bool:
+    rel = unquote(url_path).lstrip('/')
+    if rel in SKIP_IMAGES or not Path(rel).is_file():
+        return False
+    return not any(rel == ex or rel.startswith(ex + '/') for ex in EXCLUDED)
+
+
 IMG_RE = re.compile(r'<img\b[^>]*?\bsrc=["\']([^"\']+)["\']', re.I)
 
 
@@ -50,6 +78,8 @@ def local_image_urls(path: Path):
         if parsed.scheme not in ('http', 'https'):
             continue
         if parsed.netloc not in ('memoryphotoandvideo.com', 'www.memoryphotoandvideo.com'):
+            continue
+        if not is_published_image(parsed.path):
             continue
         absolute = HOST + parsed.path
         if parsed.query:

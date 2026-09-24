@@ -22,11 +22,12 @@ jobs:
           from PIL import Image
           im=Image.open('og-image.png').convert('RGB')
           im.save('og-image.jpg','JPEG',quality=82,optimize=True,progressive=True)
+          im.save('memory-og-2026.jpg','JPEG',quality=82,optimize=True,progressive=True)
           PY
       - name: Commit generated image
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add og-image.jpg
+          git add og-image.jpg memory-og-2026.jpg
           git diff --cached --quiet || git commit -m "Update social sharing preview"
           git push

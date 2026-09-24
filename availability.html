@@ -3,26 +3,24 @@
 <head>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Свободни дати | Memory Photo &amp; Video</title>
-  <meta name="description" content="Проверете свободните дати за вашето събитие и вижте актуалната заетост по месеци.">
+  <title>Свободни дати за сватбен фотограф и видеограф | Memory Photo &amp; Video</title>
+  <meta name="description" content="Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo &amp; Video и вижте актуалната заетост по месеци.">
   <link rel="canonical" href="https://memoryphotoandvideo.com/availability.html">
+  <meta property="og:site_name" content="Memory Photo &amp; Video"><meta property="og:locale" content="bg_BG">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Свободни дати | Memory Photo & Video">
-  <meta property="og:description" content="Проверете свободните дати за вашето събитие и вижте актуалната заетост по месеци.">
+  <meta property="og:title" content="Свободни дати за сватбен фотограф и видеограф | Memory Photo &amp; Video">
+  <meta property="og:description" content="Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo &amp; Video и вижте актуалната заетост по месеци.">
   <meta property="og:url" content="https://memoryphotoandvideo.com/availability.html">
-  <meta property="og:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+  <meta property="og:image" content="https://memoryphotoandvideo.com/memory-og-2026.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Свободни дати | Memory Photo & Video">
-  <meta name="twitter:description" content="Проверете свободните дати за вашето събитие и се ориентирайте бързо кои дати са свободни.">
-  <meta name="twitter:image" content="https://memoryphotoandvideo.com/og-image.jpg">
+  <meta name="twitter:title" content="Свободни дати за сватбен фотограф и видеограф | Memory Photo &amp; Video">
+  <meta name="twitter:description" content="Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo &amp; Video и вижте актуалната заетост по месеци.">
+  <meta name="twitter:image" content="https://memoryphotoandvideo.com/memory-og-2026.jpg">
 
   <link rel="icon" type="image/png" href="/assets/icon-64.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="preload" href="/assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="assets/css/main.css?v=20260924">
 
   <style>
     :root{
@@ -330,6 +328,7 @@
     .cell.free{ background: var(--free); }
     .cell.partial{ background: var(--partial); }
     .cell.busy{ background: var(--busy); }
+    .cell.past{ background: rgba(255,255,255,.04); color: rgba(245,247,251,.32); }
 
     .day-number{
       font-size:.88rem;
@@ -449,7 +448,7 @@
     }
   </style>
 <link rel="stylesheet" href="assets/css/language-switch.css">
-<link rel="stylesheet" href="/assets/css/blue-editorial.css?v=20260910b">
+<link rel="stylesheet" href="/assets/css/blue-editorial.css?v=20260924">
 
 <link rel="alternate" hreflang="bg" href="https://memoryphotoandvideo.com/availability.html">
 <link rel="alternate" hreflang="en" href="https://memoryphotoandvideo.com/en/availability.html">
@@ -461,7 +460,7 @@
   <header>
     <div class="nav-wrap">
       <a class="brand" href="index.html" aria-label="Начало">
-        <img src="/assets/icon-64.png" alt="Икона на Memory Photo & Video">
+        <img src="/assets/icon-64.png" alt="Memory Photo & Video" width="32" height="32">
         <span>Memory Photo &amp; Video</span>
       </a>
 
@@ -482,10 +481,10 @@
   <main id="main-content" class="availability-page">
     <div class="availability-wrap">
       <section class="availability-hero">
-        <span class="availability-kicker">Booking Calendar</span>
+        <span class="availability-kicker">Календар на заетостта</span>
         <h1>Проверете свободните дати за вашето събитие.</h1>
         <p>
-          Виж актуалната заетост по месеци и се ориентирайте бързо кои дати са свободни,
+          Вижте актуалната заетост по месеци и се ориентирайте бързо кои дати са свободни,
           частично ангажирани или вече запазени. Така следващата стъпка към резервацията
           е по-лесна и по-уверена.
         </p>
@@ -515,7 +514,7 @@
             <p>Актуален преглед на заетостта по месеци.</p>
           </div>
 
-          <div class="legend" aria-label="Легенда">
+          <div class="legend" aria-label="Легенда на календара">
             <span class="legend-item"><i class="dot dot-free"></i>Свободно</span>
             <span class="legend-item"><i class="dot dot-partial"></i>Частично заето</span>
             <span class="legend-item"><i class="dot dot-busy"></i>Заето</span>
@@ -548,7 +547,7 @@
 
         <div class="availability-cta">
           <div>
-            <h3>Откри подходяща дата?</h3>
+            <h3>Открихте ли подходяща дата?</h3>
             <p>
               Продължете към портфолиото или вижте цените, за да изберете подходящия пакет,
               а след това се свържете с нас за потвърждение.
@@ -607,8 +606,12 @@
 
       if (!grid || !label || !prev || !next || !yearToggle) return;
 
-      let activeYear = 2026;
-      let view = new Date(2026, Math.max(new Date().getMonth(), calendarData[2026].minView.getMonth()), 1);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+      const years = Object.keys(calendarData).map(Number).sort((a, b) => a - b);
+      let activeYear = calendarData[today.getFullYear()] ? today.getFullYear() : years[years.length - 1];
+      let view = currentMonthStart;
 
       function pad(n) {
         return String(n).padStart(2, '0');
@@ -619,20 +622,15 @@
       }
 
       function getConfig() {
-        return calendarData[activeYear];
+        const config = calendarData[activeYear];
+        // Never offer months that have already passed.
+        const minView = config.minView < currentMonthStart && currentMonthStart <= config.maxView ? currentMonthStart : config.minView;
+        return { ...config, minView };
       }
 
-      function getDefaultView(year) {
-        const config = calendarData[year];
-        if (year === 2026) {
-          const currentMonth = new Date().getMonth();
-          const targetMonth = Math.min(
-            Math.max(currentMonth, config.minView.getMonth()),
-            config.maxView.getMonth()
-          );
-          return new Date(2026, targetMonth, 1);
-        }
-        return new Date(config.minView.getFullYear(), config.minView.getMonth(), 1);
+      function getDefaultView() {
+        const { minView } = getConfig();
+        return new Date(minView.getFullYear(), minView.getMonth(), 1);
       }
 
       function clampView() {
@@ -653,7 +651,7 @@
         prev.style.cursor = atMin ? 'not-allowed' : 'pointer';
         next.style.cursor = atMax ? 'not-allowed' : 'pointer';
 
-        const nextYear = activeYear === 2026 ? 2027 : 2026;
+        const nextYear = years[(years.indexOf(activeYear) + 1) % years.length];
         yearToggle.dataset.targetYear = String(nextYear);
         yearToggle.setAttribute('aria-label', isEnglish ? `Show ${nextYear}` : `Покажи ${nextYear}`);
         yearToggle.textContent = String(nextYear);
@@ -686,15 +684,18 @@
           const cell = document.createElement('div');
           const dayNumber = document.createElement('span');
 
-          const isBusy = busy.has(key);
-          const isPartial = partial.has(key);
+          const isPast = date < today;
+          const isBusy = !isPast && busy.has(key);
+          const isPartial = !isPast && partial.has(key);
 
-          const status = isBusy
-            ? (isEnglish ? 'Booked' : 'Заето')
-            : isPartial
-              ? (isEnglish ? 'Partially booked' : 'Частично заето')
-              : (isEnglish ? 'Available' : 'Свободно');
-          cell.className = `cell ${isBusy ? 'busy' : isPartial ? 'partial' : 'free'}`;
+          const status = isPast
+            ? (isEnglish ? 'Past date' : 'Отминала дата')
+            : isBusy
+              ? (isEnglish ? 'Booked' : 'Заето')
+              : isPartial
+                ? (isEnglish ? 'Partially booked' : 'Частично заето')
+                : (isEnglish ? 'Available' : 'Свободно');
+          cell.className = `cell ${isPast ? 'past' : isBusy ? 'busy' : isPartial ? 'partial' : 'free'}`;
           cell.setAttribute('aria-label', `${d} ${monthNames[m]} ${y}: ${status}`);
           dayNumber.className = 'day-number';
           dayNumber.textContent = d;
@@ -708,7 +709,7 @@
 
       function setYear(year) {
         activeYear = year;
-        view = getDefaultView(year);
+        view = getDefaultView();
         render();
       }
 
@@ -725,13 +726,14 @@
       });
 
       yearToggle.addEventListener('click', () => {
-        setYear(activeYear === 2026 ? 2027 : 2026);
+        setYear(years[(years.indexOf(activeYear) + 1) % years.length]);
       });
 
+      view = getDefaultView();
       render();
     })();
   </script>
-<script defer src="assets/js/main.js?v=20260911c"></script>
-<script defer src="assets/js/language-switch.js"></script>
+<script defer src="assets/js/main.js?v=20260924"></script>
+<script defer src="assets/js/language-switch.js?v=20260924"></script>
 </body>
 </html>
