@@ -322,11 +322,16 @@ jobs:
               for script in list(soup.find_all('script', src=True)):
                   if re.search(r'language-switch-(runtime|complete)\.js|wow-polish\.js', script['src']):
                       script.decompose()
-              # Reset the homepage slider to its initial state. The snapshot is taken after
-              # autoplay has advanced, and a stale data-slider-ready stops main.js initialising it.
+              # Scripts mark elements they've already set up; the snapshot keeps those marks,
+              # which would stop the scripts initialising again on the real English page
+              # (pricing tabs and package buttons, the English dictionary, the slider).
+              for marker in ('data-pricing-fix-bound', 'data-memory-english-complete', 'data-slider-ready'):
+                  for element in soup.find_all(attrs={marker: True}):
+                      del element[marker]
+
+              # Reset the homepage slider to its initial state (the snapshot is taken after
+              # autoplay has advanced).
               for slider in soup.select('[data-home-slider]'):
-                  if slider.has_attr('data-slider-ready'):
-                      del slider['data-slider-ready']
                   for index, slide in enumerate(slider.select('[data-home-slide]')):
                       classes = [c for c in slide.get('class', []) if c != 'is-active']
                       slide['class'] = classes + (['is-active'] if index == 0 else [])
