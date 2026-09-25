@@ -7,23 +7,9 @@
   const q=(s,r=document)=>r.querySelector(s);
   const qa=(s,r=document)=>[...r.querySelectorAll(s)];
 
-  const ensureAnalytics=()=>{
-    if(typeof window.gtag==='function') return;
-    window.dataLayer=window.dataLayer||[];
-    window.gtag=function(){window.dataLayer.push(arguments);};
-    window.gtag('js',new Date());
-    window.gtag('config','G-WJK01GL7PM');
-    if(!q('script[src*="googletagmanager.com/gtag/js?id=G-WJK01GL7PM"]')){
-      const ga=document.createElement('script');
-      ga.async=true;
-      ga.src='https://www.googletagmanager.com/gtag/js?id=G-WJK01GL7PM';
-      document.head.appendChild(ga);
-    }
-  };
+  // Analytics is loaded only by main.js after the visitor accepts the consent notice.
 
   const init=()=>{
-    ensureAnalytics();
-
     if(!q('#wowScrollProgress')){
       const progress=document.createElement('div');
       progress.id='wowScrollProgress';

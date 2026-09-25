@@ -10,7 +10,7 @@
 
     document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale').forEach(el=>{el.style.opacity='1';el.style.transform='none';});
 
-    const moneyEUR=n=>n.toLocaleString(en?'en-US':'bg-BG',{minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2})+' €';
+    const moneyEUR=n=>{const s=n.toLocaleString(en?'en-US':'bg-BG',{minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2});return en?'€'+s:s+' €';};
     const row=(label,value)=>`<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
     const clampHours=(input,min=0)=>{if(!input)return min;let n=Number(input.value);if(!Number.isFinite(n))n=min;n=Math.min(MAX_HOURS,Math.max(min,Math.ceil(n)));input.value=String(n);return n;};
 
@@ -99,7 +99,7 @@
       if(raw?.checked){total+=P.raw;lines.push(row(en?'Raw files':'Сурови файлове',P.raw));}
       if(after?.checked){total+=P.after;lines.push(row(en?'Photo session on a separate day':'Фотосесия в отделен ден',P.after));}
       if(kmv){const x=kmv*P.transport;total+=x;lines.push(row(en?`Travel: ${kmv} km × €0.51 (one way)`:`Транспорт: ${kmv} км × 0,51 € (еднопосочно)`,x));}
-      totalEUR.textContent=moneyEUR(total);if(breakdown)breakdown.innerHTML=lines.join('')||`<div class="line"><div>${en?'No services selected.':'Няма избрани услуги.'}</div><div class="r">0 €</div></div>`;
+      totalEUR.textContent=moneyEUR(total);if(breakdown)breakdown.innerHTML=lines.join('')||`<div class="line"><div>${en?'No services selected.':'Няма избрани услуги.'}</div><div class="r">${moneyEUR(0)}</div></div>`;
     };
 
     const updateDrone=()=>{if(!droneMode||!droneHours)return;const hourly=droneMode.value==='hour';droneHours.disabled=!hourly;droneHours.style.opacity=hourly?'1':'.45';};

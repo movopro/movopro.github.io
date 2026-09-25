@@ -179,6 +179,8 @@ body .home-regions .home-eyebrow{color:#abcaf1!important}
 body .home-regions .home-title{color:#f5f7fb!important}
 body .home-regions .home-copy{color:#bdc9d8!important}
 body .home-regions .region-list{border-top-color:rgba(171,202,241,.18)}
+.region-list a{color:inherit;text-decoration:none;transition:color .2s ease}
+.region-list a:hover,.region-list a:focus-visible{color:#abcaf1}
 body .home-regions .region-list li{
   color:#eef4fc;
   border-bottom-color:rgba(171,202,241,.15);

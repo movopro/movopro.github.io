@@ -61,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setMeta('meta[name="twitter:description"]', seo.description);
   }
 
-  if (!isEnglishPage) {
-    const existingSchema = document.getElementById('mpv-seo-schema');
-    if (existingSchema) existingSchema.remove();
+  /* Pages with their own structured data (home, about, city and wedding pages) keep it;
+     replacing or duplicating it produced conflicting #business records. */
+  if (!isEnglishPage && !document.querySelector('script[type="application/ld+json"]')) {
 
     const pageName = seoPages[path]?.title?.split('|')[0].trim() || document.title.split('|')[0].trim();
     const canonical = document.querySelector('link[rel="canonical"]')?.href || `${location.origin}${path}`;
@@ -204,39 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
         : 'Няколко от любимите ни кадри от истински сватбени дни.';
     }
 
-    const collageImg = homeHero.parentElement?.querySelector('img[src="assets/weddings/selected-collage.webp"], img[src="/assets/weddings/selected-collage.webp"]');
-    if (collageImg) {
-      const link = collageImg.closest('a') || collageImg.parentElement;
-      const grid = document.createElement('div');
-      grid.className = 'home-photo-grid';
-      const files = ['01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg','09.jpg'];
-
-      files.forEach((file, index) => {
-        const card = document.createElement('a');
-        card.href = `${isEnglishPage ? '/svatba-izbrani.html?lang=en' : '/svatba-izbrani.html'}#kadyr-${index + 1}`;
-
-        const picture = document.createElement('picture');
-        picture.style.display = 'block';
-
-        const mobileSource = document.createElement('source');
-        mobileSource.media = '(max-width: 768px)';
-        mobileSource.srcset = `/assets/mobile/${file}`;
-
-        const img = document.createElement('img');
-        img.src = `/assets/${file}`;
-        img.alt = isEnglishPage ? `Selected wedding photo ${index + 1}` : `Избран сватбен кадър ${index + 1}`;
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.fetchPriority = 'low';
-
-        picture.append(mobileSource, img);
-        card.appendChild(picture);
-        grid.appendChild(card);
-      });
-
-      link?.replaceWith(grid);
-    }
-
     homeHero.querySelectorAll('.home-btn').forEach(btn => {
       if (!canHover) return;
       btn.addEventListener('mouseenter', () => btn.classList.add('is-hovered'));
@@ -341,6 +308,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (slides.length < 2) return;
 
   slider.dataset.sliderReady = 'true';
+
+  /* Hidden slides are loaded after the page so they don't compete with the first photo. */
+  const loadDeferredSlides = () => {
+    slider.querySelectorAll('source[data-srcset]').forEach(source => {
+      source.srcset = source.dataset.srcset;
+      source.removeAttribute('data-srcset');
+    });
+    slider.querySelectorAll('img[data-src]').forEach(img => {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    });
+  };
+  if (document.readyState === 'complete') loadDeferredSlides();
+  else window.addEventListener('load', loadDeferredSlides, { once: true });
+
   let currentIndex = Math.max(0, slides.findIndex(slide => slide.classList.contains('is-active')));
   let autoplayTimer = null;
   let userPaused = reduceMotion;
@@ -365,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const showSlide = (requestedIndex, announce = false) => {
+    loadDeferredSlides();
     currentIndex = (requestedIndex + slides.length) % slides.length;
 
     slides.forEach((slide, index) => {

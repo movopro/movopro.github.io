@@ -17,6 +17,11 @@ on:
 permissions:
   contents: write
 
+# A second push while this is running waits instead of racing it (two runs clashed on 2026-09-11).
+concurrency:
+  group: build-static-en
+  cancel-in-progress: false
+
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, '[skip static en]')"
@@ -236,8 +241,8 @@ jobs:
               for meta in head.find_all('meta', attrs={'http-equiv': re.compile(r'^refresh$', re.I)}):
                   meta.decompose()
 
-              # Replace the Bulgarian runtime schema snapshot with English structured data.
-              for schema in head.select('#mpv-seo-schema'):
+              # Replace every Bulgarian structured-data snapshot with English structured data.
+              for schema in soup.find_all('script', attrs={'type': 'application/ld+json'}):
                   schema.decompose()
               page_type = 'AboutPage' if src == 'about.html' else 'WebPage'
               schema = soup.new_tag('script', id='mpv-seo-schema', type='application/ld+json')
@@ -314,8 +319,52 @@ jobs:
                       link['aria-label'] = 'Memory Photo & Video on Facebook'
 
               # Remove browser-only/runtime controls; scripts recreate them cleanly.
-              for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue, .mpv-consent'):
+              for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue, .mpv-consent, .portfolio-gallery-controls'):
                   transient.decompose()
+              for item in soup.select('.gallery-item[hidden]'):
+                  del item['hidden']
+              # language-switch.js injects these at runtime; snapshot copies would load them twice.
+              for script in list(soup.find_all('script', src=True)):
+                  if re.search(r'language-switch-(runtime|complete)\.js|wow-polish\.js', script['src']):
+                      script.decompose()
+              # Scripts mark elements they've already set up; the snapshot keeps those marks,
+              # which would stop the scripts initialising again on the real English page
+              # (pricing tabs and package buttons, the English dictionary, the slider).
+              for marker in ('data-pricing-fix-bound', 'data-memory-english-complete', 'data-slider-ready'):
+                  for element in soup.find_all(attrs={marker: True}):
+                      del element[marker]
+
+              # Reset the homepage slider to its initial state (the snapshot is taken after
+              # autoplay has advanced).
+              for slider in soup.select('[data-home-slider]'):
+                  for index, slide in enumerate(slider.select('[data-home-slide]')):
+                      classes = [c for c in slide.get('class', []) if c != 'is-active']
+                      slide['class'] = classes + (['is-active'] if index == 0 else [])
+                      slide['aria-hidden'] = 'false' if index == 0 else 'true'
+                  for index, dot in enumerate(slider.select('[data-home-slide-to]')):
+                      classes = [c for c in dot.get('class', []) if c != 'is-active']
+                      dot['class'] = classes + (['is-active'] if index == 0 else [])
+                      if index == 0:
+                          dot['aria-current'] = 'true'
+                      elif dot.has_attr('aria-current'):
+                          del dot['aria-current']
+                  status = slider.select_one('[data-home-slider-status]')
+                  if status:
+                      status.string = f"Photo 1 of {len(slider.select('[data-home-slide]'))}"
+
+              # Keep inactive homepage slides deferred (main.js loads them after the page).
+              pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+              for slide in soup.select('[data-home-slide]:not(.is-active)'):
+                  for source in slide.find_all('source', srcset=True):
+                      if not source['srcset'].startswith('data:'):
+                          source['data-srcset'], source['srcset'] = source['srcset'], pixel
+                  for img in slide.find_all('img', src=True):
+                      if not img['src'].startswith('data:'):
+                          img['data-src'], img['src'] = img['src'], pixel
+              # <base href="/"> makes bare "#fragment" links resolve to the Bulgarian homepage.
+              for a in soup.find_all('a', href=True):
+                  if a['href'].startswith('#') and len(a['href']) > 1:
+                      a['href'] = cfg['en'] + a['href']
 
               out = Path(cfg['out'])
               out.write_text(str(soup), encoding='utf-8')
@@ -351,4 +400,11 @@ jobs:
             exit 0
           fi
           git commit -m "Normalize pricing content and regenerate English pages [skip static en]"
-          git push
+          # Other site workflows can save to main at the same moment; catch up and retry.
+          for attempt in 1 2 3 4; do
+            git fetch origin main && git rebase origin/main && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 15))
+          done
+          echo 'Could not save changes after 4 attempts.' >&2
+          exit 1

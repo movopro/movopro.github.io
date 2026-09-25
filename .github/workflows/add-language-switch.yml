@@ -102,6 +102,11 @@ jobs:
           git add '*.html' 'en/*.html' 'assets/js/main.js' 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Sync language switch and SEO alternates [skip language switch]"
-          git fetch origin main
-          git rebase origin/main
-          git push
+          # Other site workflows can save to main at the same moment; catch up and retry.
+          for attempt in 1 2 3 4; do
+            git fetch origin main && git rebase origin/main && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 15))
+          done
+          echo 'Could not save changes after 4 attempts.' >&2
+          exit 1

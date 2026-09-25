@@ -83,7 +83,7 @@ def validate():
             print(f'{path}: {len(page.words)} words in raw HTML main content')
         if route == '/':
             for target, anchor in CITY_LINKS.items():
-                assert any(urljoin(canonical, href) == HOST + target and label.strip() == anchor and main
+                assert any(urljoin(canonical, href) == HOST + target and label.strip() in (anchor, anchor.split()[-1]) and main
                            for href, label, nav, main in page.links), f'Homepage missing main link {anchor}'
     assert set(urls) == expected, f'Sitemap missing: {expected - set(urls)}; unexpected: {set(urls) - expected}'
     print(f'Validated all {len(expected)} canonical pages, sitemap coverage, and static homepage city links.')

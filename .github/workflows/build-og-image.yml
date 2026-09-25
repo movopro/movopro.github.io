@@ -1,11 +1,9 @@
 name: Build OG image
+# Manual only (Actions tab -> Build OG image -> Run workflow). The live social preview,
+# memory-og-2026.jpg, is a designed image; running this automatically on hero.jpg or
+# logo.png changes replaced it with the plain og-image.svg template render.
 on:
-  push:
-    paths:
-      - "og-image.svg"
-      - "hero.jpg"
-      - "logo.png"
-      - ".github/workflows/build-og-image.yml"
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
