@@ -104,10 +104,14 @@
       link.setAttribute('rel',[...rel].join(' '));
     });
 
-    const current=(location.pathname.split('/').pop()||'index.html');
+    // Compare page names so "/en/portfolio.html" and "portfolio.html" (and "/", "/en/", "index.html") match.
+    const pageName=path=>{
+      const clean=(path||'').split('?')[0].split('#')[0];
+      return (!clean||clean.endsWith('/'))?'index.html':clean.split('/').pop();
+    };
+    const current=pageName(location.pathname);
     qa('header nav a').forEach(link=>{
-      const href=(link.getAttribute('href')||'').split('?')[0].split('#')[0];
-      if(href===current || (current==='index.html' && (href==='/'||href==='index.html'))) link.setAttribute('aria-current','page');
+      if(pageName(link.getAttribute('href'))===current) link.setAttribute('aria-current','page');
       else link.removeAttribute('aria-current');
     });
 
