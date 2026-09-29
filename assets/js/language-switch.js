@@ -27,25 +27,31 @@
   /* Pages that exist in both languages (the language button points to the matching page). */
   window.__mpvPages=['index.html','portfolio.html','videos.html','uslugi-ceni.html','availability.html','about.html','svatba-izbrani.html','privacy.html'];
 
+  /* The language button: one implementation for both languages. */
+  const addLanguageButton=()=>{
+    document.querySelectorAll('.language-switch').forEach(el=>el.remove());
+    // "/en/portfolio.html", "/portfolio.html" and the extensionless "/portfolio" all mean the same page.
+    let file=location.pathname.replace(/^\/en(?=\/|$)/,'').replace(/^\/+/,'');
+    if(!file||file.endsWith('/'))file+='index.html';
+    else if(!/\.[a-z0-9]+$/i.test(file))file+='.html';
+    const current=window.__mpvPages.includes(file)?file:'index.html';
+    const target=isEnglish?(current==='index.html'?'/':'/'+current):(current==='index.html'?'/en/':'/en/'+current);
+
+    const sw=document.createElement('a');
+    sw.className='language-switch';
+    sw.href=target+location.hash;
+    sw.hreflang=isEnglish?'bg':'en';
+    if(!isEnglish)sw.lang='en'; // the label is English text on a Bulgarian page
+    sw.setAttribute('aria-label',isEnglish?'Switch to Bulgarian':'Switch to English');
+    sw.innerHTML=isEnglish?'<span class="flag">🇧🇬</span><span class="code">BG</span>':'<span class="flag">🇬🇧</span><span class="code">EN</span>';
+    document.body.appendChild(sw);
+  };
+  if(document.body)addLanguageButton();else document.addEventListener('DOMContentLoaded',addLanguageButton,{once:true});
+
   if(isEnglish){
     // English mode: load the translation runtime, then the full dictionary.
     const loadComplete=()=>{if(document.documentElement.dataset.memoryEnglishComplete==='1')return;document.documentElement.dataset.memoryEnglishComplete='1';const complete=document.createElement('script');complete.src='/assets/js/language-switch-complete.js?v=20260929';complete.onerror=()=>{};document.head.appendChild(complete);};
     const s=document.createElement('script');s.src='/assets/js/language-switch-runtime.js?v=20260929';s.onload=loadComplete;s.onerror=loadComplete;document.head.appendChild(s);
-  }else{
-    // Bulgarian mode: only the "EN" button is needed, so the English scripts are not downloaded at all.
-    document.querySelectorAll('.language-switch').forEach(el=>el.remove());
-    const file=location.pathname.replace(/^\//,'')||'index.html';
-    const current=window.__mpvPages.includes(file)?file:'index.html';
-    const style=document.createElement('style');
-    style.textContent='.language-switch{position:fixed!important;top:10px!important;right:12px!important;z-index:1002!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-width:0!important;width:auto!important;height:42px!important;padding:8px 12px!important;box-sizing:border-box!important;border-radius:999px!important;white-space:nowrap!important}@media(max-width:880px){.language-switch{right:82px!important;top:9px!important}}';
-    document.head.appendChild(style);
-    const sw=document.createElement('a');
-    sw.className='language-switch';
-    sw.href=current==='index.html'?'/en/':'/en/'+current;
-    sw.setAttribute('aria-label','Switch to English');
-    sw.innerHTML='<span class="flag">🇬🇧</span><span class="code">EN</span>';
-    sw.onclick=e=>{e.preventDefault();location.replace(sw.href)};
-    document.body.appendChild(sw);
   }
 
   // Independent enhancement layer: never blocks navigation, pricing, or language switching.

@@ -1,0 +1,4 @@
+# Python bytecode and OS/editor leftovers
+__pycache__/
+*.pyc
+.DS_Store

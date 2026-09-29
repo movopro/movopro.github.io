@@ -37,11 +37,15 @@
       more.hidden = shown >= total;
     };
 
-    more.addEventListener('click', () => {
+    more.addEventListener('click', event => {
+      const first = shown;
       const end = Math.min(shown + BATCH, total);
-      for (let i = shown; i < end; i += 1) items[i].hidden = false;
+      for (let i = first; i < end; i += 1) items[i].hidden = false;
       shown = end;
       update();
+      // Keyboard users continue from the first new photo; the button also disappears after the last batch.
+      const byKeyboard = event.detail === 0;
+      if (byKeyboard || more.hidden) items[first].focus({ preventScroll: !byKeyboard });
     });
 
     controls.append(status, more);
@@ -60,6 +64,7 @@
   const counter = document.getElementById('lightboxCount');
   if (!lightbox || !image || !closeButton) return;
 
+  const BLANK = image.getAttribute('src') || '';
   let index = -1;
   let trigger = null;
   let token = 0;
@@ -75,11 +80,11 @@
     const thumb = item.querySelector('img');
     const mine = ++token;
     const loader = new Image();
+    image.alt = thumb?.alt || '';
     image.classList.add('is-loading');
     const done = failed => {
       if (mine !== token) return;
       image.src = failed ? (thumb?.currentSrc || thumb?.src || '') : loader.src;
-      image.alt = thumb?.alt || '';
       image.classList.remove('is-loading');
     };
     loader.onload = () => done(false);
@@ -117,6 +122,9 @@
   const close = () => {
     if (!isOpen()) return;
     token += 1;
+    image.src = BLANK;
+    image.alt = '';
+    image.classList.remove('is-loading');
     lightbox.classList.remove('open');
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lightbox-open');

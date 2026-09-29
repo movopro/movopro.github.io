@@ -18,54 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const isEnglishPage = location.pathname.startsWith('/en/') || new URLSearchParams(location.search).get('lang') === 'en';
   const path = location.pathname === '/index.html' ? '/' : location.pathname;
 
-  /* Local SEO: keep key BG pages aligned with the searches already visible in Search Console. */
-  const seoPages = {
-    '/': {
-      title: 'Сватбен фотограф и видеограф Кърджали | Memory Photo & Video',
-      description: 'Memory Photo & Video — сватбен фотограф и видеограф в Кърджали. Професионално фото и видео за сватби и събития в региона и цяла България.'
-    },
-    '/portfolio.html': {
-      title: 'Сватбена фотография в Кърджали | Memory Photo & Video',
-      description: 'Разгледайте сватбена фотография от Memory Photo & Video — реални сватби, емоции и детайли от Кърджали, региона и цяла България.'
-    },
-    '/videos.html': {
-      title: 'Сватбено видео и видеограф в Кърджали | Memory Photo & Video',
-      description: 'Сватбена видеография от Memory Photo & Video — сватбени филми и видео заснемане в Кърджали, региона и цяла България.'
-    },
-    '/uslugi-ceni.html': {
-      title: 'Цени за сватбен фотограф и видеограф | Memory Photo & Video',
-      description: 'Актуални цени и пакети за сватбена фотография и видеография от Memory Photo & Video. Фото и видео услуги за Кърджали и цяла България.'
-    },
-    '/availability.html': {
-      title: 'Свободни дати за сватба | Memory Photo & Video',
-      description: 'Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo & Video и вижте актуалната заетост по месеци.'
-    },
-    '/about.html': {
-      title: 'За Memory Photo & Video | Сватбен фотограф Кърджали',
-      description: 'Запознайте се с екипа на Memory Photo & Video — фотографи и видеографи от Кърджали, които снимат сватби и събития от 2017 г.'
-    }
-  };
-
-  const setMeta = (selector, value, attr = 'content') => {
-    const element = document.head.querySelector(selector);
-    if (element && value) element.setAttribute(attr, value);
-  };
-
-  if (!isEnglishPage && seoPages[path]) {
-    const seo = seoPages[path];
-    document.title = seo.title;
-    setMeta('meta[name="description"]', seo.description);
-    setMeta('meta[property="og:title"]', seo.title);
-    setMeta('meta[property="og:description"]', seo.description);
-    setMeta('meta[name="twitter:title"]', seo.title);
-    setMeta('meta[name="twitter:description"]', seo.description);
-  }
-
   /* Pages with their own structured data (home, about, city and wedding pages) keep it;
      replacing or duplicating it produced conflicting #business records. */
-  if (!isEnglishPage && !document.querySelector('script[type="application/ld+json"]')) {
+  const isNoindex = !!document.querySelector('meta[name="robots"][content*="noindex"]');
+  if (!isEnglishPage && !isNoindex && !document.querySelector('script[type="application/ld+json"]')) {
 
-    const pageName = seoPages[path]?.title?.split('|')[0].trim() || document.title.split('|')[0].trim();
+    const pageName = document.title.split('|')[0].trim();
     const canonical = document.querySelector('link[rel="canonical"]')?.href || `${location.origin}${path}`;
     const schema = document.createElement('script');
     schema.id = 'mpv-seo-schema';
