@@ -16,8 +16,8 @@
 <meta content="Wedding Photography &amp; Video Pricing | Memory Photo &amp; Video" name="twitter:title"/>
 <meta content="Current wedding photography and videography packages, pricing and a flexible event cost calculator from Memory Photo &amp; Video." name="twitter:description"/>
 <meta content="https://memoryphotoandvideo.com/memory-og-2026.jpg" name="twitter:image"/>
-<link href="/assets/icon-64.png" rel="icon" type="image/png"/>
-<link as="font" crossorigin="" href="/assets/fonts/manrope-cyrillic.woff2" rel="preload" type="font/woff2"/><link as="font" crossorigin="" href="/assets/fonts/manrope-latin.woff2" rel="preload" type="font/woff2"/><link href="assets/css/main.css?v=20260924" rel="stylesheet"/>
+<link href="/favicon.ico" rel="icon" sizes="48x48"/><link href="/assets/icon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="/apple-touch-icon.png" rel="apple-touch-icon"/><link href="/site.webmanifest" rel="manifest"/><meta content="#080c12" name="theme-color"/>
+<link as="font" crossorigin="" href="/assets/fonts/manrope-cyrillic.woff2" rel="preload" type="font/woff2"/><link as="font" crossorigin="" href="/assets/fonts/manrope-latin.woff2" rel="preload" type="font/woff2"/><link href="assets/css/main.css?v=20260929" rel="stylesheet"/>
 <style>
     :root {
       --page-bg: #0c0a08;
@@ -45,28 +45,8 @@
       background-attachment: fixed;
     }
 
-    /* ── REVEAL ANIMATIONS ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-28px);
-      transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal-left.in { opacity:1; transform:none; }
-    .reveal-scale {
-      opacity: 0;
-      transform: scale(.96);
-      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal-scale.in { opacity:1; transform:none; }
+    /* ── REVEAL ── the sections are always visible (they used to start transparent and needed JavaScript) */
+    .reveal, .reveal-left, .reveal-scale { opacity: 1; transform: none; }
     .stagger > *:nth-child(1) { transition-delay: 0ms; }
     .stagger > *:nth-child(2) { transition-delay: 80ms; }
     .stagger > *:nth-child(3) { transition-delay: 160ms; }
@@ -156,7 +136,7 @@
       margin-bottom: 20px;
       color: var(--cream);
       text-wrap: balance;
-      max-width: 18ch;
+      max-width: 26ch;
     }
 
     .pricing-hero h1 em {
@@ -407,6 +387,9 @@
       font-weight: 300;
       color: var(--cream);
       letter-spacing: -.01em;
+      margin: 0;
+      line-height: inherit;
+      text-wrap: inherit;
     }
 
     .package-price {
@@ -468,13 +451,12 @@
     }
 
     .note {
-      opacity: .72;
       font-size: .86rem;
       line-height: 1.68;
       margin-top: 20px;
       border-top: 1px solid rgba(201,169,110,.10);
       padding-top: 18px;
-      color: var(--text-faint);
+      color: rgba(245,247,251,.62);
       font-weight: 300;
     }
 
@@ -520,6 +502,7 @@
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 18px;
+      align-items: start;
     }
 
     .calc-card {
@@ -580,7 +563,7 @@
       width: 100%;
       padding: 14px 16px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(171,202,241,.5);
       background: rgba(0,0,0,.28);
       color: var(--cream);
       font-family: Manrope, sans-serif;
@@ -590,10 +573,15 @@
 
     .calc-input:focus,
     .calc-select:focus {
-      outline: none;
-      border-color: rgba(201,169,110,.70);
-      box-shadow: 0 0 0 3px rgba(201,169,110,.10);
+      outline: 2px solid #75a5e8;
+      outline-offset: 2px;
+      border-color: #75a5e8;
     }
+    .calc-input[aria-invalid="true"] { border-color: #f0a0a0; }
+    #sendStatus:not(:empty) { color: rgba(245,247,251,.86); font-weight: 500; }
+    #sendStatus[data-state="error"] { color: #f4a9a9; }
+    #sendStatus[data-state="ok"] { color: #8fd8ab; }
+    #inquirySection:focus { outline: none; }
 
     textarea.calc-input { resize: vertical; }
 
@@ -601,8 +589,11 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+      align-items: end;
     }
 
+    .privacy-note { margin: 6px 0 0 30px; font-size: .82rem; }
+    .privacy-note a { color: var(--gold2, #abcaf1); text-underline-offset: 3px; }
     .check-row {
       display: flex;
       align-items: flex-start;
@@ -802,14 +793,13 @@
 
     /* ── FOOTER ── */
     footer {
-      background: #000;
-      padding: 32px 20px;
+      padding: 42px 20px 34px;
       text-align: center;
-      font-size: .68rem;
-      letter-spacing: .18em;
+      font-size: .69rem;
+      letter-spacing: .13em;
       text-transform: uppercase;
-      color: rgba(245,240,232,.5);
-      border-top: 1px solid rgba(201,169,110,.18);
+      color: rgba(245,247,251,.62);
+      border-top: 1px solid rgba(220,231,247,.12);
       font-family: Manrope, sans-serif;
     }
 
@@ -843,21 +833,21 @@
     }
   </style>
 <link href="assets/css/language-switch.css" rel="stylesheet"/>
-<link href="/assets/css/blue-editorial.css?v=20260924" rel="stylesheet"/>
+<link href="/assets/css/blue-editorial.css?v=20260929" rel="stylesheet"/>
 
 
 
-<style>.language-switch{position:fixed!important;top:10px!important;right:12px!important;z-index:1002!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-width:0!important;width:auto!important;height:42px!important;padding:8px 12px!important;box-sizing:border-box!important;border-radius:999px!important;white-space:nowrap!important}@media(max-width:880px){.language-switch{right:82px!important;top:9px!important}}</style><link href="https://memoryphotoandvideo.com/en/uslugi-ceni.html" rel="canonical"/><link href="https://memoryphotoandvideo.com/uslugi-ceni.html" hreflang="bg" rel="alternate"/><link href="https://memoryphotoandvideo.com/en/uslugi-ceni.html" hreflang="en" rel="alternate"/><link href="https://memoryphotoandvideo.com/uslugi-ceni.html" hreflang="x-default" rel="alternate"/><script id="mpv-seo-schema" type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://memoryphotoandvideo.com/#business","name":"Memory Photo & Video","url":"https://memoryphotoandvideo.com/","logo":"https://memoryphotoandvideo.com/logo.png","image":"https://memoryphotoandvideo.com/memory-og-2026.jpg","description":"Wedding photography and videography in Bulgaria.","foundingDate":"2017","areaServed":{"@type":"Country","name":"Bulgaria"},"serviceType":["Wedding photography","Wedding videography","Event photography","Event videography"],"sameAs":["https://www.instagram.com/memoryphotoandvideo/","https://www.facebook.com/MemoryPhotoAndVideo/"]},{"@type":"WebSite","@id":"https://memoryphotoandvideo.com/#website-en","url":"https://memoryphotoandvideo.com/en/","name":"Memory Photo & Video","inLanguage":"en","publisher":{"@id":"https://memoryphotoandvideo.com/#business"}},{"@type":"WebPage","@id":"https://memoryphotoandvideo.com/en/uslugi-ceni.html#webpage","url":"https://memoryphotoandvideo.com/en/uslugi-ceni.html","name":"Wedding Photography & Video Pricing | Memory Photo & Video","description":"Current wedding photography and videography packages, pricing and a flexible event cost calculator from Memory Photo & Video.","isPartOf":{"@id":"https://memoryphotoandvideo.com/#website-en"},"about":{"@id":"https://memoryphotoandvideo.com/#business"},"inLanguage":"en"}]}</script></head>
+<link href="https://memoryphotoandvideo.com/en/uslugi-ceni.html" rel="canonical"/><link href="https://memoryphotoandvideo.com/uslugi-ceni.html" hreflang="bg" rel="alternate"/><link href="https://memoryphotoandvideo.com/en/uslugi-ceni.html" hreflang="en" rel="alternate"/><link href="https://memoryphotoandvideo.com/uslugi-ceni.html" hreflang="x-default" rel="alternate"/><script id="mpv-seo-schema" type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://memoryphotoandvideo.com/#business","name":"Memory Photo & Video","url":"https://memoryphotoandvideo.com/","logo":"https://memoryphotoandvideo.com/assets/icon-512.png","image":"https://memoryphotoandvideo.com/memory-og-2026.jpg","description":"Wedding photography and videography from Kardzhali — for weddings and events in the region and across Bulgaria.","foundingDate":"2017","address":{"@type":"PostalAddress","addressLocality":"Kardzhali","addressCountry":"BG"},"areaServed":[{"@type":"City","name":"Kardzhali"},{"@type":"City","name":"Plovdiv"},{"@type":"City","name":"Zlatograd"},{"@type":"City","name":"Shumen"},{"@type":"City","name":"Smolyan"},{"@type":"City","name":"Stara Zagora"},{"@type":"Country","name":"Bulgaria"}],"serviceType":["Wedding photography","Wedding videography","Event photography","Event videography"],"sameAs":["https://www.instagram.com/memoryphotoandvideo/","https://www.facebook.com/MemoryPhotoAndVideo/"]},{"@type":"WebSite","@id":"https://memoryphotoandvideo.com/#website-en","url":"https://memoryphotoandvideo.com/en/","name":"Memory Photo & Video","inLanguage":"en","publisher":{"@id":"https://memoryphotoandvideo.com/#business"}},{"@type":"WebPage","@id":"https://memoryphotoandvideo.com/en/uslugi-ceni.html#webpage","url":"https://memoryphotoandvideo.com/en/uslugi-ceni.html","name":"Wedding Photography & Video Pricing | Memory Photo & Video","description":"Current wedding photography and videography packages, pricing and a flexible event cost calculator from Memory Photo & Video.","isPartOf":{"@id":"https://memoryphotoandvideo.com/#website-en"},"about":{"@id":"https://memoryphotoandvideo.com/#business"},"inLanguage":"en"}]}</script></head>
 <body style="background: rgb(12, 11, 9);">
 <a class="skip-link" href="/en/uslugi-ceni.html#main-content">Skip to content</a>
 <header>
 <div class="nav-wrap">
-<a aria-label="Home" class="brand" href="/en/">
-<img alt="Memory Photo &amp; Video" height="32" src="/assets/icon-64.png" width="32"/>
+<a class="brand" href="/en/">
+<img alt="" height="32" src="/assets/icon-64.png" width="32"/>
 <span>Memory Photo &amp; Video</span>
 </a>
-<input aria-controls="site-navigation" aria-expanded="false" aria-label="Open menu" id="menuToggle" type="checkbox"/>
-<label aria-controls="site-navigation" aria-expanded="false" aria-label="Menu" class="burger" for="menuToggle" role="button" tabindex="0"><div></div></label>
+<input aria-controls="site-navigation" aria-label="Menu" id="menuToggle" type="checkbox"/>
+<label class="burger" for="menuToggle"><span></span></label>
 <nav aria-label="Primary navigation" id="site-navigation">
 <a href="/en/">Home</a>
 <a href="/en/portfolio.html">Portfolio</a>
@@ -871,28 +861,28 @@
 <main class="pricing-page" id="main-content">
 <div class="pricing-wrap">
 <!-- HERO -->
-<section class="pricing-hero reveal" style="opacity: 1; transform: none;">
+<section class="pricing-hero reveal">
 <span class="pricing-kicker">Services &amp; Pricing</span>
 <h1>Clear packages, <em>professional</em> coverage and a flexible calculator.</h1>
 <p>
           Here you will find the current wedding packages, indicative prices for other events, and a calculator for estimating the approximate cost based on team size, extra hours, travel, drone coverage and additional services.
         </p>
 <div class="pricing-points stagger">
-<div class="pricing-point reveal-scale" style="opacity: 1; transform: none;">
+<div class="pricing-point reveal-scale">
 <div class="pricing-point-icon">◷</div>
 <div>
 <strong>Up to 10 hours</strong>
 <span>Wedding coverage</span>
 </div>
 </div>
-<div class="pricing-point reveal-scale" style="opacity: 1; transform: none;">
+<div class="pricing-point reveal-scale">
 <div class="pricing-point-icon">◈</div>
 <div>
 <strong>Photo + video</strong>
 <span>Flexible combinations</span>
 </div>
 </div>
-<div class="pricing-point reveal-scale" style="opacity: 1; transform: none;">
+<div class="pricing-point reveal-scale">
 <div class="pricing-point-icon">✦</div>
 <div>
 <strong>Updated pricing</strong>
@@ -902,7 +892,7 @@
 </div>
 </section>
 <!-- WEDDING PACKAGES -->
-<section class="glass-card reveal" style="opacity: 1; transform: none;">
+<section class="glass-card reveal">
 <div class="section-topline">
 <div>
 <h2>Wedding packages</h2>
@@ -913,19 +903,19 @@
 <div class="included-all wow-reveal" data-wow-delay="1">
 <div class="inc-title">Every package includes</div>
 <div class="inc-grid stagger">
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Unlimited photos and professional editing.</div>
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Video trailer featuring the most important moments.</div>
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Full documentary-style wedding film.</div>
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Photo session on the wedding day.</div>
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Up to 10 hours of coverage.</div>
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Audio recording with an external recorder.</div>
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Documentary wedding photography.</div>
-<div class="inc-item reveal-scale" style="opacity: 1; transform: none;">Delivery of the finished material.</div>
+<div class="inc-item reveal-scale">Unlimited photos and professional editing.</div>
+<div class="inc-item reveal-scale">Video trailer featuring the most important moments.</div>
+<div class="inc-item reveal-scale">Full documentary-style wedding film.</div>
+<div class="inc-item reveal-scale">Photo session on the wedding day.</div>
+<div class="inc-item reveal-scale">Up to 10 hours of coverage.</div>
+<div class="inc-item reveal-scale">Audio recording with an external recorder.</div>
+<div class="inc-item reveal-scale">Documentary wedding photography.</div>
+<div class="inc-item reveal-scale">Delivery of the finished material.</div>
 </div>
 </div>
 <div class="package-grid">
-<article class="package-card reveal" style="opacity: 1; transform: none;">
-<div class="package-title">Standard</div>
+<article class="package-card reveal">
+<h3 class="package-title">Standard</h3>
 <div class="package-price">€1,450</div>
 <div class="gold-divider"></div>
 <div class="package-diff-label">Includes</div>
@@ -938,9 +928,9 @@
               Ask about this package
             </button>
 </article>
-<article class="package-card recommended reveal" style="opacity: 1; transform: none;">
+<article class="package-card recommended reveal">
 <div class="badge">Recommended</div>
-<div class="package-title">Premium</div>
+<h3 class="package-title">Premium</h3>
 <div class="package-price">€1,950</div>
 <div class="gold-divider"></div>
 <div class="package-diff-label">Includes</div>
@@ -953,8 +943,8 @@
               Ask about this package
             </button>
 </article>
-<article class="package-card reveal" style="opacity: 1; transform: none;">
-<div class="package-title">Ultra</div>
+<article class="package-card reveal">
+<h3 class="package-title">Ultra</h3>
 <div class="package-price">€2,700</div>
 <div class="gold-divider"></div>
 <div class="package-diff-label">Includes</div>
@@ -983,7 +973,7 @@
 <div class="inc-item">Outside Kardzhali: €0.51 per km, calculated one way.</div>
 <div class="inc-item">More than 100 km from Kardzhali: accommodation for the team is required after the wedding.</div>
 <div class="inc-item">More than 200 km from Kardzhali: accommodation must be arranged and paid for before and after the wedding.</div>
-</div></div></section><section class="glass-card reveal" style="opacity: 1; transform: none;">
+</div></div></section><section class="glass-card reveal">
 <div class="section-topline">
 <div>
 <h2>Calculator</h2>
@@ -992,8 +982,8 @@
 <div class="pill">updated calculation logic</div>
 </div>
 <div class="mode-tabs">
-<button class="mode-tab active" data-mode="wedding" type="button">Wedding</button>
-<button class="mode-tab" data-mode="event" type="button">Other event</button>
+<button aria-pressed="true" class="mode-tab active" data-mode="wedding" type="button">Wedding</button>
+<button aria-pressed="false" class="mode-tab" data-mode="event" type="button">Other event</button>
 </div>
 <div class="mode-panel visible" id="panel-wedding">
 <div class="calc-grid">
@@ -1062,7 +1052,7 @@
 <h3>Result</h3>
 <div class="result-total">
 <small>Estimated total</small>
-<div class="result-eur" id="totalEUR">€0</div>
+<div aria-atomic="true" aria-live="polite" class="result-eur" id="totalEUR">€0</div>
 </div>
 <div class="breakdown" id="breakdown"><div class="line"><div>No services selected.</div><div class="r">€0</div></div></div>
 </div>
@@ -1086,7 +1076,7 @@
 </div>
 <div class="calc-two">
 <div class="calc-row">
-<label class="calc-label" for="eventHours">Started hours</label>
+<label class="calc-label" for="eventHours">Billable hours</label>
 <input class="calc-input" id="eventHours" max="24" min="1" step="1" type="number" value="2"/>
 </div>
 <div class="calc-row">
@@ -1112,7 +1102,7 @@
 <h3>Result</h3>
 <div class="result-total">
 <small>Estimated total</small>
-<div class="result-eur" id="eventTotalEUR">€220</div>
+<div aria-atomic="true" aria-live="polite" class="result-eur" id="eventTotalEUR">€220</div>
 </div>
 <div class="breakdown" id="eventBreakdown"><div class="line"><div>First started hour: 1 × €130</div><div class="r">€130</div></div><div class="line"><div>Next hours: 1h × 1 × €90</div><div class="r">€90</div></div></div>
 </div>
@@ -1120,10 +1110,10 @@
 </div>
 </section>
 <!-- INQUIRY -->
-<section class="glass-card reveal" id="inquirySection" style="opacity: 1; transform: none;">
+<section aria-labelledby="inquiryHeading" class="glass-card reveal" id="inquirySection" tabindex="-1">
 <div class="section-topline">
 <div>
-<h2>Send inquiry</h2>
+<h2 id="inquiryHeading">Send inquiry</h2>
 <p>
               Send an inquiry for a specific package or custom configuration from the calculator. The event date is required so we can check availability.
             </p>
@@ -1137,24 +1127,24 @@
 <label class="calc-label" for="inquiryType">Inquiry type</label>
 <select class="calc-select" id="inquiryType">
 <option value="Пакетна оферта">Package quote</option>
-<option value="Персонална конфигурация">Custom configuration</option>
+<option value="Индивидуална конфигурация">Custom configuration</option>
 <option value="Друго събитие">Other event</option>
 </select>
 </div>
 <div class="calc-two">
 <div class="calc-row">
 <label class="calc-label" for="clientName">Name</label>
-<input class="calc-input" id="clientName" required="" type="text"/>
+<input autocomplete="name" class="calc-input" id="clientName" required="" type="text"/>
 </div>
 <div class="calc-row">
 <label class="calc-label" for="clientPhone">Phone</label>
-<input class="calc-input" id="clientPhone" required="" type="text"/>
+<input autocomplete="tel" class="calc-input" id="clientPhone" required="" type="tel"/>
 </div>
 </div>
 <div class="calc-two">
 <div class="calc-row">
 <label class="calc-label" for="clientEmail">Email</label>
-<input class="calc-input" id="clientEmail" required="" type="email"/>
+<input autocomplete="email" class="calc-input" id="clientEmail" required="" type="email"/>
 </div>
 <div class="calc-row">
 <label class="calc-label" for="eventDate">Event date</label>
@@ -1183,10 +1173,11 @@
 <input id="privacyConsent" type="checkbox"/>
 <span>I agree that my personal data may be used to contact me regarding this inquiry.</span>
 </label>
+<p class="privacy-note"><a href="/en/privacy.html" rel="noopener noreferrer" target="_blank">How we use your data<span class="sr-only"> (opens in a new tab)</span></a></p>
 <div class="calc-actions">
 <button class="btn btn--primary" id="sendInquiry" type="button">Send inquiry</button>
 </div>
-<p class="calc-mini" id="sendStatus" style="margin-top:12px;"></p>
+<p class="calc-mini" id="sendStatus" role="status" style="margin-top:12px;"></p>
 </div>
 <div class="calc-card result-card wow-reveal" data-wow-delay="3">
 <h3>What you will receive</h3>
@@ -1200,16 +1191,16 @@
 </div>
 </section>
 <!-- OTHER EVENTS -->
-<section class="glass-card reveal" style="opacity: 1; transform: none;">
+<section class="glass-card reveal">
 <div class="section-topline">
 <div>
 <h2>Other events</h2>
-<p>For one photographer or one videographer: €130 for the first started hour and €90 for each subsequent started hour.</p>
+<p>For one photographer or one videographer: €130 for the first hour and €90 for each additional hour; part hours are billed in full.</p>
 </div>
 <div class="pill">current rates</div>
 </div>
 <div class="event-grid">
-<article class="event-rate-card reveal" style="opacity: 1; transform: none;">
+<article class="event-rate-card reveal">
 <h3>Birthday</h3>
 <div class="event-rate">€130 first hour · €90 each next hour</div>
 <ul class="bullets">
@@ -1217,7 +1208,7 @@
 <li>Photo, video or combined coverage available.</li>
 </ul>
 </article>
-<article class="event-rate-card reveal" style="opacity: 1; transform: none;">
+<article class="event-rate-card reveal">
 <h3>Baptism</h3>
 <div class="event-rate">€130 first hour · €90 each next hour</div>
 <ul class="bullets">
@@ -1225,7 +1216,7 @@
 <li>Flexible configuration based on the schedule and location.</li>
 </ul>
 </article>
-<article class="event-rate-card reveal" style="opacity: 1; transform: none;">
+<article class="event-rate-card reveal">
 <h3>Corporate event</h3>
 <div class="event-rate">€130 first hour · €90 each next hour</div>
 <ul class="bullets">
@@ -1233,7 +1224,7 @@
 <li>Option for broader documentary coverage and a more dynamic look.</li>
 </ul>
 </article>
-<article class="event-rate-card reveal" style="opacity: 1; transform: none;">
+<article class="event-rate-card reveal">
 <h3>Individual project</h3>
 <div class="event-rate">€130 first hour · €90 each next hour</div>
 <ul class="bullets">
@@ -1244,7 +1235,7 @@
 </div>
 </section>
 <!-- FOOTER CTA -->
-<section class="pricing-footer-cta reveal" style="opacity: 1; transform: none;">
+<section class="pricing-footer-cta reveal">
 <div>
 <h3>The next step is easy.</h3>
 <p>
@@ -1258,12 +1249,12 @@
 </section>
 </div>
 </main>
-<footer>
-    © 2026 Memory Photo &amp; Video. All rights reserved.
-  </footer>
+<footer><span class="footer-copy">
+    © <span data-year="">2026</span> Memory Photo &amp; Video. All rights reserved.</span> <span class="footer-legal"><a href="/en/privacy.html">Privacy</a><button class="footer-link" data-consent-settings="" type="button">Analytics settings</button></span>
+</footer>
 <!-- The maintained calculator lives in assets/js/pricing-fix.js?v=20260911-eur. -->
 <script>window.__pricingFixEnabled = true;</script>
-<script defer="" src="assets/js/pricing-fix.js?v=20260924"></script>
-<script defer="" src="assets/js/main.js?v=20260924"></script>
-<script defer="" src="assets/js/language-switch.js?v=20260924"></script>
+<script defer="" src="assets/js/pricing-fix.js?v=20260929"></script>
+<script defer="" src="assets/js/main.js?v=20260929"></script>
+<script defer="" src="assets/js/language-switch.js?v=20260929"></script>
 </body></html>

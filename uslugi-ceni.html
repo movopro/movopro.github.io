@@ -19,8 +19,8 @@
   <meta name="twitter:description" content="Актуални цени и пакети за сватбена фотография и видеография от Memory Photo &amp; Video. Фото и видео услуги за Кърджали и цяла България.">
   <meta name="twitter:image" content="https://memoryphotoandvideo.com/memory-og-2026.jpg">
 
-  <link rel="icon" type="image/png" href="/assets/icon-64.png" />
-        <link rel="preload" href="/assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="assets/css/main.css?v=20260924">
+  <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#080c12">
+        <link rel="preload" href="/assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="assets/css/main.css?v=20260929">
 
   <style>
     :root {
@@ -49,28 +49,8 @@
       background-attachment: fixed;
     }
 
-    /* ── REVEAL ANIMATIONS ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-28px);
-      transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal-left.in { opacity:1; transform:none; }
-    .reveal-scale {
-      opacity: 0;
-      transform: scale(.96);
-      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal-scale.in { opacity:1; transform:none; }
+    /* ── REVEAL ── the sections are always visible (they used to start transparent and needed JavaScript) */
+    .reveal, .reveal-left, .reveal-scale { opacity: 1; transform: none; }
     .stagger > *:nth-child(1) { transition-delay: 0ms; }
     .stagger > *:nth-child(2) { transition-delay: 80ms; }
     .stagger > *:nth-child(3) { transition-delay: 160ms; }
@@ -160,7 +140,7 @@
       margin-bottom: 20px;
       color: var(--cream);
       text-wrap: balance;
-      max-width: 18ch;
+      max-width: 26ch;
     }
 
     .pricing-hero h1 em {
@@ -408,9 +388,12 @@
     .package-title {
       font-family: 'Manrope', Georgia, serif;
       font-size: 1.9rem;
-      font-weight: 300;
+      font-weight: 300 !important;
       color: var(--cream);
-      letter-spacing: -.01em;
+      letter-spacing: -.01em !important;
+      margin: 0;
+      line-height: inherit !important;
+      text-wrap: inherit;
     }
 
     .package-price {
@@ -472,13 +455,12 @@
     }
 
     .note {
-      opacity: .72;
       font-size: .86rem;
       line-height: 1.68;
       margin-top: 20px;
       border-top: 1px solid rgba(201,169,110,.10);
       padding-top: 18px;
-      color: var(--text-faint);
+      color: rgba(245,247,251,.62);
       font-weight: 300;
     }
 
@@ -524,6 +506,7 @@
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 18px;
+      align-items: start;
     }
 
     .calc-card {
@@ -584,7 +567,7 @@
       width: 100%;
       padding: 14px 16px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(171,202,241,.5);
       background: rgba(0,0,0,.28);
       color: var(--cream);
       font-family: Manrope, sans-serif;
@@ -594,10 +577,15 @@
 
     .calc-input:focus,
     .calc-select:focus {
-      outline: none;
-      border-color: rgba(201,169,110,.70);
-      box-shadow: 0 0 0 3px rgba(201,169,110,.10);
+      outline: 2px solid #75a5e8;
+      outline-offset: 2px;
+      border-color: #75a5e8;
     }
+    .calc-input[aria-invalid="true"] { border-color: #f0a0a0; }
+    #sendStatus:not(:empty) { color: rgba(245,247,251,.86); font-weight: 500; }
+    #sendStatus[data-state="error"] { color: #f4a9a9; }
+    #sendStatus[data-state="ok"] { color: #8fd8ab; }
+    #inquirySection:focus { outline: none; }
 
     textarea.calc-input { resize: vertical; }
 
@@ -605,8 +593,11 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+      align-items: end;
     }
 
+    .privacy-note { margin: 6px 0 0 30px; font-size: .82rem; }
+    .privacy-note a { color: var(--gold2, #abcaf1); text-underline-offset: 3px; }
     .check-row {
       display: flex;
       align-items: flex-start;
@@ -806,14 +797,13 @@
 
     /* ── FOOTER ── */
     footer {
-      background: #000;
-      padding: 32px 20px;
+      padding: 42px 20px 34px;
       text-align: center;
-      font-size: .68rem;
-      letter-spacing: .18em;
+      font-size: .69rem;
+      letter-spacing: .13em;
       text-transform: uppercase;
-      color: rgba(245,240,232,.5);
-      border-top: 1px solid rgba(201,169,110,.18);
+      color: rgba(245,247,251,.62);
+      border-top: 1px solid rgba(220,231,247,.12);
       font-family: Manrope, sans-serif;
     }
 
@@ -847,7 +837,7 @@
     }
   </style>
 <link rel="stylesheet" href="assets/css/language-switch.css">
-<link rel="stylesheet" href="/assets/css/blue-editorial.css?v=20260924">
+<link rel="stylesheet" href="/assets/css/blue-editorial.css?v=20260929">
 
 <link rel="alternate" hreflang="bg" href="https://memoryphotoandvideo.com/uslugi-ceni.html">
 <link rel="alternate" hreflang="en" href="https://memoryphotoandvideo.com/en/uslugi-ceni.html">
@@ -858,15 +848,15 @@
 
   <header>
     <div class="nav-wrap">
-      <a class="brand" href="index.html" aria-label="Начало">
-        <img src="/assets/icon-64.png" alt="Memory Photo & Video" width="32" height="32">
+      <a class="brand" href="index.html">
+        <img src="/assets/icon-64.png" alt="" width="32" height="32">
         <span>Memory Photo &amp; Video</span>
       </a>
 
-      <input id="menuToggle" type="checkbox" />
-      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+      <input id="menuToggle" type="checkbox" aria-label="Меню">
+      <label class="burger" for="menuToggle"><span></span></label>
 
-      <nav>
+      <nav aria-label="Основна навигация">
         <a href="index.html">Начало</a>
         <a href="portfolio.html">Портфолио</a>
         <a href="videos.html">Видео</a>
@@ -910,8 +900,8 @@
           <div class="pricing-point reveal-scale">
             <div class="pricing-point-icon">✦</div>
             <div>
-              <strong>Актуализирани цени</strong>
-              <span>Професионално структурирани</span>
+              <strong>Актуални цени</strong>
+              <span>Пакети и почасови тарифи</span>
             </div>
           </div>
         </div>
@@ -932,7 +922,7 @@
           <div class="inc-grid stagger">
             <div class="inc-item reveal-scale">Неограничен брой кадри и обработка.</div>
             <div class="inc-item reveal-scale">Видео трейлър с най-важните моменти.</div>
-            <div class="inc-item reveal-scale">Цял репортажен филм.</div>
+            <div class="inc-item reveal-scale">Пълен репортажен филм.</div>
             <div class="inc-item reveal-scale">Фотосесия в деня на сватбата.</div>
             <div class="inc-item reveal-scale">Заснемане до 10 часа.</div>
             <div class="inc-item reveal-scale">Запис на звук с външен рекордер.</div>
@@ -943,53 +933,53 @@
 
         <div class="package-grid">
           <article class="package-card reveal">
-            <div class="package-title">Стандартен</div>
-            <div class="package-price">1 450 €</div>
+            <h3 class="package-title">Стандартен</h3>
+            <div class="package-price">1&nbsp;450&nbsp;€</div>
             <div class="gold-divider"></div>
             <div class="package-diff-label">Включва</div>
             <ul class="bullets">
-              <li>Екип от 2 души — 1 фотограф + 1 оператор.</li>
-              <li>Пълно покритие на сватбения ден с ясен баланс между фото и видео.</li>
-              <li>Подходящ пакет за двойки, които искат силно и изчистено цялостно покритие.</li>
+              <li>Екип от 2 души — 1 фотограф + 1 видеограф.</li>
+              <li>Пълно заснемане на сватбения ден с равен акцент върху фото и видео.</li>
+              <li>Подходящ пакет за двойки, които искат качествено и цялостно заснемане на деня.</li>
             </ul>
             <button
               class="btn btn--secondary package-inquiry-btn"
               type="button"
               data-package="Стандартен"
-              data-package-price="1 450 €">
+              data-package-price="1&nbsp;450&nbsp;€">
               Запитване за пакета
             </button>
           </article>
 
           <article class="package-card recommended reveal">
             <div class="badge">Препоръчан</div>
-            <div class="package-title">Премиум</div>
-            <div class="package-price">1 950 €</div>
+            <h3 class="package-title">Премиум</h3>
+            <div class="package-price">1&nbsp;950&nbsp;€</div>
             <div class="gold-divider"></div>
             <div class="package-diff-label">Включва</div>
             <ul class="bullets">
-              <li>Екип от 4 души — по избор: 2 фотографи + 1 оператор + 1 асистент или 1 фотограф + 2 оператори + 1 асистент.</li>
-              <li>По-широко покритие на подготовката, детайлите и паралелните моменти.</li>
+              <li>Екип от 4 души — по избор: двама фотографи + видеограф + асистент или фотограф + двама видеографи + асистент.</li>
+              <li>По-широко заснемане на подготовката, детайлите и моментите, случващи се едновременно.</li>
               <li>По-богат монтаж, по-силен трейлър и по-голяма визуална свобода.</li>
             </ul>
             <button
               class="btn btn--primary package-inquiry-btn"
               type="button"
               data-package="Премиум"
-              data-package-price="1 950 €">
+              data-package-price="1&nbsp;950&nbsp;€">
               Запитване за пакета
             </button>
           </article>
 
           <article class="package-card reveal">
-            <div class="package-title">Ултра</div>
-            <div class="package-price">2 700 €</div>
+            <h3 class="package-title">Ултра</h3>
+            <div class="package-price">2&nbsp;700&nbsp;€</div>
             <div class="gold-divider"></div>
             <div class="package-diff-label">Включва</div>
             <ul class="bullets">
-              <li>Екип от 4 души — 2 фотографи + 2 оператори.</li>
-              <li>Максимално покритие с повече ъгли, повече динамика и по-пълна история.</li>
-              <li>Най-силният вариант за по-големи сватби и двойки, искащи максимален обхват.</li>
+              <li>Екип от 4 души — двама фотографи + двама видеографи.</li>
+              <li>Максимално заснемане с повече ракурси, повече динамика и по-пълна история.</li>
+              <li>Най-пълният вариант за по-големи сватби и двойки, искащи максимален обхват.</li>
               <li><strong>Заснемане с дрон — включено в пакета.</strong></li>
               <li><strong>Фотоалбум до 25 × 25 см — включен в пакета.</strong></li>
               <li><strong>Следсватбена фотосесия — включена в пакета.</strong></li>
@@ -998,7 +988,7 @@
               class="btn btn--secondary package-inquiry-btn"
               type="button"
               data-package="Ултра"
-              data-package-price="2 700 €">
+              data-package-price="2&nbsp;700&nbsp;€">
               Запитване за пакета
             </button>
           </article>
@@ -1017,7 +1007,7 @@
             <h2>Калкулатор</h2>
             <p>Ориентировъчна сметка според избран екип, допълнителни часове и услуги.</p>
           </div>
-          <div class="pill">актуализирана логика</div>
+          <div class="pill">ориентировъчна сума</div>
         </div>
 
         <div class="mode-tabs">
@@ -1040,22 +1030,22 @@
                   <select class="calc-select" id="photoTeam">
                     <option value="0">0</option>
                     <option value="1">1 фотограф</option>
-                    <option value="2">2 фотографи</option>
+                    <option value="2">двама фотографи</option>
                   </select>
                 </div>
                 <div class="calc-row">
-                  <label class="calc-label" for="videoTeam">Оператори</label>
+                  <label class="calc-label" for="videoTeam">Видеографи</label>
                   <select class="calc-select" id="videoTeam">
                     <option value="0">0</option>
-                    <option value="1">1 оператор</option>
-                    <option value="2">2 оператори</option>
+                    <option value="1">1 видеограф</option>
+                    <option value="2">двама видеографи</option>
                   </select>
                 </div>
               </div>
 
               <div class="calc-two">
                 <div class="calc-row">
-                  <label class="calc-label" for="otHours">Доп. часове</label>
+                  <label class="calc-label" for="otHours">Допълнителни часове</label>
                   <input class="calc-input" id="otHours" type="number" min="0" value="0">
                 </div>
                 <div class="calc-row">
@@ -1081,17 +1071,17 @@
 
               <label class="check-row">
                 <input type="checkbox" id="rawFiles">
-                <span>Добави сурови файлове</span>
+                <span>Добавете сурови файлове</span>
               </label>
               <label class="check-row">
                 <input type="checkbox" id="afterSession">
-                <span>Добави фотосесия в отделен ден</span>
+                <span>Добавете фотосесия в отделен ден</span>
               </label>
 
               <div class="calc-actions">
-                <button class="btn btn--primary" type="button" id="recalcWedding">Изчисли</button>
+                <button class="btn btn--primary" type="button" id="recalcWedding">Изчислете</button>
                 <button class="btn btn--primary" type="button" id="openWeddingInquiry">Изпратете запитване</button>
-                <button class="btn btn--secondary" type="button" id="resetCalc">Нулирай</button>
+                <button class="btn btn--secondary" type="button" id="resetCalc">Нулирайте</button>
               </div>
             </div>
 
@@ -1099,7 +1089,7 @@
               <h3>Резултат</h3>
               <div class="result-total">
                 <small>Обща ориентировъчна сума</small>
-                <div class="result-eur" id="totalEUR">0€</div>
+                <div class="result-eur" id="totalEUR">0&nbsp;€</div>
               </div>
               <div class="breakdown" id="breakdown">
                 <div class="line">
@@ -1147,13 +1137,13 @@
 
               <label class="check-row">
                 <input type="checkbox" id="eventRawFiles">
-                <span>Добави сурови файлове</span>
+                <span>Добавете сурови файлове</span>
               </label>
 
               <div class="calc-actions">
-                <button class="btn btn--primary" type="button" id="recalcEvent">Изчисли</button>
+                <button class="btn btn--primary" type="button" id="recalcEvent">Изчислете</button>
                 <button class="btn btn--primary" type="button" id="openEventInquiry">Изпратете запитване</button>
-                <button class="btn btn--secondary" type="button" id="resetEventCalc">Нулирай</button>
+                <button class="btn btn--secondary" type="button" id="resetEventCalc">Нулирайте</button>
               </div>
             </div>
 
@@ -1161,7 +1151,7 @@
               <h3>Резултат</h3>
               <div class="result-total">
                 <small>Обща ориентировъчна сума</small>
-                <div class="result-eur" id="eventTotalEUR">0€</div>
+                <div class="result-eur" id="eventTotalEUR">0&nbsp;€</div>
               </div>
               <div class="breakdown" id="eventBreakdown">
                 <div class="line">
@@ -1175,12 +1165,12 @@
       </section>
 
       <!-- INQUIRY -->
-      <section class="glass-card reveal" id="inquirySection">
+      <section class="glass-card reveal" id="inquirySection" tabindex="-1" aria-labelledby="inquiryHeading">
         <div class="section-topline">
           <div>
-            <h2>Изпратете запитване</h2>
+            <h2 id="inquiryHeading">Изпратете запитване</h2>
             <p>
-              Изпратете запитване за конкретен пакет или за персонална конфигурация от калкулатора.
+              Изпратете запитване за конкретен пакет или за индивидуална конфигурация от калкулатора.
               Датата е задължителна, за да можем да проверим наличност.
             </p>
           </div>
@@ -1195,7 +1185,7 @@
               <label class="calc-label" for="inquiryType">Тип запитване</label>
               <select class="calc-select" id="inquiryType">
                 <option value="Пакетна оферта">Пакетна оферта</option>
-                <option value="Персонална конфигурация">Персонална конфигурация</option>
+                <option value="Индивидуална конфигурация">Индивидуална конфигурация</option>
                 <option value="Друго събитие">Друго събитие</option>
               </select>
             </div>
@@ -1203,18 +1193,18 @@
             <div class="calc-two">
               <div class="calc-row">
                 <label class="calc-label" for="clientName">Име</label>
-                <input class="calc-input" id="clientName" type="text" required>
+                <input class="calc-input" id="clientName" type="text" autocomplete="name" required>
               </div>
               <div class="calc-row">
                 <label class="calc-label" for="clientPhone">Телефон</label>
-                <input class="calc-input" id="clientPhone" type="text" required>
+                <input class="calc-input" id="clientPhone" type="tel" autocomplete="tel" required>
               </div>
             </div>
 
             <div class="calc-two">
               <div class="calc-row">
                 <label class="calc-label" for="clientEmail">Имейл</label>
-                <input class="calc-input" id="clientEmail" type="email" required>
+                <input class="calc-input" id="clientEmail" type="email" autocomplete="email" required>
               </div>
               <div class="calc-row">
                 <label class="calc-label" for="eventDate">Дата на събитието</label>
@@ -1248,18 +1238,19 @@
               <input type="checkbox" id="privacyConsent">
               <span>Съгласен/а съм личните ми данни да бъдат използвани за връзка по това запитване.</span>
             </label>
+            <p class="privacy-note"><a href="privacy.html" target="_blank" rel="noopener">Как използваме данните ви</a></p>
 
             <div class="calc-actions">
               <button class="btn btn--primary" type="button" id="sendInquiry">Изпратете запитване</button>
             </div>
 
-            <p id="sendStatus" class="calc-mini" style="margin-top:12px;"></p>
+            <p id="sendStatus" class="calc-mini" role="status" style="margin-top:12px;"></p>
           </div>
 
           <div class="calc-card result-card">
             <h3>Какво ще получите</h3>
             <ul class="bullets">
-              <li>Отговор относно конкретен пакет или персонален вариант.</li>
+              <li>Отговор относно конкретен пакет или индивидуален вариант.</li>
               <li>Автоматично добавена разбивка от калкулатора при нужда.</li>
               <li>Потвърждение за наличност на избраната дата.</li>
               <li>Допълнителна информация и насоки.</li>
@@ -1273,7 +1264,7 @@
         <div class="section-topline">
           <div>
             <h2>Други събития</h2>
-            <p>За 1 фотограф или 1 оператор: 130 € за първия започнат час и 90 € за всеки следващ започнат час.</p>
+            <p>За 1 фотограф или 1 видеограф: 130 € за първия започнат час и 90 € за всеки следващ започнат час.</p>
           </div>
           <div class="pill">актуални тарифи</div>
         </div>
@@ -1336,14 +1327,14 @@
     </div>
   </main>
 
-  <footer>
-    © 2026 Memory Photo &amp; Video. Всички права запазени.
+  <footer><span class="footer-copy">
+    © <span data-year>2026</span> Memory Photo &amp; Video. Всички права запазени.</span> <span class="footer-legal"><a href="/privacy.html">Поверителност</a><button type="button" class="footer-link" data-consent-settings>Настройки за статистика</button></span>
   </footer>
 
   <!-- The maintained calculator lives in assets/js/pricing-fix.js?v=20260911-eur. -->
   <script>window.__pricingFixEnabled = true;</script>
-<script defer src="assets/js/pricing-fix.js?v=20260924"></script>
-<script defer src="assets/js/main.js?v=20260924"></script>
-<script defer src="assets/js/language-switch.js?v=20260924"></script>
+<script defer src="assets/js/pricing-fix.js?v=20260929"></script>
+<script defer src="assets/js/main.js?v=20260929"></script>
+<script defer src="assets/js/language-switch.js?v=20260929"></script>
 </body>
 </html>

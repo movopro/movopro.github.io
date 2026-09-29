@@ -11,6 +11,7 @@ on:
       - 'availability.html'
       - 'about.html'
       - 'svatba-izbrani.html'
+      - 'privacy.html'
       - 'assets/js/language-switch*.js'
       - '.github/workflows/build-static-en.yml'
 
@@ -95,7 +96,7 @@ jobs:
             exit 1
           fi
           mkdir -p /tmp/memory-en-render
-          pages=(index.html portfolio.html videos.html uslugi-ceni.html availability.html about.html svatba-izbrani.html)
+          pages=(index.html portfolio.html videos.html uslugi-ceni.html availability.html about.html svatba-izbrani.html privacy.html)
           for page in "${pages[@]}"; do
             echo "Rendering $page"
             "$CHROME" \
@@ -156,6 +157,11 @@ jobs:
                   'title': 'Selected Wedding Frames | Memory Photo & Video',
                   'description': 'A curated selection of wedding photographs from real celebrations captured by Memory Photo & Video.'
               },
+              'privacy.html': {
+                  'out': 'en/privacy.html', 'bg': '/privacy.html', 'en': '/en/privacy.html',
+                  'title': 'Privacy Policy | Memory Photo & Video',
+                  'description': 'How Memory Photo & Video handles personal data: inquiries through the form, statistics only with your consent, YouTube videos and your rights.'
+              },
           }
 
           known = {
@@ -166,6 +172,7 @@ jobs:
               'availability.html': '/en/availability.html',
               'about.html': '/en/about.html',
               'svatba-izbrani.html': '/en/svatba-izbrani.html',
+              'privacy.html': '/en/privacy.html',
           }
 
           def set_meta(soup, head, attrs, content):
@@ -252,15 +259,16 @@ jobs:
                       {
                           '@type': 'ProfessionalService',
                           '@id': host + '/#business',
-                          'name': 'Memory Photo & Video',
+                          'name': "Memory Photo & Video",
                           'url': host + '/',
-                          'logo': host + '/logo.png',
+                          'logo': host + '/assets/icon-512.png',
                           'image': host + '/memory-og-2026.jpg',
-                          'description': 'Wedding photography and videography in Bulgaria.',
-                          'foundingDate': '2017',
-                          'areaServed': {'@type': 'Country', 'name': 'Bulgaria'},
-                          'serviceType': ['Wedding photography', 'Wedding videography', 'Event photography', 'Event videography'],
-                          'sameAs': ['https://www.instagram.com/memoryphotoandvideo/', 'https://www.facebook.com/MemoryPhotoAndVideo/']
+                          'description': "Wedding photography and videography from Kardzhali — for weddings and events in the region and across Bulgaria.",
+                          'foundingDate': "2017",
+                          'address': {"@type": "PostalAddress", "addressLocality": "Kardzhali", "addressCountry": "BG"},
+                          'areaServed': [{"@type": "City", "name": "Kardzhali"}, {"@type": "City", "name": "Plovdiv"}, {"@type": "City", "name": "Zlatograd"}, {"@type": "City", "name": "Shumen"}, {"@type": "City", "name": "Smolyan"}, {"@type": "City", "name": "Stara Zagora"}, {"@type": "Country", "name": "Bulgaria"}],
+                          'serviceType': ["Wedding photography", "Wedding videography", "Event photography", "Event videography"],
+                          'sameAs': ["https://www.instagram.com/memoryphotoandvideo/", "https://www.facebook.com/MemoryPhotoAndVideo/"],
                       },
                       {
                           '@type': 'WebSite',
@@ -299,16 +307,25 @@ jobs:
                   elif clean == '':
                       a['href'] = '/en/' + anchor
 
+              # The city landing pages and the individual wedding pages exist in Bulgarian only. The videos play in
+              # place on the English pages, so the "Watch the story" links are dropped and the city names stay as
+              # plain text, instead of sending English visitors to Bulgarian pages.
+              for a in soup.find_all('a', href=True):
+                  clean = a['href'].split('#', 1)[0].split('?', 1)[0].lstrip('/')
+                  if not (clean.startswith('weddings/') or clean.startswith('svatben-fotograf-')):
+                      continue
+                  if 'video-story-link' in (a.get('class') or []):
+                      a.decompose()
+                  else:
+                      a.unwrap()
+
               # Fix English accessibility labels that are not visible-text translations.
               nav = soup.find('nav')
               if nav:
                   nav['aria-label'] = 'Primary navigation'
               menu_toggle = soup.find(id='menuToggle')
               if menu_toggle:
-                  menu_toggle['aria-label'] = 'Open menu'
-              burger = soup.select_one('label.burger')
-              if burger:
-                  burger['aria-label'] = 'Menu'
+                  menu_toggle['aria-label'] = 'Menu'
               for social in soup.select('.home-socials'):
                   social['aria-label'] = 'Social media'
               for link in soup.find_all('a', href=True):
@@ -319,10 +336,8 @@ jobs:
                       link['aria-label'] = 'Memory Photo & Video on Facebook'
 
               # Remove browser-only/runtime controls; scripts recreate them cleanly.
-              for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue, .mpv-consent, .portfolio-gallery-controls'):
+              for transient in soup.select('#wowScrollProgress, .language-nav, .language-switch, .wow-scroll-cue, .mpv-consent, .portfolio-gallery-controls'):
                   transient.decompose()
-              for item in soup.select('.gallery-item[hidden]'):
-                  del item['hidden']
               # language-switch.js injects these at runtime; snapshot copies would load them twice.
               for script in list(soup.find_all('script', src=True)):
                   if re.search(r'language-switch-(runtime|complete)\.js|wow-polish\.js', script['src']):
@@ -352,6 +367,27 @@ jobs:
                   if status:
                       status.string = f"Photo 1 of {len(slider.select('[data-home-slide]'))}"
 
+              # The availability calendar is drawn by the page script. Like the Bulgarian source, the saved
+              # page keeps an empty placeholder instead of a frozen month, so it never goes stale.
+              if src == 'availability.html':
+                  grid = soup.find(id='calendarGrid')
+                  if grid:
+                      grid.clear()
+                  month_label = soup.find(id='monthLabel')
+                  if month_label:
+                      month_label.string = 'Month'
+                  year_toggle = soup.find(id='yearToggle')
+                  if year_toggle:
+                      for attr in ('aria-label', 'data-target-year'):
+                          if year_toggle.has_attr(attr):
+                              del year_toggle[attr]
+                  for button_id in ('prevMonth', 'nextMonth'):
+                      button = soup.find(id=button_id)
+                      if button:
+                          for attr in ('disabled', 'style'):
+                              if button.has_attr(attr):
+                                  del button[attr]
+
               # Keep inactive homepage slides deferred (main.js loads them after the page).
               pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
               for slide in soup.select('[data-home-slide]:not(.is-active)'):
@@ -374,7 +410,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html; do
+          for f in en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html en/privacy.html; do
             grep -q '<h1' "$f" || { echo "Missing H1 in $f"; exit 1; }
             grep -q 'rel="canonical"' "$f" || { echo "Missing canonical in $f"; exit 1; }
             grep -q 'hreflang="en"' "$f" || { echo "Missing hreflang in $f"; exit 1; }
@@ -394,7 +430,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add availability.html uslugi-ceni.html en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html
+          git add availability.html uslugi-ceni.html en/index.html en/portfolio.html en/videos.html en/uslugi-ceni.html en/availability.html en/about.html en/svatba-izbrani.html en/privacy.html
           if git diff --cached --quiet; then
             echo 'Source and English pages already up to date.'
             exit 0

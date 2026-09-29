@@ -14,6 +14,7 @@ on:
       - 'availability.html'
       - 'about.html'
       - 'svatba-izbrani.html'
+      - 'privacy.html'
       - 'weddings/*.html'
       - 'en/*.html'
       - 'scripts/build_sitemap.py'
@@ -31,6 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, so each page's real last-modified date can be read
 
       - name: Generate sitemap
         run: python3 scripts/build_sitemap.py

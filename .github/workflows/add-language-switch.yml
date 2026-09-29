@@ -16,7 +16,8 @@ jobs:
           from pathlib import Path
           import re
 
-          files = list(Path('.').glob('*.html')) + list(Path('en').glob('*.html'))
+          # 404.html is served from any URL and has its own absolute-path assets, so it is left alone.
+          files = [p for p in list(Path('.').glob('*.html')) + list(Path('en').glob('*.html')) if p.name != '404.html']
           host = 'https://memoryphotoandvideo.com'
           old_local_title = 'Сватбен фотограф и видеограф в Кърджали | Memory Photo & Video'
           old_local_title_html = 'Сватбен фотограф и видеограф в Кърджали | Memory Photo &amp; Video'
@@ -30,6 +31,7 @@ jobs:
               'availability.html': ('/availability.html', '/en/availability.html'),
               'about.html': ('/about.html', '/en/about.html'),
               'svatba-izbrani.html': ('/svatba-izbrani.html', '/en/svatba-izbrani.html'),
+              'privacy.html': ('/privacy.html', '/en/privacy.html'),
           }
 
           for p in files:

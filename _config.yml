@@ -3,9 +3,10 @@
 exclude:
   - assets/portfolio_next
   - assets/portfolio_next_mobile
-  - assets/portfolio/.DS_Store
   - mario.jpg
   - victor.jpg
   - svetlan.jpg
   - icon.png
   - header.html
+  - assets/archive
+  - scripts

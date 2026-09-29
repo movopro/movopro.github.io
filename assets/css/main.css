@@ -89,7 +89,7 @@ p, li { text-wrap: pretty; }
 .skip-link {
   position: absolute; left: -999px; top: var(--s3);
   background: var(--gold); color: #14110e;
-  padding: var(--s2) var(--s4); border-radius: var(--radius-md); z-index: 200;
+  padding: var(--s2) var(--s4); border-radius: var(--radius-md); z-index: 3000;
   font-size: var(--text-sm); letter-spacing: .12em; text-transform: uppercase;
 }
 .skip-link:focus { left: var(--s3); }
@@ -145,6 +145,16 @@ header.scrolled {
 
 #menuToggle { display: none; }
 
+/* On small screens the checkbox that drives the menu is the focusable, announced control
+   (visually hidden); the label next to it is only the burger icon. */
+@media (max-width: 880px) {
+  #menuToggle {
+    display: block; position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; opacity: 0;
+  }
+  #menuToggle:focus-visible ~ .burger { outline: 2px solid #75a5e8; outline-offset: 3px; }
+}
+
 .burger {
   display: none; width: 44px; height: 44px;
   align-items: center; justify-content: center;
@@ -154,25 +164,25 @@ header.scrolled {
   cursor: pointer;
 }
 
-.burger div {
+.burger span {
   width: 18px; height: 1.5px;
   background: var(--cream-soft);
   position: relative;
   transition: background 0.2s;
 }
 
-.burger div::before, .burger div::after {
+.burger span::before, .burger span::after {
   content: ""; position: absolute; left: 0;
   width: 18px; height: 1.5px; background: var(--cream-soft);
   transition: transform 0.25s var(--ease), top 0.25s var(--ease);
 }
 
-.burger div::before { top: -6px; }
-.burger div::after  { top:  6px; }
+.burger span::before { top: -6px; }
+.burger span::after  { top:  6px; }
 
-#menuToggle:checked ~ .burger div { background: transparent; }
-#menuToggle:checked ~ .burger div::before { transform: rotate(45deg); top: 0; }
-#menuToggle:checked ~ .burger div::after  { transform: rotate(-45deg); top: 0; }
+#menuToggle:checked ~ .burger span { background: transparent; }
+#menuToggle:checked ~ .burger span::before { transform: rotate(45deg); top: 0; }
+#menuToggle:checked ~ .burger span::after  { transform: rotate(-45deg); top: 0; }
 
 nav {
   display: flex; gap: var(--s2); align-items: center;
@@ -1648,59 +1658,7 @@ footer {
 /* ===== compact-pages.css ===== */
 /* Compact shared layer for pricing + availability pages */
 
-/* Keep their navigation identical to the V2 pages. */
-body:has(.pricing-page) header,
-body:has(.availability-page) header{
-  position:fixed !important;
-  top:0 !important;
-  left:0 !important;
-  right:0 !important;
-  z-index:100 !important;
-  background:rgba(8,12,18,.82) !important;
-  backdrop-filter:blur(20px) saturate(1.25) !important;
-  border-bottom:1px solid rgba(220,231,247,.12) !important;
-  box-shadow:0 10px 35px rgba(0,0,0,.28) !important;
-}
-
-body:has(.pricing-page) .nav-wrap,
-body:has(.availability-page) .nav-wrap{
-  max-width:1240px !important;
-  padding:11px 20px !important;
-  gap:12px !important;
-}
-
-body:has(.pricing-page) .brand,
-body:has(.availability-page) .brand{gap:.75rem !important;}
-body:has(.pricing-page) .brand img,
-body:has(.availability-page) .brand img{width:32px !important;height:32px !important;}
-body:has(.pricing-page) .brand span,
-body:has(.availability-page) .brand span{
-  font-family:'Manrope',Georgia,serif !important;
-  font-size:1rem !important;
-  letter-spacing:.10em !important;
-}
-body:has(.pricing-page) nav,
-body:has(.availability-page) nav{gap:6px !important;}
-body:has(.pricing-page) nav a,
-body:has(.availability-page) nav a{
-  color:rgba(245,247,251,.67) !important;
-  font-size:.72rem !important;
-  letter-spacing:.14em !important;
-  padding:8px 10px !important;
-  border-radius:10px !important;
-}
-body:has(.pricing-page) nav a:hover,
-body:has(.availability-page) nav a:hover{
-  color:#f5f7fb !important;
-  background:rgba(255,255,255,.045) !important;
-  border-color:rgba(220,231,247,.12) !important;
-}
-body:has(.pricing-page) .nav-cta,
-body:has(.availability-page) .nav-cta{
-  color:#abcaf1 !important;
-  border-color:rgba(117,165,232,.34) !important;
-  background:rgba(117,165,232,.075) !important;
-}
+/* The navigation of these pages comes from the shared header styles (blue-editorial.css), like every other page. */
 
 /* More restrained page scale so these pages feel like part of the same site. */
 body:has(.pricing-page) .pricing-page{
@@ -1723,7 +1681,7 @@ body:has(.pricing-page) .pricing-hero{
 body:has(.pricing-page) .pricing-hero h1{
   font-size:clamp(2.55rem,4.7vw,4.5rem) !important;
   line-height:.98 !important;
-  max-width:14ch !important;
+  max-width:26ch !important;
   margin-bottom:14px !important;
 }
 body:has(.pricing-page) .pricing-hero p{
@@ -1798,23 +1756,6 @@ body:has(.availability-page) .cal-month{font-size:1.48rem !important;}
 body:has(.availability-page) .cell{min-height:70px !important;padding:9px !important;border-radius:14px !important;}
 body:has(.availability-page) .day-number{font-size:.82rem !important;}
 body:has(.availability-page) .availability-cta{padding:22px 24px !important;border-radius:22px !important;}
-
-@media (max-width:880px){
-  body:has(.pricing-page) .burger,
-  body:has(.availability-page) .burger{display:flex !important;}
-  body:has(.pricing-page) nav,
-  body:has(.availability-page) nav{
-    display:none !important;
-    width:100% !important;
-    flex-direction:column !important;
-    align-items:stretch !important;
-    padding:10px 0 4px !important;
-  }
-  body:has(.pricing-page) #menuToggle:checked ~ nav,
-  body:has(.availability-page) #menuToggle:checked ~ nav{display:flex !important;}
-  body:has(.pricing-page) nav a,
-  body:has(.availability-page) nav a{width:100% !important;text-align:left !important;padding:11px 12px !important;}
-}
 
 @media (max-width:640px){
   body:has(.pricing-page) .pricing-page,
@@ -1924,7 +1865,7 @@ body.lightbox-open{overflow:hidden}
   .v2-process{grid-template-columns:1fr!important}
   .v2-step{padding:18px!important}
   .v2-cta{padding:24px!important;border-radius:22px!important}
-  .v2-footer{padding:30px 14px 26px!important;font-size:.6rem!important}
+  .v2-footer{padding:30px 14px 26px!important;font-size:.66rem!important;letter-spacing:.1em!important}
 
   .home-section{width:min(92vw,620px)!important;padding:62px 0!important;text-align:center!important}
   .home-section__head{gap:16px!important;margin-bottom:20px!important;display:grid!important;grid-template-columns:1fr!important;text-align:center!important;align-items:center!important}
@@ -2487,6 +2428,43 @@ header.scrolled::after{opacity:1}
   .v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card,.portfolio-note,.videos-note,.videos-final,
   .gallery-item,.portfolio-item{transition:none}
 }
+
+/* ===== Click-to-play YouTube videos =====
+   The card shows a preview image and a play button; the player (youtube-nocookie.com) is only
+   requested after the visitor presses play. Without JavaScript the link opens the video on YouTube. */
+.yt-embed{position:relative;width:100%;height:100%;background:#000;overflow:hidden}
+.yt-embed__play{position:absolute;inset:0;display:block;width:100%;height:100%;cursor:pointer;color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.yt-embed__play img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .3s ease}
+.yt-embed__play::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.4));pointer-events:none}
+.yt-embed__icon{position:absolute;left:50%;top:50%;z-index:2;width:clamp(56px,7vw,84px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:rgba(8,12,18,.72);border:1.5px solid rgba(171,202,241,.62);display:grid;place-items:center;backdrop-filter:blur(6px);transition:background .25s ease,transform .25s ease,border-color .25s ease}
+.yt-embed__icon::before{content:"";width:36%;aspect-ratio:.9;margin-left:8%;background:#f5f7fb;clip-path:polygon(0 0,100% 50%,0 100%)}
+.yt-embed__play:hover img{transform:scale(1.03);filter:brightness(1.08)}
+.yt-embed__play:hover .yt-embed__icon,.yt-embed__play:focus-visible .yt-embed__icon{background:rgba(59,110,224,.92);border-color:#abcaf1;transform:translate(-50%,-50%) scale(1.06)}
+.yt-embed__play:focus-visible{outline:3px solid #75a5e8;outline-offset:-3px}
+.yt-embed iframe{display:block;width:100%;height:100%;border:0}
+@media (prefers-reduced-motion:reduce){.yt-embed__play img,.yt-embed__icon{transition:none}.yt-embed__play:hover img{transform:none}}
+
+/* Footer utility links: privacy policy and analytics settings */
+footer a,.footer-link{color:inherit;text-decoration:underline;text-decoration-color:rgba(245,247,251,.35);text-underline-offset:3px;transition:text-decoration-color .2s ease,color .2s ease}
+.footer-link{background:none;border:0;padding:0;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+footer a:hover,footer a:focus-visible,.footer-link:hover,.footer-link:focus-visible{text-decoration-color:currentColor;color:#f5f7fb}
+footer a:focus-visible,.footer-link:focus-visible{outline:2px solid #75a5e8;outline-offset:3px;border-radius:2px}
+body .home-footer .home-footer__bottom a,body .home-footer .home-footer__bottom .footer-link{font-size:inherit!important;line-height:inherit}
+footer .footer-link,footer a[href$="privacy.html"]{display:inline-block;padding:5px 2px;margin:-5px -2px}
+input::placeholder,textarea::placeholder{color:rgba(245,247,251,.55);opacity:1}
+
+/* Footer bottom row: the copyright text and the legal links are two groups that wrap as a whole,
+   so a separator never dangles at the end or start of a line. */
+.footer-copy{display:inline}
+.footer-legal{display:inline-flex;flex-wrap:wrap;justify-content:center;column-gap:1.4em;margin-left:1.4em}
+.home-footer__bottom .footer-legal{justify-content:flex-start}
+@media (max-width:640px){
+  .footer-copy{display:block}
+  .footer-legal{display:flex;margin:8px 0 0}
+}
+
+/* Text for assistive technology only */
+.sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 
 /* The experimental filmstrip is permanently disabled. */
 .home-filmstrip{display:none!important;}

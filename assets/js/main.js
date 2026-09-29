@@ -18,54 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const isEnglishPage = location.pathname.startsWith('/en/') || new URLSearchParams(location.search).get('lang') === 'en';
   const path = location.pathname === '/index.html' ? '/' : location.pathname;
 
-  /* Local SEO: keep key BG pages aligned with the searches already visible in Search Console. */
-  const seoPages = {
-    '/': {
-      title: 'Сватбен фотограф и видеограф Кърджали | Memory Photo & Video',
-      description: 'Memory Photo & Video — сватбен фотограф и видеограф в Кърджали. Професионално фото и видео за сватби и събития в региона и цяла България.'
-    },
-    '/portfolio.html': {
-      title: 'Сватбена фотография в Кърджали | Портфолио | Memory Photo & Video',
-      description: 'Разгледайте сватбена фотография от Memory Photo & Video — реални сватби, емоции и детайли от Кърджали, региона и цяла България.'
-    },
-    '/videos.html': {
-      title: 'Сватбено видео и видеограф в Кърджали | Memory Photo & Video',
-      description: 'Сватбена видеография от Memory Photo & Video — сватбени филми и видео заснемане в Кърджали, региона и цяла България.'
-    },
-    '/uslugi-ceni.html': {
-      title: 'Цени за сватбен фотограф и видеограф | Memory Photo & Video',
-      description: 'Актуални цени и пакети за сватбена фотография и видеография от Memory Photo & Video. Фото и видео услуги за Кърджали и цяла България.'
-    },
-    '/availability.html': {
-      title: 'Свободни дати за сватбен фотограф и видеограф | Memory Photo & Video',
-      description: 'Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo & Video и вижте актуалната заетост по месеци.'
-    },
-    '/about.html': {
-      title: 'За Memory Photo & Video | Сватбен фотограф Кърджали',
-      description: 'Запознайте се с екипа на Memory Photo & Video — фотографи и видеографи от Кърджали, които снимат сватби и събития от 2017 г.'
-    }
-  };
-
-  const setMeta = (selector, value, attr = 'content') => {
-    const element = document.head.querySelector(selector);
-    if (element && value) element.setAttribute(attr, value);
-  };
-
-  if (!isEnglishPage && seoPages[path]) {
-    const seo = seoPages[path];
-    document.title = seo.title;
-    setMeta('meta[name="description"]', seo.description);
-    setMeta('meta[property="og:title"]', seo.title);
-    setMeta('meta[property="og:description"]', seo.description);
-    setMeta('meta[name="twitter:title"]', seo.title);
-    setMeta('meta[name="twitter:description"]', seo.description);
-  }
-
   /* Pages with their own structured data (home, about, city and wedding pages) keep it;
      replacing or duplicating it produced conflicting #business records. */
-  if (!isEnglishPage && !document.querySelector('script[type="application/ld+json"]')) {
+  const isNoindex = !!document.querySelector('meta[name="robots"][content*="noindex"]');
+  if (!isEnglishPage && !isNoindex && !document.querySelector('script[type="application/ld+json"]')) {
 
-    const pageName = seoPages[path]?.title?.split('|')[0].trim() || document.title.split('|')[0].trim();
+    const pageName = document.title.split('|')[0].trim();
     const canonical = document.querySelector('link[rel="canonical"]')?.href || `${location.origin}${path}`;
     const schema = document.createElement('script');
     schema.id = 'mpv-seo-schema';
@@ -78,17 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
           '@id': 'https://memoryphotoandvideo.com/#business',
           name: 'Memory Photo & Video',
           url: 'https://memoryphotoandvideo.com/',
-          logo: 'https://memoryphotoandvideo.com/logo.png',
+          logo: 'https://memoryphotoandvideo.com/assets/icon-512.png',
           image: 'https://memoryphotoandvideo.com/memory-og-2026.jpg',
-          description: 'Сватбена фотография и видеография в Кърджали, региона и цяла България.',
+          description: 'Сватбена фотография и видеография от Кърджали — за сватби и събития в региона и цяла България.',
           foundingDate: '2017',
-          areaServed: [
-            { '@type': 'City', name: 'Кърджали' },
-            { '@type': 'AdministrativeArea', name: 'Област Кърджали' },
-            { '@type': 'Country', name: 'България' }
-          ],
+          address: { '@type': 'PostalAddress', addressLocality: 'Кърджали', addressCountry: 'BG' },
+          areaServed: [{ '@type': 'City', name: 'Кърджали' }, { '@type': 'City', name: 'Пловдив' }, { '@type': 'City', name: 'Златоград' }, { '@type': 'City', name: 'Шумен' }, { '@type': 'City', name: 'Смолян' }, { '@type': 'City', name: 'Стара Загора' }, { '@type': 'Country', name: 'България' }],
           serviceType: ['Сватбена фотография', 'Сватбена видеография', 'Събитийна фотография', 'Събитийно видео'],
-          sameAs: ['https://www.instagram.com/memoryphotoandvideo/', 'https://www.facebook.com/MemoryPhotoAndVideo/']
+          sameAs: ['https://www.instagram.com/memoryphotoandvideo/', 'https://www.facebook.com/MemoryPhotoAndVideo/'],
         },
         {
           '@type': 'WebSite',
@@ -122,10 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (menuToggle && nav && header) {
     const burger = document.querySelector('.burger');
     const syncMenuState = () => {
-      const open = menuToggle.checked;
-      menuToggle.setAttribute('aria-expanded', String(open));
-      if (burger) burger.setAttribute('aria-expanded', String(open));
-      document.body.classList.toggle('menu-open', open);
+      document.body.classList.toggle('menu-open', menuToggle.checked);
     };
 
     const closeMenu = ({ focusToggle = false } = {}) => {
@@ -135,21 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
       if (focusToggle) menuToggle.focus();
     };
 
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-controls', 'site-navigation');
+    /* The checkbox is the accessible control (a labelled checkbox that controls the navigation);
+       the label only draws the burger icon and has no text of its own. */
     nav.id = nav.id || 'site-navigation';
-
-    if (burger) {
-      burger.setAttribute('aria-controls', nav.id);
-      burger.setAttribute('role', 'button');
-      burger.setAttribute('tabindex', '0');
-      burger.addEventListener('keydown', event => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault();
-        menuToggle.checked = !menuToggle.checked;
-        syncMenuState();
-      });
+    menuToggle.setAttribute('aria-controls', nav.id);
+    if (!menuToggle.getAttribute('aria-label')) {
+      menuToggle.setAttribute('aria-label', isEnglishPage ? 'Menu' : 'Меню');
     }
+    if (burger) {
+      // Older saved copies of the page carried these on the label; the checkbox owns them now.
+      ['role', 'tabindex', 'aria-expanded', 'aria-controls', 'aria-label', 'aria-hidden'].forEach(name => burger.removeAttribute(name));
+      ['role', 'aria-expanded'].forEach(name => menuToggle.removeAttribute(name));
+    }
+    menuToggle.addEventListener('keydown', event => {
+      if (event.key !== 'Enter') return; // Space already toggles a checkbox
+      event.preventDefault();
+      menuToggle.click();
+    });
 
     menuToggle.addEventListener('change', syncMenuState);
     nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMenu()));
@@ -171,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (reviewNote) {
     reviewNote.textContent = isEnglishPage
       ? 'Our public Google rating is currently 5.0/5 from 21 reviews.'
-      : 'Публичният Google рейтинг в момента е 5.0/5 от 21 отзива.';
+      : 'Публичният Google рейтинг в момента е 5,0/5 от 21 отзива.';
   }
 
   const revealItems = document.querySelectorAll('.v2-reveal');
@@ -200,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedCopy = homeHero.parentElement?.querySelector('.home-section .home-copy');
     if (selectedCopy) {
       selectedCopy.textContent = isEnglishPage
-        ? 'Some of our favourite frames from real wedding days.'
+        ? 'Some of our favorite frames from real wedding days.'
         : 'Няколко от любимите ни кадри от истински сватбени дни.';
     }
 
@@ -260,18 +214,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(script);
   };
 
-  const savedConsent = getStoredConsent();
-  if (savedConsent === 'granted') {
-    loadAnalytics();
-  } else if (savedConsent !== 'denied') {
+  /* Withdrawing consent must also remove what analytics already stored on this device. */
+  const clearAnalyticsCookies = () => {
+    window[`ga-disable-${GA_ID}`] = true;
+    const names = document.cookie.split(';').map(part => part.split('=')[0].trim()).filter(name => name === '_ga' || name.startsWith('_ga_') || name === '_gid' || name.startsWith('_gat'));
+    const host = location.hostname;
+    const domains = [host, `.${host}`, `.${host.split('.').slice(-2).join('.')}`];
+    names.forEach(name => domains.forEach(domain => {
+      document.cookie = `${name}=; Max-Age=0; path=/; domain=${domain}`;
+    }));
+    names.forEach(name => { document.cookie = `${name}=; Max-Age=0; path=/`; });
+  };
+
+  const showConsentNotice = ({ focus = false } = {}) => {
+    if (document.querySelector('.mpv-consent')) return;
     const notice = document.createElement('div');
     notice.className = 'mpv-consent';
     notice.setAttribute('role', 'dialog');
-    notice.setAttribute('aria-label', isEnglishPage ? 'Analytics preferences' : 'Настройки за анализ');
+    notice.setAttribute('aria-label', isEnglishPage ? 'Analytics preferences' : 'Настройки за статистика');
     notice.innerHTML = `
       <p>${isEnglishPage
         ? 'We use optional analytics only to understand which pages are useful. No analytics is loaded unless you accept.'
-        : 'Използваме незадължителна статистика само за да разбираме кои страници са полезни. Анализ не се зарежда без вашето съгласие.'}</p>
+        : 'Използваме незадължителна статистика само за да разбираме кои страници са полезни. Без вашето съгласие не се зарежда никаква статистика.'}
+        <a href="${isEnglishPage ? '/en/privacy.html' : '/privacy.html'}">${isEnglishPage ? 'Privacy policy' : 'Политика за поверителност'}</a></p>
       <div class="mpv-consent__actions">
         <button type="button" data-consent="decline">${isEnglishPage ? 'Decline' : 'Отказвам'}</button>
         <button type="button" data-consent="accept">${isEnglishPage ? 'Accept' : 'Приемам'}</button>
@@ -283,11 +248,33 @@ document.addEventListener('DOMContentLoaded', () => {
       const granted = action === 'accept';
       storeConsent(granted ? 'granted' : 'denied');
       notice.remove();
-      if (granted) loadAnalytics();
+      if (granted) {
+        window[`ga-disable-${GA_ID}`] = false;
+        loadAnalytics();
+      } else {
+        clearAnalyticsCookies();
+      }
     });
 
-    document.body.appendChild(notice);
+    // First in the page order (it is fixed at the bottom of the screen) so keyboard and screen reader users meet it early.
+    document.body.prepend(notice);
+    if (focus) notice.querySelector('[data-consent="decline"]')?.focus({ preventScroll: true });
+  };
+
+  const savedConsent = getStoredConsent();
+  if (savedConsent === 'granted') {
+    loadAnalytics();
+  } else if (savedConsent !== 'denied') {
+    showConsentNotice();
   }
+
+  /* "Analytics settings" link in the footer lets visitors change their mind at any time. */
+  document.addEventListener('click', event => {
+    if (!event.target.closest?.('[data-consent-settings]')) return;
+    showConsentNotice({ focus: true });
+  });
+
+  document.querySelectorAll('[data-year]').forEach(element => { element.textContent = String(new Date().getFullYear()); });
 });
 
 /* Homepage hero carousel 2026-09-11 */
@@ -300,8 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const previousButton = slider.querySelector('[data-home-slider-prev]');
   const nextButton = slider.querySelector('[data-home-slider-next]');
   const toggleButton = slider.querySelector('[data-home-slider-toggle]');
-  const pauseIcon = toggleButton?.querySelector('[data-slider-icon="pause"]');
-  const playIcon = toggleButton?.querySelector('[data-slider-icon="play"]');
   const status = slider.querySelector('[data-home-slider-status]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -337,13 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    toggleButton.setAttribute('aria-pressed', String(userPaused));
+    // The label names the action, so it is not combined with aria-pressed; the icon follows data-state.
+    toggleButton.removeAttribute('aria-pressed');
+    toggleButton.dataset.state = userPaused ? 'paused' : 'playing';
     toggleButton.setAttribute(
       'aria-label',
-      userPaused ? 'Пусни автоматичната смяна' : 'Спри автоматичната смяна'
+      userPaused ? 'Пуснете автоматичната смяна' : 'Спрете автоматичната смяна'
     );
-    if (pauseIcon) pauseIcon.hidden = userPaused;
-    if (playIcon) playIcon.hidden = !userPaused;
   };
 
   const showSlide = (requestedIndex, announce = false) => {
@@ -468,3 +453,20 @@ document.addEventListener('DOMContentLoaded', () => {
   startAutoplay();
 });
 
+/* Click-to-play YouTube videos: nothing is requested from YouTube's player until the visitor presses play. */
+document.addEventListener('click', event => {
+  const link = event.target.closest?.('a.yt-embed__play');
+  if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const box = link.closest('.yt-embed');
+  const id = box?.dataset.ytId;
+  if (!id) return;
+  event.preventDefault();
+  const frame = document.createElement('iframe');
+  frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1`;
+  frame.title = box.dataset.ytTitle || '';
+  frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  frame.allowFullscreen = true;
+  frame.referrerPolicy = 'strict-origin-when-cross-origin';
+  link.replaceWith(frame);
+  frame.focus();
+});

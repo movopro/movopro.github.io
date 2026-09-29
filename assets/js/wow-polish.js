@@ -98,23 +98,32 @@
       },{passive:true});
     }
 
+    const english=location.pathname.startsWith('/en/')||new URLSearchParams(location.search).get('lang')==='en';
     qa('a[target="_blank"]').forEach(link=>{
       const rel=new Set((link.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
       rel.add('noopener');rel.add('noreferrer');
       link.setAttribute('rel',[...rel].join(' '));
+      // Tell assistive technology that the link opens a new tab.
+      if(!link.querySelector('.sr-only')){
+        const note=document.createElement('span');
+        note.className='sr-only';
+        note.textContent=english?' (opens in a new tab)':' (отваря се в нов раздел)';
+        link.appendChild(note);
+      }
     });
 
     // Compare page names so "/en/portfolio.html" and "portfolio.html" (and "/", "/en/", "index.html") match.
     const pageName=path=>{
       const clean=(path||'').split('?')[0].split('#')[0];
-      return (!clean||clean.endsWith('/'))?'index.html':clean.split('/').pop();
+      if(!clean||clean.endsWith('/')) return 'index.html';
+      const name=clean.split('/').pop();
+      return /\.[a-z0-9]+$/i.test(name)?name:name+'.html'; // "/portfolio" and "portfolio.html" are the same page
     };
     const current=pageName(location.pathname);
     qa('header nav a').forEach(link=>{
       if(pageName(link.getAttribute('href'))===current) link.setAttribute('aria-current','page');
       else link.removeAttribute('aria-current');
     });
-
     qa('img').forEach((img,index)=>{
       if(index>1 && !img.hasAttribute('decoding')) img.decoding='async';
     });
