@@ -189,17 +189,22 @@ document.addEventListener('DOMContentLoaded', () => {
     else heroImage.addEventListener('load', () => heroImage.classList.add('is-loaded'), { once: true });
   }
 
-  /* Consent-first GA4. Nothing is requested from Google Analytics until the visitor accepts. */
+  /* Consent first. Nothing is requested from Google or Meta until the visitor allows it, and the two purposes
+     (statistics, advertising) are separate choices. */
   const GA_ID = 'G-WJK01GL7PM';
-  const CONSENT_KEY = 'mpv_analytics_consent_v1';
-  const getStoredConsent = () => {
-    try { return localStorage.getItem(CONSENT_KEY); }
-    catch { return null; }
+  const META_PIXEL_ID = '28878319171761421';
+  const CONSENT_KEY = 'mpv_consent_v2';
+  const readConsent = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(CONSENT_KEY));
+      return saved && typeof saved === 'object' ? { analytics: saved.analytics === true, ads: saved.ads === true } : null;
+    } catch { return null; }
   };
-  const storeConsent = value => {
-    try { localStorage.setItem(CONSENT_KEY, value); }
+  const writeConsent = choice => {
+    try { localStorage.setItem(CONSENT_KEY, JSON.stringify(choice)); }
     catch { /* Browsing can continue even when storage is unavailable. */ }
   };
+
   const loadAnalytics = () => {
     if (window.__mpvAnalyticsLoaded) return;
     window.__mpvAnalyticsLoaded = true;
@@ -214,10 +219,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(script);
   };
 
-  /* Withdrawing consent must also remove what analytics already stored on this device. */
-  const clearAnalyticsCookies = () => {
-    window[`ga-disable-${GA_ID}`] = true;
-    const names = document.cookie.split(';').map(part => part.split('=')[0].trim()).filter(name => name === '_ga' || name.startsWith('_ga_') || name === '_gid' || name.startsWith('_gat'));
+  /* Meta Pixel (Facebook and Instagram ads): Meta's standard base code, started only after the visitor allows advertising. */
+  const loadMetaPixel = () => {
+    if (window.__mpvPixelLoaded) return;
+    window.__mpvPixelLoaded = true;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', META_PIXEL_ID);
+    window.fbq('track', 'PageView');
+  };
+
+  /* Withdrawing consent must also remove what the service already stored on this device. */
+  const removeCookies = matches => {
+    const names = document.cookie.split(';').map(part => part.split('=')[0].trim()).filter(matches);
     const host = location.hostname;
     const domains = [host, `.${host}`, `.${host.split('.').slice(-2).join('.')}`];
     names.forEach(name => domains.forEach(domain => {
@@ -225,50 +238,73 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
     names.forEach(name => { document.cookie = `${name}=; Max-Age=0; path=/`; });
   };
+  const stopAnalytics = () => {
+    window[`ga-disable-${GA_ID}`] = true;
+    removeCookies(name => name === '_ga' || name.startsWith('_ga_') || name === '_gid' || name.startsWith('_gat'));
+  };
+  const stopMetaPixel = () => {
+    if (window.fbq) window.fbq('consent', 'revoke');
+    removeCookies(name => name === '_fbp' || name === '_fbc');
+  };
+
+  const applyConsent = choice => {
+    if (choice.analytics) {
+      window[`ga-disable-${GA_ID}`] = false;
+      loadAnalytics();
+    } else {
+      stopAnalytics();
+    }
+    if (choice.ads) loadMetaPixel();
+    else stopMetaPixel();
+  };
 
   const showConsentNotice = ({ focus = false } = {}) => {
     if (document.querySelector('.mpv-consent')) return;
+    const say = (bg, en) => (isEnglishPage ? en : bg);
+    const current = readConsent() || { analytics: false, ads: false };
     const notice = document.createElement('div');
     notice.className = 'mpv-consent';
     notice.setAttribute('role', 'dialog');
-    notice.setAttribute('aria-label', isEnglishPage ? 'Analytics preferences' : 'Настройки за статистика');
+    notice.setAttribute('aria-label', say('Настройки за бисквитки', 'Cookie settings'));
     notice.innerHTML = `
-      <p>${isEnglishPage
-        ? 'We use optional analytics only to understand which pages are useful. No analytics is loaded unless you accept.'
-        : 'Използваме незадължителна статистика само за да разбираме кои страници са полезни. Без вашето съгласие не се зарежда никаква статистика.'}
-        <a href="${isEnglishPage ? '/en/privacy.html' : '/privacy.html'}">${isEnglishPage ? 'Privacy policy' : 'Политика за поверителност'}</a></p>
+      <div class="mpv-consent__body">
+        <p>${say('Използваме бисквитки и подобни технологии само с вашето съгласие. Изберете какво разрешавате.', 'We use cookies and similar technologies only with your consent. Choose what you allow.')}
+          <a href="${isEnglishPage ? '/en/privacy.html' : '/privacy.html'}">${say('Политика за поверителност', 'Privacy policy')}</a></p>
+        <div class="mpv-consent__choices">
+          <label><input type="checkbox" data-purpose="analytics"${current.analytics ? ' checked' : ''}><span>${say('Статистика (Google Analytics)', 'Statistics (Google Analytics)')}</span></label>
+          <label><input type="checkbox" data-purpose="ads"${current.ads ? ' checked' : ''}><span>${say('Реклама и измерване (Meta Pixel — Facebook и Instagram)', 'Advertising and measurement (Meta Pixel — Facebook and Instagram)')}</span></label>
+        </div>
+      </div>
       <div class="mpv-consent__actions">
-        <button type="button" data-consent="decline">${isEnglishPage ? 'Decline' : 'Отказвам'}</button>
-        <button type="button" data-consent="accept">${isEnglishPage ? 'Accept' : 'Приемам'}</button>
+        <button type="button" data-consent="decline">${say('Отказвам всички', 'Decline all')}</button>
+        <button type="button" data-consent="save">${say('Запазете избора', 'Save choices')}</button>
+        <button type="button" data-consent="accept">${say('Приемам всички', 'Accept all')}</button>
       </div>`;
 
     notice.addEventListener('click', event => {
       const action = event.target.closest('[data-consent]')?.dataset.consent;
       if (!action) return;
-      const granted = action === 'accept';
-      storeConsent(granted ? 'granted' : 'denied');
+      const box = purpose => notice.querySelector(`[data-purpose="${purpose}"]`)?.checked === true;
+      const choice = action === 'accept' ? { analytics: true, ads: true }
+        : action === 'save' ? { analytics: box('analytics'), ads: box('ads') }
+        : { analytics: false, ads: false };
+      writeConsent(choice);
       notice.remove();
-      if (granted) {
-        window[`ga-disable-${GA_ID}`] = false;
-        loadAnalytics();
-      } else {
-        clearAnalyticsCookies();
-      }
+      applyConsent(choice);
     });
 
-    // First in the page order (it is fixed at the bottom of the screen) so keyboard and screen reader users meet it early.
-    document.body.prepend(notice);
+    // Right after the skip link (it is fixed at the bottom of the screen), so keyboard and screen reader users meet it early.
+    const skipLink = document.querySelector('.skip-link');
+    if (skipLink) skipLink.after(notice);
+    else document.body.prepend(notice);
     if (focus) notice.querySelector('[data-consent="decline"]')?.focus({ preventScroll: true });
   };
 
-  const savedConsent = getStoredConsent();
-  if (savedConsent === 'granted') {
-    loadAnalytics();
-  } else if (savedConsent !== 'denied') {
-    showConsentNotice();
-  }
+  const savedConsent = readConsent();
+  if (savedConsent) applyConsent(savedConsent);
+  else showConsentNotice();
 
-  /* "Analytics settings" link in the footer lets visitors change their mind at any time. */
+  /* The "Cookie settings" link in the footer lets visitors change their mind at any time. */
   document.addEventListener('click', event => {
     if (!event.target.closest?.('[data-consent-settings]')) return;
     showConsentNotice({ focus: true });
