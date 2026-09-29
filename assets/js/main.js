@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /* The checkbox is the accessible control (a labelled checkbox that controls the navigation);
-       the label is only the burger icon, so it is hidden from assistive technology. */
+       the label only draws the burger icon and has no text of its own. */
     nav.id = nav.id || 'site-navigation';
     menuToggle.setAttribute('aria-controls', nav.id);
     if (!menuToggle.getAttribute('aria-label')) {
@@ -96,9 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (burger) {
       // Older saved copies of the page carried these on the label; the checkbox owns them now.
-      ['role', 'tabindex', 'aria-expanded', 'aria-controls'].forEach(name => burger.removeAttribute(name));
+      ['role', 'tabindex', 'aria-expanded', 'aria-controls', 'aria-label', 'aria-hidden'].forEach(name => burger.removeAttribute(name));
       ['role', 'aria-expanded'].forEach(name => menuToggle.removeAttribute(name));
-      burger.setAttribute('aria-hidden', 'true');
     }
     menuToggle.addEventListener('keydown', event => {
       if (event.key !== 'Enter') return; // Space already toggles a checkbox
@@ -257,7 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    document.body.appendChild(notice);
+    // First in the page order (it is fixed at the bottom of the screen) so keyboard and screen reader users meet it early.
+    document.body.prepend(notice);
     if (focus) notice.querySelector('[data-consent="decline"]')?.focus({ preventScroll: true });
   };
 
@@ -287,8 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const previousButton = slider.querySelector('[data-home-slider-prev]');
   const nextButton = slider.querySelector('[data-home-slider-next]');
   const toggleButton = slider.querySelector('[data-home-slider-toggle]');
-  const pauseIcon = toggleButton?.querySelector('[data-slider-icon="pause"]');
-  const playIcon = toggleButton?.querySelector('[data-slider-icon="play"]');
   const status = slider.querySelector('[data-home-slider-status]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -324,13 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    toggleButton.setAttribute('aria-pressed', String(userPaused));
+    // The label names the action, so it is not combined with aria-pressed; the icon follows data-state.
+    toggleButton.removeAttribute('aria-pressed');
+    toggleButton.dataset.state = userPaused ? 'paused' : 'playing';
     toggleButton.setAttribute(
       'aria-label',
       userPaused ? 'Пуснете автоматичната смяна' : 'Спрете автоматичната смяна'
     );
-    if (pauseIcon) pauseIcon.hidden = userPaused;
-    if (playIcon) playIcon.hidden = !userPaused;
   };
 
   const showSlide = (requestedIndex, announce = false) => {
@@ -466,7 +464,7 @@ document.addEventListener('click', event => {
   const frame = document.createElement('iframe');
   frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1`;
   frame.title = box.dataset.ytTitle || '';
-  frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
   frame.allowFullscreen = true;
   frame.referrerPolicy = 'strict-origin-when-cross-origin';
   link.replaceWith(frame);

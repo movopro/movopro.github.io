@@ -1,14 +1,12 @@
 (()=>{
   const init=()=>{
-    if(!location.pathname.endsWith('/uslugi-ceni.html')||window.__pricingFixLoaded)return;
+    if(!/\/uslugi-ceni(\.html)?$/.test(location.pathname)||window.__pricingFixLoaded)return;
     window.__pricingFixLoaded=true;
 
     const en=new URLSearchParams(location.search).get('lang')==='en'||location.pathname.startsWith('/en/');
     const q=id=>document.getElementById(id);
     const MAX_HOURS=24,TRANSPORT=.51;
     const mobile=()=>window.matchMedia('(max-width: 768px)').matches;
-
-    document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale').forEach(el=>{el.style.opacity='1';el.style.transform='none';});
 
     const moneyEUR=n=>{const s=n.toLocaleString(en?'en-US':'bg-BG',{minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2});if(en)return '€'+s;const [whole,cents]=s.replace(/[\s\u00a0]/g,'').split(',');return whole.replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0')+(cents?','+cents:'')+'\u00a0€';};
     const row=(label,value)=>`<div class="line"><div>${label}</div><div class="r">${moneyEUR(value)}</div></div>`;
@@ -81,7 +79,9 @@
     }
 
     const tabs=[...document.querySelectorAll('.mode-tab')],panels=[...document.querySelectorAll('.mode-panel')];
-    tabs.forEach(tab=>{if(tab.dataset.pricingFixBound)return;tab.dataset.pricingFixBound='1';tab.addEventListener('click',()=>{tabs.forEach(t=>t.classList.remove('active'));panels.forEach(p=>p.classList.remove('visible'));tab.classList.add('active');q('panel-'+tab.dataset.mode)?.classList.add('visible');});});
+    const showTab=tab=>{tabs.forEach(t=>{t.classList.remove('active');t.setAttribute('aria-pressed','false');});panels.forEach(p=>p.classList.remove('visible'));tab.classList.add('active');tab.setAttribute('aria-pressed','true');q('panel-'+tab.dataset.mode)?.classList.add('visible');};
+    tabs.forEach(t=>t.setAttribute('aria-pressed',String(t.classList.contains('active'))));
+    tabs.forEach(tab=>{if(tab.dataset.pricingFixBound)return;tab.dataset.pricingFixBound='1';tab.addEventListener('click',()=>showTab(tab));});
 
     const photo=q('photoTeam'),video=q('videoTeam'),ot=q('otHours'),km=q('km'),droneMode=q('droneMode'),droneHours=q('droneHours'),raw=q('rawFiles'),after=q('afterSession');
     const totalEUR=q('totalEUR'),breakdown=q('breakdown');
@@ -125,7 +125,11 @@
     q('resetEventCalc')?.addEventListener('click',()=>{if(eventType)eventType.value='birthday';eventHours.value='2';eventPeople.value='1';eventKm.value='0';eventRaw.checked=false;calcEvent();});
 
     const inquiry=q('inquirySection'),inquiryType=q('inquiryType'),selected=q('selectedOffer'),summary=q('inquirySummary'),name=q('clientName'),phone=q('clientPhone'),email=q('clientEmail'),date=q('eventDate'),locationField=q('eventLocation'),note=q('clientNote'),privacy=q('privacyConsent'),send=q('sendInquiry'),status=q('sendStatus');
-    const openInquiry=()=>inquiry?.scrollIntoView({behavior:'smooth',block:'start'});
+    const openInquiry=()=>{inquiry?.scrollIntoView({behavior:'smooth',block:'start'});inquiry?.focus({preventScroll:true});};
+    // Errors are announced through the status line, marked on the field and the field gets the focus.
+    const invalid=(field,message)=>{status.dataset.state='error';status.textContent=message;field?.setAttribute('aria-invalid','true');field?.focus();};
+    [name,phone,email,date].forEach(field=>field?.addEventListener('input',()=>field.removeAttribute('aria-invalid')));
+    privacy?.addEventListener('change',()=>privacy.removeAttribute('aria-invalid'));
     const weddingSummary=()=>en?`Type: Wedding\nPhotographers: ${+photo.value||0}\nVideographers: ${+video.value||0}\nExtra hours: ${clampHours(ot,0)}\nOne-way distance from Kardzhali (km): ${+km.value||0}\nDrone: ${droneMode.value==='hour'?'Hourly ('+clampHours(droneHours,1)+' h)':droneMode.value==='day'?'Full day':'No'}\nRaw files: ${raw.checked?'Yes':'No'}\nSeparate-day photo session: ${after.checked?'Yes':'No'}\nEstimated total: ${totalEUR.textContent}`:`Тип: Сватба\nФотографи: ${+photo.value||0}\nВидеографи: ${+video.value||0}\nДопълнителни часове: ${clampHours(ot,0)}\nРазстояние от Кърджали, еднопосочно (км): ${+km.value||0}\nДрон: ${droneMode.value==='hour'?'По часове ('+clampHours(droneHours,1)+' ч)':droneMode.value==='day'?'За целия ден':'Не'}\nСурови файлове: ${raw.checked?'Да':'Не'}\nФотосесия в отделен ден: ${after.checked?'Да':'Не'}\nОриентировъчна сума: ${totalEUR.textContent}`;
     const eventSummary=()=>{const m=en?{birthday:'Birthday',baptism:'Baptism',corporate:'Corporate event',other:'Other'}:{birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'};return en?`Type: ${m[eventType.value]||'Other'}\nBillable hours: ${clampHours(eventHours,1)}\nPhotographers / videographers: ${+eventPeople.value||1}\nRate: €130 first hour + €90 each additional hour (part hours billed in full)\nOne-way distance from Kardzhali (km): ${+eventKm.value||0}\nRaw files: ${eventRaw.checked?'Yes':'No'}\nEstimated total: ${eventTotalEUR.textContent}`:`Тип: ${m[eventType.value]||'Друго'}\nЗапочнати часове: ${clampHours(eventHours,1)}\nФотографи / видеографи: ${+eventPeople.value||1}\nТарифа: 130 € първи започнат час + 90 € всеки следващ започнат час\nРазстояние от Кърджали, еднопосочно (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent}`;};
 
@@ -135,17 +139,19 @@
 
     if(send)send.addEventListener('click',async()=>{
       const n=name.value.trim(),p=phone.value.trim(),e=email.value.trim(),d=date.value.trim(),loc=locationField.value.trim(),nt=note.value.trim(),offer=selected.value.trim(),sum=summary.value.trim();
-      if(!n)return status.textContent=en?'Please enter your name.':'Моля, попълнете име.';
-      if(!p)return status.textContent=en?'Please enter your phone number.':'Моля, попълнете телефон.';
-      if(!e)return status.textContent=en?'Please enter your email.':'Моля, попълнете имейл.';
-      if(!d)return status.textContent=en?'Please select the event date.':'Моля, изберете дата на събитието.';
-      if(!sum)return status.textContent=en?'Please select an offer or configuration first.':'Моля, първо изберете оферта или конфигурация.';
-      if(!privacy.checked)return status.textContent=en?'Please confirm your consent to the processing of your personal data.':'Моля, потвърдете съгласието за обработка на лични данни.';
-      send.disabled=true;status.textContent=en?'Sending…':'Изпращане…';
-      try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'33fb475c-9d44-449b-9fd0-1fc667dd170e',subject:'Ново запитване от сайта - Memory Photo & Video',from_name:'Memory Photo & Video',name:n,email:e,phone:p,event_date:d,event_location:loc,inquiry_type:inquiryType.value,selected_offer:offer,calculator_summary:sum,note:nt})});const result=await r.json();if(result.success){status.textContent=en?'Your inquiry was sent successfully.':'Запитването беше изпратено успешно.';[name,phone,email,date,locationField,note].forEach(el=>el.value='');privacy.checked=false;}else status.textContent=en?'There was a problem sending the inquiry.':'Възникна проблем при изпращането.';}catch(err){status.textContent=en?'Connection error. Please try again.':'Грешка при връзката. Опитайте отново.';}finally{send.disabled=false;}
+      if(!n)return invalid(name,en?'Please enter your name.':'Моля, попълнете име.');
+      if(!p)return invalid(phone,en?'Please enter your phone number.':'Моля, попълнете телефон.');
+      if(!e)return invalid(email,en?'Please enter your email.':'Моля, попълнете имейл.');
+      if(!d)return invalid(date,en?'Please select the event date.':'Моля, изберете дата на събитието.');
+      if(!sum)return invalid(selected,en?'Please select an offer or configuration first.':'Моля, първо изберете оферта или конфигурация.');
+      if(!privacy.checked)return invalid(privacy,en?'Please confirm your consent to the processing of your personal data.':'Моля, потвърдете съгласието за обработка на лични данни.');
+      send.disabled=true;status.dataset.state='sending';status.textContent=en?'Sending…':'Изпращане…';
+      try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'33fb475c-9d44-449b-9fd0-1fc667dd170e',subject:'Ново запитване от сайта - Memory Photo & Video',from_name:'Memory Photo & Video',name:n,email:e,phone:p,event_date:d,event_location:loc,inquiry_type:inquiryType.value,selected_offer:offer,calculator_summary:sum,note:nt})});const result=await r.json();if(result.success){status.dataset.state='ok';status.textContent=en?'Your inquiry was sent successfully.':'Запитването беше изпратено успешно.';[name,phone,email,date,locationField,note].forEach(el=>el.value='');privacy.checked=false;}else{status.dataset.state='error';status.textContent=en?'There was a problem sending the inquiry.':'Възникна проблем при изпращането.';}}catch(err){status.dataset.state='error';status.textContent=en?'Connection error. Please try again.':'Грешка при връзката. Опитайте отново.';}finally{send.disabled=false;send.focus();}
     });
 
     updateDrone();calcWedding();calcEvent();
+    // Announce the recalculated totals to screen readers (switched on after the first calculation, so nothing is read on load).
+    [totalEUR,eventTotalEUR].forEach(el=>{if(el){el.setAttribute('aria-live','polite');el.setAttribute('aria-atomic','true');}});
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();

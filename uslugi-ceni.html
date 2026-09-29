@@ -49,28 +49,8 @@
       background-attachment: fixed;
     }
 
-    /* ── REVEAL ANIMATIONS ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-28px);
-      transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal-left.in { opacity:1; transform:none; }
-    .reveal-scale {
-      opacity: 0;
-      transform: scale(.96);
-      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal-scale.in { opacity:1; transform:none; }
+    /* ── REVEAL ── the sections are always visible (they used to start transparent and needed JavaScript) */
+    .reveal, .reveal-left, .reveal-scale { opacity: 1; transform: none; }
     .stagger > *:nth-child(1) { transition-delay: 0ms; }
     .stagger > *:nth-child(2) { transition-delay: 80ms; }
     .stagger > *:nth-child(3) { transition-delay: 160ms; }
@@ -160,7 +140,7 @@
       margin-bottom: 20px;
       color: var(--cream);
       text-wrap: balance;
-      max-width: 18ch;
+      max-width: 26ch;
     }
 
     .pricing-hero h1 em {
@@ -408,9 +388,12 @@
     .package-title {
       font-family: 'Manrope', Georgia, serif;
       font-size: 1.9rem;
-      font-weight: 300;
+      font-weight: 300 !important;
       color: var(--cream);
-      letter-spacing: -.01em;
+      letter-spacing: -.01em !important;
+      margin: 0;
+      line-height: inherit !important;
+      text-wrap: inherit;
     }
 
     .package-price {
@@ -472,13 +455,12 @@
     }
 
     .note {
-      opacity: .72;
       font-size: .86rem;
       line-height: 1.68;
       margin-top: 20px;
       border-top: 1px solid rgba(201,169,110,.10);
       padding-top: 18px;
-      color: var(--text-faint);
+      color: rgba(245,247,251,.62);
       font-weight: 300;
     }
 
@@ -524,6 +506,7 @@
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 18px;
+      align-items: start;
     }
 
     .calc-card {
@@ -584,7 +567,7 @@
       width: 100%;
       padding: 14px 16px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(171,202,241,.5);
       background: rgba(0,0,0,.28);
       color: var(--cream);
       font-family: Manrope, sans-serif;
@@ -594,10 +577,15 @@
 
     .calc-input:focus,
     .calc-select:focus {
-      outline: none;
-      border-color: rgba(201,169,110,.70);
-      box-shadow: 0 0 0 3px rgba(201,169,110,.10);
+      outline: 2px solid #75a5e8;
+      outline-offset: 2px;
+      border-color: #75a5e8;
     }
+    .calc-input[aria-invalid="true"] { border-color: #f0a0a0; }
+    #sendStatus:not(:empty) { color: rgba(245,247,251,.86); font-weight: 500; }
+    #sendStatus[data-state="error"] { color: #f4a9a9; }
+    #sendStatus[data-state="ok"] { color: #8fd8ab; }
+    #inquirySection:focus { outline: none; }
 
     textarea.calc-input { resize: vertical; }
 
@@ -605,6 +593,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+      align-items: end;
     }
 
     .privacy-note { margin: 6px 0 0 30px; font-size: .82rem; }
@@ -808,14 +797,13 @@
 
     /* ── FOOTER ── */
     footer {
-      background: #000;
-      padding: 32px 20px;
+      padding: 42px 20px 34px;
       text-align: center;
-      font-size: .68rem;
-      letter-spacing: .18em;
+      font-size: .69rem;
+      letter-spacing: .13em;
       text-transform: uppercase;
-      color: rgba(245,240,232,.5);
-      border-top: 1px solid rgba(201,169,110,.18);
+      color: rgba(245,247,251,.62);
+      border-top: 1px solid rgba(220,231,247,.12);
       font-family: Manrope, sans-serif;
     }
 
@@ -866,9 +854,9 @@
       </a>
 
       <input id="menuToggle" type="checkbox" aria-label="Меню">
-      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+      <label class="burger" for="menuToggle"><span></span></label>
 
-      <nav>
+      <nav aria-label="Основна навигация">
         <a href="index.html">Начало</a>
         <a href="portfolio.html">Портфолио</a>
         <a href="videos.html">Видео</a>
@@ -945,7 +933,7 @@
 
         <div class="package-grid">
           <article class="package-card reveal">
-            <div class="package-title">Стандартен</div>
+            <h3 class="package-title">Стандартен</h3>
             <div class="package-price">1&nbsp;450&nbsp;€</div>
             <div class="gold-divider"></div>
             <div class="package-diff-label">Включва</div>
@@ -965,7 +953,7 @@
 
           <article class="package-card recommended reveal">
             <div class="badge">Препоръчан</div>
-            <div class="package-title">Премиум</div>
+            <h3 class="package-title">Премиум</h3>
             <div class="package-price">1&nbsp;950&nbsp;€</div>
             <div class="gold-divider"></div>
             <div class="package-diff-label">Включва</div>
@@ -984,7 +972,7 @@
           </article>
 
           <article class="package-card reveal">
-            <div class="package-title">Ултра</div>
+            <h3 class="package-title">Ултра</h3>
             <div class="package-price">2&nbsp;700&nbsp;€</div>
             <div class="gold-divider"></div>
             <div class="package-diff-label">Включва</div>
@@ -1177,10 +1165,10 @@
       </section>
 
       <!-- INQUIRY -->
-      <section class="glass-card reveal" id="inquirySection">
+      <section class="glass-card reveal" id="inquirySection" tabindex="-1" aria-labelledby="inquiryHeading">
         <div class="section-topline">
           <div>
-            <h2>Изпратете запитване</h2>
+            <h2 id="inquiryHeading">Изпратете запитване</h2>
             <p>
               Изпратете запитване за конкретен пакет или за индивидуална конфигурация от калкулатора.
               Датата е задължителна, за да можем да проверим наличност.
@@ -1205,18 +1193,18 @@
             <div class="calc-two">
               <div class="calc-row">
                 <label class="calc-label" for="clientName">Име</label>
-                <input class="calc-input" id="clientName" type="text" required>
+                <input class="calc-input" id="clientName" type="text" autocomplete="name" required>
               </div>
               <div class="calc-row">
                 <label class="calc-label" for="clientPhone">Телефон</label>
-                <input class="calc-input" id="clientPhone" type="text" required>
+                <input class="calc-input" id="clientPhone" type="tel" autocomplete="tel" required>
               </div>
             </div>
 
             <div class="calc-two">
               <div class="calc-row">
                 <label class="calc-label" for="clientEmail">Имейл</label>
-                <input class="calc-input" id="clientEmail" type="email" required>
+                <input class="calc-input" id="clientEmail" type="email" autocomplete="email" required>
               </div>
               <div class="calc-row">
                 <label class="calc-label" for="eventDate">Дата на събитието</label>
@@ -1256,7 +1244,7 @@
               <button class="btn btn--primary" type="button" id="sendInquiry">Изпратете запитване</button>
             </div>
 
-            <p id="sendStatus" class="calc-mini" style="margin-top:12px;"></p>
+            <p id="sendStatus" class="calc-mini" role="status" style="margin-top:12px;"></p>
           </div>
 
           <div class="calc-card result-card">
@@ -1339,8 +1327,8 @@
     </div>
   </main>
 
-  <footer>
-    © <span data-year>2026</span> Memory Photo &amp; Video. Всички права запазени. · <a href="/privacy.html">Поверителност</a> · <button type="button" class="footer-link" data-consent-settings>Настройки за статистика</button>
+  <footer><span class="footer-copy">
+    © <span data-year>2026</span> Memory Photo &amp; Video. Всички права запазени.</span> <span class="footer-legal"><a href="/privacy.html">Поверителност</a><button type="button" class="footer-link" data-consent-settings>Настройки за статистика</button></span>
   </footer>
 
   <!-- The maintained calculator lives in assets/js/pricing-fix.js?v=20260911-eur. -->

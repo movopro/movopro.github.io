@@ -3,10 +3,8 @@
   const isEnglish=params.get('lang')==='en' || location.pathname.startsWith('/en/');
   if(isEnglish){document.documentElement.style.background='#0c0b09';if(document.body)document.body.style.background='#0c0b09';}
 
-  if(location.pathname.endsWith('/uslugi-ceni.html') || location.pathname==='/uslugi-ceni.html' || location.pathname.includes('/uslugi-ceni.html')){
-    const showPricing=()=>{
-      document.querySelectorAll('.pricing-page .reveal,.pricing-page .reveal-left,.pricing-page .reveal-scale').forEach(el=>{el.style.opacity='1';el.style.transform='none';});
-
+  if(/\/uslugi-ceni(\.html)?$/.test(location.pathname)){
+    const keepAtTop=()=>{
       // The calculator initializes itself on page load. On phones that initialization can
       // trigger its result-scroll helper. A normal navigation to Pricing should always
       // open at the top; result scrolling remains available after an actual Calculate tap.
@@ -21,7 +19,7 @@
         },260);
       }
     };
-    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',showPricing,{once:true});else showPricing();
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',keepAtTop,{once:true});else keepAtTop();
   }
 
   /* Pages that exist in both languages (the language button points to the matching page). */
@@ -29,7 +27,7 @@
 
   /* The language button: one implementation for both languages. */
   const addLanguageButton=()=>{
-    document.querySelectorAll('.language-switch').forEach(el=>el.remove());
+    document.querySelectorAll('.language-nav,.language-switch').forEach(el=>el.remove());
     // "/en/portfolio.html", "/portfolio.html" and the extensionless "/portfolio" all mean the same page.
     let file=location.pathname.replace(/^\/en(?=\/|$)/,'').replace(/^\/+/,'');
     if(!file||file.endsWith('/'))file+='index.html';
@@ -42,9 +40,20 @@
     sw.href=target+location.hash;
     sw.hreflang=isEnglish?'bg':'en';
     if(!isEnglish)sw.lang='en'; // the label is English text on a Bulgarian page
-    sw.setAttribute('aria-label',isEnglish?'Switch to Bulgarian':'Switch to English');
+    sw.setAttribute('aria-label',isEnglish?'Switch to Bulgarian (BG)':'Switch to English (EN)'); // contains the visible "BG"/"EN"
     sw.innerHTML=isEnglish?'<span class="flag">🇧🇬</span><span class="code">BG</span>':'<span class="flag">🇬🇧</span><span class="code">EN</span>';
-    document.body.appendChild(sw);
+    // The button is fixed at the top right, so it also sits in the header: it belongs to the banner landmark
+    // and comes right after the menu in the tab order instead of after the footer.
+    const host=document.querySelector('header .nav-wrap');
+    if(host)host.appendChild(sw);
+    else{
+      const nav=document.createElement('div');
+      nav.className='language-nav';
+      nav.setAttribute('role','navigation');
+      nav.setAttribute('aria-label',isEnglish?'Language':'Език');
+      nav.appendChild(sw);
+      document.body.appendChild(nav);
+    }
   };
   if(document.body)addLanguageButton();else document.addEventListener('DOMContentLoaded',addLanguageButton,{once:true});
 

@@ -42,7 +42,7 @@
     <div class="nav-wrap">
       <a class="brand" href="index.html"><img src="/assets/icon-64.png" alt="" width="32" height="32"><span>Memory Photo &amp; Video</span></a>
       <input id="menuToggle" type="checkbox" aria-label="Меню">
-      <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
+      <label class="burger" for="menuToggle"><span></span></label>
       <nav aria-label="Основна навигация">
         <a href="index.html">Начало</a><a href="portfolio.html">Портфолио</a><a href="videos.html">Видео</a><a href="uslugi-ceni.html">Цени</a><a href="availability.html">Свободни дати</a><a href="about.html">За нас</a>
       </nav>
@@ -52,7 +52,7 @@
     <span style="color:#abcaf1;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase">Избрана серия</span>
     <h1>Няколко мига, които си струва да останат.</h1>
     <p class="intro">Подбрани кадри от реални сватбени дни — естествени емоции, портрети, детайли и атмосфера. Търсим не просто красивата снимка, а момента, който след време връща усещането от деня. Тази кратка серия показва част от стила на Memory Photo &amp; Video и начина, по който разказваме сватбени истории чрез фотография.</p>
-    <div class="photo-grid" aria-label="Избрани сватбени фотографии">
+    <div class="photo-grid" role="group" aria-label="Избрани сватбени фотографии">
       <a id="kadyr-1" href="assets/01.jpg" target="_blank" rel="noopener"><img src="assets/mobile/01.jpg" srcset="assets/thumb/01.jpg 480w, assets/mobile/01.jpg 800w, assets/01.jpg 2400w" sizes="(max-width: 700px) 46vw, 380px" width="800" height="533" alt="Избрана сватбена фотография от Memory Photo & Video — кадър 1" loading="eager" decoding="async"></a>
       <a id="kadyr-2" href="assets/02.jpg" target="_blank" rel="noopener"><img src="assets/mobile/02.jpg" srcset="assets/thumb/02.jpg 480w, assets/mobile/02.jpg 800w, assets/02.jpg 1600w" sizes="(max-width: 700px) 46vw, 380px" width="800" height="1200" alt="Избрана сватбена фотография от Memory Photo & Video — кадър 2" loading="lazy" decoding="async"></a>
       <a id="kadyr-3" href="assets/03.jpg" target="_blank" rel="noopener"><img src="assets/mobile/03.jpg" srcset="assets/thumb/03.jpg 480w, assets/mobile/03.jpg 800w, assets/03.jpg 2400w" sizes="(max-width: 700px) 46vw, 380px" width="800" height="533" alt="Избрана сватбена фотография от Memory Photo & Video — кадър 3" loading="lazy" decoding="async"></a>
@@ -70,7 +70,7 @@
       <a href="availability.html">Свободни дати</a>
     </div>
   </main>
-  <footer class="v2-footer"><strong>Memory Photo &amp; Video</strong> · © <span data-year>2026</span> · <a href="/privacy.html">Поверителност</a> · <button type="button" class="footer-link" data-consent-settings>Настройки за статистика</button></footer>
+  <footer class="v2-footer"><span class="footer-copy"><strong>Memory Photo &amp; Video</strong> · © <span data-year>2026</span></span> <span class="footer-legal"><a href="/privacy.html">Поверителност</a><button type="button" class="footer-link" data-consent-settings>Настройки за статистика</button></span></footer>
   <script src="assets/js/main.js?v=20260929" defer></script>
 <script defer src="assets/js/language-switch.js?v=20260929"></script>
 </body>

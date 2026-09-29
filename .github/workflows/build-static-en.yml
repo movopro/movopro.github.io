@@ -307,6 +307,18 @@ jobs:
                   elif clean == '':
                       a['href'] = '/en/' + anchor
 
+              # The city landing pages and the individual wedding pages exist in Bulgarian only. The videos play in
+              # place on the English pages, so the "Watch the story" links are dropped and the city names stay as
+              # plain text, instead of sending English visitors to Bulgarian pages.
+              for a in soup.find_all('a', href=True):
+                  clean = a['href'].split('#', 1)[0].split('?', 1)[0].lstrip('/')
+                  if not (clean.startswith('weddings/') or clean.startswith('svatben-fotograf-')):
+                      continue
+                  if 'video-story-link' in (a.get('class') or []):
+                      a.decompose()
+                  else:
+                      a.unwrap()
+
               # Fix English accessibility labels that are not visible-text translations.
               nav = soup.find('nav')
               if nav:
@@ -314,9 +326,6 @@ jobs:
               menu_toggle = soup.find(id='menuToggle')
               if menu_toggle:
                   menu_toggle['aria-label'] = 'Menu'
-              burger = soup.select_one('label.burger')
-              if burger:
-                  burger['aria-label'] = 'Menu'
               for social in soup.select('.home-socials'):
                   social['aria-label'] = 'Social media'
               for link in soup.find_all('a', href=True):
@@ -327,7 +336,7 @@ jobs:
                       link['aria-label'] = 'Memory Photo & Video on Facebook'
 
               # Remove browser-only/runtime controls; scripts recreate them cleanly.
-              for transient in soup.select('#wowScrollProgress, .language-switch, .wow-scroll-cue, .mpv-consent, .portfolio-gallery-controls'):
+              for transient in soup.select('#wowScrollProgress, .language-nav, .language-switch, .wow-scroll-cue, .mpv-consent, .portfolio-gallery-controls'):
                   transient.decompose()
               # language-switch.js injects these at runtime; snapshot copies would load them twice.
               for script in list(soup.find_all('script', src=True)):
