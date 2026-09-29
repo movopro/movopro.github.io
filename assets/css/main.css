@@ -145,6 +145,16 @@ header.scrolled {
 
 #menuToggle { display: none; }
 
+/* On small screens the checkbox that drives the menu is the focusable, announced control
+   (visually hidden); the label next to it is only the burger icon. */
+@media (max-width: 880px) {
+  #menuToggle {
+    display: block; position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; opacity: 0;
+  }
+  #menuToggle:focus-visible ~ .burger { outline: 2px solid #75a5e8; outline-offset: 3px; }
+}
+
 .burger {
   display: none; width: 44px; height: 44px;
   align-items: center; justify-content: center;
@@ -2487,6 +2497,28 @@ header.scrolled::after{opacity:1}
   .v2-service,.v2-step,.package-card,.glass-card,.calc-card,.event-card,.team-card,.portfolio-note,.videos-note,.videos-final,
   .gallery-item,.portfolio-item{transition:none}
 }
+
+/* ===== Click-to-play YouTube videos =====
+   The card shows a preview image and a play button; the player (youtube-nocookie.com) is only
+   requested after the visitor presses play. Without JavaScript the link opens the video on YouTube. */
+.yt-embed{position:relative;width:100%;height:100%;background:#000;overflow:hidden}
+.yt-embed__play{position:absolute;inset:0;display:block;width:100%;height:100%;cursor:pointer;color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.yt-embed__play img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .3s ease}
+.yt-embed__play::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.4));pointer-events:none}
+.yt-embed__icon{position:absolute;left:50%;top:50%;z-index:2;width:clamp(56px,7vw,84px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:rgba(8,12,18,.72);border:1.5px solid rgba(171,202,241,.62);display:grid;place-items:center;backdrop-filter:blur(6px);transition:background .25s ease,transform .25s ease,border-color .25s ease}
+.yt-embed__icon::before{content:"";width:36%;aspect-ratio:.9;margin-left:8%;background:#f5f7fb;clip-path:polygon(0 0,100% 50%,0 100%)}
+.yt-embed__play:hover img{transform:scale(1.03);filter:brightness(1.08)}
+.yt-embed__play:hover .yt-embed__icon,.yt-embed__play:focus-visible .yt-embed__icon{background:rgba(59,110,224,.92);border-color:#abcaf1;transform:translate(-50%,-50%) scale(1.06)}
+.yt-embed__play:focus-visible{outline:3px solid #75a5e8;outline-offset:-3px}
+.yt-embed iframe{display:block;width:100%;height:100%;border:0}
+@media (prefers-reduced-motion:reduce){.yt-embed__play img,.yt-embed__icon{transition:none}.yt-embed__play:hover img{transform:none}}
+
+/* Footer utility links: privacy policy and analytics settings */
+footer a,.footer-link{color:inherit;text-decoration:underline;text-decoration-color:rgba(245,247,251,.35);text-underline-offset:3px;transition:text-decoration-color .2s ease,color .2s ease}
+.footer-link{background:none;border:0;padding:0;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+footer a:hover,footer a:focus-visible,.footer-link:hover,.footer-link:focus-visible{text-decoration-color:currentColor;color:#f5f7fb}
+footer a:focus-visible,.footer-link:focus-visible{outline:2px solid #75a5e8;outline-offset:3px;border-radius:2px}
+body .home-footer .home-footer__bottom a,body .home-footer .home-footer__bottom .footer-link{font-size:inherit!important;line-height:inherit}
 
 /* The experimental filmstrip is permanently disabled. */
 .home-filmstrip{display:none!important;}

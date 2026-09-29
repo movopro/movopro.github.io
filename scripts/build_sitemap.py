@@ -2,6 +2,7 @@ from pathlib import Path
 from html import escape
 from urllib.parse import urljoin, urlparse, unquote
 import re
+import subprocess
 from datetime import datetime, timezone
 
 HOST = 'https://memoryphotoandvideo.com'
@@ -17,6 +18,7 @@ PAGES = [
     ('availability.html', '/availability.html'),
     ('about.html', '/about.html'),
     ('svatba-izbrani.html', '/svatba-izbrani.html'),
+    ('privacy.html', '/privacy.html'),
     ('en/index.html', '/en/'),
     ('en/portfolio.html', '/en/portfolio.html'),
     ('en/videos.html', '/en/videos.html'),
@@ -24,6 +26,7 @@ PAGES = [
     ('en/availability.html', '/en/availability.html'),
     ('en/about.html', '/en/about.html'),
     ('en/svatba-izbrani.html', '/en/svatba-izbrani.html'),
+    ('en/privacy.html', '/en/privacy.html'),
 ]
 
 # Dedicated wedding watch pages are intentionally discovered dynamically so
@@ -58,6 +61,16 @@ def is_published_image(url_path: str) -> bool:
     if rel in SKIP_IMAGES or not Path(rel).is_file():
         return False
     return not any(rel == ex or rel.startswith(ex + '/') for ex in EXCLUDED)
+
+
+def last_modified(path: Path) -> str:
+    """Date the page file last changed in git (YYYY-MM-DD); falls back to today outside a git checkout."""
+    try:
+        out = subprocess.run(['git', 'log', '-1', '--format=%cs', '--', str(path)],
+                             capture_output=True, text=True, check=True).stdout.strip()
+        return out or TODAY
+    except (OSError, subprocess.CalledProcessError):
+        return TODAY
 
 
 IMG_RE = re.compile(r'<img\b[^>]*?\bsrc=["\']([^"\']+)["\']', re.I)
@@ -103,7 +116,7 @@ for file_name, url_path in PAGES:
     page_url = HOST + url_path
     lines.append('  <url>')
     lines.append(f'    <loc>{escape(page_url)}</loc>')
-    lines.append(f'    <lastmod>{TODAY}</lastmod>')
+    lines.append(f'    <lastmod>{last_modified(page_path)}</lastmod>')
     for image_url in local_image_urls(page_path):
         lines.append('    <image:image>')
         lines.append(f'      <image:loc>{escape(image_url)}</image:loc>')

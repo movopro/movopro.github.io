@@ -70,6 +70,8 @@ def validate():
         text = path.read_text(encoding='utf-8')
         if '<html' not in text.lower():
             continue  # header.html is an include, not a standalone page.
+        if 'name="robots" content="noindex' in text:
+            continue  # e.g. 404.html: intentionally not indexed, not in the sitemap.
         page = Page(text)
         assert len(page.canonical) == 1, f'{path}: expected one canonical'
         canonical = page.canonical[0]

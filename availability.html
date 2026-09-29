@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Свободни дати за сватбен фотограф и видеограф | Memory Photo &amp; Video</title>
+  <title>Свободни дати за сватба | Memory Photo &amp; Video</title>
   <meta name="description" content="Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo &amp; Video и вижте актуалната заетост по месеци.">
   <link rel="canonical" href="https://memoryphotoandvideo.com/availability.html">
   <meta property="og:site_name" content="Memory Photo &amp; Video"><meta property="og:locale" content="bg_BG">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Свободни дати за сватбен фотограф и видеограф | Memory Photo &amp; Video">
+  <meta property="og:title" content="Свободни дати за сватба | Memory Photo &amp; Video">
   <meta property="og:description" content="Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo &amp; Video и вижте актуалната заетост по месеци.">
   <meta property="og:url" content="https://memoryphotoandvideo.com/availability.html">
   <meta property="og:image" content="https://memoryphotoandvideo.com/memory-og-2026.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Свободни дати за сватбен фотограф и видеограф | Memory Photo &amp; Video">
+  <meta name="twitter:title" content="Свободни дати за сватба | Memory Photo &amp; Video">
   <meta name="twitter:description" content="Проверете свободните дати за сватбено фото и видео заснемане от Memory Photo &amp; Video и вижте актуалната заетост по месеци.">
   <meta name="twitter:image" content="https://memoryphotoandvideo.com/memory-og-2026.jpg">
 
-  <link rel="icon" type="image/png" href="/assets/icon-64.png" />
-        <link rel="preload" href="/assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="assets/css/main.css?v=20260924">
+  <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#080c12">
+        <link rel="preload" href="/assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="assets/css/main.css?v=20260929">
 
   <style>
     :root{
@@ -448,7 +448,7 @@
     }
   </style>
 <link rel="stylesheet" href="assets/css/language-switch.css">
-<link rel="stylesheet" href="/assets/css/blue-editorial.css?v=20260924">
+<link rel="stylesheet" href="/assets/css/blue-editorial.css?v=20260929">
 
 <link rel="alternate" hreflang="bg" href="https://memoryphotoandvideo.com/availability.html">
 <link rel="alternate" hreflang="en" href="https://memoryphotoandvideo.com/en/availability.html">
@@ -459,12 +459,12 @@
 
   <header>
     <div class="nav-wrap">
-      <a class="brand" href="index.html" aria-label="Начало">
-        <img src="/assets/icon-64.png" alt="Memory Photo & Video" width="32" height="32">
+      <a class="brand" href="index.html">
+        <img src="/assets/icon-64.png" alt="" width="32" height="32">
         <span>Memory Photo &amp; Video</span>
       </a>
 
-      <input id="menuToggle" type="checkbox" />
+      <input id="menuToggle" type="checkbox" aria-label="Меню">
       <label class="burger" for="menuToggle" aria-label="Меню"><div></div></label>
 
       <nav>
@@ -486,7 +486,7 @@
         <p>
           Вижте актуалната заетост по месеци и се ориентирайте бързо кои дати са свободни,
           частично ангажирани или вече запазени. Така следващата стъпка към резервацията
-          е по-лесна и по-уверена.
+          ще бъде по-лесна и по-сигурна.
         </p>
 
         <div class="availability-points">
@@ -502,7 +502,7 @@
 
           <div class="availability-point">
             <strong>Бърза следваща стъпка</strong>
-            <span>Портфолио, цени, контакт</span>
+            <span>Портфолио, цени, запитване</span>
           </div>
         </div>
       </section>
@@ -550,7 +550,7 @@
             <h3>Открихте ли подходяща дата?</h3>
             <p>
               Продължете към портфолиото или вижте цените, за да изберете подходящия пакет,
-              а след това се свържете с нас за потвърждение.
+              а след това ни изпратете запитване за потвърждение.
             </p>
           </div>
 
@@ -563,7 +563,7 @@
     </div>
   </main>
 
-  <footer>© 2026 Memory Photo &amp; Video. Всички права запазени.</footer>
+  <footer>© <span data-year>2026</span> Memory Photo &amp; Video. Всички права запазени. · <a href="/privacy.html">Поверителност</a> · <button type="button" class="footer-link" data-consent-settings>Настройки за статистика</button></footer>
 
   <script>
     (function () {
@@ -653,7 +653,7 @@
 
         const nextYear = years[(years.indexOf(activeYear) + 1) % years.length];
         yearToggle.dataset.targetYear = String(nextYear);
-        yearToggle.setAttribute('aria-label', isEnglish ? `Show ${nextYear}` : `Покажи ${nextYear}`);
+        yearToggle.setAttribute('aria-label', isEnglish ? `Show ${nextYear}` : `Покажете ${nextYear} г.`);
         yearToggle.textContent = String(nextYear);
       }
 
@@ -733,7 +733,7 @@
       render();
     })();
   </script>
-<script defer src="assets/js/main.js?v=20260924"></script>
-<script defer src="assets/js/language-switch.js?v=20260924"></script>
+<script defer src="assets/js/main.js?v=20260929"></script>
+<script defer src="assets/js/language-switch.js?v=20260929"></script>
 </body>
 </html>

@@ -101,6 +101,7 @@ body .wow-reveal,body .v2-reveal{opacity:1!important;transform:none!important;tr
 body #wowScrollProgress{background:#75a5e8;box-shadow:none}
 body .mpv-consent{border-radius:6px;background:#101a28;border-color:rgba(171,202,241,.25);box-shadow:0 8px 32px #0005}
 body .mpv-consent p{font-size:.875rem;color:#cad5e3}
+body .mpv-consent p a{color:#abcaf1;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 body .mpv-consent button{border-radius:4px;font-family:var(--font-body);letter-spacing:0;text-transform:none;font-size:.875rem}
 body .mpv-consent button[data-consent="accept"]{background:#3468d6;color:white}
 @media(min-width:881px){

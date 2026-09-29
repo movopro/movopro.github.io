@@ -9,3 +9,5 @@ exclude:
   - svetlan.jpg
   - icon.png
   - header.html
+  - assets/archive
+  - scripts
