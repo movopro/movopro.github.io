@@ -278,7 +278,7 @@ jobs:
                           '@type': 'ImageObject',
                           'name': row['alt_en'],
                           'contentUrl': host + '/assets/gallery/' + row['file'] + '.webp',
-                          'creator': {'@id': host + '/#business'},
+                          'creator': {'@type': 'Photographer', '@id': host + '/#business', 'name': 'Memory Photo And Video'},
                           **({'contentLocation': {'@type': 'Place', 'name': row['place_en'] or row['city_en']}} if row['city_en'] else {}),
                       }
                       for row in photos

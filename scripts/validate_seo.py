@@ -204,7 +204,7 @@ def check_image_data(text_by_path):
     gallery = next(node for node in graph if node.get('@type') == 'ImageGallery')
     media = gallery['associatedMedia']
     assert [item['contentUrl'] for item in media] == [f'{HOST}/assets/gallery/{name}.webp' for name in names], 'portfolio ImageGallery does not list the same photos'
-    assert all(item['creator'] == {'@id': HOST + '/#business'} and item['name'] for item in media), 'ImageGallery items need name and creator'
+    assert all(item['creator'].get('@id') == HOST + '/#business' and item['creator'].get('name') == 'Memory Photo And Video' and item['name'] for item in media), 'ImageGallery items need a name and the creator Memory Photo And Video'
     # Image sitemap: every gallery photo, with a title and caption.
     ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9', 'i': 'http://www.google.com/schemas/sitemap-image/1.1'}
     tree = ET.parse('sitemap-images.xml')

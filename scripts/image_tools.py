@@ -7,6 +7,7 @@ assets/hero/*.webp. The JPG originals are kept in _originals/ (git-ignored) unde
 in the repository. image-seo.csv is the single source of truth for the names, titles, alt text and,
 once known, the city of every gallery photo; image-rename-map.csv lists old -> new file paths.
 
+  python3 scripts/image_tools.py originals         restore the JPG originals from git history into _originals/
   python3 scripts/image_tools.py optimize          build the WebP files from the originals
   python3 scripts/image_tools.py locate CITIES.csv [--dry-run]
                                                    record where photos were taken (columns: file,city[,place,place_en,event])
@@ -51,6 +52,7 @@ EXTRAS = (
 BATCH_SIZE = 48
 GALLERY_SIZES = '(max-width: 620px) 50vw, (max-width: 900px) 33vw, 300px'
 BUSINESS_ID = HOST + '/#business'
+CREATOR = {'@type': 'Photographer', '@id': BUSINESS_ID, 'name': 'Memory Photo And Video'}
 
 SKIP_DIRS = {'.git', '_originals', 'node_modules', '__pycache__', 'archive', 'portfolio_next', 'portfolio_next_mobile'}
 TEXT_SUFFIXES = {'.html', '.css', '.js', '.xml', '.yml', '.yaml', '.py', '.json', '.txt', '.md', '.webmanifest'}
@@ -187,6 +189,34 @@ def cmd_optimize(args):
         save_webp(image, ROOT / target_rel, quality)
         total += (ROOT / target_rel).stat().st_size
     print(f'Wrote {len(rows)} photos x {len(TIERS)} sizes + {len(EXTRAS)} other images ({total / 1e6:.1f} MB).')
+
+
+def cmd_originals(args=None):
+    """Put the JPG originals back into _originals/ (they left the repository when the photos were converted)."""
+    wanted = [row['original'] for row in read_seo()] + [original for original, *_ in EXTRAS]
+    wanted = [path for path in dict.fromkeys(wanted) if not (ORIGINALS / path).is_file()]
+    if not wanted:
+        print('All originals are already in _originals/.')
+        return
+    log = subprocess.run(['git', 'log', '--diff-filter=D', '--name-only', '--format=COMMIT:%H', '--', *wanted],
+                         cwd=ROOT, capture_output=True, text=True, check=True).stdout
+    deleted_in, commit = {}, None
+    for line in log.splitlines():
+        if line.startswith('COMMIT:'):
+            commit = line[7:]
+        elif line.strip() and line.strip() not in deleted_in:
+            deleted_in[line.strip()] = commit  # newest deletion first
+    restored = 0
+    for path in wanted:
+        if path not in deleted_in:
+            print(f'not found in history: {path}')
+            continue
+        blob = subprocess.run(['git', 'show', f'{deleted_in[path]}^:{path}'], cwd=ROOT, capture_output=True, check=True).stdout
+        target = ORIGINALS / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(blob)
+        restored += 1
+    print(f'Restored {restored} originals into _originals/.')
 
 
 # --------------------------------------------------------------------------- references
@@ -439,7 +469,7 @@ def gallery_schema(rows):
             'name': row['title_bg'],
             'caption': row['alt_bg'],
             'contentUrl': f"{HOST}/{GALLERY}/{row['file']}.webp",
-            'creator': {'@id': BUSINESS_ID},
+            'creator': CREATOR,
         }
         if row.get('city'):
             node['contentLocation'] = {'@type': 'Place', 'name': row.get('place') or row['city']}
@@ -531,6 +561,7 @@ def cmd_check(args=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest='command', required=True)
+    sub.add_parser('originals')
     sub.add_parser('optimize')
     locate = sub.add_parser('locate')
     locate.add_argument('csv')
@@ -541,7 +572,7 @@ def main(argv=None):
     sub.add_parser('gallery')
     sub.add_parser('check')
     args = parser.parse_args(argv)
-    handler = {'optimize': cmd_optimize, 'locate': cmd_locate, 'rename': cmd_rename, 'markup': cmd_markup, 'gallery': cmd_gallery, 'check': cmd_check}[args.command]
+    handler = {'originals': cmd_originals, 'optimize': cmd_optimize, 'locate': cmd_locate, 'rename': cmd_rename, 'markup': cmd_markup, 'gallery': cmd_gallery, 'check': cmd_check}[args.command]
     return handler(args) or 0
 
 
