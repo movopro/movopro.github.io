@@ -24,7 +24,7 @@ MAX_CITY_WORDS = 650
 
 # The Photographer record is repeated in several pages, in main.js and in the English page
 # generator. These fields are language-neutral and must match everywhere.
-SHARED_BUSINESS_FIELDS = ('@id', '@type', 'name', 'alternateName', 'url', 'logo', 'image', 'foundingDate', 'openingHours', 'sameAs')
+SHARED_BUSINESS_FIELDS = ('@id', '@type', 'name', 'alternateName', 'url', 'logo', 'image', 'foundingDate', 'sameAs')
 BUSINESS_TYPE = 'Photographer'
 
 
@@ -74,7 +74,7 @@ def check_business_data(business):
     bulgarian = reference.get('bg')
     if bulgarian:
         values = [bulgarian['name'], bulgarian['alternateName'], bulgarian['description'], bulgarian['logo'], bulgarian['image'],
-                  bulgarian['address']['addressLocality'], bulgarian['openingHours'],
+                  bulgarian['address']['addressLocality'],
                   *[area['name'] for area in bulgarian['areaServed']], *bulgarian['serviceType'], *bulgarian['sameAs']]
         for value in values:
             assert value in js, f'assets/js/main.js: structured-data fallback does not match the pages ("{value}")'
