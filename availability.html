@@ -331,6 +331,8 @@
     .cell.busy{ background: var(--busy); border-color: rgba(216,90,90,.7); }
     .cell.busy .day-number{ text-decoration: line-through; text-decoration-thickness: 2px; }
     .cell.past{ background: rgba(255,255,255,.04); color: rgba(245,247,251,.32); }
+    .calendar-notice{ margin:0 0 14px; padding:12px 14px; border-radius:14px; border:1px dashed rgba(211,154,45,.7); background:var(--partial); color:var(--cream); font-size:.95rem; }
+    .calendar-notice[hidden]{ display:none; }
 
     .day-number{
       font-size:.88rem;
@@ -543,6 +545,8 @@
             <div>Нд</div>
           </div>
 
+          <p class="calendar-notice" id="calendarNotice" role="status" hidden></p>
+
           <div class="calendar-grid" id="calendarGrid" role="list" aria-labelledby="monthLabel"></div>
         </div>
 
@@ -568,33 +572,20 @@
 
   <script>
     (function () {
+      // Which dates are taken is not written in this page: it lives in /data/availability.json (edited from the MARVIS
+      // dashboard or by hand), so changing the calendar is a data change and never a page change. A date that is
+      // not listed is open. The months offered per year stay here.
       const calendarData = {
         2026: {
-          busy: new Set([
-            '2026-03-14','2026-04-18','2026-04-25','2026-05-16','2026-05-24','2026-05-25',
-            '2026-05-26','2026-05-28','2026-05-30','2026-06-06','2026-06-14','2026-06-20',
-            '2026-06-26','2026-06-27','2026-07-18','2026-07-28','2026-07-30','2026-08-08',
-            '2026-08-15','2026-08-23','2026-09-26','2026-10-10'
-          ]),
-          partial: new Set([
-            '2026-06-13','2026-07-10','2026-07-11','2026-07-12','2026-07-14','2026-07-19',
-            '2026-07-24','2026-07-25','2026-08-16','2026-08-29','2026-09-12','2026-09-13',
-            '2026-10-03','2026-10-04'
-          ]),
           minView: new Date(2026, 7, 1),
           maxView: new Date(2026, 11, 1)
         },
         2027: {
-          busy: new Set([
-            '2027-04-10','2027-07-17','2027-08-21'
-          ]),
-          partial: new Set([
-            '2027-06-13','2027-07-10','2027-07-11'
-          ]),
           minView: new Date(2027, 0, 1),
           maxView: new Date(2027, 11, 1)
         }
       };
+      let statusByDate = null;   // null until the data has loaded (or if it could not be loaded)
 
       const isEnglish = new URLSearchParams(location.search).get('lang') === 'en' || location.pathname.startsWith('/en/');
       const monthNames = isEnglish
@@ -663,6 +654,7 @@
       function render() {
         clampView();
         grid.innerHTML = '';
+        if (statusByDate === null) { updateButtons(); return; }   // no data, no calendar (the notice says why)
 
         const y = view.getFullYear();
         const m = view.getMonth();
@@ -671,8 +663,6 @@
         const first = new Date(y, m, 1);
         const last = new Date(y, m + 1, 0);
         const offset = (first.getDay() + 6) % 7;
-
-        const { busy, partial } = getConfig();
 
         for (let i = 0; i < offset; i++) {
           const emptyCell = document.createElement('div');
@@ -689,8 +679,9 @@
           const dayNumber = document.createElement('span');
 
           const isPast = date < today;
-          const isBusy = !isPast && busy.has(key);
-          const isPartial = !isPast && partial.has(key);
+          const state = stateOf(key);
+          const isBusy = !isPast && state === 'booked';
+          const isPartial = !isPast && state === 'photographer-only';
 
           const status = isPast
             ? (isEnglish ? 'Past date' : 'Отминала дата')
@@ -739,8 +730,46 @@
         setYear(years[(years.indexOf(activeYear) + 1) % years.length]);
       });
 
+const notice = document.getElementById('calendarNotice');
+
+      function setNotice(text) {
+        if (!notice) return;
+        notice.textContent = text;
+        notice.hidden = !text;
+      }
+
+      // What the page shows for one date. Not listed = open. A value this page does not know is shown as taken:
+      // a date is never advertised as free by mistake.
+      function stateOf(key) {
+        const value = statusByDate[key];
+        if (value === undefined || value === 'open') return 'open';
+        return value === 'photographer-only' ? 'photographer-only' : 'booked';
+      }
+
+      async function load() {
+        grid.setAttribute('aria-busy', 'true');
+        try {
+          const response = await fetch('/data/availability.json?v=' + Math.floor(Date.now() / 60000), { cache: 'no-store' });
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          const data = await response.json();
+          if (!data || typeof data.dates !== 'object' || data.dates === null || Array.isArray(data.dates)) throw new Error('unexpected data');
+          statusByDate = data.dates;
+          setNotice('');
+          render();
+        } catch (error) {
+          // Never draw an all-free calendar because the data is missing: say so instead.
+          statusByDate = null;
+          grid.innerHTML = '';
+          setNotice(isEnglish
+            ? 'The calendar could not be loaded right now. Please contact us and we will check your date.'
+            : 'Календарът не може да се зареди в момента. Свържете се с нас и ще проверим датата.');
+        } finally {
+          grid.removeAttribute('aria-busy');
+        }
+      }
+
       view = getDefaultView();
-      render();
+      load();
     })();
   </script>
 <script defer src="assets/js/main.js?v=20260929"></script>
