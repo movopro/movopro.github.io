@@ -10,3 +10,6 @@ exclude:
   - header.html
   - assets/archive
   - scripts
+  - image-seo.csv
+  - image-rename-map.csv
+  - image-locations-TEMPLATE.csv

@@ -6,7 +6,7 @@
     'Места и спомени':'Places & memories',
     'Истории от цяла България.':'Stories across Bulgaria.',
     'Снимали сме сватби и събития в Кърджали, Пловдив, Златоград, Шумен, Смолян и Стара Загора. Познаваме различни места, но винаги започваме от вашата история.':'We have photographed weddings and events in Kardzhali, Plovdiv, Zlatograd, Shumen, Smolyan and Stara Zagora. We know many different venues, but we always start with your story.',
-    'Кърджали':'Kardzhali','Пловдив':'Plovdiv','Златоград':'Zlatograd','Шумен':'Shumen','Смолян':'Smolyan','Стара Загора':'Stara Zagora',
+    'Кърджали':'Kardzhali','Пловдив':'Plovdiv','Хасково':'Haskovo','Заснемаме в:':'We shoot in:','Вижте как снимаме в:':'See how we shoot in:','Златоград':'Zlatograd','Шумен':'Shumen','Смолян':'Smolyan','Стара Загора':'Stara Zagora',
     'Сватбен фотограф и видеограф · Кърджали':'Wedding photographer & videographer · Kardzhali',
     'Сватбен фотограф Кърджали':'Wedding photographer in Kardzhali',
     'Сватбен фотограф Пловдив':'Wedding photographer in Plovdiv',
