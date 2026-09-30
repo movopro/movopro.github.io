@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
           address: { '@type': 'PostalAddress', addressLocality: 'Кърджали', addressCountry: 'BG' },
           areaServed: [{ '@type': 'City', name: 'Кърджали' }, { '@type': 'City', name: 'Пловдив' }, { '@type': 'City', name: 'Хасково' }, { '@type': 'City', name: 'Смолян' }, { '@type': 'Country', name: 'България' }],
           serviceType: ['Сватбена фотография', 'Сватбена видеография', 'Събитийна фотография', 'Събитийно видео'],
-          openingHours: 'Mo-Su 12:00-20:00',
           sameAs: ['https://www.instagram.com/memoryphotoandvideo/', 'https://www.facebook.com/MemoryPhotoAndVideo/'],
         },
         {
