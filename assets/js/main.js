@@ -32,17 +32,19 @@ document.addEventListener('DOMContentLoaded', () => {
       '@context': 'https://schema.org',
       '@graph': [
         {
-          '@type': 'ProfessionalService',
+          '@type': 'Photographer',
           '@id': 'https://memoryphotoandvideo.com/#business',
-          name: 'Memory Photo & Video',
+          name: 'Memory Photo And Video',
+          alternateName: 'Memory Photo & Video',
           url: 'https://memoryphotoandvideo.com/',
           logo: 'https://memoryphotoandvideo.com/assets/icon-512.png',
           image: 'https://memoryphotoandvideo.com/memory-og-2026.jpg',
           description: 'Сватбена фотография и видеография от Кърджали — за сватби и събития в региона и цяла България.',
           foundingDate: '2017',
           address: { '@type': 'PostalAddress', addressLocality: 'Кърджали', addressCountry: 'BG' },
-          areaServed: [{ '@type': 'City', name: 'Кърджали' }, { '@type': 'City', name: 'Пловдив' }, { '@type': 'City', name: 'Златоград' }, { '@type': 'City', name: 'Шумен' }, { '@type': 'City', name: 'Смолян' }, { '@type': 'City', name: 'Стара Загора' }, { '@type': 'Country', name: 'България' }],
+          areaServed: [{ '@type': 'City', name: 'Кърджали' }, { '@type': 'City', name: 'Пловдив' }, { '@type': 'City', name: 'Хасково' }, { '@type': 'City', name: 'Смолян' }, { '@type': 'Country', name: 'България' }],
           serviceType: ['Сватбена фотография', 'Сватбена видеография', 'Събитийна фотография', 'Събитийно видео'],
+          openingHours: 'Mo-Su 12:00-20:00',
           sameAs: ['https://www.instagram.com/memoryphotoandvideo/', 'https://www.facebook.com/MemoryPhotoAndVideo/'],
         },
         {
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
           '@id': 'https://memoryphotoandvideo.com/#website',
           url: 'https://memoryphotoandvideo.com/',
           name: 'Memory Photo & Video',
+          alternateName: 'Memory Photo And Video',
           inLanguage: 'bg-BG',
           publisher: { '@id': 'https://memoryphotoandvideo.com/#business' }
         },

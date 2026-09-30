@@ -12,6 +12,7 @@ on:
       - 'about.html'
       - 'svatba-izbrani.html'
       - 'privacy.html'
+      - 'image-seo.csv'
       - 'assets/js/language-switch*.js'
       - '.github/workflows/build-static-en.yml'
 
@@ -116,11 +117,18 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+          import csv
           import json
           import re
           from bs4 import BeautifulSoup
 
           host = 'https://memoryphotoandvideo.com'
+
+          # English alt text and gallery records come from image-seo.csv (one row per photo).
+          with open('image-seo.csv', newline='', encoding='utf-8-sig') as handle:
+              photos = list(csv.DictReader(handle))
+          alt_en = {row['file']: row['alt_en'] for row in photos}
+          gallery_file = re.compile(r'assets/gallery/([a-z0-9-]+?)(?:-(?:800|480))?\.webp$')
           pages = {
               'index.html': {
                   'out': 'en/index.html', 'bg': '/', 'en': '/en/',
@@ -251,23 +259,47 @@ jobs:
               # Replace every Bulgarian structured-data snapshot with English structured data.
               for schema in soup.find_all('script', attrs={'type': 'application/ld+json'}):
                   schema.decompose()
-              page_type = 'AboutPage' if src == 'about.html' else 'WebPage'
+              page_type = 'AboutPage' if src == 'about.html' else 'ImageGallery' if src == 'portfolio.html' else 'WebPage'
               schema = soup.new_tag('script', id='mpv-seo-schema', type='application/ld+json')
+              page_node = {
+                  '@type': page_type,
+                  '@id': host + cfg['en'] + '#webpage',
+                  'url': host + cfg['en'],
+                  'name': cfg['title'],
+                  'description': cfg['description'],
+                  'isPartOf': {'@id': host + '/#website-en'},
+                  'about': {'@id': host + '/#business'},
+                  'inLanguage': 'en'
+              }
+              if src == 'portfolio.html':
+                  page_node['creator'] = {'@id': host + '/#business'}
+                  page_node['associatedMedia'] = [
+                      {
+                          '@type': 'ImageObject',
+                          'name': row['alt_en'],
+                          'contentUrl': host + '/assets/gallery/' + row['file'] + '.webp',
+                          'creator': {'@id': host + '/#business'},
+                          **({'contentLocation': {'@type': 'Place', 'name': row['place_en'] or row['city_en']}} if row['city_en'] else {}),
+                      }
+                      for row in photos
+                  ]
               schema.string = json.dumps({
                   '@context': 'https://schema.org',
                   '@graph': [
                       {
-                          '@type': 'ProfessionalService',
+                          '@type': 'Photographer',
                           '@id': host + '/#business',
-                          'name': "Memory Photo & Video",
+                          'name': "Memory Photo And Video",
+                          'alternateName': "Memory Photo & Video",
                           'url': host + '/',
                           'logo': host + '/assets/icon-512.png',
                           'image': host + '/memory-og-2026.jpg',
                           'description': "Wedding photography and videography from Kardzhali — for weddings and events in the region and across Bulgaria.",
                           'foundingDate': "2017",
                           'address': {"@type": "PostalAddress", "addressLocality": "Kardzhali", "addressCountry": "BG"},
-                          'areaServed': [{"@type": "City", "name": "Kardzhali"}, {"@type": "City", "name": "Plovdiv"}, {"@type": "City", "name": "Zlatograd"}, {"@type": "City", "name": "Shumen"}, {"@type": "City", "name": "Smolyan"}, {"@type": "City", "name": "Stara Zagora"}, {"@type": "Country", "name": "Bulgaria"}],
+                          'areaServed': [{"@type": "City", "name": "Kardzhali"}, {"@type": "City", "name": "Plovdiv"}, {"@type": "City", "name": "Haskovo"}, {"@type": "City", "name": "Smolyan"}, {"@type": "Country", "name": "Bulgaria"}],
                           'serviceType': ["Wedding photography", "Wedding videography", "Event photography", "Event videography"],
+                          'openingHours': "Mo-Su 12:00-20:00",
                           'sameAs': ["https://www.instagram.com/memoryphotoandvideo/", "https://www.facebook.com/MemoryPhotoAndVideo/"],
                       },
                       {
@@ -275,19 +307,11 @@ jobs:
                           '@id': host + '/#website-en',
                           'url': host + '/en/',
                           'name': 'Memory Photo & Video',
+                          'alternateName': 'Memory Photo And Video',
                           'inLanguage': 'en',
                           'publisher': {'@id': host + '/#business'}
                       },
-                      {
-                          '@type': page_type,
-                          '@id': host + cfg['en'] + '#webpage',
-                          'url': host + cfg['en'],
-                          'name': cfg['title'],
-                          'description': cfg['description'],
-                          'isPartOf': {'@id': host + '/#website-en'},
-                          'about': {'@id': host + '/#business'},
-                          'inLanguage': 'en'
-                      }
+                      page_node
                   ]
               }, ensure_ascii=False, separators=(',', ':'))
               head.append(schema)
@@ -316,6 +340,9 @@ jobs:
                       continue
                   if 'video-story-link' in (a.get('class') or []):
                       a.decompose()
+                  elif a.find_parent(class_='city-links'):
+                      a.name = 'span'  # keep the footer's spacing; there is no English page to link to
+                      a.attrs = {}
                   else:
                       a.unwrap()
 
@@ -388,15 +415,12 @@ jobs:
                               if button.has_attr(attr):
                                   del button[attr]
 
-              # Keep inactive homepage slides deferred (main.js loads them after the page).
-              pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-              for slide in soup.select('[data-home-slide]:not(.is-active)'):
-                  for source in slide.find_all('source', srcset=True):
-                      if not source['srcset'].startswith('data:'):
-                          source['data-srcset'], source['srcset'] = source['srcset'], pixel
-                  for img in slide.find_all('img', src=True):
-                      if not img['src'].startswith('data:'):
-                          img['data-src'], img['src'] = img['src'], pixel
+              # Gallery photos: English alt text from image-seo.csv (the Bulgarian text was translated
+              # by the page script only for strings it knows).
+              for img in soup.find_all('img', src=True):
+                  match = gallery_file.search(img['src'])
+                  if match and match.group(1) in alt_en:
+                      img['alt'] = alt_en[match.group(1)]
               # <base href="/"> makes bare "#fragment" links resolve to the Bulgarian homepage.
               for a in soup.find_all('a', href=True):
                   if a['href'].startswith('#') and len(a['href']) > 1:
@@ -419,6 +443,7 @@ jobs:
             if grep -qi 'http-equiv="refresh"' "$f"; then echo "Refresh redirect still present in $f"; exit 1; fi
             if grep -q 'googletagmanager.com/gtag/js' "$f"; then echo "Direct GA loader leaked into $f"; exit 1; fi
             if grep -q 'mpv-consent' "$f"; then echo "Static consent dialog leaked into $f"; exit 1; fi
+            if grep -q 'data-src=' "$f"; then echo "Deferred image placeholder in $f"; exit 1; fi
           done
           for f in uslugi-ceni.html availability.html; do
             if grep -q 'googletagmanager.com/gtag/js?id=G-WJK01GL7PM' "$f"; then echo "Direct GA loader still present in $f"; exit 1; fi

@@ -8,6 +8,9 @@ in the repository. image-seo.csv is the single source of truth for the names, ti
 once known, the city of every gallery photo; image-rename-map.csv lists old -> new file paths.
 
   python3 scripts/image_tools.py optimize          build the WebP files from the originals
+  python3 scripts/image_tools.py locate CITIES.csv [--dry-run]
+                                                   record where photos were taken (columns: file,city[,place,place_en,event])
+                                                   and rename them svatba-kardzhali-01, ... ; rewrites every reference
   python3 scripts/image_tools.py rename NEW.csv    rename photos (columns: file,new_file) and rewrite every reference
   python3 scripts/image_tools.py markup            refresh alt text, width/height and srcset widths in the pages
   python3 scripts/image_tools.py gallery           regenerate the portfolio tiles and ImageGallery JSON-LD
@@ -23,6 +26,7 @@ import posixpath
 import re
 import subprocess
 import sys
+from collections import Counter
 from html import escape, unescape
 from pathlib import Path
 
@@ -32,7 +36,7 @@ GALLERY = 'assets/gallery'
 SEO_CSV = ROOT / 'image-seo.csv'
 MAP_CSV = ROOT / 'image-rename-map.csv'
 ORIGINALS = ROOT / '_originals'
-SEO_FIELDS = ['file', 'original', 'title_bg', 'alt_bg', 'alt_en', 'city', 'place', 'width', 'height']
+SEO_FIELDS = ['file', 'original', 'title_bg', 'alt_bg', 'alt_en', 'city', 'city_en', 'place', 'place_en', 'width', 'height']
 MAP_FIELDS = ['old_path', 'new_path', 'kind']
 
 # (file suffix, size, WebP quality, how the size is applied)
@@ -51,11 +55,20 @@ BUSINESS_ID = HOST + '/#business'
 SKIP_DIRS = {'.git', '_originals', 'node_modules', '__pycache__', 'archive', 'portfolio_next', 'portfolio_next_mobile'}
 TEXT_SUFFIXES = {'.html', '.css', '.js', '.xml', '.yml', '.yaml', '.py', '.json', '.txt', '.md', '.webmanifest'}
 
+CITY_EN = {'Кърджали': 'Kardzhali', 'Пловдив': 'Plovdiv', 'Хасково': 'Haskovo', 'Смолян': 'Smolyan'}
+_TRANSLIT = dict(zip('абвгдезийклмнопрстуфхъьюя', 'a b v g d e z i y k l m n o p r s t u f h a y yu ya'.split()))
+_TRANSLIT.update({'ж': 'zh', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sht'})
+
 
 # --------------------------------------------------------------------------- helpers
 def read_csv(path):
     with open(path, newline='', encoding='utf-8-sig') as handle:
         return list(csv.DictReader(handle))
+
+
+def read_seo():
+    """image-seo.csv rows, with every column present."""
+    return [{field: row.get(field, '') for field in SEO_FIELDS} for row in read_csv(SEO_CSV)]
 
 
 def write_csv(path, fields, rows):
@@ -155,7 +168,7 @@ def base_name(rel_path):
 
 # --------------------------------------------------------------------------- optimize
 def cmd_optimize(args):
-    rows = read_csv(SEO_CSV)
+    rows = read_seo()
     total = 0
     for row in rows:
         image = load_image(source_for(row['original']))
@@ -203,9 +216,11 @@ def express_token(token, new_path, base_dir):
 
 def rewrite_file(path, mapping):
     rel = path.relative_to(ROOT)
-    base_dir = rel.parent.as_posix() if rel.suffix in ('.html', '.css') else ''
-    base_dir = '' if base_dir == '.' else base_dir
     text = path.read_text(encoding='utf-8')
+    if rel.suffix == '.html':
+        base_dir = page_base_dir(rel, text)
+    else:
+        base_dir = '' if rel.suffix != '.css' or rel.parent.as_posix() == '.' else rel.parent.as_posix()
 
     def swap(match):
         token = match.group(1)
@@ -227,11 +242,23 @@ def rewrite_references(mapping, verbose=True):
 
 
 # --------------------------------------------------------------------------- rename
+def translit(text):
+    """Bulgarian -> Latin (streamlined system): Кърджали -> kardzhali."""
+    return ''.join(_TRANSLIT.get(char, char) for char in text.lower())
+
+
+def slugify(text):
+    return re.sub(r'[^a-z0-9]+', '-', translit(text)).strip('-')
+
+
 def cmd_rename(args):
-    seo = read_csv(SEO_CSV)
-    by_file = {row['file']: row for row in seo}
     pairs = [(r['file'].strip(), r['new_file'].strip()) for r in read_csv(args.csv) if r.get('new_file', '').strip()]
-    pairs = [(old, new) for old, new in pairs if old != new]
+    apply_renames([(old, new) for old, new in pairs if old != new])
+
+
+def apply_renames(pairs):
+    seo = read_seo()
+    by_file = {row['file']: row for row in seo}
     if not pairs:
         print('Nothing to rename.')
         return
@@ -267,10 +294,50 @@ def cmd_rename(args):
             row['new_path'] = mapping[row['new_path']]
     write_csv(MAP_CSV, MAP_FIELDS, history)
     rewrite_references(mapping)
-    cmd_markup(args)
+    cmd_markup()
     if '<!-- gallery:start -->' in (ROOT / 'portfolio.html').read_text(encoding='utf-8'):
-        cmd_gallery(args)
-    print(f'Renamed {len(pairs)} photos. Re-run scripts/build_sitemap.py to refresh the sitemaps.')
+        cmd_gallery()
+    print(f'Renamed {len(pairs)} photos.')
+
+
+def cmd_locate(args):
+    """Record the city (and place) of photos and give them place names: svatba-kardzhali-01, krashtene-plovdiv-02, ..."""
+    updates = {row['file'].strip(): row for row in read_csv(args.csv) if row.get('file', '').strip() and row.get('city', '').strip()}
+    seo = read_seo()
+    known = {row['file'] for row in seo}
+    for name in updates:
+        if name not in known:
+            raise SystemExit(f'Unknown photo in {args.csv}: {name}')
+    taken = Counter()
+    for row in seo:  # continue the numbering of photos that already have a place name
+        match = re.fullmatch(r'([a-z]+)-([a-z0-9-]+?)-(\d+)', row['file'])
+        if match and row['city']:
+            taken[(match.group(1), match.group(2))] = max(taken[(match.group(1), match.group(2))], int(match.group(3)))
+    pairs = []
+    for row in seo:
+        update = updates.get(row['file'])
+        if not update:
+            continue
+        city = update['city'].strip()
+        event = (update.get('event') or 'svatba').strip() or 'svatba'
+        slug = slugify(city)
+        taken[(event, slug)] += 1
+        new = f'{event}-{slug}-{taken[(event, slug)]:02d}'
+        pairs.append((row['file'], new))
+        print(f"{row['file']} -> {new}  ({city}{', ' + update['place'].strip() if update.get('place', '').strip() else ''})")
+        if not args.dry_run:
+            row['city'] = city
+            row['city_en'] = CITY_EN.get(city) or translit(city).title()
+            row['place'] = (update.get('place') or '').strip()
+            row['place_en'] = (update.get('place_en') or '').strip()
+    if args.dry_run:
+        print('Dry run: nothing changed.')
+        return
+    write_csv(SEO_CSV, SEO_FIELDS, seo)
+    apply_renames([(old, new) for old, new in pairs if old != new])
+    cmd_gallery()  # structured data lists the places
+    subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_sitemap.py')], cwd=ROOT, check=True)
+    print('Done. Commit the changes; the English pages are rebuilt by the workflow.')
 
 
 # --------------------------------------------------------------------------- markup
@@ -304,7 +371,7 @@ def set_attr(tag, name, value):
 
 def cmd_markup(args=None):
     """Alt text from image-seo.csv; width/height of the src file; srcset width descriptors."""
-    alts = {row['file']: row['alt_bg'] for row in read_csv(SEO_CSV)}
+    alts = {row['file']: row['alt_bg'] for row in read_seo()}
     changed = 0
     for path in html_files(include_en=False):
         rel = path.relative_to(ROOT)
@@ -381,7 +448,7 @@ def gallery_schema(rows):
 
 
 def cmd_gallery(args=None):
-    rows = read_csv(SEO_CSV)
+    rows = read_seo()
     path = ROOT / 'portfolio.html'
     text = path.read_text(encoding='utf-8')
     start, end = '<!-- gallery:start -->', '<!-- gallery:end -->'
@@ -411,7 +478,7 @@ def cmd_gallery(args=None):
 # --------------------------------------------------------------------------- check
 def cmd_check(args=None):
     problems = 0
-    rows = read_csv(SEO_CSV)
+    rows = read_seo()
     names = set()
     for row in rows:
         names.add(row['file'])
@@ -465,13 +532,16 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest='command', required=True)
     sub.add_parser('optimize')
+    locate = sub.add_parser('locate')
+    locate.add_argument('csv')
+    locate.add_argument('--dry-run', action='store_true')
     rename = sub.add_parser('rename')
     rename.add_argument('csv')
     sub.add_parser('markup')
     sub.add_parser('gallery')
     sub.add_parser('check')
     args = parser.parse_args(argv)
-    handler = {'optimize': cmd_optimize, 'rename': cmd_rename, 'markup': cmd_markup, 'gallery': cmd_gallery, 'check': cmd_check}[args.command]
+    handler = {'optimize': cmd_optimize, 'locate': cmd_locate, 'rename': cmd_rename, 'markup': cmd_markup, 'gallery': cmd_gallery, 'check': cmd_check}[args.command]
     return handler(args) or 0
 
 

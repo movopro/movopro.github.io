@@ -8,6 +8,8 @@ on:
       - 'index.html'
       - 'svatben-fotograf-kardzhali.html'
       - 'svatben-fotograf-plovdiv.html'
+      - 'svatben-fotograf-haskovo.html'
+      - 'svatben-fotograf-smolyan.html'
       - 'portfolio.html'
       - 'videos.html'
       - 'uslugi-ceni.html'
@@ -21,6 +23,8 @@ on:
       - 'scripts/validate_seo.py'
       - 'header.html'
       - 'sitemap.xml'
+      - 'sitemap-images.xml'
+      - 'image-seo.csv'
       - '.github/workflows/build-sitemap.yml'
 
 permissions:
@@ -35,7 +39,7 @@ jobs:
         with:
           fetch-depth: 0   # full history, so each page's real last-modified date can be read
 
-      - name: Generate sitemap
+      - name: Generate sitemaps
         run: python3 scripts/build_sitemap.py
 
       - name: Validate sitemap
@@ -45,12 +49,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml
+          git add sitemap.xml sitemap-images.xml
           if git diff --cached --quiet; then
             echo 'Sitemap already up to date.'
             exit 0
           fi
-          git commit -m "Refresh sitemap and image discovery [skip sitemap]"
+          git commit -m "Refresh sitemaps and image discovery [skip sitemap]"
           # Other site workflows can save to main at the same moment; catch up and retry.
           for attempt in 1 2 3 4; do
             git fetch origin main && git rebase origin/main && git push && exit 0
