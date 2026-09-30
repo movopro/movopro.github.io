@@ -330,20 +330,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   slider.dataset.sliderReady = 'true';
 
-  /* Hidden slides are loaded after the page so they don't compete with the first photo. */
-  const loadDeferredSlides = () => {
-    slider.querySelectorAll('source[data-srcset]').forEach(source => {
-      source.srcset = source.dataset.srcset;
-      source.removeAttribute('data-srcset');
-    });
-    slider.querySelectorAll('img[data-src]').forEach(img => {
-      img.src = img.dataset.src;
-      img.removeAttribute('data-src');
-    });
-  };
-  if (document.readyState === 'complete') loadDeferredSlides();
-  else window.addEventListener('load', loadDeferredSlides, { once: true });
-
   let currentIndex = Math.max(0, slides.findIndex(slide => slide.classList.contains('is-active')));
   let autoplayTimer = null;
   let userPaused = reduceMotion;
@@ -368,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const showSlide = (requestedIndex, announce = false) => {
-    loadDeferredSlides();
     currentIndex = (requestedIndex + slides.length) % slides.length;
 
     slides.forEach((slide, index) => {

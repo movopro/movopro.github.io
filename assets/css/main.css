@@ -233,7 +233,7 @@ nav a:hover {
     radial-gradient(ellipse at 15% 18%, rgba(117,165,232,.18) 0%, transparent 35%),
     radial-gradient(ellipse at 85% 12%, rgba(255,255,255,.08) 0%, transparent 22%),
     linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.62) 100%),
-    url("../../hero.jpg") center/cover no-repeat;
+    url("../hero/svatben-fotograf-memory-1920.webp") center/cover no-repeat;
   transform: scale(1.04);
   filter: saturate(1.08) contrast(1.04) brightness(0.88);
   will-change: transform;

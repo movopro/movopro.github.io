@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# JPG originals of the published photos (see scripts/image_tools.py)
+_originals/
