@@ -57,6 +57,7 @@
     'Вашата история, разказана с движение и звук.':'Your story, told through movement and sound.',
     'Когато сте готови да видите още, целият ни видео архив е събран на едно място.':'When you are ready to see more, our complete video archive is gathered in one place.',
     'DJ PeppyStar е независим партньор, към когото можете да се обърнете директно за музика и озвучаване.':'DJ PeppyStar is an independent partner you can contact directly for music and sound.',
+    'DJ PeppyStar – DJ за сватби и частни събития':'DJ PeppyStar – DJ for weddings and private events',
     'Енергия, стил и правилната музика за вашето събитие.':'Energy, style and the right music for your event.',
     'Сватби, частни събития и фирмени партита. Подбор на музика според публиката и атмосферата.':'Weddings, private events and corporate parties. Music selected for the audience and atmosphere.',
     'Вашата дата':'Your date',
