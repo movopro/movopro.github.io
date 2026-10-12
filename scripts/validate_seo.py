@@ -24,7 +24,19 @@ MAX_CITY_WORDS = 650
 
 # The Photographer record is repeated in several pages, in main.js and in the English page
 # generator. These fields are language-neutral and must match everywhere.
-SHARED_BUSINESS_FIELDS = ('@id', '@type', 'name', 'alternateName', 'url', 'logo', 'image', 'foundingDate', 'sameAs')
+SHARED_BUSINESS_FIELDS = ('@id', '@type', 'name', 'alternateName', 'url', 'logo', 'image', 'foundingDate', 'sameAs',
+                          'telephone', 'geo', 'hasMap')
+# Name, address, phone (NAP) published by the owner on his Google Business Profile. Every copy must carry exactly this.
+MAP_URL = 'https://maps.google.com/?cid=17084943582406582138'
+NAP = {
+    'telephone': '+359885162499',
+    'geo': {'@type': 'GeoCoordinates', 'latitude': 41.6211389, 'longitude': 25.3785265},
+    'hasMap': MAP_URL,
+    'address': {
+        'bg': {'@type': 'PostalAddress', 'streetAddress': 'ул. Синчец 8, Веселчане', 'addressLocality': 'Кърджали', 'postalCode': '6602', 'addressCountry': 'BG'},
+        'en': {'@type': 'PostalAddress', 'streetAddress': 'ul. Sinchets 8, Veselchane', 'addressLocality': 'Kardzhali', 'postalCode': '6602', 'addressCountry': 'BG'},
+    },
+}
 BUSINESS_TYPE = 'Photographer'
 
 
@@ -67,14 +79,18 @@ def check_business_data(business):
         for field in SHARED_BUSINESS_FIELDS:
             assert node.get(field) == base.get(field), f'{lang} business record: "{field}" differs from the {base_lang} one'
         assert len(node.get('areaServed', [])) == len(base.get('areaServed', [])), f'{lang} business record: different number of service areas'
-        forbidden = {'telephone', 'email', 'faxNumber'} & set(node)
-        assert not forbidden, f'{lang} business record must not publish {sorted(forbidden)}'
-        assert set(node.get('address', {})) <= {'@type', 'addressLocality', 'addressCountry'}, f'{lang} business record must stay at city level (no street address)'
+        assert 'email' not in node and 'faxNumber' not in node and 'openingHours' not in node and 'openingHoursSpecification' not in node,             f'{lang} business record must not publish email, fax or opening hours'
+        assert 'aggregateRating' not in node and 'review' not in node, f'{lang} business record must not carry review markup'
+        for field in ('telephone', 'geo', 'hasMap'):
+            assert node.get(field) == NAP[field], f'{lang} business record: {field} must be {NAP[field]!r}'
+        assert node.get('address') == NAP['address'].get(lang, NAP['address']['bg']), f'{lang} business record: address differs from the Google Business Profile address'
+        assert MAP_URL in node.get('sameAs', []), f'{lang} business record: sameAs must include the Google Maps listing'
     js = Path('assets/js/main.js').read_text(encoding='utf-8')
     bulgarian = reference.get('bg')
     if bulgarian:
         values = [bulgarian['name'], bulgarian['alternateName'], bulgarian['description'], bulgarian['logo'], bulgarian['image'],
-                  bulgarian['address']['addressLocality'],
+                  bulgarian['address']['addressLocality'], bulgarian['address']['streetAddress'], bulgarian['address']['postalCode'],
+                  bulgarian['telephone'], bulgarian['hasMap'],
                   *[area['name'] for area in bulgarian['areaServed']], *bulgarian['serviceType'], *bulgarian['sameAs']]
         for value in values:
             assert value in js, f'assets/js/main.js: structured-data fallback does not match the pages ("{value}")'
