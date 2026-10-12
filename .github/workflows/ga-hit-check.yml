@@ -1,0 +1,59 @@
+name: GA4 hit check
+
+# Manual only. Visits the owner's sites from a GitHub runner (the home network DNS filter blocks Google
+# Analytics, so tracking cannot be tested from the LAN), accepts the statistics consent where a banner exists,
+# and prints which GA4 collect requests left the page. Hits carry utm_source=marvis-test so they are easy to find
+# in the GA4 real-time report / Data API. No secrets are used.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save playwright@1.49.1 && npx playwright install --with-deps chromium
+      - name: Visit sites and list GA4 collect requests
+        run: |
+          cat > ga-hit-check.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const pages = [
+            'https://memoryphotoandvideo.com/?utm_source=marvis-test&utm_medium=ga-check',
+            'https://memoryphotoandvideo.com/svatben-fotograf-kardzhali.html?utm_source=marvis-test&utm_medium=ga-check',
+            'https://zodia.store/?utm_source=marvis-test&utm_medium=ga-check',
+            'https://keepverdict.com/?utm_source=marvis-test&utm_medium=ga-check',
+            'https://kidventuro.com/?utm_source=marvis-test&utm_medium=ga-check',
+          ];
+          const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
+          const browser = await chromium.launch();
+          let failed = 0;
+          for (const url of pages) {
+            const ctx = await browser.newContext({ userAgent: ua, viewport: { width: 1280, height: 900 }, locale: 'bg-BG' });
+            const page = await ctx.newPage();
+            const hits = [];
+            page.on('request', (r) => {
+              const u = r.url();
+              if (/google-analytics\.com\/g\/collect|analytics\.google\.com\/g\/collect/.test(u)) {
+                const q = new URL(u).searchParams;
+                hits.push(`${q.get('tid')} en=${q.get('en')} dl=${(q.get('dl') || '').slice(0, 60)}`);
+              }
+            });
+            await page.goto(url, { waitUntil: 'load', timeout: 45000 });
+            await page.waitForTimeout(2500);
+            const accept = page.locator('button, a, [role=button]').filter({ hasText: /^(Приемам( всички)?|Accept( all)?|Allow( all)?|Разрешавам|Съгласен съм|Agree)/i }).first();
+            if (await accept.isVisible().catch(() => false)) { await accept.click().catch(() => {}); }
+            await page.waitForTimeout(2500);
+            await page.mouse.wheel(0, 1500);
+            await page.waitForTimeout(6000);
+            console.log(url.split('?')[0], '->', hits.length ? [...new Set(hits)].join(' | ') : 'NO GA4 COLLECT REQUESTS');
+            await ctx.close();
+          }
+          await browser.close();
+          JS
+          node ga-hit-check.mjs
