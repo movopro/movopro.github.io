@@ -21,6 +21,7 @@ on:
       - 'en/*.html'
       - 'scripts/build_sitemap.py'
       - 'scripts/validate_seo.py'
+      - 'scripts/check_links.py'
       - 'header.html'
       - 'sitemap.xml'
       - 'sitemap-images.xml'
@@ -44,6 +45,11 @@ jobs:
 
       - name: Validate sitemap
         run: python3 scripts/validate_seo.py
+
+      - name: Check internal links
+        run: |
+          python3 scripts/check_links_test.py
+          python3 scripts/check_links.py
 
       - name: Commit sitemap
         run: |

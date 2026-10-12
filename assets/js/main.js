@@ -493,3 +493,30 @@ document.addEventListener('click', event => {
   link.replaceWith(frame);
   frame.focus();
 });
+
+/* Conversion events (GA4). Pure classifier: maps a clicked link to an event name, or null for ordinary navigation.
+   Events are only sent when the visitor has allowed statistics (window.gtag exists only after consent, see loadAnalytics). */
+window.mpvEventForLink = function mpvEventForLink(href, pageHost) {
+  let url;
+  try { url = new URL(href, 'https://' + (pageHost || 'memoryphotoandvideo.com') + '/'); } catch { return null; }
+  if (url.protocol === 'tel:') return 'contact_phone_click';
+  if (url.protocol === 'mailto:') return 'contact_email_click';
+  const host = url.hostname.replace(/^www\./, '');
+  if (host === 'wa.me' || host === 'api.whatsapp.com') return 'contact_whatsapp_click';
+  if (host === 'm.me' || host === 'messenger.com') return 'contact_messenger_click';
+  if (host === 'instagram.com' || host === 'facebook.com') return 'social_click';
+  if (host === 'google.com' && url.pathname.startsWith('/maps')) return 'google_reviews_click';
+  if (host === (pageHost || 'memoryphotoandvideo.com').replace(/^www\./, '') && /^\/(en\/)?availability(\.html)?$/.test(url.pathname)) return 'availability_cta_click';
+  return null;
+};
+window.mpvTrack = function mpvTrack(name, params) {
+  if (typeof window.gtag !== 'function' || window['ga-disable-G-WJK01GL7PM'] === true) return false;
+  window.gtag('event', name, params || {});
+  return true;
+};
+document.addEventListener('click', event => {
+  const link = event.target.closest?.('a[href]');
+  if (!link) return;
+  const name = window.mpvEventForLink(link.getAttribute('href'), location.hostname);
+  if (name) window.mpvTrack(name, { link_url: link.href, page_path: location.pathname });
+}, { passive: true });
