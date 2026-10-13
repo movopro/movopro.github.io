@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
           description: 'Сватбена фотография и видеография от Кърджали — за сватби и събития в региона и цяла България.',
           foundingDate: '2017',
           address: { '@type': 'PostalAddress', streetAddress: 'ул. Синчец 8, Веселчане', addressLocality: 'Кърджали', postalCode: '6602', addressCountry: 'BG' },
-          telephone: '+359885162499',
           geo: { '@type': 'GeoCoordinates', latitude: 41.6211389, longitude: 25.3785265 },
           hasMap: 'https://maps.google.com/?cid=17084943582406582138',
           areaServed: [{ '@type': 'City', name: 'Кърджали' }, { '@type': 'City', name: 'Пловдив' }, { '@type': 'City', name: 'Хасково' }, { '@type': 'City', name: 'Смолян' }, { '@type': 'Country', name: 'България' }],
