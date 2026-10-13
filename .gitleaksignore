@@ -1,0 +1,9 @@
+# Reviewed gitleaks false positives (2026-10-14 final audit): unit-test fixtures and keys that are public by design
+2f108e96ffaae721cb5c07304f0101b11df0ff45:assets/js/pricing-fix.js:generic-api-key:149
+37da4f89327c2d6a0a59743bcb27311b128acde2:assets/js/pricing-fix.js:generic-api-key:149
+5ba9d7a306437e18ff6d812621faa42592586e35:assets/js/pricing-fix.js:generic-api-key:134
+654c3e82923be3f996cd3dd9a2e877bc67c54cd4:en/uslugi-ceni.html:generic-api-key:1577
+7f1704de4260a0c23227f48ed605fd5d6d1862cd:assets/js/pricing-fix.js:generic-api-key:111
+34b837e540bf978816017ad10e4217aed6db9ec4:uslugi-ceni.html:generic-api-key:1514
+d6b7f851de1c9c086c629eb6c8954bc62d66a5e7:uslugi-ceni.html:generic-api-key:1493
+assets/js/pricing-fix.js:generic-api-key:149
