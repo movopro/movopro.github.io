@@ -52,7 +52,7 @@ EXTRAS = (
 BATCH_SIZE = 48
 GALLERY_SIZES = '(max-width: 620px) 50vw, (max-width: 900px) 33vw, 300px'
 BUSINESS_ID = HOST + '/#business'
-CREATOR = {'@type': 'Photographer', '@id': BUSINESS_ID, 'name': 'Memory Photo And Video'}
+CREATOR = {'@type': 'LocalBusiness', '@id': BUSINESS_ID, 'name': 'Memory Photo And Video'}
 
 SKIP_DIRS = {'.git', '_originals', 'node_modules', '__pycache__', 'archive', 'portfolio_next', 'portfolio_next_mobile'}
 TEXT_SUFFIXES = {'.html', '.css', '.js', '.xml', '.yml', '.yaml', '.py', '.json', '.txt', '.md', '.webmanifest'}

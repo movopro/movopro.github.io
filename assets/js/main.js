@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '@context': 'https://schema.org',
       '@graph': [
         {
-          '@type': 'Photographer',
+          '@type': 'LocalBusiness',
           '@id': 'https://memoryphotoandvideo.com/#business',
           name: 'Memory Photo And Video',
           alternateName: 'Memory Photo & Video',

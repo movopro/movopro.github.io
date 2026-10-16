@@ -22,7 +22,7 @@ MIN_CITY_WORDS = 400
 MAX_CITY_WORDS = 650
 
 
-# The Photographer record is repeated in several pages, in main.js and in the English page
+# The LocalBusiness record is repeated in several pages, in main.js and in the English page
 # generator. These fields are language-neutral and must match everywhere.
 SHARED_BUSINESS_FIELDS = ('@id', '@type', 'name', 'alternateName', 'url', 'logo', 'image', 'foundingDate', 'sameAs',
                           'geo', 'hasMap')
@@ -37,13 +37,36 @@ NAP = {
         'en': {'@type': 'PostalAddress', 'streetAddress': 'ul. Sinchets 8, Veselchane', 'addressLocality': 'Kardzhali', 'postalCode': '6602', 'addressCountry': 'BG'},
     },
 }
-BUSINESS_TYPE = 'Photographer'
+BUSINESS_TYPE = 'LocalBusiness'
+# Every structured-data type on the site must exist on schema.org. Until 2026-10-16 the business record was typed
+# "Photographer", which schema.org does not define (schema.org/Photographer is a 404), so search engines saw no
+# LocalBusiness at all. Add a type here only after checking that its schema.org page exists.
+SCHEMA_TYPES = {'AboutPage', 'Answer', 'BreadcrumbList', 'City', 'CollectionPage', 'Country', 'FAQPage', 'GeoCoordinates',
+                'ImageGallery', 'ImageObject', 'ListItem', 'LocalBusiness', 'Place', 'PostalAddress', 'Question', 'Service',
+                'VideoObject', 'WebPage', 'WebSite'}
+LD_JSON = r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>'
+
+
+def ld_types(value):
+    """Every @type used anywhere inside a JSON-LD value."""
+    if isinstance(value, dict):
+        kind = value.get('@type')
+        yield from ([kind] if isinstance(kind, str) else (kind or []))
+        for item in value.values():
+            yield from ld_types(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from ld_types(item)
+
+
+def unknown_types(text):
+    return sorted({kind for block in re.findall(LD_JSON, text, re.S) for kind in ld_types(json.loads(block))} - SCHEMA_TYPES)
 
 
 def business_nodes(text):
-    """Return every Photographer node found in the page's JSON-LD blocks."""
+    """Return every LocalBusiness node found in the page's JSON-LD blocks."""
     nodes = []
-    for block in re.findall(r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>', text, re.S):
+    for block in re.findall(LD_JSON, text, re.S):
         data = json.loads(block)
         items = data.get('@graph', [data]) if isinstance(data, dict) else data
         nodes.extend(item for item in items if item.get('@type') == BUSINESS_TYPE)
@@ -265,6 +288,7 @@ def validate():
         assert canonical == HOST + route, f'{path}: incorrect canonical {canonical}'
         expected.add(canonical)
         business.extend((path.as_posix(), page.lang or 'bg', node) for node in business_nodes(text))
+        assert not unknown_types(text), f'{path}: structured data uses types schema.org does not define: {unknown_types(text)}'
         images += check_images(path, text, page_base(path, text))
         if route == '/' or route in CITY_PAGES:
             assert len(page.words) > 100, f'{path}: insufficient main text without JavaScript'
@@ -274,6 +298,7 @@ def validate():
             assert MIN_CITY_WORDS <= len(page.words) <= MAX_CITY_WORDS, f'{path}: main text should be {MIN_CITY_WORDS}-{MAX_CITY_WORDS} words, found {len(page.words)}'
             assert page.title.strip().endswith(CITY_TITLE_TAIL) and city in page.title, f'{path}: title must name {city} and end with "{CITY_TITLE_TAIL}"'
             assert any(city in h for h in page.h1), f'{path}: H1 must name {city}'
+            assert len(business_nodes(text)) == 1, f'{path}: a city page must carry exactly one {BUSINESS_TYPE} record'
         if page.lang == 'bg' and not path.parts[0] == 'en':
             footer_targets = {urljoin(canonical, href) for href, label, nav, main, foot in page.links if foot}
             for target in CITY_PAGES:
