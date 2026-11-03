@@ -331,6 +331,11 @@
     .cell.busy{ background: var(--busy); border-color: rgba(216,90,90,.7); }
     .cell.busy .day-number{ text-decoration: line-through; text-decoration-thickness: 2px; }
     .cell.past{ background: rgba(255,255,255,.04); color: rgba(245,247,251,.32); }
+    .cell{ position:relative; }
+    .cell-link{ position:absolute; inset:0; border-radius:inherit; }
+    .cell-link:focus-visible{ outline:3px solid #75a5e8; outline-offset:2px; }
+    .cell.free:hover, .cell.partial:hover{ transform:translateY(-2px); border-color:rgba(117,165,232,.7); }
+    .availability-hint{ margin:0 0 14px; color:var(--text-soft); font-size:.95rem; }
     .calendar-notice{ margin:0 0 14px; padding:12px 14px; border-radius:14px; border:1px dashed rgba(211,154,45,.7); background:var(--partial); color:var(--cream); font-size:.95rem; }
     .calendar-notice[hidden]{ display:none; }
 
@@ -560,8 +565,9 @@
           </div>
 
           <div class="availability-actions">
+            <a class="btn btn--primary" href="uslugi-ceni.html?from=availability#inquirySection">Запитване за дата</a>
+            <a class="btn btn--secondary" href="uslugi-ceni.html">Вижте цените</a>
             <a class="btn btn--secondary" href="portfolio.html">Към портфолиото</a>
-            <a class="btn btn--primary" href="uslugi-ceni.html">Вижте цените</a>
           </div>
         </div>
       </section>
@@ -700,6 +706,14 @@
           dayStatus.textContent = `${d} ${monthNames[m]} ${y}: ${status}`;
 
           cell.append(dayNumber, dayStatus);
+          if (!isPast && !isBusy) {
+            // a free or partly free date opens the inquiry form with that date filled in (assets/js/contact-bar.js)
+            const link = document.createElement('a');
+            link.className = 'cell-link';
+            link.href = `uslugi-ceni.html?from=calendar&date=${key}#inquirySection`;
+            link.setAttribute('aria-label', `${d} ${monthNames[m]} ${y}: ${isEnglish ? 'send an inquiry for this date' : 'изпратете запитване за тази дата'}`);
+            cell.appendChild(link);
+          }
           grid.appendChild(cell);
         }
 
@@ -772,7 +786,7 @@ const notice = document.getElementById('calendarNotice');
       load();
     })();
   </script>
-<script defer src="assets/js/main.js?v=20260929"></script>
+<script defer src="assets/js/main.js?v=20260929"></script><script defer src="/assets/js/contact-config.js?v=20261103"></script><script defer src="/assets/js/contact-bar.js?v=20261103"></script>
 <script defer src="assets/js/language-switch.js?v=20260929"></script>
 </body>
 </html>
