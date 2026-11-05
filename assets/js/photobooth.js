@@ -1,6 +1,19 @@
-// The "Photobooth inquiry" button on the pricing page: opens the inquiry form with the offer filled in (the same way the package buttons do).
+// Memory Booth: (1) the looping animation plays only while it is on screen, and never for a visitor who asked for less motion (the poster stays);
+// (2) the "Photobooth inquiry" button on the pricing page opens the inquiry form with the offer filled in (the same way the package buttons do).
 (() => {
   const en = new URLSearchParams(location.search).get('lang') === 'en' || location.pathname.startsWith('/en/');
+
+  const video = document.querySelector('[data-pb-video]');
+  if (video && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const watcher = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) video.play().catch(() => {});           // a blocked autoplay just leaves the poster
+        else video.pause();
+      }
+    }, { threshold: 0.3 });
+    watcher.observe(video);
+  }
+
   const button = document.querySelector('[data-photobooth-inquiry]');
   if (!button) return;
   button.addEventListener('click', () => {

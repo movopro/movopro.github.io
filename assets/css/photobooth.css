@@ -1,14 +1,15 @@
-/* Memory Booth - the winter photobooth (home page section + the pricing page card).
-   Pure CSS motion: falling snow, the three steps lighting up in turn, a camera flash after the smile and a slow drift of the photo.
-   Colours are the site's own (night blue + the light blue accent). prefers-reduced-motion shows the still picture. */
+/* Memory Booth - the photobooth (home page section + the pricing page card).
+   The picture is a short looping animation (countdown, flash, the strip of photos sliding out); around it a little confetti and the three
+   steps lighting in turn. Colours are the site's own (night blue + the light blue accent) with a party glow. prefers-reduced-motion shows
+   the still picture only. */
 
 body .pb-wrap { padding: 48px 0 8px; }
 .pb-section {
   position: relative; overflow: hidden; isolation: isolate;
   border: 1px solid rgba(171, 202, 241, .16); border-radius: 32px;
   background:
-    radial-gradient(120% 90% at 88% 0%, rgba(117, 165, 232, .24), transparent 56%),
-    radial-gradient(70% 60% at 0% 100%, rgba(117, 165, 232, .10), transparent 60%),
+    radial-gradient(110% 90% at 90% 0%, rgba(117, 165, 232, .24), transparent 56%),
+    radial-gradient(70% 60% at 6% 100%, rgba(255, 98, 168, .13), transparent 62%),
     linear-gradient(160deg, #0f1c30 0%, #0a121f 58%, #080c12 100%);
   box-shadow: 0 40px 90px rgba(0, 0, 0, .35);
 }
@@ -43,52 +44,51 @@ body .pb-wrap { padding: 48px 0 8px; }
 .pb-price span { color: rgba(245, 247, 251, .74); font-size: .96rem; }
 body .pb-copy .home-actions { margin-top: 26px; justify-content: flex-start !important; }       /* the site centres every .home-actions with !important */
 
-/* the photo of the booth */
+/* the picture: a looping animation (poster until it plays) */
 .pb-photo {
-  position: relative; margin: 0; overflow: hidden; border-radius: 22px; aspect-ratio: 3 / 4; background: #05080d;
+  position: relative; margin: 0; overflow: hidden; border-radius: 22px; aspect-ratio: 3 / 4; background: #070a12;
   box-shadow: 0 30px 80px rgba(0, 0, 0, .5), 0 0 0 1px rgba(171, 202, 241, .22);
 }
-.pb-photo picture, .pb-photo img { display: block; width: 100%; height: 100%; }
-.pb-photo img { object-fit: cover; transform-origin: 50% 62%; animation: pb-drift 18s ease-in-out infinite alternate; }
-@keyframes pb-drift { from { transform: scale(1); } to { transform: scale(1.06); } }
-.pb-flash {
-  position: absolute; inset: 0; pointer-events: none; opacity: 0; mix-blend-mode: screen;
-  background: radial-gradient(circle at 50% 47%, #fff, rgba(255, 255, 255, .55) 38%, transparent 70%);
-  animation: pb-flash 9s ease-out infinite;
-}
-@keyframes pb-flash { 0%, 63% { opacity: 0; } 64% { opacity: .85; } 72%, 100% { opacity: 0; } }
+.pb-photo picture, .pb-photo img, .pb-photo video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .pb-photo figcaption {
   position: absolute; left: 12px; bottom: 12px; padding: 6px 12px; border-radius: 999px;
   background: rgba(8, 12, 18, .72); border: 1px solid rgba(171, 202, 241, .22); color: #dbe8f8; font-size: .74rem; letter-spacing: .04em;
 }
 
-/* snow */
+/* confetti */
 .pb-snow { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .pb-snow i {
-  position: absolute; top: -12px; left: var(--x); width: var(--s); height: var(--s); border-radius: 50%;
-  background: #fff; opacity: 0; filter: blur(.4px); animation: pb-fall var(--d) linear var(--l) infinite;
+  position: absolute; top: -14px; left: var(--x); width: var(--s); height: calc(var(--s) * .55); border-radius: 2px;
+  background: var(--c, #ffc857); opacity: 0; animation: pb-fall var(--d) linear var(--l) infinite;
 }
 @keyframes pb-fall {
-  0% { transform: translate3d(0, 0, 0); opacity: 0; }
-  8% { opacity: .85; }
-  50% { transform: translate3d(14px, 50vh, 0); }
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  8% { opacity: .8; }
+  50% { transform: translate3d(18px, 50vh, 0) rotate(260deg); }
   92% { opacity: .6; }
-  100% { transform: translate3d(-8px, 105%, 0); opacity: 0; }
+  100% { transform: translate3d(-10px, 105%, 0) rotate(540deg); opacity: 0; }
 }
-.pb-snow i:nth-child(1)  { --x: 4%;  --s: 5px; --d: 12s; --l: -2s; }
-.pb-snow i:nth-child(2)  { --x: 11%; --s: 3px; --d: 9s;  --l: -6s; }
-.pb-snow i:nth-child(3)  { --x: 19%; --s: 6px; --d: 15s; --l: -9s; }
-.pb-snow i:nth-child(4)  { --x: 27%; --s: 4px; --d: 11s; --l: -1s; }
-.pb-snow i:nth-child(5)  { --x: 35%; --s: 3px; --d: 10s; --l: -7s; }
-.pb-snow i:nth-child(6)  { --x: 43%; --s: 5px; --d: 14s; --l: -4s; }
-.pb-snow i:nth-child(7)  { --x: 51%; --s: 4px; --d: 9s;  --l: -8s; }
-.pb-snow i:nth-child(8)  { --x: 58%; --s: 6px; --d: 16s; --l: -3s; }
-.pb-snow i:nth-child(9)  { --x: 66%; --s: 3px; --d: 11s; --l: -10s; }
-.pb-snow i:nth-child(10) { --x: 73%; --s: 5px; --d: 13s; --l: -5s; }
-.pb-snow i:nth-child(11) { --x: 81%; --s: 4px; --d: 10s; --l: -2s; }
-.pb-snow i:nth-child(12) { --x: 88%; --s: 6px; --d: 15s; --l: -7s; }
-.pb-snow i:nth-child(13) { --x: 94%; --s: 3px; --d: 9s;  --l: -4s; }
-.pb-snow i:nth-child(14) { --x: 47%; --s: 4px; --d: 12s; --l: -11s; }
+.pb-snow i:nth-child(5n + 1) { --c: #ffc857; }
+.pb-snow i:nth-child(5n + 2) { --c: #ff5fa2; }
+.pb-snow i:nth-child(5n + 3) { --c: #5ccfff; }
+.pb-snow i:nth-child(5n + 4) { --c: #b88cff; }
+.pb-snow i:nth-child(5n + 5) { --c: #ffffff; }
+.pb-snow i:nth-child(1)  { --x: 4%;  --s: 9px;  --d: 12s; --l: -2s; }
+.pb-snow i:nth-child(2)  { --x: 10%; --s: 7px;  --d: 9s;  --l: -6s; }
+.pb-snow i:nth-child(3)  { --x: 17%; --s: 10px; --d: 15s; --l: -9s; }
+.pb-snow i:nth-child(4)  { --x: 24%; --s: 8px;  --d: 11s; --l: -1s; }
+.pb-snow i:nth-child(5)  { --x: 31%; --s: 7px;  --d: 10s; --l: -7s; }
+.pb-snow i:nth-child(6)  { --x: 38%; --s: 9px;  --d: 14s; --l: -4s; }
+.pb-snow i:nth-child(7)  { --x: 45%; --s: 8px;  --d: 9s;  --l: -8s; }
+.pb-snow i:nth-child(8)  { --x: 52%; --s: 10px; --d: 16s; --l: -3s; }
+.pb-snow i:nth-child(9)  { --x: 59%; --s: 7px;  --d: 11s; --l: -10s; }
+.pb-snow i:nth-child(10) { --x: 66%; --s: 9px;  --d: 13s; --l: -5s; }
+.pb-snow i:nth-child(11) { --x: 73%; --s: 8px;  --d: 10s; --l: -2s; }
+.pb-snow i:nth-child(12) { --x: 80%; --s: 10px; --d: 15s; --l: -7s; }
+.pb-snow i:nth-child(13) { --x: 87%; --s: 7px;  --d: 9s;  --l: -4s; }
+.pb-snow i:nth-child(14) { --x: 93%; --s: 9px;  --d: 12s; --l: -11s; }
+.pb-snow i:nth-child(15) { --x: 48%; --s: 8px;  --d: 13s; --l: -6s; }
+.pb-snow i:nth-child(16) { --x: 14%; --s: 7px;  --d: 10s; --l: -9s; }
 
 /* the pricing page card */
 .pb-pricing { position: relative; overflow: hidden; }
@@ -97,7 +97,7 @@ body .pb-copy .home-actions { margin-top: 26px; justify-content: flex-start !imp
 .pb-pricing .pb-price { margin-top: 0; }
 .pb-pricing .pb-minline { margin: 10px 0 0; color: rgba(245, 247, 251, .82); }
 .pb-pricing .bullets { margin-top: 18px; }
-.pb-pricing .home-actions, .pb-pricing .pb-cta { margin-top: 20px; }
+.pb-pricing .pb-cta { margin-top: 20px; }
 
 @media (max-width: 860px) {
   body .pb-wrap { padding-top: 28px; }
@@ -109,6 +109,5 @@ body .pb-copy .home-actions { margin-top: 26px; justify-content: flex-start !imp
 }
 @media (prefers-reduced-motion: reduce) {
   .pb-snow { display: none; }
-  .pb-photo img, .pb-flash, .pb-steps li { animation: none; }
-  .pb-flash { opacity: 0; }
+  .pb-steps li { animation: none; }
 }
