@@ -1,0 +1,114 @@
+/* Memory Booth - the winter photobooth (home page section + the pricing page card).
+   Pure CSS motion: falling snow, the three steps lighting up in turn, a camera flash after the smile and a slow drift of the photo.
+   Colours are the site's own (night blue + the light blue accent). prefers-reduced-motion shows the still picture. */
+
+body .pb-wrap { padding: 48px 0 8px; }
+.pb-section {
+  position: relative; overflow: hidden; isolation: isolate;
+  border: 1px solid rgba(171, 202, 241, .16); border-radius: 32px;
+  background:
+    radial-gradient(120% 90% at 88% 0%, rgba(117, 165, 232, .24), transparent 56%),
+    radial-gradient(70% 60% at 0% 100%, rgba(117, 165, 232, .10), transparent 60%),
+    linear-gradient(160deg, #0f1c30 0%, #0a121f 58%, #080c12 100%);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, .35);
+}
+.pb-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .78fr); gap: clamp(26px, 4.2vw, 60px); align-items: center;
+  padding: clamp(28px, 4.6vw, 64px);
+}
+.pb-copy .home-title { max-width: 20ch; }
+.pb-lead { max-width: 54ch; margin: 16px 0 0; color: rgba(245, 247, 251, .82); font-size: 1.02rem; line-height: 1.8; font-weight: 300; }
+
+/* the three steps are printed on the booth itself: touch the screen, smile, take your photo */
+.pb-steps { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; padding: 0; }
+.pb-steps li {
+  display: flex; align-items: center; gap: 10px; padding: 9px 16px 9px 9px;
+  border: 1px solid rgba(171, 202, 241, .2); border-radius: 999px; background: rgba(255, 255, 255, .04);
+  color: #eef4fc; font-size: .92rem; animation: pb-step 9s ease-in-out infinite;
+}
+.pb-steps li:nth-child(2) { animation-delay: 3s; }
+.pb-steps li:nth-child(3) { animation-delay: 6s; }
+.pb-steps b {
+  display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(117, 165, 232, .22); color: #abcaf1; font-size: .85rem; font-weight: 700;
+}
+@keyframes pb-step {
+  0%, 28% { border-color: #75a5e8; background: rgba(117, 165, 232, .17); box-shadow: 0 0 0 4px rgba(117, 165, 232, .12); }
+  34%, 100% { border-color: rgba(171, 202, 241, .2); background: rgba(255, 255, 255, .04); box-shadow: none; }
+}
+
+.pb-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 28px 0 0; }
+.pb-price strong { font-size: clamp(2.3rem, 4.2vw, 3.3rem); font-weight: 600; line-height: 1; color: #fff; letter-spacing: .01em; }
+.pb-price span { color: rgba(245, 247, 251, .74); font-size: .96rem; }
+body .pb-copy .home-actions { margin-top: 26px; justify-content: flex-start !important; }       /* the site centres every .home-actions with !important */
+
+/* the photo of the booth */
+.pb-photo {
+  position: relative; margin: 0; overflow: hidden; border-radius: 22px; aspect-ratio: 3 / 4; background: #05080d;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5), 0 0 0 1px rgba(171, 202, 241, .22);
+}
+.pb-photo picture, .pb-photo img { display: block; width: 100%; height: 100%; }
+.pb-photo img { object-fit: cover; transform-origin: 50% 62%; animation: pb-drift 18s ease-in-out infinite alternate; }
+@keyframes pb-drift { from { transform: scale(1); } to { transform: scale(1.06); } }
+.pb-flash {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; mix-blend-mode: screen;
+  background: radial-gradient(circle at 50% 47%, #fff, rgba(255, 255, 255, .55) 38%, transparent 70%);
+  animation: pb-flash 9s ease-out infinite;
+}
+@keyframes pb-flash { 0%, 63% { opacity: 0; } 64% { opacity: .85; } 72%, 100% { opacity: 0; } }
+.pb-photo figcaption {
+  position: absolute; left: 12px; bottom: 12px; padding: 6px 12px; border-radius: 999px;
+  background: rgba(8, 12, 18, .72); border: 1px solid rgba(171, 202, 241, .22); color: #dbe8f8; font-size: .74rem; letter-spacing: .04em;
+}
+
+/* snow */
+.pb-snow { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.pb-snow i {
+  position: absolute; top: -12px; left: var(--x); width: var(--s); height: var(--s); border-radius: 50%;
+  background: #fff; opacity: 0; filter: blur(.4px); animation: pb-fall var(--d) linear var(--l) infinite;
+}
+@keyframes pb-fall {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  8% { opacity: .85; }
+  50% { transform: translate3d(14px, 50vh, 0); }
+  92% { opacity: .6; }
+  100% { transform: translate3d(-8px, 105%, 0); opacity: 0; }
+}
+.pb-snow i:nth-child(1)  { --x: 4%;  --s: 5px; --d: 12s; --l: -2s; }
+.pb-snow i:nth-child(2)  { --x: 11%; --s: 3px; --d: 9s;  --l: -6s; }
+.pb-snow i:nth-child(3)  { --x: 19%; --s: 6px; --d: 15s; --l: -9s; }
+.pb-snow i:nth-child(4)  { --x: 27%; --s: 4px; --d: 11s; --l: -1s; }
+.pb-snow i:nth-child(5)  { --x: 35%; --s: 3px; --d: 10s; --l: -7s; }
+.pb-snow i:nth-child(6)  { --x: 43%; --s: 5px; --d: 14s; --l: -4s; }
+.pb-snow i:nth-child(7)  { --x: 51%; --s: 4px; --d: 9s;  --l: -8s; }
+.pb-snow i:nth-child(8)  { --x: 58%; --s: 6px; --d: 16s; --l: -3s; }
+.pb-snow i:nth-child(9)  { --x: 66%; --s: 3px; --d: 11s; --l: -10s; }
+.pb-snow i:nth-child(10) { --x: 73%; --s: 5px; --d: 13s; --l: -5s; }
+.pb-snow i:nth-child(11) { --x: 81%; --s: 4px; --d: 10s; --l: -2s; }
+.pb-snow i:nth-child(12) { --x: 88%; --s: 6px; --d: 15s; --l: -7s; }
+.pb-snow i:nth-child(13) { --x: 94%; --s: 3px; --d: 9s;  --l: -4s; }
+.pb-snow i:nth-child(14) { --x: 47%; --s: 4px; --d: 12s; --l: -11s; }
+
+/* the pricing page card */
+.pb-pricing { position: relative; overflow: hidden; }
+.pb-pricing > *:not(.pb-snow) { position: relative; z-index: 1; }
+.pb-pricing-grid { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: clamp(22px, 3.4vw, 44px); align-items: center; margin-top: 22px; }
+.pb-pricing .pb-price { margin-top: 0; }
+.pb-pricing .pb-minline { margin: 10px 0 0; color: rgba(245, 247, 251, .82); }
+.pb-pricing .bullets { margin-top: 18px; }
+.pb-pricing .home-actions, .pb-pricing .pb-cta { margin-top: 20px; }
+
+@media (max-width: 860px) {
+  body .pb-wrap { padding-top: 28px; }
+  .pb-inner, .pb-pricing-grid { grid-template-columns: 1fr; }
+  .pb-photo { max-width: 360px; width: 100%; margin: 0 auto; }
+  body .pb-copy, body .pb-copy .home-eyebrow, body .pb-copy .home-title, body .pb-copy .pb-lead { text-align: left !important; }   /* the site centres headings and paragraphs on phones; the steps and buttons are left aligned */
+  body .pb-copy .home-eyebrow { justify-content: flex-start; }
+  .pb-steps li { font-size: .88rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pb-snow { display: none; }
+  .pb-photo img, .pb-flash, .pb-steps li { animation: none; }
+  .pb-flash { opacity: 0; }
+}

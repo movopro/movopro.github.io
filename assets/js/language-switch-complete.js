@@ -44,6 +44,24 @@
     'Кадри':'Frames','снимки':'photos','снимка':'photo','сватба':'wedding','сватбени':'wedding','фотосесия':'photo session','фотосесии':'photo sessions','емоция':'emotion','светлина':'light','детайл':'detail','естествени моменти':'authentic moments','момент':'moment','моменти':'moments','видео':'video','видеа':'videos','филм':'film','филми':'films','трейлър':'trailer','трейлъри':'trailers','тийзър':'teaser','тийзъри':'teasers','брандове':'brands','услуги':'services','реклама':'advertising','училищни':'school','хора':'people','енергия':'energy','любов':'love','нежност':'tenderness','нов':'new','кадър':'frame','дата':'date','цени':'pricing','пакет':'package','пакети':'packages','екип':'team','час':'hour','часа':'hours','локация':'location','проверете':'check','вижте':'view','разгледайте':'browse','избрани':'selected','истински':'real','история':'story','истории':'stories','Вашият':'Your','вашия':'your','вашето':'your','ден':'day','деня':'day','работата':'work','само':'only','част':'part','включена':'included','включено':'included','включен':'included'
   };
   Object.assign(M,{
+    'Нова фотобудка · тази зима':'New photobooth · this winter',
+    'Гостите ви се снимат, смеят се и си тръгват със спомен.':'Your guests pose, laugh and leave with a keepsake.',
+    'Memory Booth е нашата нова фотобудка за зимни партита, фирмени вечери, рождени дни и семейни празници. Докосвате екрана, усмихвате се и взимате снимката.':'Memory Booth is our new photobooth for winter parties, company evenings, birthdays and family celebrations. You touch the screen, smile and take your photo.',
+    'Как работи':'How it works','Докосни екрана':'Touch the screen','Усмихни се':'Smile','Вземи снимката':'Take your photo',
+    'от 90 €':'from 90 €','на час · минимум 2 часа':'per hour · minimum 2 hours',
+    'Цени и запитване':'Prices & inquiry','Свободни дати':'Available dates',
+    'Memory Booth на вечерно събитие':'Memory Booth at an evening event',
+    'Фотобудка Memory Booth вечер на открито: екран с три стъпки, QR код и светлини в градината':'The Memory Booth photobooth outdoors in the evening: a screen with three steps, a QR code and lights in the garden',
+    'Фотобудка':'Photobooth',
+    'Memory Booth е нашата нова фотобудка за зимни партита, фирмени вечери и семейни празници.':'Memory Booth is our new photobooth for winter parties, company evenings and family celebrations.',
+    'нова за сезона':'new this season',
+    'При минимум 2 часа цената започва от 180 €.':'With the 2-hour minimum, the price starts at 180 €.',
+    'Три стъпки на самата будка: докосни екрана, усмихни се, вземи снимката.':'Three steps on the booth itself: touch the screen, smile, take your photo.',
+    'На будката има QR код, през който гостите разглеждат снимките си.':'The booth has a QR code that guests use to view their photos.',
+    'Датата, продължителността и мястото се уточняват в запитването.':'The date, duration and venue are agreed in your inquiry.',
+    'Запитване за фотобудка':'Photobooth inquiry'
+  });
+  Object.assign(M,{
     'Снимаме истинските моменти — тихите, шумните, красивите и неподправените. Фото и видео, които не просто показват как е изглеждал денят, а ви връщат в него.':'We capture real moments — the quiet, the loud, the beautiful and the unplanned. Photo and video that do more than show what your day looked like; they bring you back to it.',
     'Сватбен фотограф и видеограф | Memory Photo & Video':'Wedding Photographer & Videographer | Memory Photo & Video',
     'Memory Photo & Video — сватбена фотография и видеография с внимание към светлината, емоцията и детайла. Кърджали и цяла България.':'Memory Photo & Video — wedding photography and videography with attention to light, emotion and detail. Kardzhali and throughout Bulgaria.',
