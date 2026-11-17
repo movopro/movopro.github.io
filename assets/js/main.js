@@ -511,6 +511,17 @@ window.mpvEventForLink = function mpvEventForLink(href, pageHost) {
   if (host === (pageHost || 'memoryphotoandvideo.com').replace(/^www\./, '') && /^\/(en\/)?availability(\.html)?$/.test(url.pathname)) return 'availability_cta_click';
   return null;
 };
+/* A visitor who taps phone, e-mail, WhatsApp or Messenger is a lead for the advertising too: Meta's standard "Contact" event.
+   window.fbq exists only after the visitor allowed advertising (see loadMetaPixel), so nothing is sent without that "yes". */
+window.mpvMetaEventFor = function mpvMetaEventFor(name) {
+  return /^contact_(phone|email|whatsapp|messenger)_click$/.test(name || '') ? 'Contact' : null;
+};
+window.mpvTrackMeta = function mpvTrackMeta(name) {
+  const event = window.mpvMetaEventFor(name);
+  if (!event || typeof window.fbq !== 'function') return false;
+  window.fbq('track', event);
+  return true;
+};
 window.mpvTrack = function mpvTrack(name, params) {
   if (typeof window.gtag !== 'function' || window['ga-disable-G-WJK01GL7PM'] === true) return false;
   window.gtag('event', name, params || {});
@@ -520,5 +531,8 @@ document.addEventListener('click', event => {
   const link = event.target.closest?.('a[href]');
   if (!link) return;
   const name = window.mpvEventForLink(link.getAttribute('href'), location.hostname);
-  if (name) window.mpvTrack(name, { link_url: link.href, page_path: location.pathname });
+  if (name) {
+    window.mpvTrack(name, { link_url: link.href, page_path: location.pathname });
+    window.mpvTrackMeta(name);
+  }
 }, { passive: true });

@@ -56,3 +56,19 @@ test('click handler reports a social link click', () => {
   click({ target: { closest: () => null } });
   assert.equal(calls.length, 1);
 });
+
+test('a contact click is also Meta\'s "Contact" - only when the pixel exists (advertising allowed), never for other links', () => {
+  const { sandbox: w, listeners } = load();
+  const click = listeners.filter(l => l.type === 'click').pop().fn;
+  const link = (href) => ({ getAttribute: () => href, href });
+  const metaCalls = [];
+  w.gtag = () => {};
+  click({ target: { closest: () => link('tel:+359000') } });
+  assert.equal(metaCalls.length, 0, 'no fbq (no advertising "yes"): nothing is sent');
+  w.fbq = (...args) => metaCalls.push(args);
+  for (const href of ['tel:+359000', 'mailto:a@b.bg', 'https://wa.me/359', 'https://m.me/x']) click({ target: { closest: () => link(href) } });
+  assert.deepEqual(metaCalls, [['track', 'Contact'], ['track', 'Contact'], ['track', 'Contact'], ['track', 'Contact']]);
+  for (const href of ['https://www.instagram.com/x/', 'https://memoryphotoandvideo.com/availability.html', 'https://google.com/maps/x']) click({ target: { closest: () => link(href) } });
+  assert.equal(metaCalls.length, 4, 'social, availability and reviews links are not leads');
+  assert.equal(w.mpvMetaEventFor('contact_click'), null);
+});
