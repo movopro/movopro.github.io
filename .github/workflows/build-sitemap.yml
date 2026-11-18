@@ -2,6 +2,12 @@ name: Build SEO sitemap
 
 on:
   workflow_dispatch:
+  # The English pages are committed by "Build static English pages" with a token that does not start workflows by push, so the
+  # sitemap would keep their old lastmod until the next push. Rebuilding after that workflow gives them the real date.
+  workflow_run:
+    workflows: ["Build static English pages"]
+    types: [completed]
+    branches: [main]
   push:
     branches: [main]
     paths:
@@ -22,6 +28,12 @@ on:
       - 'scripts/build_sitemap.py'
       - 'scripts/validate_seo.py'
       - 'scripts/check_links.py'
+      - 'scripts/link_weddings.py'
+      - 'scripts/link_weddings_test.py'
+      - 'scripts/indexnow.py'
+      - 'scripts/indexnow_test.py'
+      - 'video-sitemap.xml'
+      - 'robots.txt'
       - 'header.html'
       - 'sitemap.xml'
       - 'sitemap-images.xml'
@@ -40,6 +52,9 @@ jobs:
         with:
           fetch-depth: 0   # full history, so each page's real last-modified date can be read
 
+      - name: Link wedding stories from the city pages and from each other
+        run: python3 scripts/link_weddings.py
+
       - name: Generate sitemaps
         run: python3 scripts/build_sitemap.py
 
@@ -51,16 +66,21 @@ jobs:
           python3 scripts/check_links_test.py
           python3 scripts/check_links.py
 
+      - name: Test the link and IndexNow scripts
+        run: |
+          python3 scripts/link_weddings_test.py
+          python3 scripts/indexnow_test.py
+
       - name: Commit sitemap
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml sitemap-images.xml
+          git add sitemap.xml sitemap-images.xml weddings svatben-fotograf-*.html
           if git diff --cached --quiet; then
             echo 'Sitemap already up to date.'
             exit 0
           fi
-          git commit -m "Refresh sitemaps and image discovery [skip sitemap]"
+          git commit -m "Refresh sitemaps, image discovery and wedding story links [skip sitemap]"
           # Other site workflows can save to main at the same moment; catch up and retry.
           for attempt in 1 2 3 4; do
             git fetch origin main && git rebase origin/main && git push && exit 0

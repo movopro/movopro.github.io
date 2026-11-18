@@ -1,5 +1,6 @@
 """Check city links, canonical sitemap coverage, image markup/sitemap and business structured data (stdlib only)."""
 from collections import Counter
+from fnmatch import fnmatch
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
@@ -261,6 +262,109 @@ def check_image_data(text_by_path):
     return len(rows)
 
 
+CITY_FILE_GLOB = 'svatben-fotograf-*.html'
+# Images that are interface chrome, never listed in the image sitemap (same list as scripts/build_sitemap.py).
+CHROME_IMAGES = {'assets/icon-64.png', 'assets/icon-192.png', 'assets/icon-512.png', 'apple-touch-icon.png'}
+GALLERY_VARIANT = re.compile(r'^assets/gallery/([a-z0-9-]+?)(?:-(?:800|480))?\.webp$')
+HERO_VARIANT = {'assets/hero/svatben-fotograf-memory-1200.webp': 'assets/hero/svatben-fotograf-memory-1920.webp'}
+SM_NS = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9', 'i': 'http://www.google.com/schemas/sitemap-image/1.1',
+         'v': 'http://www.google.com/schemas/sitemap-video/1.1'}
+
+
+def page_url(name):
+    """Canonical address of a page file ('index.html' -> '/', 'en/index.html' -> '/en/')."""
+    route = '/' + name
+    return HOST + (route[:-10] if route.endswith('/index.html') else route)
+
+
+def link_targets(name, text):
+    """Absolute URLs of every <a href> in a page (relative links resolved the way the browser does)."""
+    base = page_base(Path(name), text)
+    return {urljoin(base, href).split('#')[0] for href, *_ in Page(text).links if href}
+
+
+def check_wedding_links(texts):
+    """Each wedding story is linked from the hub (videos.html), every city page and every other story (an orphan went unindexed)."""
+    stories = sorted(name for name in texts if name.startswith('weddings/'))
+    cities = sorted(name for name in texts if fnmatch(name, CITY_FILE_GLOB))
+    assert stories and cities, 'no wedding stories or city pages found'
+    for story in stories:
+        for source in ['videos.html', *cities, *[other for other in stories if other != story]]:
+            assert page_url(story) in link_targets(source, texts[source]), f'{source} does not link to {story} (run python3 scripts/link_weddings.py)'
+    return len(stories)
+
+
+def check_video_sitemap(texts, page_urls):
+    """video-sitemap.xml lists each video once, under a page that embeds it, with matching thumbnail and player addresses."""
+    listed = {}
+    for node in ET.parse('video-sitemap.xml').findall('s:url', SM_NS):
+        loc = node.findtext('s:loc', '', SM_NS)
+        assert loc in page_urls, f'video-sitemap.xml: {loc} is not a sitemap.xml page'
+        for video in node.findall('v:video', SM_NS):
+            player = video.findtext('v:player_loc', '', SM_NS)
+            match = re.fullmatch(r'https://www\.youtube\.com/embed/([A-Za-z0-9_-]{11})', player)
+            assert match, f'video-sitemap.xml: {loc} has a player_loc that is not a YouTube embed: {player!r}'
+            video_id = match.group(1)
+            assert video.findtext('v:thumbnail_loc', '', SM_NS) == f'https://i.ytimg.com/vi/{video_id}/hqdefault.jpg', f'video-sitemap.xml: {loc}: thumbnail does not match video {video_id}'
+            for field in ('title', 'description'):
+                assert (video.findtext(f'v:{field}', '', SM_NS) or '').strip(), f'video-sitemap.xml: {loc}: video {video_id} has no {field}'
+            listed.setdefault(loc, set()).add(video_id)
+    embedded = {}
+    for name, text in sorted(texts.items()):
+        if name.startswith('en/') or 'name="robots" content="noindex' in text:
+            continue  # the English pages show the same videos; the sitemap lists them once, under the Bulgarian page
+        embedded[page_url(name)] = set(re.findall(r'data-yt-id="([A-Za-z0-9_-]{11})"', text))
+    for loc, ids in listed.items():
+        assert ids <= embedded.get(loc, set()), f'video-sitemap.xml lists {sorted(ids - embedded.get(loc, set()))} for {loc}, but the page does not embed them'
+    every = set().union(*listed.values()) if listed else set()
+    for loc, ids in embedded.items():
+        assert ids <= every, f'{loc} embeds {sorted(ids - every)}, which video-sitemap.xml does not list under any page'
+    return len(every)
+
+
+def check_image_discovery(texts, page_urls):
+    """Every described content image of every Bulgarian page is in sitemap-images.xml under that page (English pages show the same files)."""
+    listed = {}
+    for node in ET.parse('sitemap-images.xml').findall('s:url', SM_NS):
+        loc = node.findtext('s:loc', '', SM_NS)
+        assert loc in page_urls, f'sitemap-images.xml: {loc} is not a sitemap.xml page'
+        listed[loc] = {image.findtext('i:loc', '', SM_NS) for image in node.findall('i:image', SM_NS)}
+        for url in listed[loc]:
+            assert url.startswith(HOST + '/') and Path(url[len(HOST) + 1:]).is_file(), f'sitemap-images.xml: {url} is not a published file'
+    checked = 0
+    for name, text in sorted(texts.items()):
+        if name.startswith('en/') or 'name="robots" content="noindex' in text:
+            continue
+        base = page_base(Path(name), text)
+        for tag in IMG_TAG.findall(text):
+            if attribute(tag, 'id') == 'lightboxImage':
+                continue
+            parsed = urlparse(urljoin(base, attribute(tag, 'src') or ''))
+            rel = parsed.path.lstrip('/')
+            if parsed.netloc != 'memoryphotoandvideo.com' or rel in CHROME_IMAGES or not (attribute(tag, 'alt') or '').strip():
+                continue  # off-site, interface chrome or decorative (empty alt)
+            wanted = {rel, HERO_VARIANT.get(rel, rel)}
+            match = GALLERY_VARIANT.match(rel)
+            if match:
+                wanted.add(f'assets/gallery/{match.group(1)}.webp')
+            assert any(f'{HOST}/{item}' in listed.get(page_url(name), set()) for item in wanted), f'sitemap-images.xml does not list {rel} for {page_url(name)}'
+            checked += 1
+    return checked
+
+
+def check_discovery(texts, page_urls):
+    """Internal links to every story, the video sitemap, the image sitemap and robots.txt: what crawlers need to find each page and picture."""
+    stories = check_wedding_links(texts)
+    videos = check_video_sitemap(texts, page_urls)
+    images = check_image_discovery(texts, page_urls)
+    robots = Path('robots.txt').read_text(encoding='utf-8')
+    for sitemap in sorted(Path('.').glob('*sitemap*.xml')):
+        assert f'Sitemap: {HOST}/{sitemap.name}' in robots, f'robots.txt does not reference {sitemap.name}'
+        assert sitemap.stat().st_size < 50 * 1024 * 1024, f'{sitemap.name} is larger than 50 MB'
+    assert not re.search(r'(?im)^\s*disallow:\s*/(assets|weddings|en)?\s*$', robots), 'robots.txt blocks the site, /assets, /weddings or /en'
+    return stories, videos, images
+
+
 def validate():
     ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls = [node.text for node in ET.parse('sitemap.xml').findall('s:url/s:loc', ns)]
@@ -314,7 +418,9 @@ def validate():
         assert HOST + target in pricing_links, f'uslugi-ceni.html does not link to {target}'
     records = check_business_data(business)
     photos = check_image_data(texts)
+    stories, videos, discovered = check_discovery(texts, set(urls))
     print(f'Validated all {len(expected)} canonical pages, sitemap coverage, city links, {images} <img> tags, {photos} gallery photos (page, structured data, image sitemap) and {records} consistent business records.')
+    print(f'Discovery: {stories} wedding stories linked from the hub, every city page and each other; {videos} videos match video-sitemap.xml; {discovered} content images are in sitemap-images.xml.')
 
 
 if __name__ == '__main__':

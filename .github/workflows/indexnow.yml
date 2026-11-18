@@ -1,0 +1,63 @@
+name: Submit changed pages to IndexNow
+
+# Tells Bing, Yandex, Naver, Seznam and their partners (not Google) which pages and pictures changed. It runs after "Build SEO sitemap"
+# (that workflow's own commit does not start other workflows by push, so this one listens to its completion instead).
+#
+# One owner step turns it on: add the repository secret INDEXNOW_KEY (Settings -> Secrets and variables -> Actions -> New repository
+# secret; the value is the content of the key file `<key>.txt` in the repository root). Until the secret exists every run prints a
+# notice and ends green; nothing is sent. The secret is never printed.
+#
+# Manual run (Actions -> Run workflow): "apply" is off by default, which only lists what would be sent.
+# Days 0 + images "all" + apply on = submit every page and every picture once.
+on:
+  workflow_run:
+    workflows: ["Build SEO sitemap"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Pages whose sitemap lastmod is within this many days (0 = every page)"
+        default: "1"
+      images:
+        description: "Also send pictures: none, changed (files committed in that window) or all"
+        type: choice
+        options: [none, changed, all]
+        default: changed
+      apply:
+        description: "Really send to IndexNow (off = dry run: only list what would be sent)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# Two runs close together would send the same pages twice.
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 0   # git log tells which picture files changed
+
+      - name: Check the IndexNow scripts
+        run: python3 scripts/indexnow_test.py
+
+      - name: Submit to IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          DAYS: ${{ github.event.inputs.days || '1' }}
+          IMAGES: ${{ github.event.inputs.images || 'changed' }}
+          APPLY: ${{ github.event_name == 'workflow_run' && 'true' || github.event.inputs.apply }}
+        run: |
+          flags=""
+          if [ "$APPLY" = "true" ]; then flags="--apply"; fi
+          python3 scripts/indexnow.py --days "$DAYS" --images "$IMAGES" $flags
