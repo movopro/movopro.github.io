@@ -124,12 +124,51 @@
     q('recalcEvent')?.addEventListener('click',()=>{calcEvent();scrollToResult(eventBreakdown||eventTotalEUR);});
     q('resetEventCalc')?.addEventListener('click',()=>{if(eventType)eventType.value='birthday';eventHours.value='2';eventPeople.value='1';eventKm.value='0';eventRaw.checked=false;calcEvent();});
 
-    const inquiry=q('inquirySection'),inquiryType=q('inquiryType'),selected=q('selectedOffer'),summary=q('inquirySummary'),name=q('clientName'),phone=q('clientPhone'),email=q('clientEmail'),date=q('eventDate'),locationField=q('eventLocation'),note=q('clientNote'),privacy=q('privacyConsent'),send=q('sendInquiry'),status=q('sendStatus');
+    const inquiry=q('inquirySection'),inquiryType=q('inquiryType'),selected=q('selectedOffer'),summary=q('inquirySummary'),name=q('clientName'),phone=q('clientPhone'),email=q('clientEmail'),date=q('eventDate'),locationField=q('eventLocation'),note=q('clientNote'),privacy=q('privacyConsent'),send=q('sendInquiry'),status=q('sendStatus'),form=q('inquiryForm');
     const openInquiry=()=>{inquiry?.scrollIntoView({behavior:'smooth',block:'start'});inquiry?.focus({preventScroll:true});};
-    // Errors are announced through the status line, marked on the field and the field gets the focus.
-    const invalid=(field,message)=>{status.dataset.state='error';status.textContent=message;field?.setAttribute('aria-invalid','true');field?.focus();};
-    [name,phone,email,date].forEach(field=>field?.addEventListener('input',()=>field.removeAttribute('aria-invalid')));
-    privacy?.addEventListener('change',()=>privacy.removeAttribute('aria-invalid'));
+    // The inquiry e-mail is read by Marvis (home assistant), which finds the fields by their NAMES. The contract, field by field:
+    // subject MEMORY-INQUIRY (hidden) | name | phone (required) | contact_via viber|call|email | email (required only for contact_via=email)
+    // | event_type | event_date | message | lang bg|en (hidden) | page (hidden); event_location, selected_offer and calculator_summary are extras.
+    // The names live on the form controls (uslugi-ceni.html); the payload below is built from them. Documented in docs/sessions/2026-11-20-contact-form-viber.md.
+    const T=en?{
+      name:'Please enter your name.',
+      phone:'Please enter your phone or Viber number.',
+      phoneBad:'This phone number does not look right. Use a format like 0888 123 456 or +359 888 123 456; for a number outside Bulgaria start with + and the country code.',
+      emailNeeded:'Please enter your email, because you chose to be contacted by email.',
+      emailBad:'Please enter a valid email address, for example name@example.com.',
+      date:'Please select the event date.',
+      offer:'Please select an offer or configuration first.',
+      consent:'Please confirm your consent to the processing of your personal data.',
+      emailOpt:'Email (optional)',emailReq:'Email'
+    }:{
+      name:'Моля, попълнете име.',
+      phone:'Моля, попълнете телефон или Viber номер.',
+      phoneBad:'Телефонният номер не изглежда верен. Използвайте формат като 0888 123 456 или +359 888 123 456; за номер извън България започнете с + и кода на държавата.',
+      emailNeeded:'Моля, попълнете имейл, защото сте избрали връзка по имейл.',
+      emailBad:'Моля, въведете валиден имейл адрес, например ime@example.com.',
+      date:'Моля, изберете дата на събитието.',
+      offer:'Моля, първо изберете оферта или конфигурация.',
+      consent:'Моля, потвърдете съгласието за обработка на лични данни.',
+      emailOpt:'Имейл (по желание)',emailReq:'Имейл'
+    };
+    // Bulgarian numbers (08xx/09xx mobile, 0-prefixed landline, the same without the leading 0, +359 / 00359 / 359, also with a stray 0 after the country code)
+    // and any international number written +<country code>...; spaces, dashes, dots and brackets are ignored. Letters are never accepted.
+    const phoneOk=raw=>{const c=String(raw).replace(/[\s().\-/]/g,'').replace(/^00(?=[1-9])/,'+');return /^0(?:[89]\d{8}|[1-7]\d{7,8})$/.test(c)||/^[89]\d{8}$/.test(c)||/^\+?3590?[1-9]\d{7,8}$/.test(c)||/^\+(?!359)[1-9]\d{7,14}$/.test(c);};
+    const emailOk=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    const viaRadios=[...document.querySelectorAll('input[name="contact_via"]')],emailLabel=document.querySelector('label[for="clientEmail"]');
+    const viaValue=()=>viaRadios.find(r=>r.checked)?.value||'viber';
+    // Errors are announced through the status line and next to the field (linked with aria-describedby), marked on the field, and the field gets the focus.
+    const errorEl=field=>{let el=q(field.id+'Error');if(!el){el=document.createElement('p');el.id=field.id+'Error';el.className='field-error';const host=field.closest('.check-row')||field.closest('.calc-row')||field.parentNode;host.insertAdjacentElement(host.classList.contains('check-row')?'afterend':'beforeend',el);}return el;};
+    const invalid=(field,message)=>{status.dataset.state='error';status.textContent=message;if(field){field.setAttribute('aria-invalid','true');const el=errorEl(field);el.textContent=message;const ids=(field.getAttribute('aria-describedby')||'').split(' ').filter(Boolean);if(!ids.includes(el.id))ids.push(el.id);field.setAttribute('aria-describedby',ids.join(' '));field.focus();}};
+    const clearInvalid=field=>{if(!field||!field.hasAttribute('aria-invalid'))return;field.removeAttribute('aria-invalid');const el=q(field.id+'Error');if(el){el.textContent='';const ids=(field.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==el.id);if(ids.length)field.setAttribute('aria-describedby',ids.join(' '));else field.removeAttribute('aria-describedby');}if(status.dataset.state==='error'){status.textContent='';delete status.dataset.state;}};
+    [name,phone,email,date].forEach(field=>field?.addEventListener('input',()=>clearInvalid(field)));
+    privacy?.addEventListener('change',()=>clearInvalid(privacy));
+    // E-mail is optional unless the visitor wants to be contacted by e-mail.
+    const syncVia=()=>{if(!email)return;const need=viaValue()==='email';email.required=need;if(emailLabel)emailLabel.textContent=need?T.emailReq:T.emailOpt;if(!need)clearInvalid(email);};
+    viaRadios.forEach(r=>r.addEventListener('change',syncVia));
+    // Hidden fields: the language the visitor read the page in and the page path they were on.
+    const stamp=()=>{const l=form?.elements.namedItem('lang'),p=form?.elements.namedItem('page');if(l)l.value=en?'en':'bg';if(p)p.value=location.pathname;};
+    stamp();syncVia();
     const weddingSummary=()=>en?`Type: Wedding\nPhotographers: ${+photo.value||0}\nVideographers: ${+video.value||0}\nExtra hours: ${clampHours(ot,0)}\nOne-way distance from Kardzhali (km): ${+km.value||0}\nDrone: ${droneMode.value==='hour'?'Hourly ('+clampHours(droneHours,1)+' h)':droneMode.value==='day'?'Full day':'No'}\nRaw files: ${raw.checked?'Yes':'No'}\nSeparate-day photo session: ${after.checked?'Yes':'No'}\nEstimated total: ${totalEUR.textContent}`:`Тип: Сватба\nФотографи: ${+photo.value||0}\nВидеографи: ${+video.value||0}\nДопълнителни часове: ${clampHours(ot,0)}\nРазстояние от Кърджали, еднопосочно (км): ${+km.value||0}\nДрон: ${droneMode.value==='hour'?'По часове ('+clampHours(droneHours,1)+' ч)':droneMode.value==='day'?'За целия ден':'Не'}\nСурови файлове: ${raw.checked?'Да':'Не'}\nФотосесия в отделен ден: ${after.checked?'Да':'Не'}\nОриентировъчна сума: ${totalEUR.textContent}`;
     const eventSummary=()=>{const m=en?{birthday:'Birthday',baptism:'Baptism',corporate:'Corporate event',other:'Other'}:{birthday:'Рожден ден',baptism:'Кръщене',corporate:'Фирмено събитие',other:'Друго'};return en?`Type: ${m[eventType.value]||'Other'}\nBillable hours: ${clampHours(eventHours,1)}\nPhotographers / videographers: ${+eventPeople.value||1}\nRate: €130 first hour + €90 each additional hour (part hours billed in full)\nOne-way distance from Kardzhali (km): ${+eventKm.value||0}\nRaw files: ${eventRaw.checked?'Yes':'No'}\nEstimated total: ${eventTotalEUR.textContent}`:`Тип: ${m[eventType.value]||'Друго'}\nЗапочнати часове: ${clampHours(eventHours,1)}\nФотографи / видеографи: ${+eventPeople.value||1}\nТарифа: 130 € първи започнат час + 90 € всеки следващ започнат час\nРазстояние от Кърджали, еднопосочно (км): ${+eventKm.value||0}\nСурови файлове: ${eventRaw.checked?'Да':'Не'}\nОриентировъчна сума: ${eventTotalEUR.textContent}`;};
 
@@ -137,16 +176,25 @@
     q('openWeddingInquiry')?.addEventListener('click',()=>{calcWedding();inquiryType.value='Индивидуална конфигурация';selected.value=en?'Custom wedding configuration':'Индивидуална конфигурация за сватба';summary.value=weddingSummary();openInquiry();});
     q('openEventInquiry')?.addEventListener('click',()=>{calcEvent();inquiryType.value='Друго събитие';selected.value=en?'Custom configuration for another event':'Индивидуална конфигурация за друго събитие';summary.value=eventSummary();openInquiry();});
 
-    if(send)send.addEventListener('click',async()=>{
-      const n=name.value.trim(),p=phone.value.trim(),e=email.value.trim(),d=date.value.trim(),loc=locationField.value.trim(),nt=note.value.trim(),offer=selected.value.trim(),sum=summary.value.trim();
-      if(!n)return invalid(name,en?'Please enter your name.':'Моля, попълнете име.');
-      if(!p)return invalid(phone,en?'Please enter your phone number.':'Моля, попълнете телефон.');
-      if(!e)return invalid(email,en?'Please enter your email.':'Моля, попълнете имейл.');
-      if(!d)return invalid(date,en?'Please select the event date.':'Моля, изберете дата на събитието.');
-      if(!sum)return invalid(selected,en?'Please select an offer or configuration first.':'Моля, първо изберете оферта или конфигурация.');
-      if(!privacy.checked)return invalid(privacy,en?'Please confirm your consent to the processing of your personal data.':'Моля, потвърдете съгласието за обработка на лични данни.');
+    // The form is a real <form novalidate>: Enter in a field sends it, and the messages below replace the browser's own bubbles.
+    if(form&&send)form.addEventListener('submit',async ev=>{
+      ev.preventDefault();
+      if(send.disabled)return;
+      const n=name.value.trim(),p=phone.value.trim(),e=email.value.trim(),d=date.value.trim(),sum=summary.value.trim(),via=viaValue();
+      if(!n)return invalid(name,T.name);
+      if(!p)return invalid(phone,T.phone);
+      if(!phoneOk(p))return invalid(phone,T.phoneBad);
+      if(via==='email'&&!e)return invalid(email,T.emailNeeded);
+      if(e&&!emailOk(e))return invalid(email,T.emailBad);
+      if(!d)return invalid(date,T.date);
+      if(!sum)return invalid(selected,T.offer);
+      if(!privacy.checked)return invalid(privacy,T.consent);
+      stamp();
+      const val=field=>(form.elements.namedItem(field)?.value||'').trim();
+      // Contract fields first, in this order; the e-mail key is left out when empty (Web3Forms treats it as the reply-to address); the extras come last.
+      const payload={access_key:'33fb475c-9d44-449b-9fd0-1fc667dd170e',subject:val('subject')||'MEMORY-INQUIRY',from_name:'Memory Photo & Video',name:n,phone:p,contact_via:via,...(e?{email:e}:{}),event_type:inquiryType.value,event_date:d,message:note.value.trim(),lang:val('lang'),page:val('page'),event_location:locationField.value.trim(),selected_offer:selected.value.trim(),calculator_summary:sum};
       send.disabled=true;status.dataset.state='sending';status.textContent=en?'Sending…':'Изпращане…';
-      try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'33fb475c-9d44-449b-9fd0-1fc667dd170e',subject:'Ново запитване от сайта - Memory Photo & Video',from_name:'Memory Photo & Video',name:n,email:e,phone:p,event_date:d,event_location:loc,inquiry_type:inquiryType.value,selected_offer:offer,calculator_summary:sum,note:nt})});const result=await r.json();if(result.success){if(window.mpvTrack)window.mpvTrack('generate_lead',{form_id:'pricing_inquiry',inquiry_type:inquiryType.value,page_path:location.pathname});status.dataset.state='ok';status.textContent=en?'Your inquiry was sent successfully.':'Запитването беше изпратено успешно.';[name,phone,email,date,locationField,note].forEach(el=>el.value='');privacy.checked=false;}else{status.dataset.state='error';status.textContent=en?'There was a problem sending the inquiry.':'Възникна проблем при изпращането.';}}catch(err){status.dataset.state='error';status.textContent=en?'Connection error. Please try again.':'Грешка при връзката. Опитайте отново.';}finally{send.disabled=false;send.focus();}
+      try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});const result=await r.json();if(result.success){if(window.mpvTrack)window.mpvTrack('generate_lead',{form_id:'pricing_inquiry',inquiry_type:inquiryType.value,page_path:location.pathname});status.dataset.state='ok';status.textContent=en?'Your inquiry was sent successfully.':'Запитването беше изпратено успешно.';[name,phone,email,date,locationField,note].forEach(el=>el.value='');privacy.checked=false;viaRadios.forEach(r=>{r.checked=r.value==='viber';});syncVia();}else{status.dataset.state='error';status.textContent=en?'There was a problem sending the inquiry.':'Възникна проблем при изпращането.';}}catch(err){status.dataset.state='error';status.textContent=en?'Connection error. Please try again.':'Грешка при връзката. Опитайте отново.';}finally{send.disabled=false;send.focus();}
     });
 
     updateDrone();calcWedding();calcEvent();

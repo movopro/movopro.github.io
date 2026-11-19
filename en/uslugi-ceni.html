@@ -585,6 +585,37 @@
 
     textarea.calc-input { resize: vertical; }
 
+    /* Inquiry form only: 16px fields (iOS does not zoom in on focus), 44px touch targets, inline errors. */
+    /* (main.css sets .84rem !important on these for the whole pricing page, so the override needs the same weight.) */
+    body:has(.pricing-page) #inquirySection .calc-input,
+    body:has(.pricing-page) #inquirySection .calc-select { font-size: 16px !important; min-height: 44px; }
+    #inquirySection .check-row { min-height: 44px; align-items: center; }
+    #inquirySection .check-row input { width: 22px; height: 22px; margin-top: 0; flex: none; }
+    #inquirySection .privacy-note a { display: inline-flex; align-items: center; min-height: 44px; }
+    #inquirySection .calc-input::placeholder { opacity: .55; }
+    .field-error { margin: 0; color: #f4a9a9; font-size: .9rem; line-height: 1.5; }
+    .field-error:empty { display: none; }
+    .contact-via { border: 0; margin: 12px 0; padding: 0; min-width: 0; }
+    .contact-via legend { padding: 0; margin-bottom: 8px; }
+    .contact-via__options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .contact-via__opt {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(171,202,241,.5);
+      background: rgba(0,0,0,.28);
+      color: var(--cream);
+      font-family: Manrope, sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .contact-via__opt input { width: 20px; height: 20px; margin: 0; accent-color: #75a5e8; flex: none; }
+    .contact-via__opt:has(input:checked) { border-color: #75a5e8; background: rgba(117,165,232,.2); }
+    .contact-via__opt:focus-within { outline: 2px solid #75a5e8; outline-offset: 2px; }
+
     .calc-two {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1124,9 +1155,13 @@
 <div class="calc-grid">
 <div class="calc-card wow-reveal" data-wow-delay="2">
 <h3>Inquiry details</h3>
+<form id="inquiryForm" novalidate="">
+<input name="subject" type="hidden" value="MEMORY-INQUIRY"/>
+<input name="lang" type="hidden" value="en"/>
+<input name="page" type="hidden" value="/en/uslugi-ceni.html"/>
 <div class="calc-row">
 <label class="calc-label" for="inquiryType">Inquiry type</label>
-<select class="calc-select" id="inquiryType">
+<select class="calc-select" id="inquiryType" name="event_type">
 <option value="Пакетна оферта">Package quote</option>
 <option value="Индивидуална конфигурация">Custom configuration</option>
 <option value="Друго събитие">Other event</option>
@@ -1136,40 +1171,48 @@
 <div class="calc-two">
 <div class="calc-row">
 <label class="calc-label" for="clientName">Name</label>
-<input autocomplete="name" class="calc-input" id="clientName" required="" type="text"/>
+<input autocomplete="name" class="calc-input" id="clientName" name="name" required="" type="text"/>
 </div>
 <div class="calc-row">
-<label class="calc-label" for="clientPhone">Phone</label>
-<input autocomplete="tel" class="calc-input" id="clientPhone" required="" type="tel"/>
+<label class="calc-label" for="clientPhone">Phone / Viber</label>
+<input autocomplete="tel" class="calc-input" id="clientPhone" inputmode="tel" name="phone" placeholder="0888 123 456" required="" type="tel"/>
 </div>
 </div>
+<fieldset class="contact-via">
+<legend class="calc-label">How would you like us to contact you?</legend>
+<div class="contact-via__options">
+<label class="contact-via__opt"><input checked="" name="contact_via" type="radio" value="viber"/><span>Viber</span></label>
+<label class="contact-via__opt"><input name="contact_via" type="radio" value="call"/><span>Phone call</span></label>
+<label class="contact-via__opt"><input name="contact_via" type="radio" value="email"/><span>Email</span></label>
+</div>
+</fieldset>
 <div class="calc-two">
 <div class="calc-row">
-<label class="calc-label" for="clientEmail">Email</label>
-<input autocomplete="email" class="calc-input" id="clientEmail" required="" type="email"/>
+<label class="calc-label" for="clientEmail">Email (optional)</label>
+<input autocomplete="email" class="calc-input" id="clientEmail" name="email" type="email"/>
 </div>
 <div class="calc-row">
 <label class="calc-label" for="eventDate">Event date</label>
-<input class="calc-input" id="eventDate" required="" type="date"/>
+<input class="calc-input" id="eventDate" name="event_date" required="" type="date"/>
 </div>
 </div>
 <div class="calc-two">
 <div class="calc-row">
 <label class="calc-label" for="eventLocation">Location</label>
-<input class="calc-input" id="eventLocation" type="text"/>
+<input class="calc-input" id="eventLocation" name="event_location" type="text"/>
 </div>
 <div class="calc-row">
 <label class="calc-label" for="selectedOffer">Selected offer</label>
-<input class="calc-input" id="selectedOffer" readonly="" type="text"/>
+<input class="calc-input" id="selectedOffer" name="selected_offer" readonly="" type="text"/>
 </div>
 </div>
 <div class="calc-row">
 <label class="calc-label" for="inquirySummary">Summary</label>
-<textarea class="calc-input" id="inquirySummary" readonly="" rows="8"></textarea>
+<textarea class="calc-input" id="inquirySummary" name="calculator_summary" readonly="" rows="8"></textarea>
 </div>
 <div class="calc-row">
 <label class="calc-label" for="clientNote">Additional details</label>
-<textarea class="calc-input" id="clientNote" placeholder="For example: event start time, number of guests, address, preferred style, additional requirements." rows="5"></textarea>
+<textarea class="calc-input" id="clientNote" name="message" placeholder="For example: event start time, number of guests, address, preferred style, additional requirements." rows="5"></textarea>
 </div>
 <label class="check-row">
 <input id="privacyConsent" type="checkbox"/>
@@ -1177,9 +1220,10 @@
 </label>
 <p class="privacy-note"><a href="/en/privacy.html" rel="noopener noreferrer" target="_blank">How we use your data<span class="sr-only"> (opens in a new tab)</span></a></p>
 <div class="calc-actions">
-<button class="btn btn--primary" id="sendInquiry" type="button">Send inquiry</button>
+<button class="btn btn--primary" id="sendInquiry" type="submit">Send inquiry</button>
 </div>
 <p class="calc-mini" id="sendStatus" role="status" style="margin-top:12px;"></p>
+</form>
 </div>
 <div class="calc-card result-card wow-reveal" data-wow-delay="3">
 <h3>What you will receive</h3>
@@ -1281,7 +1325,7 @@
 </footer>
 <!-- The maintained calculator lives in assets/js/pricing-fix.js?v=20260911-eur. -->
 <script>window.__pricingFixEnabled = true;</script>
-<script defer="" src="assets/js/pricing-fix.js?v=20260929"></script>
+<script defer="" src="assets/js/pricing-fix.js?v=20261120"></script>
 <script defer="" src="assets/js/photobooth.js?v=20261105"></script>
 <script defer="" src="assets/js/main.js?v=20260929"></script><script defer="" src="/assets/js/contact-config.js?v=20261103"></script><script defer="" src="/assets/js/contact-bar.js?v=20261103"></script>
 <script defer="" src="assets/js/language-switch.js?v=20260929"></script>

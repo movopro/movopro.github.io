@@ -13,3 +13,4 @@ exclude:
   - image-seo.csv
   - image-rename-map.csv
   - image-locations-TEMPLATE.csv
+  - docs

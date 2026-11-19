@@ -589,6 +589,37 @@
 
     textarea.calc-input { resize: vertical; }
 
+    /* Inquiry form only: 16px fields (iOS does not zoom in on focus), 44px touch targets, inline errors. */
+    /* (main.css sets .84rem !important on these for the whole pricing page, so the override needs the same weight.) */
+    body:has(.pricing-page) #inquirySection .calc-input,
+    body:has(.pricing-page) #inquirySection .calc-select { font-size: 16px !important; min-height: 44px; }
+    #inquirySection .check-row { min-height: 44px; align-items: center; }
+    #inquirySection .check-row input { width: 22px; height: 22px; margin-top: 0; flex: none; }
+    #inquirySection .privacy-note a { display: inline-flex; align-items: center; min-height: 44px; }
+    #inquirySection .calc-input::placeholder { opacity: .55; }
+    .field-error { margin: 0; color: #f4a9a9; font-size: .9rem; line-height: 1.5; }
+    .field-error:empty { display: none; }
+    .contact-via { border: 0; margin: 12px 0; padding: 0; min-width: 0; }
+    .contact-via legend { padding: 0; margin-bottom: 8px; }
+    .contact-via__options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .contact-via__opt {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(171,202,241,.5);
+      background: rgba(0,0,0,.28);
+      color: var(--cream);
+      font-family: Manrope, sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .contact-via__opt input { width: 20px; height: 20px; margin: 0; accent-color: #75a5e8; flex: none; }
+    .contact-via__opt:has(input:checked) { border-color: #75a5e8; background: rgba(117,165,232,.2); }
+    .contact-via__opt:focus-within { outline: 2px solid #75a5e8; outline-offset: 2px; }
+
     .calc-two {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1182,71 +1213,86 @@
           <div class="calc-card">
             <h3>Данни за запитването</h3>
 
-            <div class="calc-row">
-              <label class="calc-label" for="inquiryType">Тип запитване</label>
-              <select class="calc-select" id="inquiryType">
-                <option value="Пакетна оферта">Пакетна оферта</option>
-                <option value="Индивидуална конфигурация">Индивидуална конфигурация</option>
-                <option value="Друго събитие">Друго събитие</option>
-                <option value="Фотобудка">Фотобудка</option>
-              </select>
-            </div>
+            <form id="inquiryForm" novalidate>
+              <input type="hidden" name="subject" value="MEMORY-INQUIRY">
+              <input type="hidden" name="lang" value="bg">
+              <input type="hidden" name="page" value="/uslugi-ceni.html">
 
-            <div class="calc-two">
               <div class="calc-row">
-                <label class="calc-label" for="clientName">Име</label>
-                <input class="calc-input" id="clientName" type="text" autocomplete="name" required>
+                <label class="calc-label" for="inquiryType">Тип запитване</label>
+                <select class="calc-select" id="inquiryType" name="event_type">
+                  <option value="Пакетна оферта">Пакетна оферта</option>
+                  <option value="Индивидуална конфигурация">Индивидуална конфигурация</option>
+                  <option value="Друго събитие">Друго събитие</option>
+                  <option value="Фотобудка">Фотобудка</option>
+                </select>
               </div>
+
+              <div class="calc-two">
+                <div class="calc-row">
+                  <label class="calc-label" for="clientName">Име</label>
+                  <input class="calc-input" id="clientName" name="name" type="text" autocomplete="name" required>
+                </div>
+                <div class="calc-row">
+                  <label class="calc-label" for="clientPhone">Телефон / Viber</label>
+                  <input class="calc-input" id="clientPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0888 123 456" required>
+                </div>
+              </div>
+
+              <fieldset class="contact-via">
+                <legend class="calc-label">Как предпочитате да се свържем с вас?</legend>
+                <div class="contact-via__options">
+                  <label class="contact-via__opt"><input type="radio" name="contact_via" value="viber" checked><span>Viber</span></label>
+                  <label class="contact-via__opt"><input type="radio" name="contact_via" value="call"><span>Обаждане</span></label>
+                  <label class="contact-via__opt"><input type="radio" name="contact_via" value="email"><span>Имейл</span></label>
+                </div>
+              </fieldset>
+
+              <div class="calc-two">
+                <div class="calc-row">
+                  <label class="calc-label" for="clientEmail">Имейл (по желание)</label>
+                  <input class="calc-input" id="clientEmail" name="email" type="email" autocomplete="email">
+                </div>
+                <div class="calc-row">
+                  <label class="calc-label" for="eventDate">Дата на събитието</label>
+                  <input class="calc-input" id="eventDate" name="event_date" type="date" required>
+                </div>
+              </div>
+
+              <div class="calc-two">
+                <div class="calc-row">
+                  <label class="calc-label" for="eventLocation">Локация</label>
+                  <input class="calc-input" id="eventLocation" name="event_location" type="text">
+                </div>
+                <div class="calc-row">
+                  <label class="calc-label" for="selectedOffer">Избрана оферта</label>
+                  <input class="calc-input" id="selectedOffer" name="selected_offer" type="text" readonly>
+                </div>
+              </div>
+
               <div class="calc-row">
-                <label class="calc-label" for="clientPhone">Телефон</label>
-                <input class="calc-input" id="clientPhone" type="tel" autocomplete="tel" required>
+                <label class="calc-label" for="inquirySummary">Обобщение</label>
+                <textarea class="calc-input" id="inquirySummary" name="calculator_summary" rows="8" readonly></textarea>
               </div>
-            </div>
 
-            <div class="calc-two">
               <div class="calc-row">
-                <label class="calc-label" for="clientEmail">Имейл</label>
-                <input class="calc-input" id="clientEmail" type="email" autocomplete="email" required>
+                <label class="calc-label" for="clientNote">Допълнителни детайли</label>
+                <textarea class="calc-input" id="clientNote" name="message" rows="5"
+                  placeholder="Например: начало на събитието, брой гости, адрес, предпочитан стил, допълнителни изисквания."></textarea>
               </div>
-              <div class="calc-row">
-                <label class="calc-label" for="eventDate">Дата на събитието</label>
-                <input class="calc-input" id="eventDate" type="date" required>
+
+              <label class="check-row">
+                <input type="checkbox" id="privacyConsent">
+                <span>Съгласен/а съм личните ми данни да бъдат използвани за връзка по това запитване.</span>
+              </label>
+              <p class="privacy-note"><a href="privacy.html" target="_blank" rel="noopener">Как използваме данните ви</a></p>
+
+              <div class="calc-actions">
+                <button class="btn btn--primary" type="submit" id="sendInquiry">Изпратете запитване</button>
               </div>
-            </div>
 
-            <div class="calc-two">
-              <div class="calc-row">
-                <label class="calc-label" for="eventLocation">Локация</label>
-                <input class="calc-input" id="eventLocation" type="text">
-              </div>
-              <div class="calc-row">
-                <label class="calc-label" for="selectedOffer">Избрана оферта</label>
-                <input class="calc-input" id="selectedOffer" type="text" readonly>
-              </div>
-            </div>
-
-            <div class="calc-row">
-              <label class="calc-label" for="inquirySummary">Обобщение</label>
-              <textarea class="calc-input" id="inquirySummary" rows="8" readonly></textarea>
-            </div>
-
-            <div class="calc-row">
-              <label class="calc-label" for="clientNote">Допълнителни детайли</label>
-              <textarea class="calc-input" id="clientNote" rows="5"
-                placeholder="Например: начало на събитието, брой гости, адрес, предпочитан стил, допълнителни изисквания."></textarea>
-            </div>
-
-            <label class="check-row">
-              <input type="checkbox" id="privacyConsent">
-              <span>Съгласен/а съм личните ми данни да бъдат използвани за връзка по това запитване.</span>
-            </label>
-            <p class="privacy-note"><a href="privacy.html" target="_blank" rel="noopener">Как използваме данните ви</a></p>
-
-            <div class="calc-actions">
-              <button class="btn btn--primary" type="button" id="sendInquiry">Изпратете запитване</button>
-            </div>
-
-            <p id="sendStatus" class="calc-mini" role="status" style="margin-top:12px;"></p>
+              <p id="sendStatus" class="calc-mini" role="status" style="margin-top:12px;"></p>
+            </form>
           </div>
 
           <div class="calc-card result-card">
@@ -1363,7 +1409,7 @@
 
   <!-- The maintained calculator lives in assets/js/pricing-fix.js?v=20260911-eur. -->
   <script>window.__pricingFixEnabled = true;</script>
-<script defer src="assets/js/pricing-fix.js?v=20260929"></script>
+<script defer src="assets/js/pricing-fix.js?v=20261120"></script>
 <script defer src="assets/js/photobooth.js?v=20261105"></script>
 <script defer src="assets/js/main.js?v=20260929"></script><script defer src="/assets/js/contact-config.js?v=20261103"></script><script defer src="/assets/js/contact-bar.js?v=20261103"></script>
 <script defer src="assets/js/language-switch.js?v=20260929"></script>
